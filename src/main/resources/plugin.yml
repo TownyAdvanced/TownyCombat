@@ -2,6 +2,9 @@ name: ${project.artifactId}
 main: ${project.groupId}.${project.name}.${project.artifactId}
 version: ${project.version}
 api-version: ${project.bukkitAPIVersion}
-author: LlmDl
+author: Goosius
 website: 'http://townyadvanced.github.io'
 prefix: ${project.artifactId}
+depend: [Towny]
+
+description: A combat plugin for Towny

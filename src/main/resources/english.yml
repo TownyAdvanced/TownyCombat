@@ -1,7 +1,7 @@
 name: BlankPlugin
 version: 0.01
 language: english
-author: Author
+author: Goosius
 website: 'http://townyadvanced.github.io/'
 description: >
     Language file for all game messages.  Do not alter this file.

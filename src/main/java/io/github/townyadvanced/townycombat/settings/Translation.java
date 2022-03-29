@@ -1,4 +1,4 @@
-package io.github.townyadvanced.blankplugin.settings;
+package io.github.townyadvanced.townycombat.settings;
 
 
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -6,8 +6,8 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import com.palmergames.bukkit.util.Colors;
 import com.palmergames.util.StringMgmt;
 
-import io.github.townyadvanced.blankplugin.BlankPlugin;
-import io.github.townyadvanced.blankplugin.util.FileMgmt;
+import io.github.townyadvanced.townycombat.TownyCombatPlugin;
+import io.github.townyadvanced.townycombat.utils.FileMgmt;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,11 +36,11 @@ public final class Translation {
 		try {
 			newLanguage.loadFromString(FileMgmt.convertStreamToString("/" + res));
 		} catch (IOException e) {
-			BlankPlugin.info("Lang: Custom language file detected, not updating.");
-			BlankPlugin.info("Lang: " + res + " v" + Translation.of("version") + " loaded.");
+			TownyCombatPlugin.info("Lang: Custom language file detected, not updating.");
+			TownyCombatPlugin.info("Lang: " + res + " v" + Translation.of("version") + " loaded.");
 			return;
 		} catch (InvalidConfigurationException e) {
-			BlankPlugin.severe("Invalid Configuration in language file detected.");
+			TownyCombatPlugin.severe("Invalid Configuration in language file detected.");
 		}
 		
 		String resVersion = newLanguage.getString("version");
@@ -48,10 +48,10 @@ public final class Translation {
 
 		if (!langVersion.equalsIgnoreCase(resVersion)) {
 			language = newLanguage;
-			BlankPlugin.info("Lang: Language file replaced with updated version.");
+			TownyCombatPlugin.info("Lang: Language file replaced with updated version.");
 			FileMgmt.stringToFile(FileMgmt.convertStreamToString("/" + res), file);
 		}
-		BlankPlugin.info("Lang: " + res + " v" + Translation.of("version") + " loaded.");
+		TownyCombatPlugin.info("Lang: " + res + " v" + Translation.of("version") + " loaded.");
 	}
 
 	private static String parseSingleLineString(String str) {
@@ -68,7 +68,7 @@ public final class Translation {
 		String data = language.getString(key.toLowerCase());
 
 		if (data == null) {
-			BlankPlugin.severe("Error could not read " + key.toLowerCase() + " from " + Settings.getString(ConfigNodes.LANGUAGE));
+			TownyCombatPlugin.severe("Error could not read " + key.toLowerCase() + " from " + Settings.getString(ConfigNodes.LANGUAGE));
 			return "";
 		}
 		return StringMgmt.translateHexColors(parseSingleLineString(data));
