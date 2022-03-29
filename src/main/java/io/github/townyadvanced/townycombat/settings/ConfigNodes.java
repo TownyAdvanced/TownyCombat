@@ -21,7 +21,32 @@ public enum ConfigNodes {
 			"",
 			"# If true, then when a player uses /n or /t spawn, their mount (e.g. a horse) comes with them.",
 			"# After the player spawns, the mount takes 5 seconds to arrive.",
-			"# TIP: The setting helps enable cavalry tactics, by making it easier to get horses to Siege-Zones.");
+			"# TIP: The setting helps enable cavalry tactics, by making it easier to get horses to Siege-Zones."),
+	BLOCK_GLITCHING_PREVENTION(
+		"block_glitching_prevention",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |             BLOCK GLITCHING PREVENTION               | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
+	BLOCK_GLITCHING_PREVENTION_ENABLED(
+			"block_glitching_prevention.enabled",
+			"true",
+			"",
+			"# If this value is true, then some block glitching is prevented.",
+			"# Any player whose block-place-or-destroy action is cancelled, gets teleported back to where they were when they attempted the action.",
+			"# TIP: This feature will not prevent all wall-bypass cheating methods, but it should help."),
+	BLOCK_GLITCHING_PREVENTION_TELEPORT_DELAY_MILLIS(
+			"block_glitching_prevention.teleport_delay_millis",
+			"500",
+			"",
+			"# This value determines the delay before teleport.",
+			"# TIP: If you set this value very low, you might get lag.");
+
 	
 	private final String Root;
 	private final String Default;

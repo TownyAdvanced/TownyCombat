@@ -1,5 +1,6 @@
 package io.github.townyadvanced.townycombat.listeners;
 
+import com.palmergames.bukkit.towny.event.actions.TownyDestroyEvent;
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import io.github.townyadvanced.townycombat.utils.TownyCombatHorseUtil;
@@ -44,6 +45,8 @@ public class TownyCombatBukkitEventListener implements Listener {
 
 	@EventHandler
 	public void on (EntityMountEvent event) {
+		if (!TownyCombatSettings.isTownyCombatEnabled())
+			return;
 		//Prevent mount if the horse is about to be TP'd to owner
 		if(TownyCombatSettings.isTeleportMountWithPlayerEnabled()
 				&& event.getMount() instanceof AbstractHorse

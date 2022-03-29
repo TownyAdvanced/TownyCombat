@@ -6,6 +6,7 @@ import java.io.IOException;
 import io.github.townyadvanced.townycombat.listeners.TownyCombatBukkitEventListener;
 import io.github.townyadvanced.townycombat.listeners.TownyCombatNationEventListener;
 import io.github.townyadvanced.townycombat.listeners.TownyCombatTownEventListener;
+import io.github.townyadvanced.townycombat.listeners.TownyCombatTownyEventListener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -74,5 +75,6 @@ public class TownyCombat extends JavaPlugin {
 		pm.registerEvents(new TownyCombatBukkitEventListener(this), this);
 		pm.registerEvents(new TownyCombatTownEventListener(this), this);		
 		pm.registerEvents(new TownyCombatNationEventListener(this), this);
+		pm.registerEvents(new TownyCombatTownyEventListener(this), this);
 	}
 }
