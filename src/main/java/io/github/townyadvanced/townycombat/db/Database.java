@@ -11,22 +11,22 @@ import org.bukkit.scheduler.BukkitTask;
 
 import com.palmergames.util.FileMgmt;
 
-import io.github.townyadvanced.townycombat.TownyCombatPlugin;
+import io.github.townyadvanced.townycombat.TownyCombat;
 
 
 public class Database {
 	
-	final static String rootFolderPath = TownyCombatPlugin.getPlugin().getDataFolder().getPath();
+	final static String rootFolderPath = TownyCombat.getPlugin().getDataFolder().getPath();
 	protected final static Queue<Runnable> queryQueue = new ConcurrentLinkedQueue<>();
 	private static BukkitTask task; 
 	
-	public Database(TownyCombatPlugin plugin) {
+	public Database(TownyCombat plugin) {
 		if (!FileMgmt.checkOrCreateFolders(
 			rootFolderPath,
 			rootFolderPath + File.separator + "ruins",
 			rootFolderPath + File.separator + "ruins" + File.separator + "deleted"
 		))
-			TownyCombatPlugin.severe("Could not create default folders");
+			TownyCombat.severe("Could not create default folders");
 		
 		task = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, () -> {
 			while (!Database.queryQueue.isEmpty()) {
@@ -64,16 +64,16 @@ public class Database {
 	}
 	
 	public static boolean loadFileList(FileType type, Consumer<UUID> consumer) {
-		TownyCombatPlugin.info("Searching for " + type.foldername + "...");
+		TownyCombat.info("Searching for " + type.foldername + "...");
 		File[] files = new File(rootFolderPath + File.separator + type.foldername)
 							       .listFiles(file -> file.getName().toLowerCase().endsWith(type.fileExtension));
 		
 		if (files.length == 0) {
-			TownyCombatPlugin.info("No " + type.foldername + " found.");
+			TownyCombat.info("No " + type.foldername + " found.");
 			return true;
 		}
 		
-		TownyCombatPlugin.info("Loading " + type.foldername + " list...");
+		TownyCombat.info("Loading " + type.foldername + " list...");
 
 		for (File file : files)
 			consumer.accept(UUID.fromString(file.getName().replace(type.fileExtension, "")));

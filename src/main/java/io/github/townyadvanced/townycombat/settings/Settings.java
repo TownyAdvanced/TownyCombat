@@ -3,7 +3,7 @@ package io.github.townyadvanced.townycombat.settings;
 import java.io.File;
 import java.io.IOException;
 
-import io.github.townyadvanced.townycombat.TownyCombatPlugin;
+import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.utils.FileMgmt;
 
 public class Settings {
@@ -75,7 +75,7 @@ public class Settings {
 
 	private static void sendError(String msg) {
 
-		TownyCombatPlugin.severe("Error could not read " + msg);
+		TownyCombat.severe("Error could not read " + msg);
 	}
 	
 	public static boolean getBoolean(ConfigNodes node) {

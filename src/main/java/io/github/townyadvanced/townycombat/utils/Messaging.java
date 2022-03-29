@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.util.Colors;
 
-import io.github.townyadvanced.townycombat.TownyCombatPlugin;
+import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.settings.Translation;
 
 public class Messaging {
@@ -27,7 +27,7 @@ public class Messaging {
     }
     
     public static void sendGlobalMessage(String message) {
-        TownyCombatPlugin.info(message);
+        TownyCombat.info(message);
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (player != null && TownyAPI.getInstance().isTownyWorld(player.getWorld()))
                 sendMsg(player, message);

@@ -1,6 +1,6 @@
 package io.github.townyadvanced.townycombat.listeners;
 
-import io.github.townyadvanced.townycombat.TownyCombatPlugin;
+import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import io.github.townyadvanced.townycombat.utils.TownyCombatHorseUtil;
 import org.bukkit.entity.AbstractHorse;
@@ -18,9 +18,9 @@ import org.spigotmc.event.entity.EntityMountEvent;
 public class TownyCombatBukkitEventListener implements Listener {
 
 	@SuppressWarnings("unused")
-	private final TownyCombatPlugin plugin;
+	private final TownyCombat plugin;
 	
-	public TownyCombatBukkitEventListener(TownyCombatPlugin instance) {
+	public TownyCombatBukkitEventListener(TownyCombat instance) {
 		plugin = instance;
 	}
 
