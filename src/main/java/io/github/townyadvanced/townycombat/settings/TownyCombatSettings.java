@@ -25,7 +25,7 @@ public class TownyCombatSettings {
 	}
 
 	public static boolean isTeleportMountWithPlayerEnabled() {
-		return Settings.getBoolean(ConfigNodes.TELEPORT_MOUNT_WITH_PLAYER_ENABLED);
+		return Settings.getBoolean(ConfigNodes.HORSE_ENHANCEMENTS_TELEPORT_MOUNT_WITH_PLAYER_ENABLED);
 	}
 
 	public static boolean isBlockGlitchingPreventionEnabled() {

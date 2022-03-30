@@ -19,19 +19,19 @@ public enum ConfigNodes {
 			"true",
 			"",
 			"# etc."),
-	TELEPORT_MOUNT_WITH_PLAYER(
-		"teleport_mount_with_player",
+	HORSE_ENHANCEMENTS(
+		"horse_enhancements",
 			"",
 			"",
 			"",
 			"############################################################",
 			"# +------------------------------------------------------+ #",
-			"# |             TELEPORT MOUNT WITH PLAYER               | #",
+			"# |                   HORSE ENHANCEMENTS                 | #",
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
-	TELEPORT_MOUNT_WITH_PLAYER_ENABLED(
-			"teleport_mount_with_player.enabled",
+	HORSE_ENHANCEMENTS_TELEPORT_MOUNT_WITH_PLAYER_ENABLED(
+			"horse_enhancements.teleport_mount_with_player_enabled",
 			"true",
 			"",
 			"# If true, then when a player uses /n or /t spawn, their mount (e.g. a horse) comes with them.",
