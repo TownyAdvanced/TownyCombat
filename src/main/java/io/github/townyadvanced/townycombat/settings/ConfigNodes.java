@@ -119,7 +119,7 @@ public enum ConfigNodes {
 			"# If this setting is true, then the automatic Tactical Invisibility mode is enabled"),
 	TACTICAL_INVISIBILITY_AUTOMATIC_MODE_SCOPE_WILDERNESS(
 			"tactical_invisibility.automatic_mode.scope.wilderness",
-			"false",
+			"true",
 			"",
 			"# If true, then players are hidden when in wilderness."),
 	TACTICAL_INVISIBILITY_AUTOMATIC_MODE_SCOPE_RUINS(
