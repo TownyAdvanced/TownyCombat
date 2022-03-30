@@ -7,6 +7,10 @@ public enum ConfigNodes {
 			"version.version",
 			"",
 			"# This is the current version.  Please do not edit."),
+	LAST_RUN_VERSION(
+			"version.last_run_version",
+			"",
+			"# This is for showing the changelog on updates.  Please do not edit."),
 	LANGUAGE("language",
 			"english.yml",
 			"# The language file you wish to use"),

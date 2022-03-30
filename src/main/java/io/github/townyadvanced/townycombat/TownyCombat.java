@@ -1,39 +1,63 @@
 package io.github.townyadvanced.townycombat;
 
-import java.io.File;
-import java.io.IOException;
-
+import com.palmergames.bukkit.towny.Towny;
+import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.object.TranslationLoader;
+import com.palmergames.bukkit.util.Version;
 import io.github.townyadvanced.townycombat.integrations.dynmap.DynmapIntegration;
 import io.github.townyadvanced.townycombat.listeners.TownyCombatBukkitEventListener;
 import io.github.townyadvanced.townycombat.listeners.TownyCombatNationEventListener;
 import io.github.townyadvanced.townycombat.listeners.TownyCombatTownEventListener;
 import io.github.townyadvanced.townycombat.listeners.TownyCombatTownyEventListener;
+import io.github.townyadvanced.townycombat.settings.Settings;
+import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
+import io.github.townyadvanced.townycombat.settings.Translation;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import io.github.townyadvanced.townycombat.db.Database;
-import io.github.townyadvanced.townycombat.settings.Settings;
-import io.github.townyadvanced.townycombat.settings.Translation;
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class TownyCombat extends JavaPlugin {
 	
 	private static TownyCombat plugin = null;
 	private static DynmapIntegration dynmapIntegration = null;
-	
+	private final Version requiredTownyVersion = Version.fromString("0.98.0.0");
+	private static boolean pluginError = false;
+
     @Override
     public void onEnable() {
-    	
     	plugin = this;
+    	printSickASCIIArt();
     	
-        if (!loadSettings()) {
-        	onDisable();
-			return;
+    	try {
+			if (townyVersionCheck(getTownyVersion())) {
+				info("Towny version " + getTownyVersion() + " found.");
+			} else {
+				throw new RuntimeException("Towny version does not meet required minimum version: " + requiredTownyVersion);
+			}
+			if(Towny.getPlugin().isError()) {
+				throw new RuntimeException("Towny is in error. TownyCombat startup halted.");
+			}
+			Settings.loadConfig();
+			Settings.loadLanguages();
+			TownyCombatSettings.resetCachedSettings();
+			registerListeners();
+			loadIntegrations();
+		} catch (Exception e) {
+    		severe(e.getMessage());
+    		e.printStackTrace();
 		}
+    }
+    
+    private boolean townyVersionCheck(String version) {
+        return Version.fromString(version).compareTo(requiredTownyVersion) >= 0;
+    }
 
-        loadDatabase();
-		registerListeners();
-		loadIntegrations();
-
+    private String getTownyVersion() {
+        return Towny.getPlugin().getDescription().getVersion();
     }
 
 	private void loadIntegrations() {
@@ -58,24 +82,7 @@ public class TownyCombat extends JavaPlugin {
 	public static String getPrefix() {
 		return Translation.language != null ? Translation.of("plugin_prefix") : "[" + plugin.getName() + "]";
 	}
-	
-	private void loadDatabase() {
-		new Database(plugin);
-	}
-	
-	private boolean loadSettings() {
-		try {
-			Settings.loadConfig(this.getDataFolder().getPath() + File.separator + "config.yml", getVersion());
-			Translation.loadLanguage(this.getDataFolder().getPath() + File.separator , "english.yml");
-		} catch (IOException e) {
-            e.printStackTrace();
-            severe("Config.yml failed to load! Disabling!");
-            return false;
-        }
-		info("Config.yml loaded successfully.");		
-		return true;
-	}
-	
+
 	public static void info(String message) {
 		plugin.getLogger().info(message);
 	}
@@ -90,5 +97,8 @@ public class TownyCombat extends JavaPlugin {
 		pm.registerEvents(new TownyCombatTownEventListener(this), this);		
 		pm.registerEvents(new TownyCombatNationEventListener(this), this);
 		pm.registerEvents(new TownyCombatTownyEventListener(this), this);
+	}
+	
+	private void printSickASCIIArt() {
 	}
 }

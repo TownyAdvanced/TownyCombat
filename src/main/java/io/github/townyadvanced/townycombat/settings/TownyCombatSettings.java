@@ -16,7 +16,7 @@ public class TownyCombatSettings {
 
 	private static List<HeldItemsCombination> tacticalInvisibilityItems = null;
 
-	protected static void resetCachedSettings() {
+	public static void resetCachedSettings() {
 		tacticalInvisibilityItems = null;
 	}
 
