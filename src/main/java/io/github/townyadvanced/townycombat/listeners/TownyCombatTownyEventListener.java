@@ -2,9 +2,11 @@ package io.github.townyadvanced.townycombat.listeners;
 
 import com.palmergames.bukkit.towny.event.actions.TownyBuildEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyDestroyEvent;
+import com.palmergames.bukkit.towny.event.time.NewShortTimeEvent;
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import io.github.townyadvanced.townycombat.utils.TownyCombatBlockUtil;
+import io.github.townyadvanced.townycombat.utils.TownyCombatMapUtil;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -39,4 +41,15 @@ public class TownyCombatTownyEventListener implements Listener {
             TownyCombatBlockUtil.applyBlockGlitchingPrevention(event.getPlayer());
         }
 	}
+	
+    @EventHandler
+    public void onShortTime(NewShortTimeEvent event) {
+        if (TownyCombatSettings.isTownyCombatEnabled()) {
+			if(TownyCombatSettings.isTacticalInvisibilityEnabled()) { 
+	            TownyCombatMapUtil.evaluateTacticalInvisibility();
+				TownyCombatMapUtil.applyTacticalInvisibilityToPlayers();
+			}
+        }
+    }
+
 }

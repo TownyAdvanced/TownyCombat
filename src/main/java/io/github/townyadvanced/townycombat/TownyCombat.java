@@ -3,6 +3,7 @@ package io.github.townyadvanced.townycombat;
 import java.io.File;
 import java.io.IOException;
 
+import io.github.townyadvanced.townycombat.integrations.dynmap.DynmapIntegration;
 import io.github.townyadvanced.townycombat.listeners.TownyCombatBukkitEventListener;
 import io.github.townyadvanced.townycombat.listeners.TownyCombatNationEventListener;
 import io.github.townyadvanced.townycombat.listeners.TownyCombatTownEventListener;
@@ -16,7 +17,8 @@ import io.github.townyadvanced.townycombat.settings.Translation;
 
 public class TownyCombat extends JavaPlugin {
 	
-	private static TownyCombat plugin;
+	private static TownyCombat plugin = null;
+	private static DynmapIntegration dynmapIntegration = null;
 	
     @Override
     public void onEnable() {
@@ -30,15 +32,27 @@ public class TownyCombat extends JavaPlugin {
 
         loadDatabase();
 		registerListeners();
+		loadIntegrations();
 
     }
-    
+
+	private void loadIntegrations() {
+		if (getServer().getPluginManager().isPluginEnabled("dynmap")) {
+			info("TownyCombat found Dynmap plugin. Enabling Dynmap support now.");
+			dynmapIntegration = new DynmapIntegration();
+		}
+	}
+
 	public String getVersion() {
 		return this.getDescription().getVersion();
 	}
 	
 	public static TownyCombat getPlugin() {
 		return plugin;
+	}
+	
+	public static DynmapIntegration getDynmapIntegration() {
+    	return dynmapIntegration;
 	}
 	
 	public static String getPrefix() {

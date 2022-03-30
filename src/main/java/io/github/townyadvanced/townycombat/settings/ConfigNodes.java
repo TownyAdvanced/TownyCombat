@@ -92,7 +92,65 @@ public enum ConfigNodes {
 			"keep_stuff_on_death.town_proximity_blocks",
 			"500",
 			"",
-			"# A player must be at least this close to a non-ruined town to keep inventory+experience on death.");
+			"# A player must be at least this close to a non-ruined town to keep inventory+experience on death."),			
+	TACTICAL_INVISIBILITY(
+			"tactical_invisibility",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |           Tactical Invisibility (T.I.V)              | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
+	TACTICAL_INVISIBILITY_ENABLED(
+			"tactical_invisibility.enabled",
+			"false",
+			"",
+			"# If this setting is true, then the Tactical Invisibility (T.I.V) feature is enabled.",
+			"# This feature allow players to disappear from the dynmap, allowing military tactics.",
+			"# PREREQUISITE: Dynmap plugin",
+			"# ACTIVATION_TIME: When a player meets the conditions for map-hiding, the effect takes a few seconds to activate (same for de-activation)."),
+	TACTICAL_INVISIBILITY_AUTOMATIC_MODE_ENABLED(
+			"tactical_invisibility.automatic_mode.enabled",
+			"true",
+			"",
+			"# If this setting is true, then the automatic Tactical Invisibility mode is enabled"),
+	TACTICAL_INVISIBILITY_AUTOMATIC_MODE_SCOPE_WILDERNESS(
+			"tactical_invisibility.automatic_mode.scope.wilderness",
+			"false",
+			"",
+			"# If true, then players are hidden when in wilderness."),
+	TACTICAL_INVISIBILITY_AUTOMATIC_MODE_SCOPE_RUINS(
+			"tactical_invisibility.automatic_mode.scope.ruins",
+			"false",
+			"",
+			"# If true, then players are hidden when in ruins."),
+	TACTICAL_INVISIBILITY_TRIGGERING_ENABLED(
+			"tactical_invisibility.triggering.enabled",
+			"false",
+			"",
+			"# If this setting is true, then it is possible for individual players to trigger Tactical Invisibility,",
+			"# by equipping a specific combination of items."),
+	TACTICAL_INVISIBILITY_TRIGGERING_ITEMS(
+			"tactical_invisibility.triggering.items",
+			"diamond_sword|diamond_sword, diamond_axe|diamond_axe, diamond_shovel|diamond_shovel, bow|bow",
+			"",
+			"# This config only applies when triggering is enabled",
+			"# This list specifies the item combinations which allow players to map-hide.",
+			"# Each list entry is in the form of <off-hand>|<main-hand>.",
+			"# ",
+			"# To specify that both items are required - e.g. 'compass|painting'" + 
+			"# To specify that only one item is required - e.g. 'compass|any'",
+			"# To specify that one hand must be empty - e.g. 'compass|empty'",
+			"# ",
+			"# This list allows a server to grant usage of the feature to different categories of players.",
+			"# Example 1:  An entry with 'shield|diamond_sword' grants the feature to soldiers.",
+			"# Example 2:  An entry with 'compass|diamond_sword' grants the feature to scouts/explorers.",
+			"# Example 3:  An entry with 'compass|air' grants the feature to very peaceful explorers.",
+			"# Example 4:  An entry with 'compass|any' grants the feature to many players including builders/miners/lumberjacks.");
+
 	private final String Root;
 	private final String Default;
 	private String[] comments;
