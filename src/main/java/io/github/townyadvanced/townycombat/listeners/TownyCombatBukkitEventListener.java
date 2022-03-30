@@ -1,12 +1,15 @@
 package io.github.townyadvanced.townycombat.listeners;
 
-import com.palmergames.bukkit.towny.event.actions.TownyDestroyEvent;
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
+import io.github.townyadvanced.townycombat.utils.TownyCombatDistanceUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatHorseUtil;
+import io.github.townyadvanced.townycombat.utils.TownyCombatInventoryUtil;
+import io.github.townyadvanced.townycombat.utils.TownyCombatExperienceUtil;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.spigotmc.event.entity.EntityMountEvent;
@@ -43,7 +46,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 			TownyCombatHorseUtil.scheduleMountTeleport(event);
 	}
 
-	@EventHandler
+	@EventHandler (ignoreCancelled = true)
 	public void on (EntityMountEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
@@ -54,5 +57,19 @@ public class TownyCombatBukkitEventListener implements Listener {
 			event.setCancelled(true);
 		}
 	}
-
+	
+	@EventHandler (ignoreCancelled = true)
+	public void on (PlayerDeathEvent event) {
+		if (!TownyCombatSettings.isTownyCombatEnabled())
+			return;
+		if(!TownyCombatDistanceUtil.isCloseToATown(event.getEntity(), TownyCombatSettings.getKeepStuffOnDeathTownProximityBlocks()))
+			return;
+		if(TownyCombatSettings.isKeepInventoryOnDeathEnabled()) {
+			TownyCombatInventoryUtil.degradeInventory(event);
+			TownyCombatInventoryUtil.keepInventory(event);
+		}
+		if(TownyCombatSettings.isKeepExperienceOnDeathEnabled()) {
+			TownyCombatExperienceUtil.keepExperience(event);
+		}
+	}		
 }

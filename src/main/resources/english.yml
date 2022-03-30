@@ -23,5 +23,6 @@ description: >
 # DarkPurple = &9, LightGreen = &a, LightBlue = &b
 # Rose = &c, LightPurple = &d, Yellow = &e, White = &f
 
-plugin_prefix: '&f[&6A Prefix&f] '
+plugin_prefix: '&f[&6TownyCombat&f] '
 msg_err_command_disable: '&cYou don''t have enough permissions for that command.'
+msg_inventory_degrade_warning: '&4WARNING: &cSome of your gear is close to breaking due to inventory degradation.'

@@ -21,17 +21,21 @@ public class TownyCombatTownyEventListener implements Listener {
 	public TownyCombatTownyEventListener(TownyCombat instance) {
 		plugin = instance;
 	}
-	
+
 	@EventHandler
 	public void on (TownyDestroyEvent event) {
-        if(TownyCombatSettings.isTownyCombatEnabled() && TownyCombatSettings.isBlockGlitchingPreventionEnabled()) {
+        if(TownyCombatSettings.isTownyCombatEnabled() 
+	        	&& TownyCombatSettings.isBlockGlitchingPreventionEnabled()
+    	    	&& event.isCancelled()) {
             TownyCombatBlockUtil.applyBlockGlitchingPrevention(event.getPlayer());
         }
 	}
 
 	@EventHandler
 	public void on (TownyBuildEvent event) {
-        if(TownyCombatSettings.isTownyCombatEnabled() && TownyCombatSettings.isBlockGlitchingPreventionEnabled()) {
+        if(TownyCombatSettings.isTownyCombatEnabled() 
+        		&& TownyCombatSettings.isBlockGlitchingPreventionEnabled()
+        		&& event.isCancelled()) {
             TownyCombatBlockUtil.applyBlockGlitchingPrevention(event.getPlayer());
         }
 	}
