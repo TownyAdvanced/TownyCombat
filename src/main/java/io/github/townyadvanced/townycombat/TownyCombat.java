@@ -11,21 +11,14 @@ import io.github.townyadvanced.townycombat.listeners.TownyCombatTownEventListene
 import io.github.townyadvanced.townycombat.listeners.TownyCombatTownyEventListener;
 import io.github.townyadvanced.townycombat.settings.Settings;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
-import io.github.townyadvanced.townycombat.settings.Translation;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class TownyCombat extends JavaPlugin {
 	
 	private static TownyCombat plugin = null;
 	private static DynmapIntegration dynmapIntegration = null;
 	private final Version requiredTownyVersion = Version.fromString("0.98.0.0");
-	private static boolean pluginError = false;
 
     @Override
     public void onEnable() {
@@ -77,10 +70,6 @@ public class TownyCombat extends JavaPlugin {
 	
 	public static DynmapIntegration getDynmapIntegration() {
     	return dynmapIntegration;
-	}
-	
-	public static String getPrefix() {
-		return Translation.language != null ? Translation.of("plugin_prefix") : "[" + plugin.getName() + "]";
 	}
 
 	public static void info(String message) {

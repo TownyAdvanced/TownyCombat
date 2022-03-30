@@ -1,6 +1,7 @@
 package io.github.townyadvanced.townycombat.utils;
 
 import com.palmergames.bukkit.towny.object.Translatable;
+import com.palmergames.bukkit.towny.object.Translation;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -9,7 +10,6 @@ import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.util.Colors;
 
 import io.github.townyadvanced.townycombat.TownyCombat;
-import io.github.townyadvanced.townycombat.settings.Translation;
 
 import java.util.List;
 
