@@ -15,11 +15,11 @@ public class TownyCombatDistanceUtil {
 
 	/**
 	 * @param player given player
-	 * @param maxDistance max allowed distance
+	 * @param maxDistanceBlocks max allowed distance in blocks
 	 * 
 	 * @return true if the given player is close to any non-ruined town
 	 */
-	public static boolean isCloseToATown(Player player, int maxDistance) {
+	public static boolean isCloseToATown(Player player, int maxDistanceBlocks) {
 		//True if player is in a town
 		Town townPlayerIsIn = TownyAPI.getInstance().getTown(player.getLocation());
 		if(townPlayerIsIn != null && !townPlayerIsIn.isRuined())
@@ -33,7 +33,7 @@ public class TownyCombatDistanceUtil {
 					&& areCoordsClose(
 						worldCoordOfPlayer,
 						town.getHomeBlockOrNull().getWorldCoord(),
-						maxDistance)) {
+						maxDistanceBlocks)) {
 				return true;	
 			}
 		}
@@ -43,12 +43,12 @@ public class TownyCombatDistanceUtil {
 	/**
 	 * @param coord1 world coord 1
 	 * @param coord2 world coord 2
-	 * @param maxDistance max allowed distance in blocks
+	 * @param maxDistanceBlocks max allowed distance in blocks
 	 *
 	 * @return true if the two world coords are close
 	 */
-	private static boolean areCoordsClose(WorldCoord coord1, WorldCoord coord2, int maxDistance) {
-		int maxDistanceTownBlocks = maxDistance * TownySettings.getTownBlockSize();
+	private static boolean areCoordsClose(WorldCoord coord1, WorldCoord coord2, int maxDistanceBlocks) {
+		int maxDistanceTownBlocks = maxDistanceBlocks / TownySettings.getTownBlockSize();
 		if(!coord1.getWorldName().equalsIgnoreCase(coord2.getWorldName()))
 			return false;
 		double distanceTownblocks = Math.sqrt(Math.pow(coord1.getX() - coord2.getX(), 2) + Math.pow(coord1.getZ() - coord2.getZ(), 2));
