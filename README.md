@@ -1,5 +1,5 @@
 # TownyCombat
-A combat plugin for Towny, containing some useful combat/pvp features.
+A combat plugin for Towny, containing some generally useful combat/battle/pvp features.
 
 ## Features:
 - :horse: :magic_wand: **Horse Teleporting:**
