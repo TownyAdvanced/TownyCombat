@@ -8,3 +8,14 @@ prefix: ${project.artifactId}
 depend: [Towny]
 
 description: A combat plugin for Towny
+
+commands:
+    townycombatadmin:
+        aliases: [tcm]
+        
+permissions:
+    townycombat.admin:
+        description: User is able to use all townycombat admin commands.
+        default: op
+        children:
+            townycombat.admin.command.*: true

@@ -4,6 +4,7 @@ import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.TranslationLoader;
 import com.palmergames.bukkit.util.Version;
+import io.github.townyadvanced.townycombat.commands.TownyCombatAdminCommand;
 import io.github.townyadvanced.townycombat.integrations.dynmap.DynmapIntegration;
 import io.github.townyadvanced.townycombat.listeners.TownyCombatBukkitEventListener;
 import io.github.townyadvanced.townycombat.listeners.TownyCombatNationEventListener;
@@ -39,6 +40,7 @@ public class TownyCombat extends JavaPlugin {
 			TownyCombatSettings.resetCachedSettings();
 			registerListeners();
 			loadIntegrations();
+			registerCommands();
 		} catch (Exception e) {
     		severe(e.getMessage());
     		e.printStackTrace();
@@ -58,6 +60,10 @@ public class TownyCombat extends JavaPlugin {
 			info("TownyCombat found Dynmap plugin. Enabling Dynmap support now.");
 			dynmapIntegration = new DynmapIntegration();
 		}
+	}
+
+	private void registerCommands() {
+		getCommand("townycombatadmin").setExecutor(new TownyCombatAdminCommand());
 	}
 
 	public String getVersion() {
