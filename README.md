@@ -12,7 +12,7 @@ A combat plugin for Towny, containing some generally useful combat/battle/pvp fe
   - Any tools/weapons/armour in your inventory are subject to a 20% degrade.
 - :detective: :x: **Tactical Invisibilty:** ***(Disabled By Default)***
   - Use stealth tactics by going invisible on the dynmap.
-  - This is a harcore battle feature, which enables stealth tactics, in exchange for showing less battle information on the dynmap.
+  - This is a harcore battle feature, which enables stealth tactics, in exchange for showing less activity on the dynmap.
   - There are 2 Modes:
     - Automatic: You go map-invisible when in the wilderness.
     - Triggered: You go map-invisible when holding a certain combination of items in your hands (*e.g. double diamond swords*).
