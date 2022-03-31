@@ -24,8 +24,9 @@ public class TownyCombat extends JavaPlugin {
     @Override
     public void onEnable() {
     	plugin = this;
-    	printSickASCIIArt();
-    	
+		System.out.println("=================================================================================");
+		printSickASCIIArt();
+	
     	try {
 			if (townyVersionCheck(getTownyVersion())) {
 				info("Towny version " + getTownyVersion() + " found.");
@@ -41,6 +42,8 @@ public class TownyCombat extends JavaPlugin {
 			registerListeners();
 			loadIntegrations();
 			registerCommands();
+			info("TownyCombat Enabled.");
+			System.out.println("=================================================================================");
 		} catch (Exception e) {
     		severe(e.getMessage());
     		e.printStackTrace();
@@ -95,5 +98,14 @@ public class TownyCombat extends JavaPlugin {
 	}
 	
 	private void printSickASCIIArt() {
+		System.out.println("  *   )                             (                    )           )");  
+		System.out.println("` )  /(     (  (           (        )\\           )    ( /(     )  ( /( "); 
+		System.out.println(" ( )(_))(   )\\))(    (     )\\ )   (((_)   (     (     )\\()) ( /(  )\\()) ");
+		System.out.println("(_(_()) )\\ ((_)()\\   )\\ ) (()/(   )\\___   )\\    )\\  '((_)\\  )(_))(_))/  ");
+		System.out.println("|_   _|((_)_(()((_) _(_/(  )(_)) ((/ __| ((_) _((_)) | |(_)((_)_ | |_   ");
+		System.out.println("  | | / _ \\\\ V  V /| ' \\))| || |  | (__ / _ \\| '  \\()| '_ \\/ _` ||  _|  ");
+		System.out.println("  |_| \\___/ \\_/\\_/ |_||_|  \\_, |   \\___|\\___/|_|_|_| |_.__/\\__,_| \\__|  ");
+		System.out.println("                           |__/ ");                                        
+		System.out.println();	
 	}
 }

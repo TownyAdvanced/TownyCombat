@@ -6,6 +6,7 @@ author: Goosius
 website: 'http://townyadvanced.github.io'
 prefix: ${project.artifactId}
 depend: [Towny]
+softdepend: [dynmap]
 
 description: A combat plugin for Towny
 
