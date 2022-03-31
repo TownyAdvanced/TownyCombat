@@ -1,12 +1,26 @@
 # TownyCombat
-A combat plugin for Towny
+A combat plugin for Towny, containing some useful combat/pvp features.
 
-A plugin for low-level combat features which can be shared across all Towny war systems.
+## Features:
+- :horse: :magic_wand: **Horse Teleporting:**
+  - When using /t or /n spawns, your horse comes with you.
+- :snake: :x: **Prevents Towny-Block-Glitching by quick-block-place/destroy:**
+  - Via a secret magical method.
+  - Try it and see!
+- :coffin: :moneybag: **Keep Stuff on Death:**
+  - If you die within 500 blocks of a town-homeblock, you keep your inventory and levels.
+  - Any tools/weapons/armour in your inventory are subject to a 20% degrade.
+- :detective: :x: **Tactical Invisibilty:** ***(Disabled By Default)***
+  - Use stealth tactics by going invisible on the dynmap.
+  - This is a harcore battle feature, which enables stealth tactics, in exchange for showing less battle information on the dynmap.
+  - There are 2 Modes:
+    - Automatic: You go map-invisible when in the wilderness.
+    - Triggered: You go map-invisible when holding a certain combination of items in your hands (*e.g. double diamond swords*).
 
-E.g.
-<br> Horse teleporting with owner when using /t /n (for cavalry battles)
-<br> Keep Inventory/levels on death with degrade when near to towns.
-<br> Anti-Town block glitching (improved wall usability in battles)
-<br> Map-Hiding/Tactical Invisibility. Inside/Outside towns can give different effects.
-<br> Other low level combat effects
+## Commands:
+- ```/tcm reload```: Reloads config and language settings
 
+## Installation:
+1. Download the latest ***TownyCombat.jar*** from [here](https://github.com/TownyAdvanced/TownyCombat/releases).
+2. Drop the jar into your plugins folder.
+3. Restart your server.
