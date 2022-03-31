@@ -22,7 +22,6 @@ public class TownyCombatAdminCommand implements TabExecutor {
 	private static final List<String> townyCombatAdminTabCompletes = Arrays.asList("reload");
 
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-
 		switch (args[0].toLowerCase()) {
 		default:
 			if (args.length == 1)
@@ -47,14 +46,14 @@ public class TownyCombatAdminCommand implements TabExecutor {
 				return;
 			}
 			switch (args[0]) {
-			case "reload":
-				parseReloadCommand(sender);
+				case "reload":
+					parseReloadCommand(sender);
 				break;
-			/*
-			 * Show help if no command found.
-			 */
-			default:
-				showHelp(sender);
+				/*
+				 * Show help if no command found.
+				 */
+				default:
+					showHelp(sender);
 			}
 		} else {
 			if (sender instanceof Player
@@ -68,7 +67,7 @@ public class TownyCombatAdminCommand implements TabExecutor {
 
 	private void showHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/townycombatadmin"));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/tca", "reload", Translatable.of("admin_help_1").forLocale(sender)));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/tca", "reload", Translatable.of("admin_help_reload").forLocale(sender)));
 	}
 
 	private void parseReloadCommand(CommandSender sender) {
