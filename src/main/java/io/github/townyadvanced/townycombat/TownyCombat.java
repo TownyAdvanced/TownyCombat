@@ -1,8 +1,6 @@
 package io.github.townyadvanced.townycombat;
 
 import com.palmergames.bukkit.towny.Towny;
-import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.object.TranslationLoader;
 import com.palmergames.bukkit.util.Version;
 import io.github.townyadvanced.townycombat.commands.TownyCombatAdminCommand;
 import io.github.townyadvanced.townycombat.integrations.dynmap.DynmapIntegration;
