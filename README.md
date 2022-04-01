@@ -4,7 +4,7 @@ A combat plugin for Towny, containing some generally useful combat/battle/pvp fe
 ## Features:
 - :horse: :magic_wand: **Horse Teleporting:**
   - When using /t or /n spawns, your horse comes with you.
-- :snake: :x: **Prevents Towny-Block-Glitching by quick-block-place/destroy:**
+- :snake: :x: **Prevent Towny-Block-Glitching by quick-block-place/destroy:**
   - Via a secret magical method.
   - Try it and see!
 - :coffin: :moneybag: **Keep Stuff on Death:**
