@@ -94,7 +94,7 @@ public enum ConfigNodes {
 		    "# TIP: Don't set this too low or battles could get crezzy."),
 	KEEP_STUFF_ON_DEATH_TOWN_PROXIMITY_BLOCKS(
 			"keep_stuff_on_death.town_proximity_blocks",
-			"500",
+			"400",
 			"",
 			"# A player must be at least this close to a non-ruined town to keep inventory+experience on death."),			
 	TACTICAL_INVISIBILITY(
