@@ -8,7 +8,7 @@ A combat plugin for Towny, containing some generally useful combat/battle/pvp fe
   - Via a secret magical method.
   - Try it and see!
 - :coffin: :moneybag: **Keep Stuff on Death:**
-  - If you die within 500 blocks of a town-homeblock, you keep your inventory and levels.
+  - If you die within 400 blocks of a town-homeblock, you keep your inventory and levels.
   - Any tools/weapons/armour in your inventory are subject to a 20% degrade.
 - :bust_in_silhouette: :footprints: **Tactical Invisibilty:** ***(Disabled By Default)***
   - Use stealth tactics by going invisible on the dynmap.
