@@ -219,6 +219,6 @@ public class TownyCombatSettings {
 	}
 
 	public static double getDamageModificationAllWeaponsPercentage() {
-		return Settings.getDouble(ConfigNodes.DAMAGE_MODIFICATION_ALL_WEAPONS_PERCENTAGE);
+		return Settings.getDouble(ConfigNodes.DAMAGE_ADJUSTMENTS_ALL_WEAPONS_PERCENTAGE);
 	}
 }

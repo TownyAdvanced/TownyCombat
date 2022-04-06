@@ -154,8 +154,8 @@ public enum ConfigNodes {
 			"# Example 2:  An entry with 'compass|diamond_sword' grants the feature to scouts/explorers.",
 			"# Example 3:  An entry with 'compass|air' grants the feature to very peaceful explorers.",
 			"# Example 4:  An entry with 'compass|any' grants the feature to many players including builders/miners/lumberjacks."),
-	DAMAGE_MODIFICATION(
-		"damage_modification",
+	DAMAGE_ADJUSTMENTS(
+		"damage_adjustments",
 			"",
 			"",
 			"",
@@ -165,8 +165,8 @@ public enum ConfigNodes {
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
-	DAMAGE_MODIFICATION_ALL_WEAPONS_PERCENTAGE(
-			"damage_modification.all_weapons_percentage",
+	DAMAGE_ADJUSTMENTS_ALL_WEAPONS_PERCENTAGE(
+			"damage_adjustments.all_weapons_percentage",
 			"-30",
 			"",
 			"# This setting adjusts the damage of all weapons (including fists)",

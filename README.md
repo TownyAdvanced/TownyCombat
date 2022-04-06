@@ -26,7 +26,7 @@ A combat plugin for Towny, containing some generally useful combat/battle/pvp fe
       - Full Netherite Set: -28 %
     - Players with full Chainmail or heavier are extra slow at jumping/climbing.
     - This feature increases tactical options on the battlefield.
-    - This feature allows nation to develop practically useful military uniforms.
+    - This feature also allows nation to develop practically useful military uniforms.
       - A full diamond/netherite set is no longer de-rigeur, due to its tactical vulnerability (*ie. slow*).
       - Instead, each nations can develop its own practically useful uniform, with different materials and (with leather) colours. 
 - :bust_in_silhouette: :footprints: **Tactical Invisibilty:** ***(Disabled By Default)***
