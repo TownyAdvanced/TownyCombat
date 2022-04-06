@@ -14,7 +14,7 @@ A combat plugin for Towny, containing some generally useful combat/battle/pvp fe
   - General Walking-Speed Increase:
     - All player walking speeds increase by +10%
   - Weapon-Damage Decrease:
-    - All player weapon damage decreases by -30% 
+    - All player weapon damage decreases by -30%
   - Armour-Encumbrance Walking-Speed Decreases:
     - Items:
       - Shield: -4 %

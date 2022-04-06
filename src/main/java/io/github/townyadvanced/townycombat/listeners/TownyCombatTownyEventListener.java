@@ -58,7 +58,7 @@ public class TownyCombatTownyEventListener implements Listener {
 			}
         }
     }
-    
+
     @EventHandler (ignoreCancelled = true)
     public void on (EntityDamageByEntityEvent event) {
 		if(event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
