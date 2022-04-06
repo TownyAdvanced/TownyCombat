@@ -1,8 +1,6 @@
 package io.github.townyadvanced.townycombat;
 
 import com.palmergames.bukkit.towny.Towny;
-import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.object.TranslationLoader;
 import com.palmergames.bukkit.util.Version;
 import io.github.townyadvanced.townycombat.commands.TownyCombatAdminCommand;
 import io.github.townyadvanced.townycombat.integrations.dynmap.DynmapIntegration;
@@ -12,14 +10,17 @@ import io.github.townyadvanced.townycombat.listeners.TownyCombatTownEventListene
 import io.github.townyadvanced.townycombat.listeners.TownyCombatTownyEventListener;
 import io.github.townyadvanced.townycombat.settings.Settings;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
+import io.github.townyadvanced.townycombat.tasks.JumpReductionTask;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitTask;
 
 public class TownyCombat extends JavaPlugin {
 	
 	private static TownyCombat plugin = null;
 	private static DynmapIntegration dynmapIntegration = null;
-	private final Version requiredTownyVersion = Version.fromString("0.98.0.0");
+	private static final Version requiredTownyVersion = Version.fromString("0.98.0.0");
+	private static BukkitTask jumpReductionTask = null;
 
     @Override
     public void onEnable() {
@@ -36,18 +37,21 @@ public class TownyCombat extends JavaPlugin {
 			if(Towny.getPlugin().isError()) {
 				throw new RuntimeException("Towny is in error. TownyCombat startup halted.");
 			}
+			registerListeners();
 			Settings.loadConfig();
 			Settings.loadLanguages();
-			TownyCombatSettings.resetCachedSettings();
-			registerListeners();
+			TownyCombatSettings.loadReloadCachedSetting();
 			loadIntegrations();
 			registerCommands();
+			startTasks();
 			info("TownyCombat Enabled.");
 			System.out.println("=================================================================================");
 		} catch (Exception e) {
     		severe(e.getMessage());
     		e.printStackTrace();
-		}
+			info("TownyCombat did not start correctly.");
+			endTasks();
+		} 
     }
     
     private boolean townyVersionCheck(String version) {
@@ -96,6 +100,15 @@ public class TownyCombat extends JavaPlugin {
 		pm.registerEvents(new TownyCombatNationEventListener(this), this);
 		pm.registerEvents(new TownyCombatTownyEventListener(this), this);
 	}
+	
+	private void startTasks() {
+		//Run jump reduction task every 0.5 seconds
+        jumpReductionTask = new JumpReductionTask().runTaskTimerAsynchronously(plugin, 400, 10);
+    }
+
+    public void endTasks() {
+        jumpReductionTask.cancel();
+    }
 	
 	private void printSickASCIIArt() {
 		System.out.println("  *   )                             (                    )           )");  
