@@ -33,7 +33,7 @@ A combat plugin for Towny, containing some generally useful combat/battle/pvp fe
     - This feature increases tactical options on the battlefield.
     - This feature also allows nation to develop practically useful military uniforms.
       - Full diamond/netherite sets are no longer de-rigeur, due to their tactical vulnerability (*ie. reduced soldier speed*).
-      - Instead, each nation can develop its own practically useful uniform, containing specific  materials and (with leather) colours. 
+      - Instead, each nation can develop its own practically useful uniform, containing specific materials and (with leather) colours. 
 
 ## Commands:
 - ```/tcm reload```: Reloads config and language settings
