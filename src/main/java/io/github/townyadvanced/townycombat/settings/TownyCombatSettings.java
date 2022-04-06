@@ -215,6 +215,10 @@ public class TownyCombatSettings {
 	}
 
 	public static double getGenericInfantrySpeedAdjustmentPercentage() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_INFANTRY_GENERIC_ADJUSTMENT_PERCENTAGE);		
+		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_INFANTRY_GENERIC_ADJUSTMENT_PERCENTAGE);
+	}
+
+	public static double getDamageModificationAllWeaponsPercentage() {
+		return Settings.getDouble(ConfigNodes.DAMAGE_MODIFICATION_ALL_WEAPONS_PERCENTAGE);
 	}
 }

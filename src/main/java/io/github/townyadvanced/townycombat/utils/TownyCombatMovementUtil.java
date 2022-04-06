@@ -41,7 +41,7 @@ public class TownyCombatMovementUtil {
                 }
             }
         }      
-        infantryArmourSpeedAdjustmentPercentages.put(player, armourSpeedAdjustmentPercentage);        
+        infantryArmourSpeedAdjustmentPercentages.put(player, armourSpeedAdjustmentPercentage);
 
         //Apply all speed adjustments
         double recalculatedSpeed = 
@@ -51,11 +51,9 @@ public class TownyCombatMovementUtil {
         if(recalculatedSpeed < 0)
             recalculatedSpeed = 0;
         else if(recalculatedSpeed > 1)
-            recalculatedSpeed = 1;            
+            recalculatedSpeed = 1;
         //Apply
         player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(recalculatedSpeed);
-        
-        System.out.println("New Speed: " + recalculatedSpeed); 
     }
     
     public static Map<Player, Double> getInfantryArmourSpeedAdjustmentPercentages() {

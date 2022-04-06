@@ -104,7 +104,7 @@ public enum ConfigNodes {
 			"",
 			"############################################################",
 			"# +------------------------------------------------------+ #",
-			"# |           Tactical Invisibility (T.I.V)              | #",
+			"# |           TACTICAL INVISIBILITY (T.I.V)              | #",
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
@@ -161,16 +161,16 @@ public enum ConfigNodes {
 			"",
 			"############################################################",
 			"# +------------------------------------------------------+ #",
-			"# |                 Damage Modification                    | #",
+			"# |                 DAMAGE ADJUSTMENTS                   | #",
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
 	DAMAGE_MODIFICATION_ALL_WEAPONS_PERCENTAGE(
 			"damage_modification.all_weapons_percentage",
-			"75",
+			"-30",
 			"",
-			"# This setting reduces the damage of all weapons (including fists)",
-			"# TIP: If armour slowing is enabled, this setting is important, as players generally will have less armour."),
+			"# This setting adjusts the damage of all weapons (including fists)",
+			"# TIP: If armour slowing is enabled, this setting is important, as players will generally have less armour."),
 	SPEED_ADJUSTMENTS(
 			"speed_adjustments",
 			"",
@@ -272,22 +272,6 @@ public enum ConfigNodes {
 	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_NETHERITE(
 			"speed_adjustments.infantry.armour_slowing.material_modification_percentage.netherite",
 			"700",
-			""),
-	SLOW(
-			"slow",
-			"3",
-			""),
-	SLOW_FALLING(
-			"slow_falling",
-			"252",
-			""),
-	JUMP(
-			"jump",
-			"-4",
-			""),
-	LEVITATION(
-			"levitation",
-			"-4",
 			"");
 
 	private final String Root;
