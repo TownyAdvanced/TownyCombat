@@ -24,25 +24,26 @@ public class JumpReductionTask extends BukkitRunnable {
 
     public void run() {
         double velocityY;        
-        Map<Player, Double> playerArmourSlowPercentages = TownyCombatMovementUtil.getPlayerArmourSlowPercentages();
-        Double playerArmourSlowPercentage;
+        Map<Player, Double> armourSpeedAdjustmentPercentages = TownyCombatMovementUtil.getInfantryArmourSpeedAdjustmentPercentages();
+        Double armourSpeedAdjustmentPercentage;
         for(Player player: Bukkit.getOnlinePlayers()) {
             velocityY = player.getVelocity().getY();  
             if(velocityY != GRAVITY_VELOCITY && velocityY != LADDER_VELOCITY && velocityY > 0) {
-                //Player is jumping or ascending an incline                
                 /*
-                 * If they have heavy armour, apply a temporary slow + jump-stop
-                 * Effects starts at armour sloe 16%, when it is 0.5 seconds
-                 * Every 4% slow after that, adds 0.5 seconds
+                 * Player is jumping or ascending an incline
+                 * 
+                 * If they have heavy armour, apply a temporary effect of: slow + jump-nerf
+                 * Effects starts at 8% armour-slow, with an effect duration of 1 second (20 ticks)
+                 * Every 4% amour-slow after that, adds a effect duration of 0.4 seconds (8 tics)
                  * These numbers are hardcoded for simplicity & to avoid server misconfiguration.
                  */
-                playerArmourSlowPercentage = playerArmourSlowPercentages.get(player);                
-                if(playerArmourSlowPercentage != null && playerArmourSlowPercentage >= 16) {
-                     final int effectDurationTicks = (int)((((playerArmourSlowPercentage / 4) -3) * 10) + 0.5);  
+                armourSpeedAdjustmentPercentage = armourSpeedAdjustmentPercentages.get(player);                
+                if(armourSpeedAdjustmentPercentage != null && armourSpeedAdjustmentPercentage <= -8) {
+                     final int effectDurationTicks = (int)(20  + (((-armourSpeedAdjustmentPercentage / 4) -2) * 8));  
                     Towny.getPlugin().getServer().getScheduler().runTask(Towny.getPlugin(), new Runnable() {
                         public void run() {
-                            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, effectDurationTicks, 2));
-                            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, effectDurationTicks, -2));                            
+                            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, effectDurationTicks, 4));    
+                            player.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, effectDurationTicks, -30));                            
                         }
                     });
                 }

@@ -159,55 +159,55 @@ public class TownyCombatSettings {
 	}
 
 	public static boolean isArmourSlowingEnabled() {
-		return Settings.getBoolean(ConfigNodes.ARMOUR_SLOWING_ENABLED);
+		return Settings.getBoolean(ConfigNodes.SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_ENABLED);
 	}
 	
 	public static double getArmourSlowingBaseItemPercentageShield() {
-		return Settings.getDouble(ConfigNodes.ARMOUR_SLOWING_BASE_ITEM_PERCENTAGE_SHIELD);
+		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_BASE_ITEM_PERCENTAGE_SHIELD);
 	}
 	
 	public static double getArmourSlowingBaseItemPercentageHelmet() {
-		return Settings.getDouble(ConfigNodes.ARMOUR_SLOWING_BASE_ITEM_PERCENTAGE_HELMET);
+		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_BASE_ITEM_PERCENTAGE_HELMET);
 	}
 	
 	public static double getArmourSlowingBaseItemPercentageChestplate() {
-		return Settings.getDouble(ConfigNodes.ARMOUR_SLOWING_BASE_ITEM_PERCENTAGE_CHESTPLATE);
+		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_BASE_ITEM_CHESTPLATE);
 	}
 	
 	public static double getArmourSlowingBaseItemSlowPercentageLeggings() {
-		return Settings.getDouble(ConfigNodes.ARMOUR_SLOWING_BASE_ITEM_PERCENTAGE_LEGGINGS);
+		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_BASE_ITEM_PERCENTAGE_LEGGINGS);
 	}
 	
 	public static double getArmourSlowingBaseItemSlowPercentageBoots() {
-		return Settings.getDouble(ConfigNodes.ARMOUR_SLOWING_BASE_ITEM_PERCENTAGE_BOOTS);
+		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_BASE_ITEM_PERCENTAGE_BOOTS);
 	}
 	
 	public static double getArmourSlowingMaterialModificationPercentageLeather() {
-		return Settings.getDouble(ConfigNodes.ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_LEATHER);
+		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_LEATHER);
 	}
 	
 	public static double getArmourSlowingMaterialModificationPercentageChainmail() {
-		return Settings.getDouble(ConfigNodes.ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_CHAINMAIL);
+		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_CHAINMAIL);
 	}
 
 	public static double getArmourSlowingMaterialModificationPercentageTurtleShell() {
-		return Settings.getDouble(ConfigNodes.ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_TURTLE_SHELL);
+		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_TURTLE_SHELL);
 	}
 
 	public static double getArmourSlowingMaterialModificationPercentageGold() {
-		return Settings.getDouble(ConfigNodes.ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_GOLD);
+		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_GOLD);
 	}		
 
 	public static double getArmourSlowingMaterialModificationPercentageIron() {
-		return Settings.getDouble(ConfigNodes.ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_IRON);
+		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_IRON);
 	}
 	
 	public static double getArmourSlowingMaterialModificationPercentageDiamond() {
-		return Settings.getDouble(ConfigNodes.ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_DIAMOND);
+		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_DIAMOND);
 	}		
 
 	public static double getArmourSlowingMaterialModificationPercentageNetherite() {
-		return Settings.getDouble(ConfigNodes.ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_NETHERITE);
+		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_NETHERITE);
 	}		
 
 	public static Map<Material, Double> getMaterialSlowPercentageMap() {
@@ -215,6 +215,6 @@ public class TownyCombatSettings {
 	}
 
 	public static double getGenericInfantrySpeedAdjustmentPercentage() {
-		return Settings.getDouble(ConfigNodes.cc);		
+		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_INFANTRY_GENERIC_ADJUSTMENT_PERCENTAGE);		
 	}
 }

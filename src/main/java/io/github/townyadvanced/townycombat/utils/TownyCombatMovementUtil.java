@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class TownyCombatMovementUtil {
     private static final double VANILLA_PLAYER_GENERIC_MOVEMENT_SPEED = 0.1;
-    private static Map<Player, Double> playerArmourSlowPercentages = new HashMap<>();
+    private static Map<Player, Double> infantryArmourSpeedAdjustmentPercentages = new HashMap<>();
 
     public static void adjustPlayerSpeed() {
         for(Player player: Bukkit.getOnlinePlayers()) {
@@ -25,11 +25,11 @@ public class TownyCombatMovementUtil {
         }
     }
 
-    private static void adjustPlayerSpeed(Player player) {
-        //Calculate generic infantry adjustment       
-        int genericSpeedAdjustmentPercentage = TownyCombatSettings.getGenericInfantrySpeedAdjustmentPercentage();
+    public static void adjustPlayerSpeed(Player player) {
+        //Calculate generic speed adjustment
+        double genericSpeedAdjustmentPercentage = TownyCombatSettings.getGenericInfantrySpeedAdjustmentPercentage();
 
-        //Calculate armour slowing
+        //Calculate armour speed adjustment
         Map<Material, Double> materialSlowPercentageMap = TownyCombatSettings.getMaterialSlowPercentageMap();
         double armourSpeedAdjustmentPercentage = 0;
         Double slowPercentage;
@@ -41,17 +41,25 @@ public class TownyCombatMovementUtil {
                 }
             }
         }      
-        playerArmourSlowPercentages.put(player, armourSpeedAdjustmentPercentage);
-        
+        infantryArmourSpeedAdjustmentPercentages.put(player, armourSpeedAdjustmentPercentage);        
+
         //Apply all speed adjustments
         double recalculatedSpeed = 
             VANILLA_PLAYER_GENERIC_MOVEMENT_SPEED + (VANILLA_PLAYER_GENERIC_MOVEMENT_SPEED * ((genericSpeedAdjustmentPercentage + armourSpeedAdjustmentPercentage) / 100));
-        recalculatedSpeed = recalculatedSpeed < 0 ? 0 : recalculatedSpeed;
-        player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(recalculatedSpeed); 
+
+        //Sanitize
+        if(recalculatedSpeed < 0)
+            recalculatedSpeed = 0;
+        else if(recalculatedSpeed > 1)
+            recalculatedSpeed = 1;            
+        //Apply
+        player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(recalculatedSpeed);
+        
+        System.out.println("New Speed: " + recalculatedSpeed); 
     }
     
-    public static Map<Player, Double> getPlayerArmourSlowPercentages() {
-        return playerArmourSlowPercentages;
+    public static Map<Player, Double> getInfantryArmourSpeedAdjustmentPercentages() {
+        return infantryArmourSpeedAdjustmentPercentages;
     }
 
 }

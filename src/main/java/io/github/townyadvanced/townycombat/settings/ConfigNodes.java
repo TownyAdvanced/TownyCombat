@@ -36,7 +36,7 @@ public enum ConfigNodes {
 			"",
 			"# If true, then when a player uses /n or /t spawn, their mount (e.g. a horse) comes with them.",
 			"# After the player spawns, the mount takes 5 seconds to arrive.",
-			"# TIP: The setting helps enable cavalry tactics, by making it easier to get horses to Siege-Zones."),
+			"# TIP: The setting helps enable cavalry tactics, by making it easier to bring horses to battles."),
 	BLOCK_GLITCHING_PREVENTION(
 		"block_glitching_prevention",
 			"",
@@ -196,12 +196,12 @@ public enum ConfigNodes {
 			"",
 			"",
 			""),
-	SPEED_ADJUSTMENTS_INFANTRY_GENERIC_VALUE(
+	SPEED_ADJUSTMENTS_INFANTRY_GENERIC_ADJUSTMENT_PERCENTAGE(
 			"speed_adjustments.infantry.generic.adjustment_percentage",
 			"10",
 			"",
-			"# Adjust the movement speed of all players.",
-			"# TIP: This settings adds a little sugar coating to help players accept armour-based speed-slowing."),
+			"# Adjusts the movement speed of all players.",
+			"# TIP: Giving all players a small speed boost helps sugar-coat the concept of armour-based speed-slowing."),
 	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING(
 			"speed_adjustments.infantry.armour_slowing",
 			"",
@@ -212,7 +212,7 @@ public enum ConfigNodes {
 			"true",
 			"",
 			"# If this value is true, armour slowing is enabled.",
-			"# TIP 1: Armour-Slowing significantly boost the tactical options available to players.",
+			"# TIP 1: Armour-Slowing significantly boost the tactical options available to armies.",
 			"# TIP 2: Armour-Slowing allows for the introduction of combat-useful national uniforms.",
 			"# e.g. each nation may design its own national kit, including different materials, and (with leather items) colours."),
 	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_BASE_ITEM_PERCENTAGE(
@@ -228,7 +228,7 @@ public enum ConfigNodes {
 			"speed_adjustments.infantry.armour_slowing.base_item_percentage.helmet",
 			"0.6",
 			""),
-	ARMOUR_SLOWING_BASE_ITEM_PERCENTAGE_CHESTPLATE(
+	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_BASE_ITEM_CHESTPLATE(
 			"speed_adjustments.infantry.armour_slowing.base_item_percentage.chestplate",
 			"1.6",
 			""),
@@ -272,6 +272,22 @@ public enum ConfigNodes {
 	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_NETHERITE(
 			"speed_adjustments.infantry.armour_slowing.material_modification_percentage.netherite",
 			"700",
+			""),
+	SLOW(
+			"slow",
+			"3",
+			""),
+	SLOW_FALLING(
+			"slow_falling",
+			"252",
+			""),
+	JUMP(
+			"jump",
+			"-4",
+			""),
+	LEVITATION(
+			"levitation",
+			"-4",
 			"");
 
 	private final String Root;

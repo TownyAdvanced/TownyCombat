@@ -2,21 +2,19 @@ package io.github.townyadvanced.townycombat.listeners;
 
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
-import io.github.townyadvanced.townycombat.utils.TownyCombatDistanceUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatHorseUtil;
+import io.github.townyadvanced.townycombat.utils.TownyCombatDistanceUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatInventoryUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatExperienceUtil;
-import org.bukkit.attribute.Attributable;
-import org.bukkit.attribute.Attribute;
+import io.github.townyadvanced.townycombat.utils.TownyCombatMovementUtil;
+
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
-import org.bukkit.event.player.PlayerVelocityEvent;
 import org.spigotmc.event.entity.EntityMountEvent;
 
 /**
@@ -53,9 +51,6 @@ public class TownyCombatBukkitEventListener implements Listener {
 
 	@EventHandler (ignoreCancelled = true)
 	public void on (EntityMountEvent event) {
-		//double moveSpeed = ((Attributable)wolf).getAttribute(Attribute..GENERIC_MOVEMENT_SPEED).getValue();
-		//((Attributable)event.getEntity()).getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.001); 
-
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
 		//Prevent mount if the horse is about to be TP'd to owner
@@ -69,8 +64,6 @@ public class TownyCombatBukkitEventListener implements Listener {
 	
 	@EventHandler (ignoreCancelled = true)
 	public void on (PlayerDeathEvent event) {
-		//((Attributable)event.getEntity()).getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.01); 
-
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
 		if(!TownyCombatDistanceUtil.isCloseToATown(event.getEntity(), TownyCombatSettings.getKeepStuffOnDeathTownProximityBlocks()))
@@ -82,25 +75,11 @@ public class TownyCombatBukkitEventListener implements Listener {
 		if(TownyCombatSettings.isKeepExperienceOnDeathEnabled()) {
 			TownyCombatExperienceUtil.keepExperience(event);
 		}
-	}		
-	
+	}
+
 	@EventHandler (ignoreCancelled = true)
-	public void on (EntityDamageEvent event) {
-	
-		if(event.getCause() == EntityDamageEvent.DamageCause.FALL) {
-			System.out.println("Fall damage!");
-		}
+	public void on (PlayerJoinEvent event) {
+		TownyCombatMovementUtil.adjustPlayerSpeed(event.getPlayer());
 	}
 	
-	
-	@EventHandler (ignoreCancelled = true)
-	public void on (PlayerVelocityEvent event) {
-	
-		System.out.println("vel ev " + event.getVelocity().getX());
-		System.out.println("vel ev " + event.getVelocity().getY());
-		System.out.println("vel ev " + event.getVelocity().getZ());
-
-	}
-	
-
 }
