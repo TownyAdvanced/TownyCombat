@@ -1,6 +1,7 @@
 package io.github.townyadvanced.townycombat;
 
 import com.palmergames.bukkit.towny.Towny;
+import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.util.Version;
 import io.github.townyadvanced.townycombat.commands.TownyCombatAdminCommand;
 import io.github.townyadvanced.townycombat.integrations.dynmap.DynmapIntegration;
@@ -102,8 +103,10 @@ public class TownyCombat extends JavaPlugin {
 	}
 	
 	private void startTasks() {
-		//Run jump reduction task every 0.5 seconds
-        jumpReductionTask = new JumpReductionTask().runTaskTimerAsynchronously(plugin, 400, 10);
+		if(TownyCombatSettings.isArmourSlowingEnabled()) {
+			//Run jump reduction task every 0.5 seconds
+        	jumpReductionTask = new JumpReductionTask().runTaskTimerAsynchronously(plugin, 400, 10);
+		}
     }
 
     public void endTasks() {
