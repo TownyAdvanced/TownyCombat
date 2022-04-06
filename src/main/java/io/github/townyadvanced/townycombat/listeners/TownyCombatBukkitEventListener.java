@@ -9,8 +9,10 @@ import io.github.townyadvanced.townycombat.utils.TownyCombatExperienceUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatMovementUtil;
 
 import org.bukkit.entity.AbstractHorse;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -79,7 +81,16 @@ public class TownyCombatBukkitEventListener implements Listener {
 
 	@EventHandler (ignoreCancelled = true)
 	public void on (PlayerJoinEvent event) {
+		if (!TownyCombatSettings.isTownyCombatEnabled())
+			return;
 		TownyCombatMovementUtil.adjustPlayerSpeed(event.getPlayer());
 	}
-	
+
+    @EventHandler (ignoreCancelled = true)
+    public void on (EntityDamageByEntityEvent event) {
+		if(event.getDamager() instanceof Player) {
+			event.setDamage(event.getDamage() + (event.getDamage() * (TownyCombatSettings.getDamageModificationAllWeaponsPercentage() / 100)));
+		}
+	}
+
 }

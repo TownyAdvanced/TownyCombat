@@ -59,10 +59,4 @@ public class TownyCombatTownyEventListener implements Listener {
         }
     }
 
-    @EventHandler (ignoreCancelled = true)
-    public void on (EntityDamageByEntityEvent event) {
-		if(event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-			event.setDamage(event.getDamage() + (event.getDamage() * (TownyCombatSettings.getDamageModificationAllWeaponsPercentage() / 100)));
-		}
-	}
 }
