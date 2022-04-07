@@ -211,10 +211,10 @@ public enum ConfigNodes {
 			"speed_adjustments.infantry.armour_slowing.enabled",
 			"true",
 			"",
-			"# If this value is true, armour slowing is enabled.",
-			"# TIP 1: Armour-Slowing significantly boost the tactical options available to armies.",
-			"# TIP 2: Armour-Slowing allows for the introduction of combat-useful national uniforms.",
-			"# e.g. each nation may design its own national kit, including different materials, and (with leather items) colours."),
+			"# If this value is true, infantry armour slowing is enabled.",
+			"# TIP 1: Armour-Slowing significantly boosts the tactical options available to armies.",
+			"# TIP 2: Armour-Slowing allows for the development of combat-useful uniforms.",
+			"# e.g. each nation may design national uniforms for different soldier types, including different materials, and (with leather items) colours."),
 	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_BASE_ITEM_PERCENTAGE(
 			"speed_adjustments.infantry.armour_slowing.base_item_percentage",
 			"",
@@ -272,7 +272,40 @@ public enum ConfigNodes {
 	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_NETHERITE(
 			"speed_adjustments.infantry.armour_slowing.material_modification_percentage.netherite",
 			"700",
-			"");
+			""),
+	SPEED_ADJUSTMENTS_CAVALRY(
+			"speed_adjustments.cavalry",
+			"",
+			"",
+			"",
+			"# +------------------------------------------------------+ #",
+			"# |                      CAVALRY                         | #",
+			"# +------------------------------------------------------+ #",
+			""),
+	SPEED_ADJUSTMENTS_CAVALRY_GENERIC(
+			"speed_adjustments.cavalry.generic",
+			"",
+			"",
+			""),
+	SPEED_ADJUSTMENTS_CAVALRY_GENERIC_ADJUSTMENT_PERCENTAGE(
+			"speed_adjustments.cavalry.generic.adjustment_percentage",
+			"10",
+			"",
+			"# Adjusts the movement speed of all mounted horses.",
+			"# TIP: Giving all mounted horses a small speed boost helps sugar-coat the concept of armour-based speed-slowing."),
+	SPEED_ADJUSTMENTS_CAVALRY_ARMOUR_SLOWING(
+			"speed_adjustments.cavalry.armour_slowing",
+			"",
+			"",
+			""),
+	SPEED_ADJUSTMENTS_CAVALRY_ARMOUR_SLOWING_ENABLED(
+			"speed_adjustments.cavalry.armour_slowing.enabled",
+			"true",
+			"",
+			"# If this value is true, cavalry armour slowing is enabled.",
+			"# TIP 1: Armour-Slowing significantly boosts the tactical options available to armies.",
+			"# TIP 2: Armour-Slowing allows for the development of combat-useful uniforms.",
+			"# e.g. each nation may design national uniforms for different soldier types, including different materials, and (with leather items) colours.");
 
 	private final String Root;
 	private final String Default;
