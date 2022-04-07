@@ -25,19 +25,17 @@ public class TownyCombatMovementUtil {
     private static final double VANILLA_PLAYER_GENERIC_MOVEMENT_SPEED = 0.1;
     private static Map<Player, Double> playerEncumbrancePercentageMap = new HashMap<>();  //Encumbrance = Walk-speed-slow
 
-    public static void adjustPlayerSpeed() {
+    public static void adjustAllPlayerAndMountSpeeds() {
         for(Player player: Bukkit.getOnlinePlayers()) {
-            adjustPlayerSpeed(player);
+            adjustPlayerAndMountSpeeds(player);
         }
     }
 
-    public static void adjustPlayerSpeed(Player player) {
-        //Apply adjustments to player walk
+    public static void adjustPlayerAndMountSpeeds(Player player) {
+        //Apply adjustments to player walk speed
         adjustPlayerWalkSpeed(player);
-        //Apply adjustments to mount walk
-        if(player.isInsideVehicle() && player.getVehicle() instanceof AbstractHorse) {
-            adjustMountWalkSpeed(player);
-        }
+        //Apply adjustments to mount walk speed
+        adjustMountWalkSpeed(player);
     }
 
     private static void adjustPlayerWalkSpeed(Player player) {
@@ -71,52 +69,63 @@ public class TownyCombatMovementUtil {
     }
     
     private static void adjustMountWalkSpeed(Player player) {
+        if(!player.isInsideVehicle() || !(player.getVehicle() instanceof AbstractHorse))
+            return;
         AbstractHorse mount = (AbstractHorse)player.getVehicle();
         AnimalTamer owner = mount.getOwner();
-        if(owner != null) {
-            //Get Base Walk Speed
-            Double baseWalkSpeed;
-            UUID ownerUUID = mount.getOwner().getUniqueId();
-            Resident ownerResident = TownyAPI.getInstance().getResident(ownerUUID);
-            if(ownerResident == null) {
-                //Owner has left server. Horse is sad and goes slow.
-                baseWalkSpeed = 0.1;
-            } else {
-                baseWalkSpeed = TownyCombatResidentMetaDataController.getTrainedHorseBaseSpeed(ownerResident, mount.getUniqueId());
-                if(baseWalkSpeed == null) {
-                    //Register base walk speed
-                    baseWalkSpeed = TownyCombatResidentMetaDataController.registerTrainedHorse(ownerResident, mount);
-                }
+        if(owner == null) 
+            return;
+        
+        //Get Base Walk Speed
+        Double baseWalkSpeed;
+        UUID ownerUUID = mount.getOwner().getUniqueId();
+        Resident ownerResident = TownyAPI.getInstance().getResident(ownerUUID);
+        if(ownerResident == null) {
+            //Owner has left server. Horse is sad and goes slow.
+            baseWalkSpeed = 0.1;
+        } else {
+            baseWalkSpeed = TownyCombatResidentMetaDataController.getTrainedHorseBaseSpeed(ownerResident, mount.getUniqueId());
+            if(baseWalkSpeed == null) {
+                //Register base walk speed
+                baseWalkSpeed = TownyCombatResidentMetaDataController.registerTrainedHorse(ownerResident, mount);
             }
+        }
 
-            //Calculate generic adjustment
-            double genericSpeedAdjustmentPercentage = TownyCombatSettings.getGenericCavalrySpeedAdjustmentPercentage();
+        //Calculate generic adjustment
+        double genericSpeedAdjustmentPercentage = TownyCombatSettings.getGenericCavalrySpeedAdjustmentPercentage();
+    
+        //Calculate encumbrance
+        //1. Encumbrance due to weight/bulk of horses own armour
+        double totalEncumbrancePercentage; 
+        
+        for(ItemStack x: mount.getInventory().getContents()) {
+            System.out.println("Horse Item: " + x.getType());    
+        }
+        
+            System.out.println("Horse Item 0: " + mount.getInventory().getItem(0));    
+            System.out.println("Horse Item 1: " + mount.getInventory().getItem(1));    
             
-            //Calculate encumbrance
-            //1. Encumbrance due to weight/bulk of horses own armour
-            double totalEncumbrancePercentage; 
-            ItemStack armour = mount.getEquipment().getChestplate();
-            if(armour == null)
-                totalEncumbrancePercentage = 0;
-            else
-                totalEncumbrancePercentage = TownyCombatSettings.getCavalryMaterialEncumbrancePercentageMap().get(armour.getType());
-            //2. Encumbrance due to the encumbrance of rider
-            Double riderEncumbrance = playerEncumbrancePercentageMap.get(player);
-            if(riderEncumbrance != null) {
-                totalEncumbrancePercentage += riderEncumbrance / 50;
-            }
-
-            //Calculate total speed adjustment
-            double recalculatedSpeed = 
-                baseWalkSpeed + (baseWalkSpeed * ((genericSpeedAdjustmentPercentage + totalEncumbrancePercentage) / 100));
-            //Sanitize
-            if(recalculatedSpeed < 0)
-                recalculatedSpeed = 0;
-            else if(recalculatedSpeed > 1)
-                recalculatedSpeed = 1;
-            //Apply
-            mount.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(recalculatedSpeed);
-        } 
+        ItemStack horseArmour = mount.getInventory().getItem(1);
+        if(horseArmour == null)
+            totalEncumbrancePercentage = 0;
+        else
+            totalEncumbrancePercentage = TownyCombatSettings.getCavalryMaterialEncumbrancePercentageMap().get(horseArmour.getType());
+        //2. Encumbrance due to the encumbrance of rider
+        Double riderEncumbrance = playerEncumbrancePercentageMap.get(player);
+        if(riderEncumbrance != null) {
+            totalEncumbrancePercentage += riderEncumbrance * (TownyCombatSettings.getEncumbranceRiderContributionPercentage() / 100);
+        }
+    
+        //Calculate total speed adjustment
+        double recalculatedSpeed = 
+            baseWalkSpeed + (baseWalkSpeed * ((genericSpeedAdjustmentPercentage + totalEncumbrancePercentage) / 100));
+        //Sanitize
+        if(recalculatedSpeed < 0)
+            recalculatedSpeed = 0;
+        else if(recalculatedSpeed > 1)
+            recalculatedSpeed = 1;
+        //Apply
+        mount.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(recalculatedSpeed);
     }
     
     public static Map<Player, Double> getPlayerEncumbrancePercentageMap() {
