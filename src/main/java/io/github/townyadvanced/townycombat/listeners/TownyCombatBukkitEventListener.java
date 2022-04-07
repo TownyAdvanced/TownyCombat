@@ -2,14 +2,20 @@ package io.github.townyadvanced.townycombat.listeners;
 
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
-import io.github.townyadvanced.townycombat.utils.TownyCombatDistanceUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatHorseUtil;
+import io.github.townyadvanced.townycombat.utils.TownyCombatDistanceUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatInventoryUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatExperienceUtil;
+import io.github.townyadvanced.townycombat.utils.TownyCombatMovementUtil;
+
 import org.bukkit.entity.AbstractHorse;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.spigotmc.event.entity.EntityMountEvent;
@@ -55,6 +61,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 				&& event.getMount() instanceof AbstractHorse
 				&& TownyCombatHorseUtil.isHorseTeleportScheduled((AbstractHorse)event.getMount())) {
 			event.setCancelled(true);
+			event.getEntity().getUniqueId();
 		}
 	}
 	
@@ -71,5 +78,21 @@ public class TownyCombatBukkitEventListener implements Listener {
 		if(TownyCombatSettings.isKeepExperienceOnDeathEnabled()) {
 			TownyCombatExperienceUtil.keepExperience(event);
 		}
-	}		
+	}
+
+	@EventHandler (ignoreCancelled = true)
+	public void on (PlayerJoinEvent event) {
+		if (!TownyCombatSettings.isTownyCombatEnabled())
+			return;
+		TownyCombatMovementUtil.adjustPlayerSpeed(event.getPlayer());
+	}
+
+    @EventHandler (ignoreCancelled = true)
+    public void on (EntityDamageByEntityEvent event) {
+		if(event.getDamager() instanceof Player
+			|| (event.getDamager() instanceof Projectile
+				&& ((Projectile)event.getDamager()).getShooter() instanceof Player)) {
+			event.setDamage(event.getDamage() + (event.getDamage() * (TownyCombatSettings.getDamageModificationAllWeaponsPercentage() / 100)));
+		}
+	}
 }

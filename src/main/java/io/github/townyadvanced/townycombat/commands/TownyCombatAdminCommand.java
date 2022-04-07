@@ -74,7 +74,7 @@ public class TownyCombatAdminCommand implements TabExecutor {
 		try {
 			Settings.loadConfig();
 			Settings.loadLanguages();
-			TownyCombatSettings.resetCachedSettings();
+			TownyCombatSettings.loadReloadCachedSetting();
 			Messaging.sendMsg(sender, Translatable.of("config_and_lang_file_reloaded_successfully"));			
 		} catch (Exception e) {
 			Messaging.sendErrorMsg(sender, Translatable.of("config_and_lang_file_could_not_be_reloaded"));

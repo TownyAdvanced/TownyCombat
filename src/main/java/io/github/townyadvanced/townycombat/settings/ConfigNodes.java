@@ -36,7 +36,7 @@ public enum ConfigNodes {
 			"",
 			"# If true, then when a player uses /n or /t spawn, their mount (e.g. a horse) comes with them.",
 			"# After the player spawns, the mount takes 5 seconds to arrive.",
-			"# TIP: The setting helps enable cavalry tactics, by making it easier to get horses to Siege-Zones."),
+			"# TIP: The setting helps enable cavalry tactics, by making it easier to bring horses to battles."),
 	BLOCK_GLITCHING_PREVENTION(
 		"block_glitching_prevention",
 			"",
@@ -104,7 +104,7 @@ public enum ConfigNodes {
 			"",
 			"############################################################",
 			"# +------------------------------------------------------+ #",
-			"# |           Tactical Invisibility (T.I.V)              | #",
+			"# |           TACTICAL INVISIBILITY (T.I.V)              | #",
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
@@ -145,7 +145,7 @@ public enum ConfigNodes {
 			"# This list specifies the item combinations which allow players to map-hide.",
 			"# Each list entry is in the form of <off-hand>|<main-hand>.",
 			"# ",
-			"# To specify that both items are required - e.g. 'compass|painting'" + 
+			"# To specify that both items are required - e.g. 'compass|painting'", 
 			"# To specify that only one item is required - e.g. 'compass|any'",
 			"# To specify that one hand must be empty - e.g. 'compass|empty'",
 			"# ",
@@ -153,7 +153,126 @@ public enum ConfigNodes {
 			"# Example 1:  An entry with 'shield|diamond_sword' grants the feature to soldiers.",
 			"# Example 2:  An entry with 'compass|diamond_sword' grants the feature to scouts/explorers.",
 			"# Example 3:  An entry with 'compass|air' grants the feature to very peaceful explorers.",
-			"# Example 4:  An entry with 'compass|any' grants the feature to many players including builders/miners/lumberjacks.");
+			"# Example 4:  An entry with 'compass|any' grants the feature to many players including builders/miners/lumberjacks."),
+	DAMAGE_ADJUSTMENTS(
+		"damage_adjustments",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |                 DAMAGE ADJUSTMENTS                   | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
+	DAMAGE_ADJUSTMENTS_ALL_WEAPONS_PERCENTAGE(
+			"damage_adjustments.all_weapons_percentage",
+			"-30",
+			"",
+			"# This setting adjusts the damage of all weapons (including fists)",
+			"# TIP: If armour slowing is enabled, this setting is important, as players will generally have less armour."),
+	SPEED_ADJUSTMENTS(
+			"speed_adjustments",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |                   SPEED ADJUSTMENTS                    | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
+	SPEED_ADJUSTMENTS_INFANTRY(
+			"speed_adjustments.infantry",
+			"",
+			"",
+			"",
+			"# +------------------------------------------------------+ #",
+			"# |                      INFANTRY                        | #",
+			"# +------------------------------------------------------+ #",
+			""),
+	SPEED_ADJUSTMENTS_INFANTRY_GENERIC(
+			"speed_adjustments.infantry.generic",
+			"",
+			"",
+			""),
+	SPEED_ADJUSTMENTS_INFANTRY_GENERIC_ADJUSTMENT_PERCENTAGE(
+			"speed_adjustments.infantry.generic.adjustment_percentage",
+			"10",
+			"",
+			"# Adjusts the movement speed of all players.",
+			"# TIP: Giving all players a small speed boost helps sugar-coat the concept of armour-based speed-slowing."),
+	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING(
+			"speed_adjustments.infantry.armour_slowing",
+			"",
+			"",
+			""),
+	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_ENABLED(
+			"speed_adjustments.infantry.armour_slowing.enabled",
+			"true",
+			"",
+			"# If this value is true, armour slowing is enabled.",
+			"# TIP 1: Armour-Slowing significantly boost the tactical options available to armies.",
+			"# TIP 2: Armour-Slowing allows for the introduction of combat-useful national uniforms.",
+			"# e.g. each nation may design its own national kit, including different materials, and (with leather items) colours."),
+	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_BASE_ITEM_PERCENTAGE(
+			"speed_adjustments.infantry.armour_slowing.base_item_percentage",
+			"",
+			"",
+			"# The base slow percentage for each type of armour item."),
+	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_BASE_ITEM_PERCENTAGE_SHIELD(
+			"speed_adjustments.infantry.armour_slowing.base_item_percentage.shield",
+			"4",
+			""),
+	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_BASE_ITEM_PERCENTAGE_HELMET(
+			"speed_adjustments.infantry.armour_slowing.base_item_percentage.helmet",
+			"0.6",
+			""),
+	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_BASE_ITEM_CHESTPLATE(
+			"speed_adjustments.infantry.armour_slowing.base_item_percentage.chestplate",
+			"1.6",
+			""),
+	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_BASE_ITEM_PERCENTAGE_LEGGINGS(
+			"speed_adjustments.infantry.armour_slowing.base_item_percentage.leggings",
+			"1.2",
+			""),
+	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_BASE_ITEM_PERCENTAGE_BOOTS(
+			"speed_adjustments.infantry.armour_slowing.base_item_percentage.boots",
+			"0.6",
+			""),
+	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE(
+			"speed_adjustments.infantry.armour_slowing.material_modification_percentage",
+			"",
+			"",
+			"# The modification to slowing, of each material."),
+	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_LEATHER(
+			"speed_adjustments.infantry.armour_slowing.material_modification_percentage.leather",
+			"100",
+			""),
+	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_CHAINMAIL(
+			"speed_adjustments.infantry.armour_slowing.material_modification_percentage.chainmail",
+			"200",
+			""),
+	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_TURTLE_SHELL(
+			"speed_adjustments.infantry.armour_slowing.material_modification_percentage.turtle_shell",
+			"300",
+			""),
+	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_GOLD(
+			"speed_adjustments.infantry.armour_slowing.material_modification_percentage.gold",
+			"400",
+			""),
+	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_IRON(
+			"speed_adjustments.infantry.armour_slowing.material_modification_percentage.iron",
+			"500",
+			""),
+	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_DIAMOND(
+			"speed_adjustments.infantry.armour_slowing.material_modification_percentage.diamond",
+			"600",
+			""),
+	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_NETHERITE(
+			"speed_adjustments.infantry.armour_slowing.material_modification_percentage.netherite",
+			"700",
+			"");
 
 	private final String Root;
 	private final String Default;
