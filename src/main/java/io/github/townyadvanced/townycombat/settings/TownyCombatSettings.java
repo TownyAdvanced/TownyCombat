@@ -17,7 +17,9 @@ import java.util.Map;
 public class TownyCombatSettings {
 
 	private static List<HeldItemsCombination> tacticalInvisibilityItems = new ArrayList<>();
-    private static Map<Material, Double> materialSlowPercentageMap = new HashMap<>();
+    private static Map<Material, Double> infantryMaterialEncumbrancePercentageMap = new HashMap<>();
+    private static Map<Material, Double> cavalryMaterialEncumbrancePercentageMap = new HashMap<>();
+    
 
 	public static void loadReloadCachedSetting() {
 		//Load/reload tactical invisibility items
@@ -64,42 +66,49 @@ public class TownyCombatSettings {
 			e.printStackTrace();
 		}
 
-		//Load/reload material slow items
-		materialSlowPercentageMap.clear();
+		//Load/reload encumbrance values
+		infantryMaterialEncumbrancePercentageMap.clear();
 
-        materialSlowPercentageMap.put(Material.SHIELD, TownyCombatSettings.getArmourSlowingBaseItemPercentageShield()); 
+        infantryMaterialEncumbrancePercentageMap.put(Material.SHIELD, TownyCombatSettings.getArmourSlowingBaseItemPercentageShield()); 
 
-        materialSlowPercentageMap.put(Material.LEATHER_HELMET, TownyCombatSettings.getArmourSlowingBaseItemPercentageHelmet() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageLeather() / 100); 
-        materialSlowPercentageMap.put(Material.LEATHER_CHESTPLATE, TownyCombatSettings.getArmourSlowingBaseItemPercentageChestplate() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageLeather() / 100); 
-        materialSlowPercentageMap.put(Material.LEATHER_LEGGINGS, TownyCombatSettings.getArmourSlowingBaseItemSlowPercentageLeggings() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageLeather() / 100); 
-        materialSlowPercentageMap.put(Material.LEATHER_BOOTS, TownyCombatSettings.getArmourSlowingBaseItemSlowPercentageBoots() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageLeather() / 100); 
+        infantryMaterialEncumbrancePercentageMap.put(Material.LEATHER_HELMET, TownyCombatSettings.getArmourSlowingBaseItemPercentageHelmet() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageLeather() / 100); 
+        infantryMaterialEncumbrancePercentageMap.put(Material.LEATHER_CHESTPLATE, TownyCombatSettings.getArmourSlowingBaseItemPercentageChestplate() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageLeather() / 100); 
+        infantryMaterialEncumbrancePercentageMap.put(Material.LEATHER_LEGGINGS, TownyCombatSettings.getArmourSlowingBaseItemSlowPercentageLeggings() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageLeather() / 100); 
+        infantryMaterialEncumbrancePercentageMap.put(Material.LEATHER_BOOTS, TownyCombatSettings.getArmourSlowingBaseItemSlowPercentageBoots() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageLeather() / 100); 
 
-        materialSlowPercentageMap.put(Material.CHAINMAIL_HELMET, TownyCombatSettings.getArmourSlowingBaseItemPercentageHelmet() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageChainmail() / 100); 
-        materialSlowPercentageMap.put(Material.CHAINMAIL_CHESTPLATE, TownyCombatSettings.getArmourSlowingBaseItemPercentageChestplate() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageChainmail() / 100); 
-        materialSlowPercentageMap.put(Material.CHAINMAIL_LEGGINGS, TownyCombatSettings.getArmourSlowingBaseItemSlowPercentageLeggings() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageChainmail() / 100); 
-        materialSlowPercentageMap.put(Material.CHAINMAIL_BOOTS, TownyCombatSettings.getArmourSlowingBaseItemSlowPercentageBoots() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageChainmail() / 100); 
+        infantryMaterialEncumbrancePercentageMap.put(Material.CHAINMAIL_HELMET, TownyCombatSettings.getArmourSlowingBaseItemPercentageHelmet() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageChainmail() / 100); 
+        infantryMaterialEncumbrancePercentageMap.put(Material.CHAINMAIL_CHESTPLATE, TownyCombatSettings.getArmourSlowingBaseItemPercentageChestplate() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageChainmail() / 100); 
+        infantryMaterialEncumbrancePercentageMap.put(Material.CHAINMAIL_LEGGINGS, TownyCombatSettings.getArmourSlowingBaseItemSlowPercentageLeggings() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageChainmail() / 100); 
+        infantryMaterialEncumbrancePercentageMap.put(Material.CHAINMAIL_BOOTS, TownyCombatSettings.getArmourSlowingBaseItemSlowPercentageBoots() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageChainmail() / 100); 
 
-        materialSlowPercentageMap.put(Material.TURTLE_HELMET, TownyCombatSettings.getArmourSlowingBaseItemPercentageHelmet() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageTurtleShell() / 100); 
+        infantryMaterialEncumbrancePercentageMap.put(Material.TURTLE_HELMET, TownyCombatSettings.getArmourSlowingBaseItemPercentageHelmet() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageTurtleShell() / 100); 
 
-        materialSlowPercentageMap.put(Material.GOLDEN_HELMET, TownyCombatSettings.getArmourSlowingBaseItemPercentageHelmet() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageGold() / 100); 
-        materialSlowPercentageMap.put(Material.GOLDEN_CHESTPLATE, TownyCombatSettings.getArmourSlowingBaseItemPercentageChestplate() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageGold() / 100); 
-        materialSlowPercentageMap.put(Material.GOLDEN_LEGGINGS, TownyCombatSettings.getArmourSlowingBaseItemSlowPercentageLeggings() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageGold() / 100); 
-        materialSlowPercentageMap.put(Material.GOLDEN_BOOTS, TownyCombatSettings.getArmourSlowingBaseItemSlowPercentageBoots() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageGold() / 100); 
+        infantryMaterialEncumbrancePercentageMap.put(Material.GOLDEN_HELMET, TownyCombatSettings.getArmourSlowingBaseItemPercentageHelmet() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageGold() / 100); 
+        infantryMaterialEncumbrancePercentageMap.put(Material.GOLDEN_CHESTPLATE, TownyCombatSettings.getArmourSlowingBaseItemPercentageChestplate() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageGold() / 100); 
+        infantryMaterialEncumbrancePercentageMap.put(Material.GOLDEN_LEGGINGS, TownyCombatSettings.getArmourSlowingBaseItemSlowPercentageLeggings() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageGold() / 100); 
+        infantryMaterialEncumbrancePercentageMap.put(Material.GOLDEN_BOOTS, TownyCombatSettings.getArmourSlowingBaseItemSlowPercentageBoots() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageGold() / 100); 
 
-        materialSlowPercentageMap.put(Material.IRON_HELMET, TownyCombatSettings.getArmourSlowingBaseItemPercentageHelmet() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageIron() / 100); 
-        materialSlowPercentageMap.put(Material.IRON_CHESTPLATE, TownyCombatSettings.getArmourSlowingBaseItemPercentageChestplate() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageIron() / 100); 
-        materialSlowPercentageMap.put(Material.IRON_LEGGINGS, TownyCombatSettings.getArmourSlowingBaseItemSlowPercentageLeggings() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageIron() / 100); 
-        materialSlowPercentageMap.put(Material.IRON_BOOTS, TownyCombatSettings.getArmourSlowingBaseItemSlowPercentageBoots() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageIron() / 100); 
+        infantryMaterialEncumbrancePercentageMap.put(Material.IRON_HELMET, TownyCombatSettings.getArmourSlowingBaseItemPercentageHelmet() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageIron() / 100); 
+        infantryMaterialEncumbrancePercentageMap.put(Material.IRON_CHESTPLATE, TownyCombatSettings.getArmourSlowingBaseItemPercentageChestplate() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageIron() / 100); 
+        infantryMaterialEncumbrancePercentageMap.put(Material.IRON_LEGGINGS, TownyCombatSettings.getArmourSlowingBaseItemSlowPercentageLeggings() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageIron() / 100); 
+        infantryMaterialEncumbrancePercentageMap.put(Material.IRON_BOOTS, TownyCombatSettings.getArmourSlowingBaseItemSlowPercentageBoots() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageIron() / 100); 
 
-        materialSlowPercentageMap.put(Material.DIAMOND_HELMET, TownyCombatSettings.getArmourSlowingBaseItemPercentageHelmet() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageDiamond() / 100); 
-        materialSlowPercentageMap.put(Material.DIAMOND_CHESTPLATE, TownyCombatSettings.getArmourSlowingBaseItemPercentageChestplate() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageDiamond() / 100); 
-        materialSlowPercentageMap.put(Material.DIAMOND_LEGGINGS, TownyCombatSettings.getArmourSlowingBaseItemSlowPercentageLeggings() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageDiamond() / 100); 
-        materialSlowPercentageMap.put(Material.DIAMOND_BOOTS, TownyCombatSettings.getArmourSlowingBaseItemSlowPercentageBoots() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageDiamond() / 100); 
+        infantryMaterialEncumbrancePercentageMap.put(Material.DIAMOND_HELMET, TownyCombatSettings.getArmourSlowingBaseItemPercentageHelmet() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageDiamond() / 100); 
+        infantryMaterialEncumbrancePercentageMap.put(Material.DIAMOND_CHESTPLATE, TownyCombatSettings.getArmourSlowingBaseItemPercentageChestplate() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageDiamond() / 100); 
+        infantryMaterialEncumbrancePercentageMap.put(Material.DIAMOND_LEGGINGS, TownyCombatSettings.getArmourSlowingBaseItemSlowPercentageLeggings() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageDiamond() / 100); 
+        infantryMaterialEncumbrancePercentageMap.put(Material.DIAMOND_BOOTS, TownyCombatSettings.getArmourSlowingBaseItemSlowPercentageBoots() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageDiamond() / 100); 
 
-        materialSlowPercentageMap.put(Material.NETHERITE_HELMET, TownyCombatSettings.getArmourSlowingBaseItemPercentageHelmet() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageNetherite() / 100); 
-        materialSlowPercentageMap.put(Material.NETHERITE_CHESTPLATE, TownyCombatSettings.getArmourSlowingBaseItemPercentageChestplate() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageNetherite() / 100); 
-        materialSlowPercentageMap.put(Material.NETHERITE_LEGGINGS, TownyCombatSettings.getArmourSlowingBaseItemSlowPercentageLeggings() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageNetherite() / 100); 
-        materialSlowPercentageMap.put(Material.NETHERITE_BOOTS, TownyCombatSettings.getArmourSlowingBaseItemSlowPercentageBoots() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageNetherite() / 100); 		
+        infantryMaterialEncumbrancePercentageMap.put(Material.NETHERITE_HELMET, TownyCombatSettings.getArmourSlowingBaseItemPercentageHelmet() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageNetherite() / 100); 
+        infantryMaterialEncumbrancePercentageMap.put(Material.NETHERITE_CHESTPLATE, TownyCombatSettings.getArmourSlowingBaseItemPercentageChestplate() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageNetherite() / 100); 
+        infantryMaterialEncumbrancePercentageMap.put(Material.NETHERITE_LEGGINGS, TownyCombatSettings.getArmourSlowingBaseItemSlowPercentageLeggings() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageNetherite() / 100); 
+        infantryMaterialEncumbrancePercentageMap.put(Material.NETHERITE_BOOTS, TownyCombatSettings.getArmourSlowingBaseItemSlowPercentageBoots() * TownyCombatSettings.getArmourSlowingMaterialModificationPercentageNetherite() / 100); 		
+
+		//Load/reload encumbrance values
+		cavalryMaterialEncumbrancePercentageMap.clear();
+		cavalryMaterialEncumbrancePercentageMap.put(Material.LEATHER_HORSE_ARMOR, 10d);
+		cavalryMaterialEncumbrancePercentageMap.put(Material.GOLDEN_HORSE_ARMOR, 10d);
+		cavalryMaterialEncumbrancePercentageMap.put(Material.IRON_HORSE_ARMOR, 10d);
+		cavalryMaterialEncumbrancePercentageMap.put(Material.DIAMOND_HORSE_ARMOR, 10d);
 	}
 
 	public static boolean isTownyCombatEnabled() {
@@ -158,7 +167,7 @@ public class TownyCombatSettings {
 		return tacticalInvisibilityItems;
 	}
 
-	public static boolean isArmourSlowingEnabled() {
+	public static boolean isInfantryArmourSlowingEnabled() {
 		return Settings.getBoolean(ConfigNodes.SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_ENABLED);
 	}
 	
@@ -210,8 +219,12 @@ public class TownyCombatSettings {
 		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_NETHERITE);
 	}		
 
-	public static Map<Material, Double> getMaterialSlowPercentageMap() {
-		return materialSlowPercentageMap;
+	public static Map<Material, Double> getInfantryMaterialEncumbrancePercentageMap() {
+		return infantryMaterialEncumbrancePercentageMap;
+	}
+
+	public static Map<Material, Double> getCavalryMaterialEncumbrancePercentageMap() {
+		return cavalryMaterialEncumbrancePercentageMap;
 	}
 
 	public static double getGenericInfantrySpeedAdjustmentPercentage() {
@@ -221,4 +234,13 @@ public class TownyCombatSettings {
 	public static double getDamageModificationAllWeaponsPercentage() {
 		return Settings.getDouble(ConfigNodes.DAMAGE_ADJUSTMENTS_ALL_WEAPONS_PERCENTAGE);
 	}
+
+	public static boolean isCavalryArmourSlowingEnabled() {
+		return Settings.getBoolean(ConfigNodes.SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_ENABLED);
+	}
+
+	public static double getGenericCavalrySpeedAdjustmentPercentage() {
+		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_INFANTRY_GENERIC_ADJUSTMENT_PERCENTAGE);
+	}
+
 }
