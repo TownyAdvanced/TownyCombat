@@ -1,6 +1,6 @@
 package io.github.townyadvanced.townycombat.tasks;
 
-import com.palmergames.bukkit.towny.Towny;
+import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.utils.TownyCombatMovementUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -39,15 +39,16 @@ public class JumpReductionTask extends BukkitRunnable {
                  */
                 armourSpeedAdjustmentPercentage = armourSpeedAdjustmentPercentages.get(player);
                 if(armourSpeedAdjustmentPercentage != null && armourSpeedAdjustmentPercentage <= -8) {
-                     final int effectDurationTicks = (int)(20  + (((-armourSpeedAdjustmentPercentage / 4) -2) * 8));
-                    Towny.getPlugin().getServer().getScheduler().runTask(Towny.getPlugin(), new Runnable() {
-                        public void run() {
-                            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, effectDurationTicks, 4, false, false, true));
-                            player.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, effectDurationTicks, -30, false, false, true));
-                        }
-                    });
-                }
+                    final int effectDurationTicks = (int)(20  + (((-armourSpeedAdjustmentPercentage / 4) -2) * 8));
+                    TownyCombat.getPlugin().getServer().getScheduler().runTask(TownyCombat.getPlugin(), ()-> applyEffects(player, effectDurationTicks));
+               }
             }
         }
     }
+i
+    private void applyEffects(Player player, int effectDurationTicks) {
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, effectDurationTicks, 4, false, false, true));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, effectDurationTicks, -30, false, false, true));
+    }
+
 }
