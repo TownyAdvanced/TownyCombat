@@ -117,7 +117,7 @@ public class TownyCombatMovementUtil {
         if(horseArmour == null)
             totalEncumbrancePercentage = 0;
         else
-            totalEncumbrancePercentage = TownyCombatSettings.getCavalryMaterialEncumbrancePercentageMap().get(horseArmour.getType());
+            totalEncumbrancePercentage = TownyCombatSettings.getMaterialEncumbrancePercentageMap().get(horseArmour.getType());
         //2. Encumbrance due to the encumbrance of rider
         Double riderEncumbrance = playerEncumbrancePercentageMap.get(player);
         if(riderEncumbrance != null) {
