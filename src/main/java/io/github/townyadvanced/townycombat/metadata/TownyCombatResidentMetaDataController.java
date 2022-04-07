@@ -2,9 +2,6 @@ package io.github.townyadvanced.townycombat.metadata;
 
 
 import com.palmergames.bukkit.towny.object.Resident;
-import com.palmergames.bukkit.towny.object.metadata.BooleanDataField;
-import com.palmergames.bukkit.towny.object.metadata.CustomDataField;
-import com.palmergames.bukkit.towny.object.metadata.IntegerDataField;
 import com.palmergames.bukkit.towny.object.metadata.StringDataField;
 import com.palmergames.bukkit.towny.utils.MetaDataUtil;
 import org.bukkit.attribute.Attribute;
@@ -15,48 +12,19 @@ import java.util.*;
 
 /**
  * 
- * @author LlmDl
+ * @author Goosius
  *
  */
 public class TownyCombatResidentMetaDataController {
 
-	private static StringDataField trainedHorseBaseSpeedMap = new StringDataField("townycombat_trainedhorsebasespeedmap", ""); 
+	//This map records the original/base speeds of the horses the player/resident trained 
+	private static StringDataField horseSpeedMap = new StringDataField("townycombat_horsespeedmap", ""); 
 
-
-
-	public static void setBoolean(Resident resident, String key, boolean bool) {
-		if (resident.hasMeta(key)) {
-			if (bool == false)
-				resident.removeMetaData(resident.getMetadata(key));
-			else {
-				CustomDataField<?> cdf = resident.getMetadata(key);
-				if (cdf instanceof BooleanDataField) {
-					((BooleanDataField) cdf).setValue(bool);
-					resident.save();
-				}
-				return;
-			}
-		} else if (bool)
-			resident.addMetaData(new BooleanDataField(key, bool));
-	}
-
-	public static boolean getBoolean(Resident resident, String key) {
-		if (resident.hasMeta(key)) {
-			CustomDataField<?> cdf = resident.getMetadata(key);
-			if (cdf instanceof BooleanDataField)
-				return ((BooleanDataField) cdf).getValue();
-		}
-		return false;
-	}
-
-
-	
-
-	private static Map<UUID, Double> getTrainedHorseBaseSpeedMap(Resident resident) {	
+	private static Map<UUID, Double> getHorseSpeedMap(Resident resident) {	
 		Map<UUID, Double> result = new HashMap<>();
-		String trainedHorseBaseSpeedMapAsString = getTrainedHorseBaseSpeedMapAsString(resident);
-		if(trainedHorseBaseSpeedMapAsString != null && trainedHorseBaseSpeedMapAsString.length() == 0) {
-			String[] entries = trainedHorseBaseSpeedMapAsString.replaceAll(" ","").split(",");
+		String horseSpeedMapAsString = getHorseSpeedMapAsString(resident);
+		if(horseSpeedMapAsString != null && horseSpeedMapAsString.length() != 0) {
+			String[] entries = horseSpeedMapAsString.replaceAll(" ","").split(",");
 			String[] entryArray;
 			for(String entryString: entries) {
 				entryArray = entryString.split(":");
@@ -67,22 +35,23 @@ public class TownyCombatResidentMetaDataController {
 	}
 
 	@Nullable
-	private static String getTrainedHorseBaseSpeedMapAsString(Resident resident) {
-		StringDataField sdf = (StringDataField) trainedHorseBaseSpeedMap.clone();
+	private static String getHorseSpeedMapAsString(Resident resident) {
+		StringDataField sdf = (StringDataField) horseSpeedMap.clone();
 		if (resident.hasMeta(sdf.getKey()))
 			return MetaDataUtil.getString(resident, sdf);
 		return null;
 	}
 
 	public static double registerTrainedHorse(Resident resident, AbstractHorse horse) {
-		Map<UUID, Double> trainedHorseBaseSpeedMap = getTrainedHorseBaseSpeedMap(resident);
+		Map<UUID, Double> horseSpeedMap = getHorseSpeedMap(resident);
 		double baseHorseSpeed = horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue();
-		trainedHorseBaseSpeedMap.put(horse.getUniqueId(), baseHorseSpeed);
-		setTrainedHorseBaseSpeedMap(resident, trainedHorseBaseSpeedMap);
+		horseSpeedMap.put(horse.getUniqueId(), baseHorseSpeed);
+		setHorseSpeedMap(resident, horseSpeedMap);
+		resident.save();
 		return baseHorseSpeed;		
 	}
 
-	private static void setTrainedHorseBaseSpeedMap(Resident resident, Map<UUID,Double> mapToSet) {
+	private static void setHorseSpeedMap(Resident resident, Map<UUID,Double> mapToSet) {
 		//Build map
 		StringBuilder stringBuilderForMap = new StringBuilder();
 		for(Map.Entry<UUID, Double> mapEntry: mapToSet.entrySet()) {
@@ -91,15 +60,15 @@ public class TownyCombatResidentMetaDataController {
 			stringBuilderForMap.append(mapEntry.getValue().toString());			
 		}
 		//Set value		
-		StringDataField sdf = (StringDataField) trainedHorseBaseSpeedMap.clone();
+		StringDataField sdf = (StringDataField) horseSpeedMap.clone();
 		if (resident.hasMeta(sdf.getKey())) {
 			MetaDataUtil.setString(resident, sdf, stringBuilderForMap.toString(), true);
 		} else {
-			resident.addMetaData(new StringDataField("townycombat_trainedhorsebasespeedmap", stringBuilderForMap.toString()));
+			resident.addMetaData(new StringDataField("townycombat_horsespeedmap", stringBuilderForMap.toString()));
 		}
 	}
 
 	public static Double getTrainedHorseBaseSpeed(Resident resident, UUID horseUUID) {
-		return getTrainedHorseBaseSpeedMap(resident).get(horseUUID);
+		return getHorseSpeedMap(resident).get(horseUUID);
 	}
 }

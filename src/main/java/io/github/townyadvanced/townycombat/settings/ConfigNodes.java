@@ -297,22 +297,22 @@ public enum ConfigNodes {
 			"speed_adjustments.encumbrance.cavalry.item_percentage",
 			"",
 			"",
-			"# The base slow percentage for each type of armour item."),
+			"# The base slow percentage for each type of cavalry armour item."),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_LEATHER_HORSE_ARMOUR(
 			"speed_adjustments.encumbrance.cavalry.item_percentage.leather_horse_armour",
-			"100",
+			"4",
 			""),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_GOLD_HORSE_ARMOUR(
 			"speed_adjustments.encumbrance.cavalry.item_percentage.gold_horse_armour",
-			"400",
+			"16",
 			""),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_IRON_HORSE_ARMOUR(
 			"speed_adjustments.encumbrance.cavalry.item_percentage.iron_horse_armour",
-			"500",
+			"20",
 			""),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_DIAMOND_HORSE_ARMOUR(
 			"speed_adjustments.encumbrance.cavalry.item_percentage.diamond_horse_armour",
-			"600",
+			"24",
 			"");
 
 	private final String Root;

@@ -43,7 +43,7 @@ public class TownyCombatMovementUtil {
         double genericSpeedAdjustmentPercentage = TownyCombatSettings.getGenericInfantrySpeedAdjustmentPercentage();
 
         //Calculate slow due to encumbrance
-        Map<Material, Double> materialEncumbrancePercentageMap = TownyCombatSettings.getInfantryMaterialEncumbrancePercentageMap();
+        Map<Material, Double> materialEncumbrancePercentageMap = TownyCombatSettings.getMaterialEncumbrancePercentageMap();
         double totalEncumbrancePercentage = 0;
         Double itemEncumbrancePercentage;
         for(ItemStack itemStack: player.getInventory().getContents()) {
@@ -58,7 +58,7 @@ public class TownyCombatMovementUtil {
 
         //Calculate total speed adjustment
         double recalculatedSpeed = 
-            VANILLA_PLAYER_GENERIC_MOVEMENT_SPEED + (VANILLA_PLAYER_GENERIC_MOVEMENT_SPEED * ((genericSpeedAdjustmentPercentage + totalEncumbrancePercentage) / 100));
+            VANILLA_PLAYER_GENERIC_MOVEMENT_SPEED + (VANILLA_PLAYER_GENERIC_MOVEMENT_SPEED * ((genericSpeedAdjustmentPercentage - totalEncumbrancePercentage) / 100));
         //Sanitize
         if(recalculatedSpeed < 0)
             recalculatedSpeed = 0;
@@ -79,6 +79,8 @@ public class TownyCombatMovementUtil {
         //Get Base Walk Speed
         Double baseWalkSpeed;
         UUID ownerUUID = mount.getOwner().getUniqueId();
+        
+        System.out.println("Mount owner " + ownerUUID);
         Resident ownerResident = TownyAPI.getInstance().getResident(ownerUUID);
         if(ownerResident == null) {
             //Owner has left server. Horse is sad and goes slow.
@@ -87,9 +89,11 @@ public class TownyCombatMovementUtil {
             baseWalkSpeed = TownyCombatResidentMetaDataController.getTrainedHorseBaseSpeed(ownerResident, mount.getUniqueId());
             if(baseWalkSpeed == null) {
                 //Register base walk speed
+                System.out.println("Training horse now " + mount.getUniqueId());
                 baseWalkSpeed = TownyCombatResidentMetaDataController.registerTrainedHorse(ownerResident, mount);
             }
         }
+        System.out.println("Base walk speed " + baseWalkSpeed);
 
         //Calculate generic adjustment
         double genericSpeedAdjustmentPercentage = TownyCombatSettings.getGenericCavalrySpeedAdjustmentPercentage();
@@ -99,7 +103,11 @@ public class TownyCombatMovementUtil {
         double totalEncumbrancePercentage; 
         
         for(ItemStack x: mount.getInventory().getContents()) {
-            System.out.println("Horse Item: " + x.getType());    
+            if(x == null) {
+                System.out.println("Horse Inv Item: null");                
+            } else {
+                System.out.println("Horse Inv Item: " + x.getType());
+            }    
         }
         
             System.out.println("Horse Item 0: " + mount.getInventory().getItem(0));    
@@ -118,7 +126,7 @@ public class TownyCombatMovementUtil {
     
         //Calculate total speed adjustment
         double recalculatedSpeed = 
-            baseWalkSpeed + (baseWalkSpeed * ((genericSpeedAdjustmentPercentage + totalEncumbrancePercentage) / 100));
+            baseWalkSpeed + (baseWalkSpeed * ((genericSpeedAdjustmentPercentage - totalEncumbrancePercentage) / 100));
         //Sanitize
         if(recalculatedSpeed < 0)
             recalculatedSpeed = 0;
