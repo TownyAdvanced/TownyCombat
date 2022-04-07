@@ -182,8 +182,38 @@ public enum ConfigNodes {
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
-	SPEED_ADJUSTMENTS_INFANTRY(
-			"speed_adjustments.infantry",
+	SPEED_ADJUSTMENTS_GENERIC(
+			"speed_adjustments.generic",
+			"",
+			"",
+			""),
+	SPEED_ADJUSTMENTS_GENERIC_INFANTRY_ADJUSTMENT_PERCENTAGE(
+			"speed_adjustments.generic.infantry_adjustment_percentage",
+			"10",
+			"",
+			"# Adjusts the walking speed of all players.",
+			"# TIP: Giving all players a small speed boost helps sugar-coat the concept of encumbrance."),
+	SPEED_ADJUSTMENTS_GENERIC_CAVALRY_ADJUSTMENT_PERCENTAGE(
+			"speed_adjustments.generic.cavalry_adjustment_percentage",
+			"10",
+			"",
+			"# Adjusts the walking speed of all player mounts.",
+			"# TIP: Giving all player mounts a small speed boost helps sugar-coat the concept of encumbrance."),
+	SPEED_ADJUSTMENTS_ENCUMBRANCE(
+			"speed_adjustments.encumbrance",
+			"",
+			"",
+			""),
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_ENABLED(
+			"speed_adjustments.encumbrance.enabled",
+			"true",
+			"",
+			"# If this value is true, encumbrance is enabled, slowing players and mounts down due to equipment weight.",
+			"# TIP 1: Encumbrance significantly boosts the tactical options available to armies.",
+			"# TIP 2: Encumbrance allows for the development of combat-useful uniforms.",
+			"# e.g. each nation may design national uniforms for different soldier types, including different materials, and (with leather items) colours."),
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY(
+			"speed_adjustments.encumbrance.infantry",
 			"",
 			"",
 			"",
@@ -191,90 +221,66 @@ public enum ConfigNodes {
 			"# |                      INFANTRY                        | #",
 			"# +------------------------------------------------------+ #",
 			""),
-	SPEED_ADJUSTMENTS_INFANTRY_GENERIC(
-			"speed_adjustments.infantry.generic",
-			"",
-			"",
-			""),
-	SPEED_ADJUSTMENTS_INFANTRY_GENERIC_ADJUSTMENT_PERCENTAGE(
-			"speed_adjustments.infantry.generic.adjustment_percentage",
-			"10",
-			"",
-			"# Adjusts the movement speed of all players.",
-			"# TIP: Giving all players a small speed boost helps sugar-coat the concept of armour-based speed-slowing."),
-	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING(
-			"speed_adjustments.infantry.armour_slowing",
-			"",
-			"",
-			""),
-	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_ENABLED(
-			"speed_adjustments.infantry.armour_slowing.enabled",
-			"true",
-			"",
-			"# If this value is true, infantry armour slowing is enabled.",
-			"# TIP 1: Armour-Slowing significantly boosts the tactical options available to armies.",
-			"# TIP 2: Armour-Slowing allows for the development of combat-useful uniforms.",
-			"# e.g. each nation may design national uniforms for different soldier types, including different materials, and (with leather items) colours."),
-	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_BASE_ITEM_PERCENTAGE(
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE(
 			"speed_adjustments.infantry.armour_slowing.base_item_percentage",
 			"",
 			"",
 			"# The base slow percentage for each type of armour item."),
-	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_BASE_ITEM_PERCENTAGE_SHIELD(
-			"speed_adjustments.infantry.armour_slowing.base_item_percentage.shield",
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_SHIELD(
+			"speed_adjustments.encumbrance.infantry.base_item_percentage.shield",
 			"4",
 			""),
-	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_BASE_ITEM_PERCENTAGE_HELMET(
-			"speed_adjustments.infantry.armour_slowing.base_item_percentage.helmet",
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_HELMET(
+			"speed_adjustments.encumbrance.infantry.base_item_percentage.helmet",
 			"0.6",
 			""),
-	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_BASE_ITEM_CHESTPLATE(
-			"speed_adjustments.infantry.armour_slowing.base_item_percentage.chestplate",
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_CHESTPLATE(
+			"speed_adjustments.encumbrance.infantry.base_item_percentage.chestplate",
 			"1.6",
 			""),
-	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_BASE_ITEM_PERCENTAGE_LEGGINGS(
-			"speed_adjustments.infantry.armour_slowing.base_item_percentage.leggings",
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_LEGGINGS(
+			"speed_adjustments.encumbrance.infantry.base_item_percentage.leggings",
 			"1.2",
 			""),
-	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_BASE_ITEM_PERCENTAGE_BOOTS(
-			"speed_adjustments.infantry.armour_slowing.base_item_percentage.boots",
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_BOOTS(
+			"speed_adjustments.encumbrance.infantry.base_item_percentage.boots",
 			"0.6",
 			""),
-	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE(
-			"speed_adjustments.infantry.armour_slowing.material_modification_percentage",
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE(
+			"speed_adjustments.encumbrance.infantry.material_modification_percentage",
 			"",
 			"",
-			"# The modification to slowing, of each material."),
-	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_LEATHER(
-			"speed_adjustments.infantry.armour_slowing.material_modification_percentage.leather",
+			"# The modification to encumbrance, of each material."),
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_LEATHER(
+			"speed_adjustments.encumbrance.infantry.material_modification_percentage.leather",
 			"100",
 			""),
-	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_CHAINMAIL(
-			"speed_adjustments.infantry.armour_slowing.material_modification_percentage.chainmail",
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_CHAINMAIL(
+			"speed_adjustments.encumbrance.infantry.material_modification_percentage.chainmail",
 			"200",
 			""),
-	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_TURTLE_SHELL(
-			"speed_adjustments.infantry.armour_slowing.material_modification_percentage.turtle_shell",
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_TURTLE_SHELL(
+			"speed_adjustments.encumbrance.infantry.material_modification_percentage.turtle_shell",
 			"300",
 			""),
-	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_GOLD(
-			"speed_adjustments.infantry.armour_slowing.material_modification_percentage.gold",
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_GOLD(
+			"speed_adjustments.encumbrance.infantry.material_modification_percentage.gold",
 			"400",
 			""),
-	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_IRON(
-			"speed_adjustments.infantry.armour_slowing.material_modification_percentage.iron",
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_IRON(
+			"speed_adjustments.encumbrance.infantry.material_modification_percentage.iron",
 			"500",
 			""),
-	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_DIAMOND(
-			"speed_adjustments.infantry.armour_slowing.material_modification_percentage.diamond",
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_DIAMOND(
+			"speed_adjustments.encumbrance.infantry.material_modification_percentage.diamond",
 			"600",
 			""),
-	SPEED_ADJUSTMENTS_INFANTRY_ARMOUR_SLOWING_MATERIAL_MODIFICATION_PERCENTAGE_NETHERITE(
-			"speed_adjustments.infantry.armour_slowing.material_modification_percentage.netherite",
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_NETHERITE(
+			"speed_adjustments.encumbrance.infantry.material_modification_percentage.netherite",
 			"700",
 			""),
-	SPEED_ADJUSTMENTS_CAVALRY(
-			"speed_adjustments.cavalry",
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY(
+			"speed_adjustments.encumbrance.cavalry",
 			"",
 			"",
 			"",
@@ -282,30 +288,32 @@ public enum ConfigNodes {
 			"# |                      CAVALRY                         | #",
 			"# +------------------------------------------------------+ #",
 			""),
-	SPEED_ADJUSTMENTS_CAVALRY_GENERIC(
-			"speed_adjustments.cavalry.generic",
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_RIDER_CONTRIBUTION_PERCENTAGE(
+			"speed_adjustments.encumbrance.cavalry.rider_contribution_percentage",
+			"50",
+			"",
+			"# The rider's encumbrance contributes this much to the mount's encumbrance."),
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE(
+			"speed_adjustments.encumbrance.cavalry.item_percentage",
 			"",
 			"",
+			"# The base slow percentage for each type of armour item."),
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_LEATHER_HORSE_ARMOUR(
+			"speed_adjustments.encumbrance.cavalry.item_percentage.leather_horse_armour",
+			"100",
 			""),
-	SPEED_ADJUSTMENTS_CAVALRY_GENERIC_ADJUSTMENT_PERCENTAGE(
-			"speed_adjustments.cavalry.generic.adjustment_percentage",
-			"10",
-			"",
-			"# Adjusts the movement speed of all mounted horses.",
-			"# TIP: Giving all mounted horses a small speed boost helps sugar-coat the concept of armour-based speed-slowing."),
-	SPEED_ADJUSTMENTS_CAVALRY_ARMOUR_SLOWING(
-			"speed_adjustments.cavalry.armour_slowing",
-			"",
-			"",
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_GOLD_HORSE_ARMOUR(
+			"speed_adjustments.encumbrance.cavalry.item_percentage.gold_horse_armour",
+			"400",
 			""),
-	SPEED_ADJUSTMENTS_CAVALRY_ARMOUR_SLOWING_ENABLED(
-			"speed_adjustments.cavalry.armour_slowing.enabled",
-			"true",
-			"",
-			"# If this value is true, cavalry armour slowing is enabled.",
-			"# TIP 1: Armour-Slowing significantly boosts the tactical options available to armies.",
-			"# TIP 2: Armour-Slowing allows for the development of combat-useful uniforms.",
-			"# e.g. each nation may design national uniforms for different soldier types, including different materials, and (with leather items) colours.");
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_IRON_HORSE_ARMOUR(
+			"speed_adjustments.encumbrance.cavalry.item_percentage.iron_horse_armour",
+			"500",
+			""),
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_DIAMOND_HORSE_ARMOUR(
+			"speed_adjustments.encumbrance.cavalry.item_percentage.diamond_horse_armour",
+			"600",
+			"");
 
 	private final String Root;
 	private final String Default;

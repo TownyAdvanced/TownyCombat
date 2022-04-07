@@ -84,7 +84,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 	public void on (PlayerJoinEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
-		TownyCombatMovementUtil.adjustPlayerSpeed(event.getPlayer());
+		TownyCombatMovementUtil.adjustPlayerAndMountSpeeds(event.getPlayer());
 	}
 
     @EventHandler (ignoreCancelled = true)

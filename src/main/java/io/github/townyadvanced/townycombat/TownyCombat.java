@@ -103,7 +103,7 @@ public class TownyCombat extends JavaPlugin {
 	}
 	
 	private void startTasks() {
-		if(TownyCombatSettings.isArmourSlowingEnabled()) {
+		if(TownyCombatSettings.isEncumbranceEnabled()) {
 			//Run jump reduction task every 0.5 seconds
         	jumpReductionTask = new JumpReductionTask().runTaskTimerAsynchronously(plugin, 400, 10);
 		}
