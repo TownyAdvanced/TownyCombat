@@ -2,13 +2,13 @@ package io.github.townyadvanced.townycombat.utils;
 
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Resident;
+import io.github.townyadvanced.townycombat.metadata.TownyCombatResidentMetaDataController;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.AnimalTamer;
-import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -73,23 +73,19 @@ public class TownyCombatMovementUtil {
     private static void adjustMountWalkSpeed(Player player) {
         AbstractHorse mount = (AbstractHorse)player.getVehicle();
         AnimalTamer owner = mount.getOwner();
-        if(owner == null) {
-            //Untrained mount. No adjust
-            return;
-        } else {
+        if(owner != null) {
             //Get Base Walk Speed
             Double baseWalkSpeed;
             UUID ownerUUID = mount.getOwner().getUniqueId();
-            Resident resident = TownyAPI.getInstance().getResident(ownerUUID);
-            if(resident == null) {
+            Resident ownerResident = TownyAPI.getInstance().getResident(ownerUUID);
+            if(ownerResident == null) {
                 //Owner has left server. Horse is sad and goes slow.
                 baseWalkSpeed = 0.1;
             } else {
-                baseWalkSpeed = TownyCombatResidentMetaDataController.getBaseHorseSpeed(resident, mount.getUniqueId());
+                baseWalkSpeed = TownyCombatResidentMetaDataController.getTrainedHorseBaseSpeed(ownerResident, mount.getUniqueId());
                 if(baseWalkSpeed == null) {
                     //Register base walk speed
-                    baseWalkSpeed = mount.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue();
-                    TownyCombatResidentMetaDataController.setBaseHorseSpeed(etc).
+                    baseWalkSpeed = TownyCombatResidentMetaDataController.registerTrainedHorse(ownerResident, mount);
                 }
             }
 
