@@ -288,11 +288,11 @@ public enum ConfigNodes {
 			"# |                      CAVALRY                         | #",
 			"# +------------------------------------------------------+ #",
 			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_RIDER_CONTRIBUTION_PERCENTAGE(
-			"speed_adjustments.encumbrance.cavalry.rider_contribution_percentage",
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_STRENGTH_MODIFICATION_PERCENTAGE(
+			"speed_adjustments.encumbrance.cavalry.strength_modification_percentage",
 			"50",
 			"",
-			"# The rider's encumbrance contributes this much to the mount's encumbrance."),
+			"# Horses, being stronger, can carry more weight, thus their encumbrance is reduced"),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE(
 			"speed_adjustments.encumbrance.cavalry.item_percentage",
 			"",
@@ -300,19 +300,19 @@ public enum ConfigNodes {
 			"# The base slow percentage for each type of cavalry armour item."),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_LEATHER_HORSE_ARMOUR(
 			"speed_adjustments.encumbrance.cavalry.item_percentage.leather_horse_armour",
-			"4",
+			"8",
 			""),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_GOLD_HORSE_ARMOUR(
 			"speed_adjustments.encumbrance.cavalry.item_percentage.gold_horse_armour",
-			"16",
+			"32",
 			""),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_IRON_HORSE_ARMOUR(
 			"speed_adjustments.encumbrance.cavalry.item_percentage.iron_horse_armour",
-			"20",
+			"40",
 			""),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_DIAMOND_HORSE_ARMOUR(
 			"speed_adjustments.encumbrance.cavalry.item_percentage.diamond_horse_armour",
-			"24",
+			"48",
 			"");
 
 	private final String Root;

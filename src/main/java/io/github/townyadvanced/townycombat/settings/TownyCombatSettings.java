@@ -90,10 +90,10 @@ public class TownyCombatSettings {
         materialEncumbrancePercentageMap.put(Material.IRON_LEGGINGS, getEquipmentEncumbranceBaseLeggings() * getEquipmentEncumbranceModificationIron() / 100); 
         materialEncumbrancePercentageMap.put(Material.IRON_BOOTS, getEquipmentEncumbranceBaseBoots() * getEquipmentEncumbranceModificationIron() / 100); 
 
-        materialEncumbrancePercentageMap.put(Material.DIAMOND_HELMET, getEquipmentEncumbranceBaseHelmet() * getEquipmentEncumbranceModificationIron() / 100); 
-        materialEncumbrancePercentageMap.put(Material.DIAMOND_CHESTPLATE, getEquipmentEncumbranceBaseChestplate() * getEquipmentEncumbranceModificationIron() / 100); 
-        materialEncumbrancePercentageMap.put(Material.DIAMOND_LEGGINGS, getEquipmentEncumbranceBaseLeggings() * getEquipmentEncumbranceModificationIron() / 100); 
-        materialEncumbrancePercentageMap.put(Material.DIAMOND_BOOTS, getEquipmentEncumbranceBaseBoots() * getEquipmentEncumbranceModificationIron() / 100); 
+        materialEncumbrancePercentageMap.put(Material.DIAMOND_HELMET, getEquipmentEncumbranceBaseHelmet() * getEquipmentEncumbranceModificationDiamond() / 100); 
+        materialEncumbrancePercentageMap.put(Material.DIAMOND_CHESTPLATE, getEquipmentEncumbranceBaseChestplate() * getEquipmentEncumbranceModificationDiamond() / 100); 
+        materialEncumbrancePercentageMap.put(Material.DIAMOND_LEGGINGS, getEquipmentEncumbranceBaseLeggings() * getEquipmentEncumbranceModificationDiamond() / 100); 
+        materialEncumbrancePercentageMap.put(Material.DIAMOND_BOOTS, getEquipmentEncumbranceBaseBoots() * getEquipmentEncumbranceModificationDiamond() / 100); 
 
         materialEncumbrancePercentageMap.put(Material.NETHERITE_HELMET, getEquipmentEncumbranceBaseHelmet() * getEquipmentEncumbranceModificationNetherite() / 100); 
         materialEncumbrancePercentageMap.put(Material.NETHERITE_CHESTPLATE, getEquipmentEncumbranceBaseChestplate() * getEquipmentEncumbranceModificationNetherite() / 100); 
@@ -251,8 +251,8 @@ public class TownyCombatSettings {
 		return Settings.getDouble(ConfigNodes.DAMAGE_ADJUSTMENTS_ALL_WEAPONS_PERCENTAGE);
 	}
 	
-	public static double getEncumbranceRiderContributionPercentage() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_RIDER_CONTRIBUTION_PERCENTAGE);
+	public static double getCavalryEncumbranceReductionPercentage() {
+		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_STRENGTH_MODIFICATION_PERCENTAGE);
 	}
 
 

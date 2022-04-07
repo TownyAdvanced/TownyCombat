@@ -118,11 +118,14 @@ public class TownyCombatMovementUtil {
             totalEncumbrancePercentage = 0;
         else
             totalEncumbrancePercentage = TownyCombatSettings.getMaterialEncumbrancePercentageMap().get(horseArmour.getType());
-        //2. Encumbrance due to the encumbrance of rider
+        //2. Add encumbrance of rider
         Double riderEncumbrance = playerEncumbrancePercentageMap.get(player);
         if(riderEncumbrance != null) {
-            totalEncumbrancePercentage += riderEncumbrance * (TownyCombatSettings.getEncumbranceRiderContributionPercentage() / 100);
+            totalEncumbrancePercentage += riderEncumbrance;
         }
+        //3. Reduce encumbrance due to horse strength
+        totalEncumbrancePercentage = 
+            totalEncumbrancePercentage - (totalEncumbrancePercentage * (TownyCombatSettings.getCavalryEncumbranceReductionPercentage() / 100));
     
         //Calculate total speed adjustment
         double recalculatedSpeed = 
