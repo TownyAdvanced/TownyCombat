@@ -61,7 +61,7 @@ public class TownyCombatMovementUtil {
             VANILLA_PLAYER_GENERIC_MOVEMENT_SPEED + (VANILLA_PLAYER_GENERIC_MOVEMENT_SPEED * ((genericSpeedAdjustmentPercentage - totalEncumbrancePercentage) / 100));
         //Sanitize
         if(recalculatedSpeed < 0)
-            recalculatedSpeed = 0;
+            recalculatedSpeed = 0.05;
         else if(recalculatedSpeed > 1)
             recalculatedSpeed = 1;
         //Apply
@@ -132,7 +132,7 @@ public class TownyCombatMovementUtil {
             baseWalkSpeed + (baseWalkSpeed * ((genericSpeedAdjustmentPercentage - totalEncumbrancePercentage) / 100));
         //Sanitize
         if(recalculatedSpeed < 0)
-            recalculatedSpeed = 0;
+            recalculatedSpeed = 0.05;
         else if(recalculatedSpeed > 1)
             recalculatedSpeed = 1;
         //Apply
