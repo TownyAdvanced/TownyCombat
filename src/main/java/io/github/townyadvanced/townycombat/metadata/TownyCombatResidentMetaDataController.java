@@ -54,7 +54,13 @@ public class TownyCombatResidentMetaDataController {
 	private static void setHorseSpeedMap(Resident resident, Map<UUID,Double> mapToSet) {
 		//Build map
 		StringBuilder stringBuilderForMap = new StringBuilder();
+		boolean firstEntry = true;
 		for(Map.Entry<UUID, Double> mapEntry: mapToSet.entrySet()) {
+			if(firstEntry) {
+				firstEntry = false;
+			} else {
+				stringBuilderForMap.append(", ");
+			}
 			stringBuilderForMap.append(mapEntry.getKey().toString());
 			stringBuilderForMap.append(":");
 			stringBuilderForMap.append(mapEntry.getValue().toString());			
