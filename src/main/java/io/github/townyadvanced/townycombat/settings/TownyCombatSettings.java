@@ -252,7 +252,7 @@ public class TownyCombatSettings {
 	}
 	
 	public static double getCavalryEncumbranceReductionPercentage() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_STRENGTH_MODIFICATION_PERCENTAGE);
+		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_REDUCTION_PERCENTAGE);
 	}
 
 

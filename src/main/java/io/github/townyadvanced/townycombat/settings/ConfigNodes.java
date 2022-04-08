@@ -288,8 +288,8 @@ public enum ConfigNodes {
 			"# |                      CAVALRY                         | #",
 			"# +------------------------------------------------------+ #",
 			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_STRENGTH_MODIFICATION_PERCENTAGE(
-			"speed_adjustments.encumbrance.cavalry.strength_modification_percentage",
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_REDUCTION_PERCENTAGE(
+			"speed_adjustments.encumbrance.cavalry.reduction_percentage",
 			"50",
 			"",
 			"# Horses, being stronger, can carry more weight, thus their encumbrance is reduced"),
