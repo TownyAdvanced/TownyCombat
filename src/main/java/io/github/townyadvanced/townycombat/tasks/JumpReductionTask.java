@@ -48,7 +48,7 @@ public class JumpReductionTask extends BukkitRunnable {
     }
 
     private void applyEffects(Player player, int effectDurationTicks) {
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, effectDurationTicks, 4));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, effectDurationTicks, -30));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, effectDurationTicks, 4, false, false));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, effectDurationTicks, -30, false, false));
     }
 }

@@ -62,8 +62,8 @@ public class TownyCombatMovementUtil {
         double recalculatedSpeed = 
             VANILLA_PLAYER_MOVEMENT_SPEED + (VANILLA_PLAYER_MOVEMENT_SPEED * ((genericSpeedAdjustmentPercentage - totalEncumbrancePercentage) / 100));
         //Sanitize
-        recalculatedSpeed = Math.min(recalculatedSpeed, 0.05);
-        recalculatedSpeed = Math.max(recalculatedSpeed, 1);
+        recalculatedSpeed = Math.max(recalculatedSpeed, 0.05);
+        recalculatedSpeed = Math.min(recalculatedSpeed, 1);
        //Apply
         player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(recalculatedSpeed);
     }
@@ -131,8 +131,8 @@ public class TownyCombatMovementUtil {
         double recalculatedSpeed = 
             baseWalkSpeed + (baseWalkSpeed * ((genericSpeedAdjustmentPercentage - totalEncumbrancePercentage) / 100));
         //Sanitize
-        recalculatedSpeed = Math.min(recalculatedSpeed, 0.05);
-        recalculatedSpeed = Math.max(recalculatedSpeed, 1);
+        recalculatedSpeed = Math.max(recalculatedSpeed, 0.05);
+        recalculatedSpeed = Math.min(recalculatedSpeed, 1);
         //Apply
         mount.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(recalculatedSpeed);
     }
