@@ -1,8 +1,6 @@
 package io.github.townyadvanced.townycombat;
 
 import com.palmergames.bukkit.towny.Towny;
-import com.palmergames.bukkit.towny.TownySettings;
-import com.palmergames.bukkit.util.Colors;
 import com.palmergames.bukkit.util.Version;
 import io.github.townyadvanced.townycombat.commands.TownyCombatAdminCommand;
 import io.github.townyadvanced.townycombat.integrations.dynmap.DynmapIntegration;
@@ -28,7 +26,7 @@ public class TownyCombat extends JavaPlugin {
     @Override
     public void onEnable() {
     	plugin = this;
-    	Bukkit.getLogger().info("=================================================================================");
+		Bukkit.getLogger().info("=================================================================================");
 		printSickASCIIArt();
 	
     	try {
@@ -116,17 +114,17 @@ public class TownyCombat extends JavaPlugin {
     }
 	
 	private void printSickASCIIArt() {
-	    String art = 
+	    String art =
 	    System.lineSeparator() +
-		System.lineSeparator() + ("  *   )                             (                    )           )") +  
+		System.lineSeparator() + ("  *   )                             (                    )           )") +
 		System.lineSeparator() + ("` )  /(     (  (           (        )\\           )    ( /(     )  ( /( ") +
 		System.lineSeparator() + (" ( )(_))(   )\\))(    (     )\\ )   (((_)   (     (     )\\()) ( /(  )\\()) ") +
 		System.lineSeparator() + ("(_(_()) )\\ ((_)()\\   )\\ ) (()/(   )\\___   )\\    )\\  '((_)\\  )(_))(_))/  ") +
 		System.lineSeparator() + ("|_   _|((_)_(()((_) _(_/(  )(_)) ((/ __| ((_) _((_)) | |(_)((_)_ | |_   ") +
 		System.lineSeparator() + ("  | | / _ \\\\ V  V /| ' \\))| || |  | (__ / _ \\| '  \\()| '_ \\/ _` ||  _|  ") +
 		System.lineSeparator() + ("  |_| \\___/ \\_/\\_/ |_||_|  \\_, |   \\___|\\___/|_|_|_| |_.__/\\__,_| \\__|  ") +
-		System.lineSeparator() + ("                           |__/ ") +                          
-		System.lineSeparator();	
+		System.lineSeparator() + ("                           |__/ ") +
+		System.lineSeparator();
 		Bukkit.getLogger().info(art);
 	}
 }
