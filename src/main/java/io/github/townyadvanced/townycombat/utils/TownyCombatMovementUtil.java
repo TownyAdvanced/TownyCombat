@@ -2,6 +2,7 @@ package io.github.townyadvanced.townycombat.utils;
 
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Resident;
+import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.metadata.TownyCombatResidentMetaDataController;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import org.bukkit.Bukkit;
@@ -167,5 +168,6 @@ public class TownyCombatMovementUtil {
                 resident.save();
             }
         }
+        TownyCombat.info("Resident Horse Registration Cleanup Complete");
     }
 }
