@@ -124,7 +124,7 @@ public class TownyCombatMovementUtil {
             totalEncumbrancePercentage += riderEncumbrance;
         }
         //3. Reduce encumbrance due to horse strength
-        totalEncumbrancePercentage = 
+        totalEncumbrancePercentage =
             totalEncumbrancePercentage - (totalEncumbrancePercentage * (TownyCombatSettings.getCavalryEncumbranceReductionPercentage() / 100));
     
         //Calculate total speed adjustment

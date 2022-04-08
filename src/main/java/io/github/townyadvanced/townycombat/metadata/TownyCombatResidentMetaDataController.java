@@ -57,7 +57,7 @@ public class TownyCombatResidentMetaDataController {
 				baseHorseSpeed = baseHorseSpeed / (100 - (potionEffect.getAmplifier() * 15)) * 100;
 			}
 		}
-		//Catch all limit for edge cases		
+		//Catch all limit for edge cases
 		baseHorseSpeed = Math.max(baseHorseSpeed, TownyCombatMovementUtil.VANILLA_HORSE_MAX_MOVEMENT_SPEED);
 		horseSpeedMap.put(horse.getUniqueId(), baseHorseSpeed);
 		setHorseSpeedMap(resident, horseSpeedMap);
