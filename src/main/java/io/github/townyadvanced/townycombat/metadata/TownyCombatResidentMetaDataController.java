@@ -4,8 +4,11 @@ package io.github.townyadvanced.townycombat.metadata;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.metadata.StringDataField;
 import com.palmergames.bukkit.towny.utils.MetaDataUtil;
+import io.github.townyadvanced.townycombat.utils.TownyCombatMovementUtil;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AbstractHorse;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -45,6 +48,17 @@ public class TownyCombatResidentMetaDataController {
 	public static double registerTrainedHorse(Resident resident, AbstractHorse horse) {
 		Map<UUID, Double> horseSpeedMap = getHorseSpeedMap(resident);
 		double baseHorseSpeed = horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue();
+		//Compensate for speed effect
+		for(PotionEffect potionEffect: horse.getActivePotionEffects()) {
+			if(potionEffect.getType() == PotionEffectType.SPEED) {
+				baseHorseSpeed = baseHorseSpeed / (100 + (potionEffect.getAmplifier() * 20)) * 100;
+			}
+			if(potionEffect.getType() == PotionEffectType.SLOW) {
+				baseHorseSpeed = baseHorseSpeed / (100 - (potionEffect.getAmplifier() * 15)) * 100;
+			}
+		}
+		//Catch all limit for edge cases		
+		baseHorseSpeed = Math.max(baseHorseSpeed, TownyCombatMovementUtil.VANILLA_HORSE_MAX_MOVEMENT_SPEED);
 		horseSpeedMap.put(horse.getUniqueId(), baseHorseSpeed);
 		setHorseSpeedMap(resident, horseSpeedMap);
 		resident.save();

@@ -14,7 +14,6 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -100,11 +99,4 @@ public class TownyCombatBukkitEventListener implements Listener {
 			event.setDamage(event.getDamage() + (event.getDamage() * (TownyCombatSettings.getDamageModificationAllWeaponsPercentage() / 100)));
 		}
 	}
-	
-	@EventHandler (ignoreCancelled = true)
-    public void on (EntityDeathEvent event) {
-    	//If the entity was a horse with an owner, delete the metadata
-		System.out.println("TODOOOOOO");
-	}
-	
 }

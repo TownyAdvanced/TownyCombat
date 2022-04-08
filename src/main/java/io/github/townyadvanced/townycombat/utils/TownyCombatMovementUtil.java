@@ -22,7 +22,9 @@ import java.util.UUID;
  *
  */
 public class TownyCombatMovementUtil {
-    private static final double VANILLA_PLAYER_GENERIC_MOVEMENT_SPEED = 0.1;
+    public static final double VANILLA_PLAYER_MOVEMENT_SPEED = 0.1;
+    public static final double VANILLA_HORSE_MAX_MOVEMENT_SPEED = 0.3375;
+
     private static Map<Player, Double> playerEncumbrancePercentageMap = new HashMap<>();  //Encumbrance = Walk-speed-slow
 
     public static void adjustAllPlayerAndMountSpeeds() {
@@ -58,13 +60,11 @@ public class TownyCombatMovementUtil {
 
         //Calculate total speed adjustment
         double recalculatedSpeed = 
-            VANILLA_PLAYER_GENERIC_MOVEMENT_SPEED + (VANILLA_PLAYER_GENERIC_MOVEMENT_SPEED * ((genericSpeedAdjustmentPercentage - totalEncumbrancePercentage) / 100));
+            VANILLA_PLAYER_MOVEMENT_SPEED + (VANILLA_PLAYER_MOVEMENT_SPEED * ((genericSpeedAdjustmentPercentage - totalEncumbrancePercentage) / 100));
         //Sanitize
-        if(recalculatedSpeed < 0)
-            recalculatedSpeed = 0.05;
-        else if(recalculatedSpeed > 1)
-            recalculatedSpeed = 1;
-        //Apply
+        recalculatedSpeed = Math.min(recalculatedSpeed, 0.05);
+        recalculatedSpeed = Math.max(recalculatedSpeed, 1);
+       //Apply
         player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(recalculatedSpeed);
     }
     
@@ -131,10 +131,8 @@ public class TownyCombatMovementUtil {
         double recalculatedSpeed = 
             baseWalkSpeed + (baseWalkSpeed * ((genericSpeedAdjustmentPercentage - totalEncumbrancePercentage) / 100));
         //Sanitize
-        if(recalculatedSpeed < 0)
-            recalculatedSpeed = 0.05;
-        else if(recalculatedSpeed > 1)
-            recalculatedSpeed = 1;
+        recalculatedSpeed = Math.min(recalculatedSpeed, 0.05);
+        recalculatedSpeed = Math.max(recalculatedSpeed, 1);
         //Apply
         mount.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(recalculatedSpeed);
     }
