@@ -60,7 +60,7 @@ public class TownyCombatTownyEventListener implements Listener {
 	@EventHandler
 	public void on (NewDayEvent event) {
         if (TownyCombatSettings.isTownyCombatEnabled()) {
-			TownyCombatMovementUtil.cleanupResidentHorseRegistrations();
+			TownyCombat.getPlugin().getServer().getScheduler().runTaskLater(TownyCombat.getPlugin(), TownyCombatMovementUtil::cleanupResidentHorseRegistrations, 20);
 		}
 	}
 

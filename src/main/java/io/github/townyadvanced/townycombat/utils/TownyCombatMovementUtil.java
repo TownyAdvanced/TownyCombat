@@ -165,6 +165,7 @@ public class TownyCombatMovementUtil {
                 for(UUID uuid: entriesToDelete) {
                     horseSpeedMap.remove(uuid);
                 }
+                TownyCombatResidentMetaDataController.setHorseSpeedMap(resident, horseSpeedMap);
                 resident.save();
             }
         }

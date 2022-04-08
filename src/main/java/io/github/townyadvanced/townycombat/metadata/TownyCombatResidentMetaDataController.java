@@ -58,14 +58,14 @@ public class TownyCombatResidentMetaDataController {
 			}
 		}
 		//Catch all limit for edge cases
-		baseHorseSpeed = Math.max(baseHorseSpeed, TownyCombatMovementUtil.VANILLA_HORSE_MAX_MOVEMENT_SPEED);
+		baseHorseSpeed = Math.min(baseHorseSpeed, TownyCombatMovementUtil.VANILLA_HORSE_MAX_MOVEMENT_SPEED);
 		horseSpeedMap.put(horse.getUniqueId(), baseHorseSpeed);
 		setHorseSpeedMap(resident, horseSpeedMap);
 		resident.save();
 		return baseHorseSpeed;		
 	}
 
-	private static void setHorseSpeedMap(Resident resident, Map<UUID,Double> mapToSet) {
+	public static void setHorseSpeedMap(Resident resident, Map<UUID,Double> mapToSet) {
 		//Build map
 		StringBuilder stringBuilderForMap = new StringBuilder();
 		boolean firstEntry = true;
