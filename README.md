@@ -16,24 +16,33 @@ A combat plugin for Towny, containing some generally useful combat/battle/pvp fe
   - There are 2 Modes:
     - Automatic: You go map-invisible when in the wilderness.
     - Triggered: You go map-invisible when holding a certain combination of items in your hands (*e.g. double diamond swords*).  
-- :crossed_swords: :recycle: **Tactical Damage Adjustments** ***(upcoming in 0.2.0)***
+- :crossed_swords: :recycle: **Generic Damage Adjustments** ***(upcoming in 0.2.0)***
   - Player weapon damage decreased by -30%.
-- :arrow_right: :recycle: **Tactical Movement Adjustments** ***(upcoming in 0.2.0)***
-  - Player walking speed increased by +10%.
-  - Military Equipment reduces walking speeds:
-    - Equipment:
+- :arrow_right: :recycle: **Generic Movement Adjustments** ***(upcoming in 0.2.0)***
+  - Player speed increased by +10%.
+  - Horse speed increased by +10%.
+- :left_luggage: :recycle: **Encumbrance Movement Adjustments** ***(upcoming in 0.2.0)***
+  - Carrying Military Equipment reduces speed:
+  - Horses are stronger than players, so their encumbrance is reduced by 50%.
+  - Equipment:
+    - Infantry:
       - Shield: -4 %
       - Full Leather Set: -4 %
       - Full Chainmail Set: -8 %
-      - Full Iron Set: -16 %
-      - Full Gold Set: -20 %
+      - Full Gold Set: -16 %
+      - Full Iron Set: -20 %
       - Full Diamond Set: -24 %    (*Walking around literally covered in rocks...*)
       - Full Netherite Set: -28 %
-    - Players with 8% encumbrance or more are extra slow at jumping/climbing.
-    - This feature increases tactical options on the battlefield.
-    - This feature also allows nation to develop practically useful military uniforms.
-      - Full diamond/netherite sets are no longer de-rigeur, due to their tactical vulnerability (*ie. reduced soldier speed*).
-      - Instead, each nation can develop its own practically useful uniform, containing specific materials and (with leather) colours. 
+    - Cavalry:
+      - Leather Horse Armour: -8%
+      - Gold Horse Armour: -32%
+      - Iron Horse Armour: -40%
+     - Diamond Horse Armour: -48%
+  - Players with 8% encumbrance or more are extra slow at jumping/climbing.
+  - This feature increases tactical options on the battlefield.
+  - This feature also allows nation to develop practically useful military uniforms.
+    - Full diamond/netherite sets are no longer de-rigeur, due to their tactical vulnerability (*ie. reduced soldier speed*).
+    - Instead, each nation can develop its own practically useful uniform, containing specific materials and (with leather) colours. 
 
 ## Commands:
 - ```/tcm reload```: Reloads config and language settings

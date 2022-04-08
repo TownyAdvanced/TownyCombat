@@ -297,7 +297,7 @@ public enum ConfigNodes {
 			"speed_adjustments.encumbrance.cavalry.item_percentage",
 			"",
 			"",
-			"# The base slow percentage for each type of cavalry armour item."),
+			"# The slow percentage for each type of cavalry armour item."),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_LEATHER_HORSE_ARMOUR(
 			"speed_adjustments.encumbrance.cavalry.item_percentage.leather_horse_armour",
 			"8",
