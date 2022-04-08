@@ -23,7 +23,7 @@ public class TownyCombatResidentMetaDataController {
 	//This map records the original/base speeds of the horses the player/resident trained 
 	private static StringDataField horseSpeedMap = new StringDataField("townycombat_horsespeedmap", ""); 
 
-	private static Map<UUID, Double> getHorseSpeedMap(Resident resident) {	
+	public static Map<UUID, Double> getHorseSpeedMap(Resident resident) {
 		Map<UUID, Double> result = new HashMap<>();
 		String horseSpeedMapAsString = getHorseSpeedMapAsString(resident);
 		if(horseSpeedMapAsString != null && horseSpeedMapAsString.length() != 0) {

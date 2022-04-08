@@ -9,12 +9,15 @@ import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.AnimalTamer;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * 
@@ -141,4 +144,28 @@ public class TownyCombatMovementUtil {
         return playerEncumbrancePercentageMap;
     }
 
+    /**
+    * Cleanup resident horse registrations
+    * Do this by removing dead/deleted horses from the resident files
+    */
+    public static void cleanupResidentHorseRegistrations() {
+        Map<UUID, Double> horseSpeedMap;
+        List<UUID> entriesToDelete = new ArrayList<>();
+        for(Resident resident: TownyAPI.getInstance().getResidents()) {
+            horseSpeedMap = TownyCombatResidentMetaDataController.getHorseSpeedMap(resident);
+            entriesToDelete.clear();
+            for(Map.Entry<UUID, Double> mapEntry: horseSpeedMap.entrySet()) {
+                Entity horse = Bukkit.getEntity(mapEntry.getKey());
+                if(horse == null || horse.isDead()) {
+                    entriesToDelete.add(mapEntry.getKey());
+                }
+            }
+            if(entriesToDelete.size() > 0) {
+                for(UUID uuid: entriesToDelete) {
+                    horseSpeedMap.remove(uuid);
+                }
+                resident.save();
+            }
+        }
+    }
 }
