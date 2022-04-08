@@ -107,8 +107,9 @@ public class TownyCombatSettings {
 		materialEncumbrancePercentageMap.put(Material.DIAMOND_HORSE_ARMOR, getEquipmentEncumbranceDiamondHorseArmour());
 
 		//Other Items
-		materialEncumbrancePercentageMap.put(Material.SHIELD, getEquipmentEncumbranceShield()); 
-
+		materialEncumbrancePercentageMap.put(Material.BOW, getEquipmentEncumbranceBow());
+		materialEncumbrancePercentageMap.put(Material.CROSSBOW, getEquipmentEncumbranceCrossbow());
+		materialEncumbrancePercentageMap.put(Material.SHIELD, getEquipmentEncumbranceShield());
 	}
 
 	public static boolean isTownyCombatEnabled() {
@@ -170,11 +171,19 @@ public class TownyCombatSettings {
 	public static boolean isEncumbranceEnabled() {
 		return Settings.getBoolean(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_ENABLED);
 	}
-	
+
+	public static double getEquipmentEncumbranceBow() {
+		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_BOW);
+	}
+
+	public static double getEquipmentEncumbranceCrossbow() {
+		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_CROSSBOW);
+	}
+
 	public static double getEquipmentEncumbranceShield() {
 		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_SHIELD);
 	}
-	
+
 	public static double getEquipmentEncumbranceBaseHelmet() {
 		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_HELMET);
 	}

@@ -226,9 +226,17 @@ public enum ConfigNodes {
 			"",
 			"",
 			"# The base slow percentage for each type of armour item."),
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_BOW(
+			"speed_adjustments.encumbrance.infantry.base_item_percentage.bow",
+			"2",
+			""),
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_CROSSBOW(
+			"speed_adjustments.encumbrance.infantry.base_item_percentage.crossbow",
+			"4",
+			""),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_SHIELD(
 			"speed_adjustments.encumbrance.infantry.base_item_percentage.shield",
-			"4",
+			"5",
 			""),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_HELMET(
 			"speed_adjustments.encumbrance.infantry.base_item_percentage.helmet",
