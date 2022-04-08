@@ -56,6 +56,8 @@ public class TownyCombatBukkitEventListener implements Listener {
 	public void on (EntityMountEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
+		if(!(event.getEntity() instanceof Player))
+			return;
 		//Prevent mount if the horse is about to be TP'd to owner
 		if(TownyCombatSettings.isTeleportMountWithPlayerEnabled()
 				&& event.getMount() instanceof AbstractHorse
@@ -63,6 +65,8 @@ public class TownyCombatBukkitEventListener implements Listener {
 			event.setCancelled(true);
 			event.getEntity().getUniqueId();
 		}
+		//Apply speed adjustments
+		TownyCombatMovementUtil.adjustPlayerAndMountSpeeds((Player)event.getEntity());
 	}
 	
 	@EventHandler (ignoreCancelled = true)
@@ -84,7 +88,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 	public void on (PlayerJoinEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
-		TownyCombatMovementUtil.adjustPlayerSpeed(event.getPlayer());
+		TownyCombatMovementUtil.adjustPlayerAndMountSpeeds(event.getPlayer());
 	}
 
     @EventHandler (ignoreCancelled = true)

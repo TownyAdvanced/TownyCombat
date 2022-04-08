@@ -1,18 +1,16 @@
 package io.github.townyadvanced.townycombat.listeners;
 
+import com.palmergames.bukkit.towny.event.NewDayEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyBuildEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyDestroyEvent;
-import com.palmergames.bukkit.towny.event.damage.TownyPlayerDamagePlayerEvent;
 import com.palmergames.bukkit.towny.event.time.NewShortTimeEvent;
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import io.github.townyadvanced.townycombat.utils.TownyCombatMovementUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatBlockUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatMapUtil;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 /**
  * 
@@ -49,8 +47,8 @@ public class TownyCombatTownyEventListener implements Listener {
     @EventHandler
     public void onShortTime(NewShortTimeEvent event) {
         if (TownyCombatSettings.isTownyCombatEnabled()) {
-        	if(TownyCombatSettings.isArmourSlowingEnabled()) {
-        		TownyCombatMovementUtil.adjustPlayerSpeed();
+        	if(TownyCombatSettings.isEncumbranceEnabled()) {
+        		TownyCombatMovementUtil.adjustAllPlayerAndMountSpeeds();
 			}
 			if(TownyCombatSettings.isTacticalInvisibilityEnabled()) { 
 	            TownyCombatMapUtil.evaluateTacticalInvisibility();
@@ -58,5 +56,12 @@ public class TownyCombatTownyEventListener implements Listener {
 			}
         }
     }
+
+	@EventHandler
+	public void on (NewDayEvent event) {
+        if (TownyCombatSettings.isTownyCombatEnabled()) {
+			TownyCombat.getPlugin().getServer().getScheduler().runTaskLater(TownyCombat.getPlugin(), TownyCombatMovementUtil::cleanupResidentHorseRegistrations, 20);
+		}
+	}
 
 }

@@ -1,5 +1,6 @@
 package io.github.townyadvanced.townycombat.tasks;
 
+import com.palmergames.bukkit.towny.Towny;
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.utils.TownyCombatMovementUtil;
 import org.bukkit.Bukkit;
@@ -24,8 +25,8 @@ public class JumpReductionTask extends BukkitRunnable {
 
     public void run() {
         double velocityY;        
-        Map<Player, Double> armourSpeedAdjustmentPercentages = TownyCombatMovementUtil.getInfantryArmourSpeedAdjustmentPercentages();
-        Double armourSpeedAdjustmentPercentage;
+        Map<Player, Double> playerEncumbrancePercentageMap = TownyCombatMovementUtil.getPlayerEncumbrancePercentageMap();
+        Double playerEncumbrancePercentage;
         for(Player player: Bukkit.getOnlinePlayers()) {
             velocityY = player.getVelocity().getY();  
             if(velocityY != GRAVITY_VELOCITY && velocityY != LADDER_VELOCITY && velocityY > 0) {
@@ -33,13 +34,13 @@ public class JumpReductionTask extends BukkitRunnable {
                  * Player is jumping or ascending an incline
                  *
                  * If they have heavy armour, apply a temporary effect of: slow + jump-nerf
-                 * Effects starts at 8% armour-slow, with an effect duration of 1 second (20 ticks)
-                 * Every 4% amour-slow after that, adds a effect duration of 0.4 seconds (8 tics)
+                 * Effects starts at 8% encumbrance, with an effect duration of 1 second (20 ticks)
+                 * Every 4% encumbrance after that, adds a effect duration of 0.4 seconds (8 tics)
                  * These numbers are hardcoded for simplicity & to avoid server misconfiguration.
                  */
-                armourSpeedAdjustmentPercentage = armourSpeedAdjustmentPercentages.get(player);
-                if(armourSpeedAdjustmentPercentage != null && armourSpeedAdjustmentPercentage <= -8) {
-                    final int effectDurationTicks = (int)(20  + (((-armourSpeedAdjustmentPercentage / 4) -2) * 8));
+                playerEncumbrancePercentage = playerEncumbrancePercentageMap.get(player);
+                if(playerEncumbrancePercentage != null && playerEncumbrancePercentage >= 8) {
+                    final int effectDurationTicks = (int)(20  + (((playerEncumbrancePercentage / 4) -2) * 8));
                     TownyCombat.getPlugin().getServer().getScheduler().runTask(TownyCombat.getPlugin(), ()-> applyEffects(player, effectDurationTicks));
                }
             }
@@ -47,8 +48,7 @@ public class JumpReductionTask extends BukkitRunnable {
     }
 
     private void applyEffects(Player player, int effectDurationTicks) {
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, effectDurationTicks, 4, false, false, true));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, effectDurationTicks, -30, false, false, true));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, effectDurationTicks, 4));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, effectDurationTicks, -30));
     }
-
 }
