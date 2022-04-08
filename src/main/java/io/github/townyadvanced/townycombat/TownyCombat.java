@@ -26,7 +26,7 @@ public class TownyCombat extends JavaPlugin {
     @Override
     public void onEnable() {
     	plugin = this;
-		Bukkit.getLogger().info("=================================================================================");
+		info("=================================================================================");
 		printSickASCIIArt();
 	
     	try {
@@ -46,7 +46,7 @@ public class TownyCombat extends JavaPlugin {
 			registerCommands();
 			startTasks();
 			info("TownyCombat Enabled.");
-			Bukkit.getLogger().info("=================================================================================");
+			info("=================================================================================");
 		} catch (Exception e) {
     		severe(e.getMessage());
     		e.printStackTrace();
@@ -125,6 +125,6 @@ public class TownyCombat extends JavaPlugin {
 		System.lineSeparator() + ("  |_| \\___/ \\_/\\_/ |_||_|  \\_, |   \\___|\\___/|_|_|_| |_.__/\\__,_| \\__|  ") +
 		System.lineSeparator() + ("                           |__/ ") +
 		System.lineSeparator();
-		Bukkit.getLogger().info(art);
+		info(art);
 	}
 }
