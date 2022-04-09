@@ -10,10 +10,9 @@ import io.github.townyadvanced.townycombat.utils.TownyCombatMovementUtil;
 
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -91,12 +90,21 @@ public class TownyCombatBukkitEventListener implements Listener {
 		TownyCombatMovementUtil.adjustPlayerAndMountSpeeds(event.getPlayer());
 	}
 
-    @EventHandler (ignoreCancelled = true)
-    public void on (EntityDamageByEntityEvent event) {
-		if(event.getDamager() instanceof Player
-			|| (event.getDamager() instanceof Projectile
-				&& ((Projectile)event.getDamager()).getShooter() instanceof Player)) {
-			event.setDamage(event.getDamage() + (event.getDamage() * (TownyCombatSettings.getDamageModificationAllWeaponsPercentage() / 100)));
+	@EventHandler (ignoreCancelled = true)
+    public void on (EntityDamageEvent event) {
+		if(event.getEntity() instanceof Player) {
+			//Reduce damage to players
+			event.setDamage(event.getDamage() + (event.getDamage() * (TownyCombatSettings.getDamageAdjustmentsPlayersIncoming() / 100)));
+
+		} else if (event.getEntity() instanceof AbstractHorse) {
+			//Reduce damage to horses
+			if(TownyCombatSettings.getDamageAdjustmentsHorsesImmuneToFire()
+					&& (event.getCause() == EntityDamageEvent.DamageCause.FIRE
+					|| event.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK)) {
+				event.setCancelled(true);
+			} else {
+				event.setDamage(event.getDamage() + (event.getDamage() * (TownyCombatSettings.getDamageAdjustmentsHorsesIncoming() / 100)));
+			}
 		}
 	}
 }

@@ -165,12 +165,24 @@ public enum ConfigNodes {
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
-	DAMAGE_ADJUSTMENTS_ALL_WEAPONS_PERCENTAGE(
-			"damage_adjustments.all_weapons_percentage",
+	DAMAGE_ADJUSTMENTS_PLAYERS_INCOMING(
+			"damage_adjustments.players_incoming",
 			"-30",
 			"",
-			"# This setting adjusts the damage of all weapons (including fists)",
+			"# This setting adjusts the incoming damage to all players.",
 			"# TIP: If armour slowing is enabled, this setting is important, as players will generally have less armour."),
+	DAMAGE_ADJUSTMENTS_HORSES_INCOMING(
+			"damage_adjustments.horses_incoming",
+			"-50",
+			"",
+			"# This setting adjusts the incoming damage to all horses.",
+			"# TIP: This setting is important to make horses viable in battle."),
+	DAMAGE_ADJUSTMENTS_HORSES_IMMUNE_TO_FIRE(
+			"damage_adjustments.horses_immune_to_fire",
+			"true",
+			"",
+			"# If this setting is true, then horses are immune to fire damage.",
+			"# TIP: This setting is important to make horses viable in battle."),
 	SPEED_ADJUSTMENTS(
 			"speed_adjustments",
 			"",

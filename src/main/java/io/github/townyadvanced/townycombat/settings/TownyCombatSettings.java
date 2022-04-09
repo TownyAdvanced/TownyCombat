@@ -256,8 +256,16 @@ public class TownyCombatSettings {
 		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_GENERIC_CAVALRY_ADJUSTMENT_PERCENTAGE);
 	}
 
-	public static double getDamageModificationAllWeaponsPercentage() {
-		return Settings.getDouble(ConfigNodes.DAMAGE_ADJUSTMENTS_ALL_WEAPONS_PERCENTAGE);
+	public static double getDamageAdjustmentsPlayersIncoming() {
+		return Settings.getDouble(ConfigNodes.DAMAGE_ADJUSTMENTS_PLAYERS_INCOMING);
+	}
+
+	public static double getDamageAdjustmentsHorsesIncoming() {
+		return Settings.getDouble(ConfigNodes.DAMAGE_ADJUSTMENTS_HORSES_INCOMING);
+	}
+
+	public static boolean getDamageAdjustmentsHorsesImmuneToFire() {
+		return Settings.getBoolean(ConfigNodes.DAMAGE_ADJUSTMENTS_HORSES_IMMUNE_TO_FIRE);
 	}
 	
 	public static double getCavalryEncumbranceReductionPercentage() {
