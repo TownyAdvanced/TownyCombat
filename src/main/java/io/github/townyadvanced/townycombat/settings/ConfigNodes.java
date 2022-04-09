@@ -173,7 +173,7 @@ public enum ConfigNodes {
 			"# TIP: If armour slowing is enabled, this setting is important, as players will generally have less armour."),
 	DAMAGE_ADJUSTMENTS_HORSES_INCOMING(
 			"damage_adjustments.horses_incoming",
-			"-80",
+			"-90",
 			"",
 			"# This setting adjusts the incoming damage to all horses.",
 			"# TIP: This setting is important to make horses viable in battle."),
