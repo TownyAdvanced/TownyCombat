@@ -125,7 +125,6 @@ public class TownyCombatBukkitEventListener implements Listener {
 						|| (event.getEntity() instanceof Player
 							&& event.getEntity().isInsideVehicle()
 							&& event.getEntity().getVehicle() instanceof AbstractHorse)) {
-	
 					ItemStack mainHandItem =  ((Player)event.getDamager()).getInventory().getItemInMainHand();
 					if(mainHandItem.getType() == TownyCombatItemUtil.SPEAR_PLACEHOLDER_MATERIAL
 							&& mainHandItem.getEnchantments().containsKey(Enchantment.DAMAGE_ALL)
