@@ -364,7 +364,36 @@ public enum ConfigNodes {
 			"true",
 			"",
 			"# A warhammer is a cheap and heavy throwaway item. It cannot be repaired or comnbined.",
-			"# Its damage stats are like a wooden axe, with sharpness 10, knockback 1, and 15% shield-break chance.");
+			"# Its damage stats are like a wooden axe, with sharpness 10, knockback 1, and 15% shield-break chance."),
+	AUTOPOTTING(
+		"autopotting",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |                    AUTO-POTTING                      | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
+	AUTOPOTTING_ENABLED(
+			"autopotting.enabled",
+			"true",
+			"",
+			"# If enabled, then splash health potions (I and II) are automatically consumed if a player's health gets below a certain threshold.",
+			"# BACKROUND: ",
+			"# - The required personal skill levels for Towny combat have reached an extremely high bar in the community.",
+			"# - This is excluding many new and casual players from simply 'jumping in' without months of off-server training.",
+			"# - In addition, roleplaying is being severely effected, as cross-server PVP clans are becoming decisive in battles.",
+			"# TIP: ",
+			"# - This feature restores sanity to the situation:",
+			"# - It allows new and casual players to jump into battles quickly after they join.",
+			"# - It reduces the power of PVP clans, not by nerfing them (as has been suggested), but by bringing everybody else up closer to their level."),
+	AUTOPOTTING_HEALTH_THRESHOLD(
+			"autopotting.health_threshold",
+			"10",
+			"",
+			"# Once health falls below this threshold, splash-health will be automatically consumed just before the next damage event.");
 
 	private final String Root;
 	private final String Default;

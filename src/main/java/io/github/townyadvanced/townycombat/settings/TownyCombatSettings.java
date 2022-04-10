@@ -291,4 +291,11 @@ public class TownyCombatSettings {
 		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_WARHAMMER_ENABLED);
 	}
 
+	public static boolean isAutoPottingEnabled() {
+		return Settings.getBoolean(ConfigNodes.AUTOPOTTING_ENABLED);
+	}
+
+	public static double getAutoPottingThreshold() {
+		return Settings.getDouble(ConfigNodes.AUTOPOTTING_HEALTH_THRESHOLD);
+	}
 }

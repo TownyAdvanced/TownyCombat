@@ -101,6 +101,10 @@ public class TownyCombatBukkitEventListener implements Listener {
 	@EventHandler (ignoreCancelled = true)
     public void on (EntityDamageEvent event) {
 		if(event.getEntity() instanceof Player) {
+			//Auto-pot if needed
+			if(((Player) event.getEntity()).getHealth() < TownyCombatSettings.getAutoPottingThreshold()) {
+				TownyCombatItemUtil.autopotToThreshold((Player)event.getEntity());
+			}
 			//Reduce damage to players
 			event.setDamage(event.getDamage() + (event.getDamage() * (TownyCombatSettings.getDamageAdjustmentsPlayersIncoming() / 100)));
 
@@ -112,6 +116,12 @@ public class TownyCombatBukkitEventListener implements Listener {
 				event.setCancelled(true);
 			} else {
 				event.setDamage(event.getDamage() + (event.getDamage() * (TownyCombatSettings.getDamageAdjustmentsHorsesIncoming() / 100)));
+			}
+			//Auto-pot if needed
+			if(event.getEntity().getPassengers().size() > 0
+					&& event.getEntity().getPassengers().get(0) instanceof Player
+					&& ((AbstractHorse) event.getEntity()).getHealth() < TownyCombatSettings.getAutoPottingThreshold()) {
+				TownyCombatItemUtil.autopotToThreshold((Player)event.getEntity().getPassengers().get(0), (AbstractHorse)event.getEntity());
 			}
 		}
 	}
