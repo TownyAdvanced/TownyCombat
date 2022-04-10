@@ -2,6 +2,7 @@ package io.github.townyadvanced.townycombat.settings;
 
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.objects.HeldItemsCombination;
+import io.github.townyadvanced.townycombat.utils.TownyCombatItemUtil;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
@@ -110,6 +111,8 @@ public class TownyCombatSettings {
 		materialEncumbrancePercentageMap.put(Material.BOW, getEquipmentEncumbranceBow());
 		materialEncumbrancePercentageMap.put(Material.CROSSBOW, getEquipmentEncumbranceCrossbow());
 		materialEncumbrancePercentageMap.put(Material.SHIELD, getEquipmentEncumbranceShield());
+		materialEncumbrancePercentageMap.put(TownyCombatItemUtil.SPEAR_PLACEHOLDER_MATERIAL, getEquipmentEncumbranceSpear());
+		materialEncumbrancePercentageMap.put(TownyCombatItemUtil.WARHAMMER_PLACEHOLDER_MATERIAL, getEquipmentEncumbranceWarhammer());
 	}
 
 	public static boolean isTownyCombatEnabled() {
@@ -272,5 +275,11 @@ public class TownyCombatSettings {
 		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_REDUCTION_PERCENTAGE);
 	}
 
+	public static double getEquipmentEncumbranceSpear() {
+		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_SPEAR);
+	}
 
+	public static double getEquipmentEncumbranceWarhammer() {
+		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_WARHAMMER);
+	}
 }
