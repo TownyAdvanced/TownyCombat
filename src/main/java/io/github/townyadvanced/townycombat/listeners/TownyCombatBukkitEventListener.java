@@ -117,7 +117,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 	}
 
 	@EventHandler (ignoreCancelled = true)
-    public void on (EntityDamageByEntityEvent event) {
+	public void on (EntityDamageByEntityEvent event) {
 		if(event.getDamager() instanceof Player) {
 			//SPEAR
 			if(event.getEntity() instanceof AbstractHorse
@@ -154,7 +154,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 	}
 
 	@EventHandler (ignoreCancelled = true)
-    public void on (PrepareItemCraftEvent event) {
+	public void on (PrepareItemCraftEvent event) {
 		if(event.getInventory().getResult() != null
 				&& TownyCombatItemUtil.isForbiddenItem(event.getInventory().getResult())) {
 			event.getInventory().setResult(null);
@@ -173,7 +173,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 	}
 
 	@EventHandler (ignoreCancelled = true)
-    public void on (PrepareAnvilEvent event) {
+	public void on (PrepareAnvilEvent event) {
 		if(event.getResult() != null
 				&& TownyCombatItemUtil.isReservedMaterial(event.getResult().getType())) {
 			event.setResult(null);  //Cannot repair reserved material
