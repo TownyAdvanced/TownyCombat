@@ -120,32 +120,36 @@ public class TownyCombatBukkitEventListener implements Listener {
 	public void on (EntityDamageByEntityEvent event) {
 		if(event.getDamager() instanceof Player) {
 			//SPEAR
-			if(event.getEntity() instanceof AbstractHorse
-					|| (event.getEntity() instanceof Player
-						&& event.getEntity().isInsideVehicle()
-						&& event.getEntity().getVehicle() instanceof AbstractHorse)) {
-
-				ItemStack mainHandItem =  ((Player)event.getDamager()).getInventory().getItemInMainHand();
-				if(mainHandItem.getType() == TownyCombatItemUtil.SPEAR_PLACEHOLDER_MATERIAL
-						&& mainHandItem.getEnchantments().containsKey(Enchantment.DAMAGE_ALL)
-						&& mainHandItem.getEnchantmentLevel(Enchantment.DAMAGE_ALL) == TownyCombatItemUtil.SPEAR_SHARPNESS_LEVEL) {
-					event.setDamage(event.getDamage() + (event.getDamage() * TownyCombatItemUtil.SPEAR_VS_CAVALRY_DAMAGE_ADJUSTMENT));
-					return;
+			if(TownyCombatSettings.isNewItemsSpearEnabled()) {
+				if(event.getEntity() instanceof AbstractHorse
+						|| (event.getEntity() instanceof Player
+							&& event.getEntity().isInsideVehicle()
+							&& event.getEntity().getVehicle() instanceof AbstractHorse)) {
+	
+					ItemStack mainHandItem =  ((Player)event.getDamager()).getInventory().getItemInMainHand();
+					if(mainHandItem.getType() == TownyCombatItemUtil.SPEAR_PLACEHOLDER_MATERIAL
+							&& mainHandItem.getEnchantments().containsKey(Enchantment.DAMAGE_ALL)
+							&& mainHandItem.getEnchantmentLevel(Enchantment.DAMAGE_ALL) == TownyCombatItemUtil.SPEAR_SHARPNESS_LEVEL) {
+						event.setDamage(event.getDamage() + (event.getDamage() * TownyCombatItemUtil.SPEAR_VS_CAVALRY_DAMAGE_ADJUSTMENT));
+						return;
+					}
 				}
 			}
 			//WARHAMMER
-			if(event.getEntity() instanceof Player) {
-				ItemStack damagerMainHand = ((Player)event.getDamager()).getInventory().getItemInMainHand();
-				if (damagerMainHand.getType() == TownyCombatItemUtil.WARHAMMER_PLACEHOLDER_MATERIAL) {
-					if(((Player)event.getEntity()).isBlocking()) {
-						ItemStack victimMainHand = ((Player)event.getEntity()).getInventory().getItemInMainHand();
-						ItemStack victimOffHand = ((Player)event.getEntity()).getInventory().getItemInOffHand();
-						if(victimMainHand.getType() == Material.SHIELD) {
-							//Player is blocking with shield in main hand
-							TownyCombatItemUtil.rollBreakItemInHand((Player)event.getEntity(), false, TownyCombatItemUtil.WARHAMMER_BREAK_SHIELD_CHANCE);
-						} else if (victimOffHand.getType() == Material.SHIELD) {
-							//Player is blocking with shield in off hand
-							TownyCombatItemUtil.rollBreakItemInHand((Player)event.getEntity(), true, TownyCombatItemUtil.WARHAMMER_BREAK_SHIELD_CHANCE);
+			if(TownyCombatSettings.isNewItemsWarhammerEnabled()) {
+				if(event.getEntity() instanceof Player) {
+					ItemStack damagerMainHand = ((Player)event.getDamager()).getInventory().getItemInMainHand();
+					if (damagerMainHand.getType() == TownyCombatItemUtil.WARHAMMER_PLACEHOLDER_MATERIAL) {
+						if(((Player)event.getEntity()).isBlocking()) {
+							ItemStack victimMainHand = ((Player)event.getEntity()).getInventory().getItemInMainHand();
+							ItemStack victimOffHand = ((Player)event.getEntity()).getInventory().getItemInOffHand();
+							if(victimMainHand.getType() == Material.SHIELD) {
+								//Player is blocking with shield in main hand
+								TownyCombatItemUtil.rollBreakItemInHand((Player)event.getEntity(), false, TownyCombatItemUtil.WARHAMMER_BREAK_SHIELD_CHANCE);
+							} else if (victimOffHand.getType() == Material.SHIELD) {
+								//Player is blocking with shield in off hand
+								TownyCombatItemUtil.rollBreakItemInHand((Player)event.getEntity(), true, TownyCombatItemUtil.WARHAMMER_BREAK_SHIELD_CHANCE);
+							}
 						}
 					}
 				}

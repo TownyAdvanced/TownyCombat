@@ -1,5 +1,6 @@
 package io.github.townyadvanced.townycombat.utils;
 
+import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
@@ -33,13 +34,15 @@ public class TownyCombatItemUtil {
      * @return true if forbidden item
      */
     public static boolean isForbiddenItem(ItemStack item) {
-        if(item.getType() == SPEAR_PLACEHOLDER_MATERIAL
-            && (!item.getEnchantments().containsKey(Enchantment.DAMAGE_ALL)
-                || item.getEnchantmentLevel(Enchantment.DAMAGE_ALL) != SPEAR_SHARPNESS_LEVEL)) {
+        if(TownyCombatSettings.isNewItemsSpearEnabled()
+                && item.getType() == SPEAR_PLACEHOLDER_MATERIAL
+                && (!item.getEnchantments().containsKey(Enchantment.DAMAGE_ALL)
+                    || item.getEnchantmentLevel(Enchantment.DAMAGE_ALL) != SPEAR_SHARPNESS_LEVEL)) {
             return true;  //Vanilla wooden sword
-        } else if (item.getType() == WARHAMMER_PLACEHOLDER_MATERIAL
-            && (!item.getEnchantments().containsKey(Enchantment.DAMAGE_ALL)
-                || item.getEnchantmentLevel(Enchantment.DAMAGE_ALL) != WARHAMMER_SHARPNESS_LEVEL)) {
+        } else if (TownyCombatSettings.isNewItemsWarhammerEnabled()
+                && item.getType() == WARHAMMER_PLACEHOLDER_MATERIAL
+                && (!item.getEnchantments().containsKey(Enchantment.DAMAGE_ALL)
+                    || item.getEnchantmentLevel(Enchantment.DAMAGE_ALL) != WARHAMMER_SHARPNESS_LEVEL)) {
             return true;  //Vanilla stone axe
         } else {
             return false;
@@ -53,8 +56,11 @@ public class TownyCombatItemUtil {
      * @return true if forbidden material
      */
     public static boolean isReservedMaterial(Material material) {
-        return material == SPEAR_PLACEHOLDER_MATERIAL
-            || material == WARHAMMER_PLACEHOLDER_MATERIAL;
+        if(TownyCombatSettings.isNewItemsSpearEnabled() && material == SPEAR_PLACEHOLDER_MATERIAL)
+            return true;
+        if(TownyCombatSettings.isNewItemsWarhammerEnabled() && material == WARHAMMER_PLACEHOLDER_MATERIAL)
+            return true;
+        return false;
     }
 
     /**
@@ -64,7 +70,8 @@ public class TownyCombatItemUtil {
      * @return the result
      */
     public static ItemStack calculateCraftingResult(PrepareItemCraftEvent event) {
-        if(doesMatrixMatch(event.getInventory().getMatrix(), SPEAR_MATERIALS)) {
+        if(TownyCombatSettings.isNewItemsSpearEnabled()
+                && doesMatrixMatch(event.getInventory().getMatrix(), SPEAR_MATERIALS)) {
 			ItemStack result = new ItemStack(SPEAR_PLACEHOLDER_MATERIAL);
 			ItemMeta itemMeta = result.getItemMeta();
 			itemMeta.setDisplayName("Spear");
@@ -76,7 +83,8 @@ public class TownyCombatItemUtil {
 			result.setItemMeta(itemMeta);
 			return result;
         
-        } else if(doesMatrixMatch(event.getInventory().getMatrix(), WARHAMMER_MATERIALS)) {
+        } else if(TownyCombatSettings.isNewItemsWarhammerEnabled()
+                && doesMatrixMatch(event.getInventory().getMatrix(), WARHAMMER_MATERIALS)) {
 			ItemStack result = new ItemStack(WARHAMMER_PLACEHOLDER_MATERIAL);
 			ItemMeta itemMeta = result.getItemMeta();
 			itemMeta.setDisplayName("Warhammer");

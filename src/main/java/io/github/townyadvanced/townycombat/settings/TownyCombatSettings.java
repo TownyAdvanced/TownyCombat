@@ -282,4 +282,13 @@ public class TownyCombatSettings {
 	public static double getEquipmentEncumbranceWarhammer() {
 		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_WARHAMMER);
 	}
+
+	public static boolean isNewItemsSpearEnabled() {
+		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_SPEAR_ENABLED);
+	}
+
+	public static boolean isNewItemsWarhammerEnabled() {
+		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_WARHAMMER_ENABLED);
+	}
+
 }
