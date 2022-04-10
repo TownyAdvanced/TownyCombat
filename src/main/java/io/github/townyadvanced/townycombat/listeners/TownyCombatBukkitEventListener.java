@@ -118,32 +118,13 @@ public class TownyCombatBukkitEventListener implements Listener {
 
 	@EventHandler (ignoreCancelled = true)
     public void on (EntityDamageByEntityEvent event) {
-			//Test
-			if(event.getEntity() instanceof Player) {
-				if(((Player)event.getEntity()).isBlocking()) {
-					ItemStack victimMainHand = ((Player)event.getEntity()).getInventory().getItemInMainHand();
-					ItemStack victimOffHand = ((Player)event.getEntity()).getInventory().getItemInOffHand();
-					if(victimMainHand.getType() == Material.SHIELD) {
-						//Player is blocking with shield in main hand
-						TownyCombatItemUtil.rollBreakItemInHand((Player)event.getEntity(), false, TownyCombatItemUtil.WARHAMMER_BREAK_SHIELD_CHANCE);
-					} else if (victimOffHand.getType() == Material.SHIELD) {
-						//Player is blocking with shield in off hand
-						TownyCombatItemUtil.rollBreakItemInHand((Player)event.getEntity(), true, TownyCombatItemUtil.WARHAMMER_BREAK_SHIELD_CHANCE);
-					}
-				}
-			}	
-			if(true)
-				return;
-
-
 		if(event.getDamager() instanceof Player) {
-			
 			//SPEAR
 			if(event.getEntity() instanceof AbstractHorse
-					|| (event.getEntity() instanceof Player 
+					|| (event.getEntity() instanceof Player
 						&& event.getEntity().isInsideVehicle()
 						&& event.getEntity().getVehicle() instanceof AbstractHorse)) {
-	
+
 				ItemStack mainHandItem =  ((Player)event.getDamager()).getInventory().getItemInMainHand();
 				if(mainHandItem.getType() == TownyCombatItemUtil.SPEAR_PLACEHOLDER_MATERIAL
 						&& mainHandItem.getEnchantments().containsKey(Enchantment.DAMAGE_ALL)
@@ -152,29 +133,28 @@ public class TownyCombatBukkitEventListener implements Listener {
 					return;
 				}
 			}
-
 			//WARHAMMER
 			if(event.getEntity() instanceof Player) {
 				ItemStack damagerMainHand = ((Player)event.getDamager()).getInventory().getItemInMainHand();
-				if (damagerMainHand.getType() == TownyCombatItemUtil.WARHAMMER_PLACEHOLDER_MATERIAL) {					
+				if (damagerMainHand.getType() == TownyCombatItemUtil.WARHAMMER_PLACEHOLDER_MATERIAL) {
 					if(((Player)event.getEntity()).isBlocking()) {
 						ItemStack victimMainHand = ((Player)event.getEntity()).getInventory().getItemInMainHand();
 						ItemStack victimOffHand = ((Player)event.getEntity()).getInventory().getItemInOffHand();
 						if(victimMainHand.getType() == Material.SHIELD) {
 							//Player is blocking with shield in main hand
-							TownyCombatItemUtil.rollBreakItemInHand((Player)event.getEntity(), false, TownyCombatItemUtil.WARHAMMER_BREAK_SHIELD_CHANCE);						
+							TownyCombatItemUtil.rollBreakItemInHand((Player)event.getEntity(), false, TownyCombatItemUtil.WARHAMMER_BREAK_SHIELD_CHANCE);
 						} else if (victimOffHand.getType() == Material.SHIELD) {
 							//Player is blocking with shield in off hand
-							TownyCombatItemUtil.rollBreakItemInHand((Player)event.getEntity(), true, TownyCombatItemUtil.WARHAMMER_BREAK_SHIELD_CHANCE);						
+							TownyCombatItemUtil.rollBreakItemInHand((Player)event.getEntity(), true, TownyCombatItemUtil.WARHAMMER_BREAK_SHIELD_CHANCE);
 						}
 					}
 				}
-			}	
+			}
 		}
 	}
 
 	@EventHandler (ignoreCancelled = true)
-    public void on (PrepareItemCraftEvent event) {		
+    public void on (PrepareItemCraftEvent event) {
 		if(event.getInventory().getResult() != null
 				&& TownyCombatItemUtil.isForbiddenItem(event.getInventory().getResult())) {
 			event.getInventory().setResult(null);
@@ -185,18 +165,18 @@ public class TownyCombatBukkitEventListener implements Listener {
 			if(event.getInventory().getResult() != null
 					&& TownyCombatItemUtil.isReservedMaterial(event.getInventory().getResult().getType())) {
 				event.getInventory().setResult(null); //Cannot repair reserved material
-			}			
+			}
 		} else {
 			//Craft
 			event.getInventory().setResult(TownyCombatItemUtil.calculateCraftingResult(event));
 		}
-	}	
+	}
 
 	@EventHandler (ignoreCancelled = true)
     public void on (PrepareAnvilEvent event) {
-    	if(event.getResult() != null
+		if(event.getResult() != null
 				&& TownyCombatItemUtil.isReservedMaterial(event.getResult().getType())) {
-    		event.setResult(null);  //Cannot repair reserved material
+			event.setResult(null);  //Cannot repair reserved material
 		}
 	}
 
