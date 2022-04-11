@@ -92,6 +92,8 @@ public class TownyCombatBukkitEventListener implements Listener {
 
 	@EventHandler (ignoreCancelled = true)
     public void on (EntityDamageEvent event) {
+		if (!TownyCombatSettings.isTownyCombatEnabled())
+			return;
 		if(event.getEntity() instanceof Player) {
 			//Reduce damage to players
 			event.setDamage(event.getDamage() + (event.getDamage() * (TownyCombatSettings.getDamageAdjustmentsPlayersIncoming() / 100)));
