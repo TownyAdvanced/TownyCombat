@@ -398,7 +398,7 @@ public enum ConfigNodes {
 			"autopotting.health_threshold",
 			"10",
 			"",
-			"# Once health falls below this threshold, splash-health will be automatically consumed just before the next damage event.");
+			"# Once health falls below this threshold, splash-health potions will be automatically consumed just before the next damage event.");
 
 	private final String Root;
 	private final String Default;
