@@ -392,7 +392,7 @@ public enum ConfigNodes {
 			"# B. Enabled ",
 			"#   = Shake Things Up.",
 			"#   = Combat is opened up more to new-players/casual-players/roleplayers/builders/traders.",
-			"#   = Example: Even a player who has never fought in MC before can still be useful in a battle, once their teams equips then with some basic military kit like shield, bow, sword, and a few health potions.",
+			"#   = Example: Even a player who has never fought in MC before can still be useful in a battle, once their teams equips then with some basic military kit like bow, shield, sword, and a few health potions.",
 			"# "),
 	AUTOPOTTING_HEALTH_THRESHOLD(
 			"autopotting.health_threshold",
