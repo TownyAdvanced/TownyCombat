@@ -10,8 +10,7 @@ import io.github.townyadvanced.townycombat.listeners.TownyCombatTownEventListene
 import io.github.townyadvanced.townycombat.listeners.TownyCombatTownyEventListener;
 import io.github.townyadvanced.townycombat.settings.Settings;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
-import io.github.townyadvanced.townycombat.tasks.JumpReductionTask;
-import org.bukkit.Bukkit;
+import io.github.townyadvanced.townycombat.tasks.TownyCombatTask;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -21,7 +20,7 @@ public class TownyCombat extends JavaPlugin {
 	private static TownyCombat plugin = null;
 	private static DynmapIntegration dynmapIntegration = null;
 	private static final Version requiredTownyVersion = Version.fromString("0.98.0.0");
-	private static BukkitTask jumpReductionTask = null;
+	private static BukkitTask townyCombatTask = null;
 
     @Override
     public void onEnable() {
@@ -103,14 +102,12 @@ public class TownyCombat extends JavaPlugin {
 	}
 	
 	private void startTasks() {
-		if(TownyCombatSettings.isEncumbranceEnabled()) {
-			//Run jump reduction task every 0.5 seconds
-        	jumpReductionTask = new JumpReductionTask().runTaskTimerAsynchronously(plugin, 400, 10);
-		}
+		//Run task every 0.5 seconds
+		townyCombatTask = new TownyCombatTask().runTaskTimerAsynchronously(plugin, 400, 10);
     }
 
     public void endTasks() {
-        jumpReductionTask.cancel();
+        townyCombatTask.cancel();
     }
 	
 	private void printSickASCIIArt() {

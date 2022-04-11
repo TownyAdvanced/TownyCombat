@@ -37,6 +37,34 @@ public enum ConfigNodes {
 			"# If true, then when a player uses /n or /t spawn, their mount (e.g. a horse) comes with them.",
 			"# After the player spawns, the mount takes 5 seconds to arrive.",
 			"# TIP: The setting helps enable cavalry tactics, by making it easier to bring horses to battles."),
+	HORSE_ENHANCEMENTS_HORSE_FIRE_IMMUNITY_ENABLED(
+			"horse_enhancements.horse_fire_immunity_enabled",
+			"true",
+			"",
+			"# If this setting is true, then horses are immune to fire damage.",
+			"# TIP: This setting is important to make horses viable in battle."),
+	HORSE_ENHANCEMENTS_CAVALRY_CHARGE(
+		"horse_enhancements.cavalry_charge",
+			"",
+			"",
+			"",
+			"# +------------------------------------------------------+ #",
+			"# |                   CAVALRY CHARGE                     | #",
+			"# +------------------------------------------------------+ #",
+			""),
+	HORSE_ENHANCEMENTS_CAVALRY_CHARGE_ENABLED(
+			"horse_enhancements.cavalry_charge.enabled",
+			"true",
+			"",
+			"# If this setting is true, then the Cavalry Charge ability is enabled:",
+			"# - Starts in cooldown when a player mounts a horse.",
+			"# - Goes into cooldown when the rider strikes a player/mob with their weapon.",
+			"# - Effect: Strength II"),			
+	HORSE_ENHANCEMENTS_CAVALRY_CHARGE_COOLDOWN_SECONDS(
+			"horse_enhancements.cavalry_charge.cooldown_seconds",
+			"15",
+			"",
+			"# The charge effect cooldown."),
 	BLOCK_GLITCHING_PREVENTION(
 		"block_glitching_prevention",
 			"",
@@ -176,12 +204,6 @@ public enum ConfigNodes {
 			"-90",
 			"",
 			"# This setting adjusts the incoming damage to all horses.",
-			"# TIP: This setting is important to make horses viable in battle."),
-	DAMAGE_ADJUSTMENTS_HORSES_IMMUNE_TO_FIRE(
-			"damage_adjustments.horses_immune_to_fire",
-			"true",
-			"",
-			"# If this setting is true, then horses are immune to fire damage.",
 			"# TIP: This setting is important to make horses viable in battle."),
 	SPEED_ADJUSTMENTS(
 			"speed_adjustments",
