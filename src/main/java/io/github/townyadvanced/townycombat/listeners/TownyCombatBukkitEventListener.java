@@ -1,6 +1,5 @@
 package io.github.townyadvanced.townycombat.listeners;
 
-import com.palmergames.bukkit.towny.TownySettings;
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import io.github.townyadvanced.townycombat.utils.TownyCombatHorseUtil;
@@ -114,7 +113,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 
 		} else if (event.getEntity() instanceof AbstractHorse) {
 			//Reduce damage to horses
-			if(TownyCombatSettings.getDamageAdjustmentsHorsesImmuneToFire()
+			if(TownyCombatSettings.isHorsesImmuneToFire()
 					&& (event.getCause() == EntityDamageEvent.DamageCause.FIRE
 					|| event.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK)) {
 				event.setCancelled(true);

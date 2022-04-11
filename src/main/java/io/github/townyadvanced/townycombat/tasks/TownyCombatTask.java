@@ -1,34 +1,44 @@
 package io.github.townyadvanced.townycombat.tasks;
 
-import com.palmergames.bukkit.towny.Towny;
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
+import io.github.townyadvanced.townycombat.utils.TownyCombatHorseUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatMovementUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.Map;
+import org.bukkit.scheduler.BukkitTask;
 
 /**
- * This class/task exists to compensate for a bug in vanilla Mineceaft,
- * in which players can bypass slow-effects by jumping forward.
- * 
- * This class compensates by applying a temporary extra slow, and a jump nerf,
- * if a player in heavy armour jumps or ascends an incline.
+ * This class/task governs all TownyCombat features which require shorter intervals than the Towny-Short-Interval.
  */
 public class TownyCombatTask extends BukkitRunnable {
+    private boolean offTick = false;
 
+    /**
+     * Start task. Runs every 0.5 seconds
+     *
+     * @param plugin the plugin
+     * @return task object
+     */
+    public static BukkitTask startTownyCombatTask(TownyCombat plugin) {
+        return new TownyCombatTask().runTaskTimerAsynchronously(plugin, 400, 10);
+    }
+
+    /**
+     * The required task run method
+     */
     public void run() {
+        //Execute the jump restriction every 0.5 seconds.
         if(TownyCombatSettings.isEncumbranceEnabled()) {
             TownyCombatMovementUtil.slowEncumberedJumpingPlayers();
         }
-        if(TownyCombatSettings.isCavalryChargingEnabled()) {
-            //TownyCombatMovementUtil.slowEncumberedJumpingPlayers();
+        //Execute the cavalry charge refreshes every 1 second.
+        if(TownyCombatSettings.isCavalryChargeEnabled()) {
+            if(offTick) {
+                offTick = false;
+            } else {
+                offTick = true;
+                TownyCombatHorseUtil.refreshAllCavalryCharges();
+            }
         }
-        
-    
     }
 }

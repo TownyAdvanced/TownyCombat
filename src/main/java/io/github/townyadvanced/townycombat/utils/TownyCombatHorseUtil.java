@@ -1,10 +1,13 @@
 package io.github.townyadvanced.townycombat.utils;
 
 import com.palmergames.bukkit.towny.Towny;
+import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +20,7 @@ import java.util.Map;
 public class TownyCombatHorseUtil {
 
     private static Map<Player, AbstractHorse> scheduledHorseTeleports = new HashMap<>();
+    private static Map<Player, Long> cavalryChargeRefreshTimes = new HashMap<>();
 
     /**
      * Teleport the player's horse, if there is one
@@ -45,16 +49,51 @@ public class TownyCombatHorseUtil {
     }
 
     public static void registerPlayerMount(Player player, AbstractHorse mount) {
-        scheduledHorseTeleports.put(player, mount);
+        if(TownyCombatSettings.isTeleportMountWithPlayerEnabled()) {
+            scheduledHorseTeleports.put(player, mount);
+        }
+        if(TownyCombatSettings.isCavalryChargeEnabled()) {
+            cavalryChargeRefreshTimes.put(player, System.currentTimeMillis() + TownyCombatSettings.getCavalryChargeCooldownMilliseconds());
+        }
     }
 
     public static void deregisterPlayerMount(Player player) {
-        scheduledHorseTeleports.remove(player);
+        if(TownyCombatSettings.isTeleportMountWithPlayerEnabled()) {
+            scheduledHorseTeleports.remove(player);
+        }
+        if(TownyCombatSettings.isCavalryChargeEnabled() && cavalryChargeRefreshTimes.containsKey(player)) {
+            cavalryChargeRefreshTimes.remove(player);
+        }
     }
 
     public static boolean isHorseTeleportScheduled(AbstractHorse horse) {
         return scheduledHorseTeleports.containsValue(horse);
     }
+
+    public static void refreshAllCavalryCharges() {
+        long now = System.currentTimeMillis();
+        long nextRefreshTime = System.currentTimeMillis() + TownyCombatSettings.getCavalryChargeCooldownMilliseconds();
+        int effectDurationTicks = TownyCombatSettings.getCavalryChargeCooldownTicks();
+
+        for(Map.Entry<Player, Long> playerTimeEntry: (new HashMap<>(cavalryChargeRefreshTimes)).entrySet()) {
+            //Verify player is still on horse
+            if(!playerTimeEntry.getKey().isInsideVehicle() || !(playerTimeEntry.getKey().getVehicle() instanceof AbstractHorse)) {
+                cavalryChargeRefreshTimes.remove(playerTimeEntry.getKey());
+                continue; //Player no longer on horse
+            }
+            if(now > playerTimeEntry.getValue()) {
+                //Refresh charge
+                TownyCombat.getPlugin().getServer().getScheduler().runTask(TownyCombat.getPlugin(), ()-> applyChargeEffectToPlayer(playerTimeEntry.getKey(), effectDurationTicks));
+                //Arrange next refresh time
+                cavalryChargeRefreshTimes.put(playerTimeEntry.getKey(), nextRefreshTime);
+            }
+        }
+    }
+
+    private static void applyChargeEffectToPlayer(Player player, int effectDurationTicks) {
+        player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, effectDurationTicks, 2));
+    }
+
 }
 
 

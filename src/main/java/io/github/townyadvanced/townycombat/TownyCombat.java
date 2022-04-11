@@ -43,7 +43,7 @@ public class TownyCombat extends JavaPlugin {
 			TownyCombatSettings.loadReloadCachedSetting();
 			loadIntegrations();
 			registerCommands();
-			startTasks();
+			TownyCombatTask.startTownyCombatTask(this);
 			info("TownyCombat Enabled.");
 			info("=================================================================================");
 		} catch (Exception e) {
@@ -100,11 +100,6 @@ public class TownyCombat extends JavaPlugin {
 		pm.registerEvents(new TownyCombatNationEventListener(this), this);
 		pm.registerEvents(new TownyCombatTownyEventListener(this), this);
 	}
-	
-	private void startTasks() {
-		//Run task every 0.5 seconds
-		townyCombatTask = new TownyCombatTask().runTaskTimerAsynchronously(plugin, 400, 10);
-    }
 
     public void endTasks() {
         townyCombatTask.cancel();

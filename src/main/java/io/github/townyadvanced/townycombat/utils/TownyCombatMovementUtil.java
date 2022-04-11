@@ -163,7 +163,11 @@ public class TownyCombatMovementUtil {
 
 
     /**
-     * This method slows any players who are both heavily encumbered and jumping
+     * This method exists to compensate for a bug in vanilla Minecraft,
+     * in which players can bypass slow-effects by jumping forward.
+     *
+     * This method compensates by applying a temporary extra slow, and a jump nerf,
+     * if a heavily encumbered player jumps or ascends an incline.
      */
     public static void slowEncumberedJumpingPlayers() {        
         double velocityY;        
@@ -189,7 +193,7 @@ public class TownyCombatMovementUtil {
         }
     }
 
-    private void applyPlayerJumpSlowEffects(Player player, int effectDurationTicks) {
+    private static void applyPlayerJumpSlowEffects(Player player, int effectDurationTicks) {
         player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, effectDurationTicks, 4));
         player.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, effectDurationTicks, -30));
     }
