@@ -364,7 +364,41 @@ public enum ConfigNodes {
 			"true",
 			"",
 			"# A warhammer is a cheap and heavy throwaway item. It cannot be repaired or comnbined.",
-			"# Its damage stats are like a wooden axe, with sharpness 10, knockback 1, and 15% shield-break chance.");
+			"# Its damage stats are like a wooden axe, with sharpness 10, knockback 1, and 15% shield-break chance."),
+	AUTOPOTTING(
+		"autopotting",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |                    AUTO-POTTING                      | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
+	AUTOPOTTING_ENABLED(
+			"autopotting.enabled",
+			"true",
+			"",
+			"# If enabled, splash health potions (I and II) are automatically consumed if a player's health falls below a certain threshold.",
+			"# ",
+			"# TIP: This setting represents a choice for servers:",
+			"# ",
+			"# A. Disabled: ",
+			"#   = Status Quo.",
+			"#   = Today (April 2022), combat is generally restricted to an elite caste of highly trained 'PVP'ers', sometimes non-roleplaying and/or belonging to cross-server PVP clans.",
+			"#   = New players are told, correctly, that they are effectively useless in combat, and should either commit to training (usually off-server), or adopt a peaceful supply role.",
+			"# ",
+			"# B. Enabled ",
+			"#   = Shake Things Up.",
+			"#   = Combat is opened up more to new-players/casual-players/roleplayers/builders/traders.",
+			"#   = Example: Even a player who has never fought in MC before can still be useful in a battle, once their teams equips then with some basic military kit like bow, shield, sword, and a few health potions.",
+			"# "),
+	AUTOPOTTING_HEALTH_THRESHOLD(
+			"autopotting.health_threshold",
+			"10",
+			"",
+			"# Once health falls below this threshold, splash-health potions will be automatically consumed just before the next damage event.");
 
 	private final String Root;
 	private final String Default;

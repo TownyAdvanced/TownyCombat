@@ -4,10 +4,15 @@ import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionData;
+import org.bukkit.potion.PotionType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +21,10 @@ public class TownyCombatItemUtil {
 
     public static final Material SPEAR_PLACEHOLDER_MATERIAL = Material.WOODEN_SWORD;
     public static final Material[] SPEAR_MATERIALS = new Material[]{null, null, Material.IRON_INGOT, null, Material.STICK, null, Material.STICK, null, null}; 			
-    public static final double SPEAR_VS_CAVALRY_DAMAGE_ADJUSTMENT = 0.75;
     public static final int SPEAR_SHARPNESS_LEVEL = 8;
     public static final String SPEAR_LORE = "+75% Damage v.s. Mounted Units";
-    
+    public static final double SPEAR_VS_CAVALRY_DAMAGE_ADJUSTMENT = 0.75;
+
     public static final Material WARHAMMER_PLACEHOLDER_MATERIAL = Material.WOODEN_AXE;
     public static final Material[] WARHAMMER_MATERIALS = new Material[]{null, null, Material.STONE, null, Material.STICK, null, Material.STICK, null, null}; 			
     public static final int WARHAMMER_SHARPNESS_LEVEL = 10;
@@ -147,5 +152,65 @@ public class TownyCombatItemUtil {
             if(itemHolder.getLocation().getWorld() != null)
                 itemHolder.getLocation().getWorld().playSound(itemHolder.getLocation(), Sound.ITEM_SHIELD_BREAK ,1f, 0.5f);
         }        
+    }
+
+    /**
+     * Heal player to over threshold, using any splash heal potions in the players inventory
+     * @param player player
+     */
+    public static void autopotToThreshold(Player player) {
+        if(player.getVehicle() != null  && player.getVehicle() instanceof AbstractHorse) {
+            autopotToThreshold(player, player, (LivingEntity)player.getVehicle());
+        } else {
+            autopotToThreshold(player, player, null);
+        }
+    }
+
+    /**
+     * Heal horse to over threshold, using any splash heal potions in the riders inventory
+     * @param player player
+     * @param horse horse
+     */
+    public static void autopotToThreshold(Player player, AbstractHorse horse) {
+        autopotToThreshold(player, horse, player);
+    }
+
+    /**
+     * Heal primary recipient, using any splash heal potions in the players inventory
+     * A secondary recipient, if not null, also receives any of the healing.
+     *
+     * @param supplier the one with the potions
+     * @param primaryRecipient primary recipient of healing
+     * @param secondaryRecipient secondary recipient of healing
+     */
+    public static void autopotToThreshold(Player supplier, LivingEntity primaryRecipient, LivingEntity secondaryRecipient) {
+        for(ItemStack itemStack: supplier.getInventory().getContents()) {
+            if(itemStack != null
+                    && itemStack.getType() == Material.SPLASH_POTION
+                    && itemStack.getItemMeta() != null) {
+
+                PotionData potionData = ((PotionMeta) itemStack.getItemMeta()).getBasePotionData();
+                if(potionData.getType() != PotionType.INSTANT_HEAL)
+                    continue;
+                //Use potion
+                if(potionData.isUpgraded()) {
+                    primaryRecipient.setHealth(primaryRecipient.getHealth() + 10);
+                    if(secondaryRecipient != null) {
+                        secondaryRecipient.setHealth(secondaryRecipient.getHealth() + 10);
+                    }
+                } else {
+                    primaryRecipient.setHealth(primaryRecipient.getHealth() + 5);
+                    if(secondaryRecipient != null) {
+                        secondaryRecipient.setHealth(secondaryRecipient.getHealth() + 5);
+                    }
+                }
+                //Remove potion
+                itemStack.setAmount(0);
+                //Return if the primary recipient is healed enough
+                if(primaryRecipient.getHealth() > TownyCombatSettings.getAutoPottingThreshold()) {
+                    return;
+                }
+            }
+        }
     }
 }
