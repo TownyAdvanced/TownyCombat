@@ -318,4 +318,12 @@ public class TownyCombatSettings {
 	public static double getEquipmentEncumbranceEnderChest() {
 		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_ENDER_CHEST);
 	}
+
+	public static boolean isAutoPottingEnabled() {
+		return Settings.getBoolean(ConfigNodes.AUTOPOTTING_ENABLED);
+	}
+
+	public static double getAutoPottingThreshold() {
+		return Settings.getDouble(ConfigNodes.AUTOPOTTING_HEALTH_THRESHOLD);
+	}
 }
