@@ -73,7 +73,7 @@ public class TownyCombatHorseUtil {
     public static void refreshAllCavalryCharges() {
         long now = System.currentTimeMillis();
         long nextRefreshTime = System.currentTimeMillis() + TownyCombatSettings.getCavalryChargeCooldownMilliseconds();
-        int effectDurationTicks = TownyCombatSettings.getCavalryChargeCooldownTicks();
+        int effectDurationTicks = TownyCombatSettings.getCavalryChargeEffectDurationTicks();
 
         for(Map.Entry<Player, Long> playerTimeEntry: (new HashMap<>(cavalryChargeRefreshTimes)).entrySet()) {
             //Verify player is still on horse

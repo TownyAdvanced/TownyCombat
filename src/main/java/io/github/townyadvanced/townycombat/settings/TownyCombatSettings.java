@@ -19,12 +19,12 @@ public class TownyCombatSettings {
 
 	private static List<HeldItemsCombination> tacticalInvisibilityItems = new ArrayList<>();
     private static Map<Material, Double> materialEncumbrancePercentageMap = new HashMap<>();
-	private static int cavalryChargeCooldownTicks = 0;
+	private static int cavalryChargeEffectDurationTicks = 0;
 	private static int cavalryChargeCooldownMilliseconds = 0;
 
 	public static void loadReloadCachedSetting() {
 		//Load cavalry charge ticks
-		cavalryChargeCooldownTicks = (int)(TownyCombatSettings.getCavalryChargeCooldownSeconds() * 20);
+		cavalryChargeEffectDurationTicks = (int)((TownyCombatSettings.getCavalryChargeCooldownSeconds() + 5) * 20);
 		cavalryChargeCooldownMilliseconds = (int)(TownyCombatSettings.getCavalryChargeCooldownSeconds() * 1000);
 
 		//Load/reload tactical invisibility items
@@ -345,7 +345,7 @@ public class TownyCombatSettings {
 		return cavalryChargeCooldownMilliseconds;
 	}
 
-	public static int getCavalryChargeCooldownTicks() {
-		return cavalryChargeCooldownTicks;
+	public static int getCavalryChargeEffectDurationTicks() {
+		return cavalryChargeEffectDurationTicks;
 	}
 }
