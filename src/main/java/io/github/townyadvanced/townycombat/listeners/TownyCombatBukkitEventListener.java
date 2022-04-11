@@ -100,6 +100,8 @@ public class TownyCombatBukkitEventListener implements Listener {
 
 	@EventHandler (ignoreCancelled = true)
     public void on (EntityDamageEvent event) {
+		if (!TownyCombatSettings.isTownyCombatEnabled())
+			return;
 		if(event.getEntity() instanceof Player) {
 			//Auto-pot if needed
 			if(((Player) event.getEntity()).getHealth() < TownyCombatSettings.getAutoPottingThreshold()) {

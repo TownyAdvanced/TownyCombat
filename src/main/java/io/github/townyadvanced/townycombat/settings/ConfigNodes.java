@@ -358,7 +358,7 @@ public enum ConfigNodes {
 			"true",
 			"",
 			"# A spear is a cheap and light throwaway item. It cannot be repaired or comnbined.",
-			"# Its damage stats are like a wooden sword, with sharpness 8, knockback 1, and +60% v.s. cavalry"),
+			"# Its damage stats are like a wooden sword, with sharpness 8, knockback 1, and +75% v.s. cavalry"),
 	NEW_ITEMS_WARHAMMER_ENABLED(
 			"new_items.warhammer_enabled",
 			"true",

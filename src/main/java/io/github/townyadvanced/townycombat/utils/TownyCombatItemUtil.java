@@ -21,10 +21,10 @@ public class TownyCombatItemUtil {
 
     public static final Material SPEAR_PLACEHOLDER_MATERIAL = Material.WOODEN_SWORD;
     public static final Material[] SPEAR_MATERIALS = new Material[]{null, null, Material.IRON_INGOT, null, Material.STICK, null, Material.STICK, null, null}; 			
-    public static final double SPEAR_VS_CAVALRY_DAMAGE_ADJUSTMENT = 0.6;
     public static final int SPEAR_SHARPNESS_LEVEL = 8;
-    public static final String SPEAR_LORE = "+60% Damage v.s. Mounted Units";
-    
+    public static final String SPEAR_LORE = "+75% Damage v.s. Mounted Units";
+    public static final double SPEAR_VS_CAVALRY_DAMAGE_ADJUSTMENT = 0.75;
+
     public static final Material WARHAMMER_PLACEHOLDER_MATERIAL = Material.WOODEN_AXE;
     public static final Material[] WARHAMMER_MATERIALS = new Material[]{null, null, Material.STONE, null, Material.STICK, null, Material.STICK, null, null}; 			
     public static final int WARHAMMER_SHARPNESS_LEVEL = 10;
