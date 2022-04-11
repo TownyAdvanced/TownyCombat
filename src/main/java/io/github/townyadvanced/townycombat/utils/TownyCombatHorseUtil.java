@@ -38,7 +38,7 @@ public class TownyCombatHorseUtil {
                 //Teleport Mount to wherever the player is
                 horse.teleport(event.getPlayer());
                 //Remove from map (allowing us to mount)
-                deregisterPlayerMount(event.getPlayer());
+                deregisterPlayerMountForTeleport(event.getPlayer());
                 //Mount player on horse
                 horse.addPassenger(event.getPlayer());
                 //Remove horse health protection
@@ -47,23 +47,22 @@ public class TownyCombatHorseUtil {
             },100);
         }
     }
+    
 
-    public static void registerPlayerMount(Player player, AbstractHorse mount) {
-        if(TownyCombatSettings.isTeleportMountWithPlayerEnabled()) {
-            scheduledHorseTeleports.put(player, mount);
-        }
-        if(TownyCombatSettings.isCavalryChargeEnabled()) {
-            cavalryChargeRefreshTimes.put(player, System.currentTimeMillis() + TownyCombatSettings.getCavalryChargeCooldownMilliseconds());
-        }
+    public static void registerPlayerMountForTeleport(Player player, AbstractHorse mount) {
+        scheduledHorseTeleports.put(player, mount);
     }
 
-    public static void deregisterPlayerMount(Player player) {
-        if(TownyCombatSettings.isTeleportMountWithPlayerEnabled()) {
-            scheduledHorseTeleports.remove(player);
-        }
-        if(TownyCombatSettings.isCavalryChargeEnabled() && cavalryChargeRefreshTimes.containsKey(player)) {
-            cavalryChargeRefreshTimes.remove(player);
-        }
+    public static void deregisterPlayerMountForTeleport(Player player) {
+        scheduledHorseTeleports.remove(player);
+    }
+
+    public static void registerPlayerForChargeBonus(Player player) {
+        cavalryChargeRefreshTimes.put(player, System.currentTimeMillis() + TownyCombatSettings.getCavalryChargeCooldownMilliseconds());
+    }
+
+    public static void deregisterPlayerMountForChargeBonus(Player player) {
+        cavalryChargeRefreshTimes.remove(player);
     }
 
     public static boolean isHorseTeleportScheduled(AbstractHorse horse) {

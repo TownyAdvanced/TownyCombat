@@ -24,6 +24,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.ItemStack;
+import org.spigotmc.event.entity.EntityDismountEvent;
 import org.spigotmc.event.entity.EntityMountEvent;
 
 /**
@@ -51,7 +52,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 			return; //Don't proceed further for causes like enderpearls
 		if(event.isCancelled()) {
 			//If something cancelled the player teleport, deregister the mount (to avoid it maybe teleporting later)
-			TownyCombatHorseUtil.deregisterPlayerMount(event.getPlayer());		
+			TownyCombatHorseUtil.deregisterPlayerMountForTeleport(event.getPlayer());		
 			return;
 		}
 		//Teleport horse with player
@@ -74,8 +75,20 @@ public class TownyCombatBukkitEventListener implements Listener {
 		}
 		//Apply speed adjustments
 		TownyCombatMovementUtil.adjustPlayerAndMountSpeeds((Player)event.getEntity());
+		//Register for charge bonus
+		TownyCombatHorseUtil.registerPlayerForChargeBonus((Player)event.getEntity());
 	}
-	
+
+	@EventHandler (ignoreCancelled = true)
+	public void on (EntityDismountEvent event) {
+		if (!TownyCombatSettings.isTownyCombatEnabled())
+			return;
+		if(!(event.getEntity() instanceof Player))
+			return;
+		//Deregister for charge bonus
+		TownyCombatHorseUtil.deregisterPlayerMountForChargeBonus((Player)event.getEntity());
+	}
+
 	@EventHandler (ignoreCancelled = true)
 	public void on (PlayerDeathEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
