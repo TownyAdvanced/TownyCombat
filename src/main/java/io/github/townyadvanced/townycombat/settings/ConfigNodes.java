@@ -240,15 +240,23 @@ public enum ConfigNodes {
 			"# The base slow percentage for each type of armour item."),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_BOW(
 			"speed_adjustments.encumbrance.infantry.base_item_percentage.bow",
-			"2",
-			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_CROSSBOW(
-			"speed_adjustments.encumbrance.infantry.base_item_percentage.crossbow",
-			"4",
+			"3",
 			""),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_SHIELD(
 			"speed_adjustments.encumbrance.infantry.base_item_percentage.shield",
+			"4",
+			""),
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_SPEAR(
+			"speed_adjustments.encumbrance.infantry.base_item_percentage.spear",
 			"5",
+			""),
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_CROSSBOW(
+			"speed_adjustments.encumbrance.infantry.base_item_percentage.crossbow",
+			"6",
+			""),
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_WARHAMMER(
+			"speed_adjustments.encumbrance.infantry.base_item_percentage.warhammer",
+			"12",
 			""),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_HELMET(
 			"speed_adjustments.encumbrance.infantry.base_item_percentage.helmet",
@@ -333,7 +341,30 @@ public enum ConfigNodes {
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_DIAMOND_HORSE_ARMOUR(
 			"speed_adjustments.encumbrance.cavalry.item_percentage.diamond_horse_armour",
 			"48",
-			"");
+			""),
+	NEW_ITEMS(
+		"new_items",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |                     NEW ITEMS                        | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
+	NEW_ITEMS_SPEAR_ENABLED(
+			"new_items.spear_enabled",
+			"true",
+			"",
+			"# A spear is a cheap and light throwaway item. It cannot be repaired or comnbined.",
+			"# Its damage stats are like a wooden sword, with sharpness 8, knockback 1, and +75% v.s. cavalry"),
+	NEW_ITEMS_WARHAMMER_ENABLED(
+			"new_items.warhammer_enabled",
+			"true",
+			"",
+			"# A warhammer is a cheap and heavy throwaway item. It cannot be repaired or comnbined.",
+			"# Its damage stats are like a wooden axe, with sharpness 10, knockback 1, and 15% shield-break chance.");
 
 	private final String Root;
 	private final String Default;
