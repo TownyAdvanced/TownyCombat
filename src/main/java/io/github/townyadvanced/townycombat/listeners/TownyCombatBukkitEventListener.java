@@ -167,7 +167,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 				if(event.getDamager().isInsideVehicle()
 						&& event.getDamager().getVehicle() instanceof AbstractHorse) {
 					((Player) event.getDamager()).removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
-					finalDamage += 6;   //Equivalent to Strength II
+					finalDamage += 3;   //Equivalent to Strength I
 				}
 			}
 			//WARHAMMER: Possibly break shield if warhammer
