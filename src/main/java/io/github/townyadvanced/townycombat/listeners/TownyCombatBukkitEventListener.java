@@ -24,6 +24,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
 import org.spigotmc.event.entity.EntityDismountEvent;
 import org.spigotmc.event.entity.EntityMountEvent;
 
@@ -146,6 +147,12 @@ public class TownyCombatBukkitEventListener implements Listener {
 	@EventHandler (ignoreCancelled = true)
 	public void on (EntityDamageByEntityEvent event) {
 		if(event.getDamager() instanceof Player) {
+			//CHARGE BONUS: Remove the strength effect and increase the damage by the equivalent (6)
+			if(event.getDamager().isInsideVehicle()
+					&& event.getDamager().getVehicle() instanceof AbstractHorse) {
+				((Player) event.getDamager()).removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
+				event.setDamage(event.getDamage() + 6);
+			}
 			//SPEAR
 			if(TownyCombatSettings.isNewItemsSpearEnabled()) {
 				if(event.getEntity() instanceof AbstractHorse

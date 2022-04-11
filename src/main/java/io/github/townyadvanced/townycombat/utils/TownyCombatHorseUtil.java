@@ -63,6 +63,7 @@ public class TownyCombatHorseUtil {
 
     public static void deregisterPlayerMountForChargeBonus(Player player) {
         cavalryChargeRefreshTimes.remove(player);
+        player.removePotionEffect(PotionEffectType.INCREASE_DAMAGE); //Remove strength effect if any
     }
 
     public static boolean isHorseTeleportScheduled(AbstractHorse horse) {
