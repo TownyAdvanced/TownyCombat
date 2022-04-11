@@ -388,10 +388,12 @@ public enum ConfigNodes {
 			"#   = Status Quo.",
 			"#   = Today (April 2022), combat is generally restricted to an elite caste of highly trained 'PVP'ers', sometimes non-roleplaying and/or belonging to cross-server PVP clans.",
 			"#   = New players are told, correctly, that they are effectively useless in combat, and should either commit to training (usually off-server), or adopt a peaceful supply role.",
+			"# ",
 			"# B. Enabled ",
 			"#   = Shake Things Up.",
 			"#   = Combat is opened up more to new-players/casual-players/roleplayers/builders/traders.",
-			"#   = Example: Even a player who has never fought in MC before can still be useful in a battle, once their teams equips then with some basic military kit like shield, bow, and a few health potions."),
+			"#   = Example: Even a player who has never fought in MC before can still be useful in a battle, once their teams equips then with some basic military kit like shield, bow, and a few health potions.",
+			"# "),
 	AUTOPOTTING_HEALTH_THRESHOLD(
 			"autopotting.health_threshold",
 			"10",
