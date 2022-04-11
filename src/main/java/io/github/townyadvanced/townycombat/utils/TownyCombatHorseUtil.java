@@ -91,7 +91,7 @@ public class TownyCombatHorseUtil {
     }
 
     private static void applyChargeEffectToPlayer(Player player, int effectDurationTicks) {
-        player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, effectDurationTicks, 2));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, effectDurationTicks, 1));
     }
 
 }
