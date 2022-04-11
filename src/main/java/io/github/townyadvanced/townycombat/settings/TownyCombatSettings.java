@@ -113,6 +113,26 @@ public class TownyCombatSettings {
 		materialEncumbrancePercentageMap.put(Material.SHIELD, getEquipmentEncumbranceShield());
 		materialEncumbrancePercentageMap.put(TownyCombatItemUtil.SPEAR_PLACEHOLDER_MATERIAL, getEquipmentEncumbranceSpear());
 		materialEncumbrancePercentageMap.put(TownyCombatItemUtil.WARHAMMER_PLACEHOLDER_MATERIAL, getEquipmentEncumbranceWarhammer());
+
+		//Enderchest & shulker boxes
+		materialEncumbrancePercentageMap.put(Material.ENDER_CHEST, getEquipmentEncumbranceEnderChest());
+		materialEncumbrancePercentageMap.put(Material.SHULKER_BOX, getEquipmentEncumbranceShulkerBox());
+		materialEncumbrancePercentageMap.put(Material.BLACK_SHULKER_BOX, getEquipmentEncumbranceShulkerBox());
+		materialEncumbrancePercentageMap.put(Material.BLUE_SHULKER_BOX, getEquipmentEncumbranceShulkerBox());
+		materialEncumbrancePercentageMap.put(Material.BROWN_SHULKER_BOX, getEquipmentEncumbranceShulkerBox());
+		materialEncumbrancePercentageMap.put(Material.CYAN_SHULKER_BOX, getEquipmentEncumbranceShulkerBox());
+		materialEncumbrancePercentageMap.put(Material.GRAY_SHULKER_BOX, getEquipmentEncumbranceShulkerBox());
+		materialEncumbrancePercentageMap.put(Material.GREEN_SHULKER_BOX, getEquipmentEncumbranceShulkerBox());
+		materialEncumbrancePercentageMap.put(Material.LIGHT_BLUE_SHULKER_BOX, getEquipmentEncumbranceShulkerBox());
+		materialEncumbrancePercentageMap.put(Material.LIGHT_GRAY_SHULKER_BOX, getEquipmentEncumbranceShulkerBox());
+		materialEncumbrancePercentageMap.put(Material.LIME_SHULKER_BOX, getEquipmentEncumbranceShulkerBox());
+		materialEncumbrancePercentageMap.put(Material.MAGENTA_SHULKER_BOX, getEquipmentEncumbranceShulkerBox());
+		materialEncumbrancePercentageMap.put(Material.ORANGE_SHULKER_BOX, getEquipmentEncumbranceShulkerBox());
+		materialEncumbrancePercentageMap.put(Material.PINK_SHULKER_BOX, getEquipmentEncumbranceShulkerBox());
+		materialEncumbrancePercentageMap.put(Material.PURPLE_SHULKER_BOX, getEquipmentEncumbranceShulkerBox());
+		materialEncumbrancePercentageMap.put(Material.RED_SHULKER_BOX, getEquipmentEncumbranceShulkerBox());
+		materialEncumbrancePercentageMap.put(Material.WHITE_SHULKER_BOX, getEquipmentEncumbranceShulkerBox());
+		materialEncumbrancePercentageMap.put(Material.YELLOW_SHULKER_BOX, getEquipmentEncumbranceShulkerBox());
 	}
 
 	public static boolean isTownyCombatEnabled() {
@@ -291,4 +311,11 @@ public class TownyCombatSettings {
 		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_WARHAMMER_ENABLED);
 	}
 
+	public static double getEquipmentEncumbranceShulkerBox() {
+		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_SHULKER_BOX);
+	}
+
+	public static double getEquipmentEncumbranceEnderChest() {
+		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_ENDER_CHEST);
+	}
 }
