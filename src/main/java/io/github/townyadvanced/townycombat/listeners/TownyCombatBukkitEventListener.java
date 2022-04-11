@@ -1,5 +1,6 @@
 package io.github.townyadvanced.townycombat.listeners;
 
+import com.palmergames.bukkit.towny.TownySettings;
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import io.github.townyadvanced.townycombat.utils.TownyCombatHorseUtil;
@@ -104,7 +105,8 @@ public class TownyCombatBukkitEventListener implements Listener {
 			return;
 		if(event.getEntity() instanceof Player) {
 			//Auto-pot if needed
-			if(((Player) event.getEntity()).getHealth() < TownyCombatSettings.getAutoPottingThreshold()) {
+			if(TownyCombatSettings.isAutoPottingEnabled()
+					&& ((Player) event.getEntity()).getHealth() < TownyCombatSettings.getAutoPottingThreshold()) {
 				TownyCombatItemUtil.autopotToThreshold((Player)event.getEntity());
 			}
 			//Reduce damage to players
@@ -120,7 +122,8 @@ public class TownyCombatBukkitEventListener implements Listener {
 				event.setDamage(event.getDamage() + (event.getDamage() * (TownyCombatSettings.getDamageAdjustmentsHorsesIncoming() / 100)));
 			}
 			//Auto-pot if needed
-			if(event.getEntity().getPassengers().size() > 0
+			if(TownyCombatSettings.isAutoPottingEnabled()
+					&& event.getEntity().getPassengers().size() > 0
 					&& event.getEntity().getPassengers().get(0) instanceof Player
 					&& ((AbstractHorse) event.getEntity()).getHealth() < TownyCombatSettings.getAutoPottingThreshold()) {
 				TownyCombatItemUtil.autopotToThreshold((Player)event.getEntity().getPassengers().get(0), (AbstractHorse)event.getEntity());

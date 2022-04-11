@@ -280,6 +280,14 @@ public enum ConfigNodes {
 			"speed_adjustments.encumbrance.infantry.base_item_percentage.warhammer",
 			"12",
 			""),
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_SHULKER_BOX(
+			"speed_adjustments.encumbrance.infantry.base_item_percentage.shulker_box",
+			"15",
+			""),
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_ENDER_CHEST(
+			"speed_adjustments.encumbrance.infantry.base_item_percentage.ender_chest",
+			"30",
+			""),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_HELMET(
 			"speed_adjustments.encumbrance.infantry.base_item_percentage.helmet",
 			"0.6",
