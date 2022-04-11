@@ -285,11 +285,11 @@ public class TownyCombatSettings {
 		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_GENERIC_CAVALRY_ADJUSTMENT_PERCENTAGE);
 	}
 
-	public static double getDamageAdjustmentsPlayersIncoming() {
+	public static double getDamageAdjustmentAttackOnPlayer() {
 		return Settings.getDouble(ConfigNodes.DAMAGE_ADJUSTMENTS_PLAYERS_INCOMING);
 	}
 
-	public static double getDamageAdjustmentsHorsesIncoming() {
+	public static double getDamageAdjustmentsAttackOnHorse() {
 		return Settings.getDouble(ConfigNodes.DAMAGE_ADJUSTMENTS_HORSES_INCOMING);
 	}
 

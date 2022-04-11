@@ -62,7 +62,7 @@ public enum ConfigNodes {
 			"# - Effect: Strength II"),			
 	HORSE_ENHANCEMENTS_CAVALRY_CHARGE_COOLDOWN_SECONDS(
 			"horse_enhancements.cavalry_charge.cooldown_seconds",
-			"15",
+			"10",
 			"",
 			"# The charge effect cooldown."),
 	BLOCK_GLITCHING_PREVENTION(
@@ -197,13 +197,13 @@ public enum ConfigNodes {
 			"damage_adjustments.players_incoming",
 			"-30",
 			"",
-			"# This setting adjusts the incoming damage to all players.",
+			"# This setting adjusts the incoming damage to all players from attacks.",
 			"# TIP: If armour slowing is enabled, this setting is important, as players will generally have less armour."),
 	DAMAGE_ADJUSTMENTS_HORSES_INCOMING(
 			"damage_adjustments.horses_incoming",
-			"-90",
+			"-60",
 			"",
-			"# This setting adjusts the incoming damage to all horses.",
+			"# This setting adjusts the incoming damage to all horses from attacks.",
 			"# TIP: This setting is important to make horses viable in battle."),
 	SPEED_ADJUSTMENTS(
 			"speed_adjustments",
