@@ -59,7 +59,7 @@ public enum ConfigNodes {
 			"# If this setting is true, then the Cavalry Charge ability is enabled:",
 			"# - Starts in cooldown when a player mounts a horse.",
 			"# - Goes into cooldown when the rider strikes a player/mob with their weapon.",
-			"# - Effect: Strength II"),			
+			"# - Effect: Strength I"),			
 	HORSE_ENHANCEMENTS_CAVALRY_CHARGE_COOLDOWN_SECONDS(
 			"horse_enhancements.cavalry_charge.cooldown_seconds",
 			"10",
