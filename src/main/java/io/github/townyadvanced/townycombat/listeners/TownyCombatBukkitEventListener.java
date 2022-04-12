@@ -195,7 +195,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 			finalDamage = finalDamage - (finalDamage * (TownyCombatSettings.getDamageAdjustmentAttackOnPlayer() / 100));
 		} else if (event.getEntity() instanceof AbstractHorse) {
 			finalDamage = finalDamage - (finalDamage * (TownyCombatSettings.getDamageAdjustmentsAttackOnHorse() / 100));
-		}	
+		}
 		//SET DAMAGE
 		event.setDamage(finalDamage);
 	}
