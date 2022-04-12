@@ -46,10 +46,10 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
             - Diamond: +500% (*literally walking around covered in rocks...*)
             - Netherite: +600%
         - Horse Armour:
-          - Leather Horse Armour: -8%
-          - Gold Horse Armour: -32%
-          - Iron Horse Armour: -40%
-          - Diamond Horse Armour: -48%      
+          - Leather Horse Armour: 8%
+          - Gold Horse Armour: 32%
+          - Iron Horse Armour: 40%
+          - Diamond Horse Armour: 48%      
       - Horse-carry Modifier:
         - Horses are stronger than players, so their encumbrance is reduced by 50%.
       - Equipment reduction in jump/climb speed:
