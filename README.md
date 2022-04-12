@@ -10,7 +10,7 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
 - :coffin: :moneybag: **Keep Stuff on Death:**
   - If you die within 400 blocks of a town-homeblock, you keep your inventory and levels.
   - Any tools/weapons/armour in your inventory are subject to a 20% degrade.
-- :crossed_swords: :recycle: **Battlefield Roles**
+- :guard: :guard: :guard: :recycle: **Battlefield Roles**
   - :information_source: Overview:
     - :crossed_swords: Significantly upgrades the combat/battle/war experience of Towny servers.
     - :student: Provides everyone with new combat skills to learn.
@@ -67,7 +67,7 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
       - When a player mounts a horse, or hits an enemy, the Charge Bonus goes into a 10 second cooldown.
     - :teapot: **Auto-Potting** (*The critical setting for battlefield inclusivity*)
       - After a player's health drops below 10 (*i.e 5 hearts*), then on the next incoming attack, any available Splash-Health potions are automatically consumed from the player's inventory, to take their health to back over 10.
-    - :guard: :guard: :guard: **Military Uniforms**
+    - :helmet: **Military Uniforms**
       - With all the above changes, it makes little sense for an nation to put every soldier in a full-diamond/netherite kit.
       - It makes a more sense to equip all units with at least one identifying piece of kit (*e.g. a coloured leather helmet*).
       - Shields, being freed from purgatory by autopotting, can be particularly visually effective, as they can be decorated with banners. 
