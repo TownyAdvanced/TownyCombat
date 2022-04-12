@@ -1,6 +1,7 @@
 package io.github.townyadvanced.townycombat;
 
 import com.palmergames.bukkit.towny.Towny;
+import com.palmergames.bukkit.util.Colors;
 import com.palmergames.bukkit.util.Version;
 import io.github.townyadvanced.townycombat.commands.TownyCombatAdminCommand;
 import io.github.townyadvanced.townycombat.integrations.dynmap.DynmapIntegration;
@@ -11,6 +12,8 @@ import io.github.townyadvanced.townycombat.listeners.TownyCombatTownyEventListen
 import io.github.townyadvanced.townycombat.settings.Settings;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import io.github.townyadvanced.townycombat.tasks.TownyCombatTask;
+
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -25,7 +28,7 @@ public class TownyCombat extends JavaPlugin {
     @Override
     public void onEnable() {
     	plugin = this;
-		info("=================================================================================");
+    	Bukkit.getLogger().info("=============================================================");
 		printSickASCIIArt();
 	
     	try {
@@ -45,7 +48,7 @@ public class TownyCombat extends JavaPlugin {
 			registerCommands();
 			TownyCombatTask.startTownyCombatTask(this);
 			info("TownyCombat Enabled.");
-			info("=================================================================================");
+			Bukkit.getLogger().info("=============================================================");
 		} catch (Exception e) {
     		severe(e.getMessage());
     		e.printStackTrace();
@@ -106,15 +109,16 @@ public class TownyCombat extends JavaPlugin {
     }
 	
 	private void printSickASCIIArt() {
-		info("");
-		info("  *   )                             (                    )           )");
-		info("` )  /(     (  (           (        )\\           )    ( /(     )  ( /( ");
-		info(" ( )(_))(   )\\))(    (     )\\ )   (((_)   (     (     )\\()) ( /(  )\\()) ");
-		info("(_(_()) )\\ ((_)()\\   )\\ ) (()/(   )\\___   )\\    )\\  '((_)\\  )(_))(_))/  ");
-		info("|_   _|((_)_(()((_) _(_/(  )(_)) ((/ __| ((_) _((_)) | |(_)((_)_ | |_   ");
-		info("  | | / _ \\\\ V  V /| ' \\))| || |  | (__ / _ \\| '  \\()| '_ \\/ _` ||  _|  ");
-		info("  |_| \\___/ \\_/\\_/ |_||_|  \\_, |   \\___|\\___/|_|_|_| |_.__/\\__,_| \\__|  ");
-		info("                           |__/ ");
-		info("");
+		String art = System.lineSeparator() + 
+		("         *   )                             (                    )           )") + System.lineSeparator() + 
+		("       ` )  /(     (  (           (        )\\           )    ( /(     )  ( /( ") + System.lineSeparator() + 
+		("        ( )(_))(   )\\))(    (     )\\ )   (((_)   (     (     )\\()) ( /(  )\\()) ") + System.lineSeparator() + 
+		("       (_(_()) )\\ ((_)()\\   )\\ ) (()/(   )\\___   )\\    )\\  '((_)\\  )(_))(_))/  ") + System.lineSeparator() + 
+		("       |_   _|((_)_(()((_) _(_/(  )(_)) ((/ __| ((_) _((_)) | |(_)((_)_ | |_   ") + System.lineSeparator() + 
+		("         | | / _ \\\\ V  V /| ' \\))| || |  | (__ / _ \\| '  \\()| '_ \\/ _` ||  _|  ") + System.lineSeparator() + 
+		("         |_| \\___/ \\_/\\_/ |_||_|  \\_, |   \\___|\\___/|_|_|_| |_.__/\\__,_| \\__|  ") + System.lineSeparator() + 
+		("                                  |__/ ")  + System.lineSeparator(); 
+
+		Bukkit.getLogger().info(Colors.translateColorCodes(art));
 	}
 }
