@@ -161,7 +161,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		//GENERIC DAMAGE ADJUSTMENTS AND AUTOPOTTING
 		if(event.getEntity() instanceof Player) {
 			//Generic damage adjustment
-			finalDamage = finalDamage - (finalDamage * (TownyCombatSettings.getDamageAdjustmentAttackOnPlayer() / 100));
+			finalDamage = finalDamage + (finalDamage * (TownyCombatSettings.getDamageAdjustmentAttackOnPlayer() / 100));
 			//Auto-pot if needed
 			if(TownyCombatSettings.isAutoPottingEnabled()
 					&& ((Player) event.getEntity()).getHealth() < TownyCombatSettings.getAutoPottingThreshold()) {
@@ -169,7 +169,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 			}
 		} else if (event.getEntity() instanceof AbstractHorse) {
 			//Generic damage adjustment
-			finalDamage = finalDamage - (finalDamage * (TownyCombatSettings.getDamageAdjustmentsAttackOnHorse() / 100));
+			finalDamage = finalDamage + (finalDamage * (TownyCombatSettings.getDamageAdjustmentsAttackOnHorse() / 100));
 			//Auto-pot if needed
 			if(TownyCombatSettings.isAutoPottingEnabled()
 					&& event.getEntity().getPassengers().size() > 0
