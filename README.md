@@ -11,17 +11,13 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
   - If you die within 400 blocks of a town-homeblock, you keep your inventory and levels.
   - Any tools/weapons/armour in your inventory are subject to a 20% degrade.
 - :crossed_swords: :recycle: **Battlefield Roles**
-  - :information_source: Background: 
-    - Vanilla MC battlefields often look like this:
-      - *Who?* - An elite caste of 'PVP'ers' with extensive training/experience.
-      - *What?* - Same kit for everyone, no horses, no shields, a few bows. 
-      - *Where?* - Because everybody is wearing the same thing on the battlefield, its hard to tell where friends/foes are.
-      - *When?* - Over time, the military success of the PVP caste (*including cross-server PVP clans*) can degrade server roleplaying.
-  - :dolphin: Purpose:
-    - The Battlefield Roles feature shakes up the status-quo, providing everyone with new combat skills to learn, and also making battles/wars more inclusive of new/casual/builder/trader/roleplaying  players.
-  - :arrow_double_up: Update:
+  - :information_source: Overview:
+    - :crossed_swords: Significantly upgrades the combat/battle/war experience of Towny servers.
+    - :student: Provides everyone with new combat skills to learn.
+    - :rainbow: Makes battles/wars more inclusive of new/casual/builder/trader/roleplaying  players.
+  - :spiral_notepad: Details:
     - :left_luggage: **Encumbrance** (*The Centrepiece*)
-      - Equipment reduction in move speed:
+      - Equipment-Based reduction in move speed:
         - Weapons:
           - Bow: 3%
           - Crossbow: 6%
