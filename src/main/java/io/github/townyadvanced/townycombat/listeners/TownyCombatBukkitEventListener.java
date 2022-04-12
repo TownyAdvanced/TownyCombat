@@ -113,38 +113,6 @@ public class TownyCombatBukkitEventListener implements Listener {
 	}
 
 	@EventHandler (ignoreCancelled = true)
-    public void on (EntityDamageEvent event) {
-		if (!TownyCombatSettings.isTownyCombatEnabled())
-			return;
-		if(event.getEntity() instanceof Player) {
-			//Auto-pot if needed
-			if(TownyCombatSettings.isAutoPottingEnabled()
-					&& ((Player) event.getEntity()).getHealth() < TownyCombatSettings.getAutoPottingThreshold()) {
-				TownyCombatItemUtil.autopotToThreshold((Player)event.getEntity());
-			}
-			//Reduce damage to players
-			event.setDamage(event.getDamage() + (event.getDamage() * (TownyCombatSettings.getDamageAdjustmentAttackOnPlayer() / 100)));
-
-		} else if (event.getEntity() instanceof AbstractHorse) {
-			//Reduce damage to horses
-			if(TownyCombatSettings.isHorsesImmuneToFire()
-					&& (event.getCause() == EntityDamageEvent.DamageCause.FIRE
-					|| event.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK)) {
-				event.setCancelled(true);
-			} else {
-				event.setDamage(event.getDamage() + (event.getDamage() * (TownyCombatSettings.getDamageAdjustmentsAttackOnHorse() / 100)));
-			}
-			//Auto-pot if needed
-			if(TownyCombatSettings.isAutoPottingEnabled()
-					&& event.getEntity().getPassengers().size() > 0
-					&& event.getEntity().getPassengers().get(0) instanceof Player
-					&& ((AbstractHorse) event.getEntity()).getHealth() < TownyCombatSettings.getAutoPottingThreshold()) {
-				TownyCombatItemUtil.autopotToThreshold((Player)event.getEntity().getPassengers().get(0), (AbstractHorse)event.getEntity());
-			}
-		}
-	}
-
-	@EventHandler (ignoreCancelled = true)
 	public void on (EntityDamageByEntityEvent event) {
 		double finalDamage = event.getFinalDamage();
 		if(event.getDamager() instanceof Player) {
@@ -190,11 +158,25 @@ public class TownyCombatBukkitEventListener implements Listener {
 				}
 			}
 		}
-		//GENERIC DAMAGE REDUCTIONS
+		//GENERIC DAMAGE ADJUSTMENTS AND AUTOPOTTING
 		if(event.getEntity() instanceof Player) {
+			//Generic damage adjustment
 			finalDamage = finalDamage - (finalDamage * (TownyCombatSettings.getDamageAdjustmentAttackOnPlayer() / 100));
+			//Auto-pot if needed
+			if(TownyCombatSettings.isAutoPottingEnabled()
+					&& ((Player) event.getEntity()).getHealth() < TownyCombatSettings.getAutoPottingThreshold()) {
+				TownyCombatItemUtil.autopotToThreshold((Player)event.getEntity());
+			}
 		} else if (event.getEntity() instanceof AbstractHorse) {
+			//Generic damage adjustment
 			finalDamage = finalDamage - (finalDamage * (TownyCombatSettings.getDamageAdjustmentsAttackOnHorse() / 100));
+			//Auto-pot if needed
+			if(TownyCombatSettings.isAutoPottingEnabled()
+					&& event.getEntity().getPassengers().size() > 0
+					&& event.getEntity().getPassengers().get(0) instanceof Player
+					&& ((AbstractHorse) event.getEntity()).getHealth() < TownyCombatSettings.getAutoPottingThreshold()) {
+				TownyCombatItemUtil.autopotToThreshold((Player)event.getEntity().getPassengers().get(0), (AbstractHorse)event.getEntity());
+			}
 		}
 		//SET DAMAGE
 		event.setDamage(finalDamage);
