@@ -69,7 +69,7 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
     - :horse_racing: **Cavalry Charges**  
       - Players on horseback get a Charge Bonus of Strength 1.
       - When a player mounts a horse, or hits an enemy, the Charge Bonus goes into a 10 second cooldown.
-    - :teapot: **Auto-Potting** (*The critical feature for battlefield inclusivity*)
+    - :teapot: **Auto-Potting** (*The critical setting for battlefield inclusivity*)
       - After a player's health drops below 10 (*i.e 5 hearts*), then on the next incoming attack, any available Splash-Health potions are automatically consumed from the player's inventory, to take their health to back over 10.
     - :guard: :guard: :guard: **Military Uniforms**
       - With all the above changes, it makes little sense for an nation to put every soldier in a full-diamond/netherite kit.
