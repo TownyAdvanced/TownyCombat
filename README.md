@@ -1,5 +1,5 @@
 # TownyCombat
-A combat plugin for Towny, containing some generally useful combat/battle/pvp features.
+A combat plugin for Towny, containing some fun combat/battle/pvp features.
 
 ## Features:
 - :horse: :star: **Horse Teleporting:**
@@ -10,40 +10,78 @@ A combat plugin for Towny, containing some generally useful combat/battle/pvp fe
 - :coffin: :moneybag: **Keep Stuff on Death:**
   - If you die within 400 blocks of a town-homeblock, you keep your inventory and levels.
   - Any tools/weapons/armour in your inventory are subject to a 20% degrade.
+- :crossed_swords: :recycle: **Battlefield Roles** ***(upcoming in 0.2.0)***
+  - :information_source: Background: 
+    - Vanilla MC battlefields often look like this:
+      - *Who?* - An elite caste of 'PVP'ers' with extensive training/experience.
+      - *What?* - Same kit for everyone, no horses, no shields, a few bows. 
+      - *Where?* - Because everybody is wearing the same thing on the battlefield, its hard to tell where friends/foes are.
+      - *When?* - Over time, the military success of the PVP caste (*including cross-server PVP clans*) can degrade server roleplaying.
+  - :dolphin: Purpose:
+    - The Battlefield Roles feature shakes up the status-quo, providing everyone with new combat skills to learn, and also making battles/wars more inclusive of new/casual/builder/trader/roleplaying  players.
+  - :arrow_double_up: Update:
+    - :left_luggage: **Encumbrance** (*The Centrepiece*)
+      - Equipment reduction in move speed:
+        - Weapons:
+          - Bow: 3%
+          - Crossbow: 6%
+          - Spear: 5% (*new item*)
+          - Warhammer: 12% (*new item*)
+        - Items:
+          - Shield: 4%
+          - Shulker Box: 15%
+          - Ender Chest: 30%
+        - Player Armour:
+          - Base:
+            - Helmet: 0.6%
+            - Chestplate: 1.6%
+            - Leggings: 1.2%
+            - Boots: 0.6%
+          - Materials:
+            - Leather: +0%
+            - Chain Mail: +100%
+            - Turtle Shell: +200%
+            - Gold: +300%
+            - Iron: +400%
+            - Diamond: +500% (*literally walking around covered in rocks...*)
+            - Netherite: +600%
+        - Horse Armour:
+          - Leather Horse Armour: -8%
+          - Gold Horse Armour: -32%
+          - Iron Horse Armour: -40%
+          - Diamond Horse Armour: -48%      
+      - Horse-carry Modifier:
+        - Horses are stronger than players, so their encumbrance is reduced by 50%.
+      - Equipment reduction in jump/climb speed:
+        - Players with 8% encumbrance or more get an extra slowing effect when jumping/climbing.
+        - *Sorry this effect is a little janky, but it compensates for an MC bug which allows slowdown-bypassing via. bunny-hopping.*
+    - :new: **New Items**
+      - Spear:
+        ![image](https://user-images.githubusercontent.com/50219223/162958194-a7ecd2ae-c880-49be-afb9-6838d21e2a4d.png)
+      - Warhammer
+        ![image](https://user-images.githubusercontent.com/50219223/162962278-0a172a1c-3f6f-4299-89bc-b92700c2b288.png)
+    - :arrow_right: **Movement Increases**
+      - Players: +10%
+      - Horses +10%
+    - :shield: **Attack Damage Resistance**
+      - Players: -30%
+      - Horses: -60%
+    - :horse_racing: **Cavalry Charges**  
+      - Players on horseback get a Charge Bonus of Strength 1.
+      - When a player mounts a horse, or hits an enemy, the Charge Bonus goes into a 10 second cooldown.
+    - :teapot: **Auto-Potting** (*The critical feature for battlefield inclusivity*)
+      - After a player's health drops below 10 (*i.e 5 hearts*), then on the next incoming attack, any available Splash-Health potions are automatically consumed from the player's inventory, to take their health to back over 10.
+    - :guard: :guard: :guard: **Military Uniforms**
+      - With all the above changes, it makes little sense for an nation to put every soldier in a full-diamond/netherite kit.
+      - It makes a more sense to equip all units with at least one identifying piece of kit (*e.g. a coloured leather helmet*).
+      - Shields, being freed from purgatory by autopotting, can be particularly visually effective, as they can be decorated with banners. 
 - :bust_in_silhouette: :footprints: **Tactical Invisibilty:** ***(Disabled By Default)***
   - Use stealth tactics by going invisible on the dynmap.
   - This is a harcore battle feature, which enables stealth tactics, in exchange for showing less activity on the dynmap.
   - There are 2 Modes:
     - Automatic: You go map-invisible when in the wilderness.
     - Triggered: You go map-invisible when holding a certain combination of items in your hands (*e.g. double diamond swords*).  
-- :crossed_swords: :recycle: **Generic Damage Adjustments** ***(upcoming in 0.2.0)***
-  - Player weapon damage decreased by -30%.
-- :arrow_right: :recycle: **Generic Movement Adjustments** ***(upcoming in 0.2.0)***
-  - Player speed increased by +10%.
-  - Horse speed increased by +10%.
-- :left_luggage: :recycle: **Encumbrance Movement Adjustments** ***(upcoming in 0.2.0)***
-  - Carrying Military Equipment reduces speed:
-  - Horses are stronger than players, so their encumbrance is reduced by 50%.
-  - Equipment:
-    - Infantry:
-      - Shield: -4 %
-      - Full Leather Set: -4 %
-      - Full Chainmail Set: -8 %
-      - Full Gold Set: -16 %
-      - Full Iron Set: -20 %
-      - Full Diamond Set: -24 %    (*Walking around literally covered in rocks...*)
-      - Full Netherite Set: -28 %
-    - Cavalry:
-      - Leather Horse Armour: -8%
-      - Gold Horse Armour: -32%
-      - Iron Horse Armour: -40%
-     - Diamond Horse Armour: -48%
-  - Players with 8% encumbrance or more are extra slow at jumping/climbing.
-  - This feature increases tactical options on the battlefield.
-  - This feature also allows nation to develop practically useful military uniforms:
-    - Full diamond/netherite sets are no longer de-rigeur, due to their tactical vulnerability (*ie. reduced soldier speed*).
-    - Instead, each nation can develop its own practically useful uniform, containing specific materials and (with leather) colours. 
-
+ 
 ## Commands:
 - ```/tcm reload```: Reloads config and language settings
 
