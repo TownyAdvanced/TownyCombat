@@ -337,6 +337,10 @@ public class TownyCombatSettings {
 		return Settings.getBoolean(ConfigNodes.HORSE_ENHANCEMENTS_CAVALRY_CHARGE_ENABLED);
 	}
 
+	public static int getCavalryChargeStrengthEffectLevel() {
+		return Settings.getInt(ConfigNodes.HORSE_ENHANCEMENTS_CAVALRY_STRENGTH_EFFECT_LEVEL);
+	}
+
 	public static double getCavalryChargeCooldownSeconds() {
 		return Settings.getDouble(ConfigNodes.HORSE_ENHANCEMENTS_CAVALRY_CHARGE_COOLDOWN_SECONDS);
 	}

@@ -74,6 +74,7 @@ public class TownyCombatHorseUtil {
         long now = System.currentTimeMillis();
         long nextRefreshTime = System.currentTimeMillis() + TownyCombatSettings.getCavalryChargeCooldownMilliseconds();
         int effectDurationTicks = TownyCombatSettings.getCavalryChargeEffectDurationTicks();
+        int effectAmplifier = TownyCombatSettings.getCavalryChargeStrengthEffectLevel() - 1;
 
         for(Map.Entry<Player, Long> playerTimeEntry: (new HashMap<>(cavalryChargeRefreshTimes)).entrySet()) {
             //Verify player is still on horse
@@ -83,15 +84,15 @@ public class TownyCombatHorseUtil {
             }
             if(now > playerTimeEntry.getValue()) {
                 //Refresh charge
-                TownyCombat.getPlugin().getServer().getScheduler().runTask(TownyCombat.getPlugin(), ()-> applyChargeEffectToPlayer(playerTimeEntry.getKey(), effectDurationTicks));
+                TownyCombat.getPlugin().getServer().getScheduler().runTask(TownyCombat.getPlugin(), ()-> applyChargeEffectToPlayer(playerTimeEntry.getKey(), effectDurationTicks, effectAmplifier));
                 //Arrange next refresh time
                 cavalryChargeRefreshTimes.put(playerTimeEntry.getKey(), nextRefreshTime);
             }
         }
     }
 
-    private static void applyChargeEffectToPlayer(Player player, int effectDurationTicks) {
-        player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, effectDurationTicks, 0));
+    private static void applyChargeEffectToPlayer(Player player, int effectDurationTicks, int effectAmplifier) {
+        player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, effectDurationTicks, effectAmplifier));
     }
 
 }
