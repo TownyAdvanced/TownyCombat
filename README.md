@@ -10,7 +10,7 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
 - :coffin: :moneybag: **Keep Stuff on Death:**
   - If you die within 400 blocks of a town-homeblock, you keep your inventory and levels.
   - Any tools/weapons/armour in your inventory are subject to a 20% degrade.
-- :crossed_swords: :recycle: **Battlefield Roles** ***(upcoming in 0.2.0)***
+- :crossed_swords: :recycle: **Battlefield Roles**
   - :information_source: Background: 
     - Vanilla MC battlefields often look like this:
       - *Who?* - An elite caste of 'PVP'ers' with extensive training/experience.
