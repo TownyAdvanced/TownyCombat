@@ -60,8 +60,8 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
       - Players: +10%
       - Horses +10%
     - :shield: **Attack Damage Resistance**
-      - Players: -30%
-      - Horses: -60%
+      - Players: 30%
+      - Horses: 60%
     - :horse_racing: **Cavalry Charges**  
       - Players on horseback get a Charge Bonus of Strength 1.
       - When a player mounts a horse, or hits an enemy, the Charge Bonus goes into a 10 second cooldown.
