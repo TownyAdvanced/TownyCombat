@@ -31,9 +31,9 @@ public class TownyCombatNationEventListener implements Listener {
 		//If player has a mount, register it, otherwise unregister
 		if(TownyCombatSettings.isTeleportMountWithPlayerEnabled()) {
 			if(event.getPlayer().isInsideVehicle() && event.getPlayer().getVehicle() instanceof AbstractHorse) {
-				TownyCombatHorseUtil.registerPlayerMount(event.getPlayer(), (AbstractHorse)event.getPlayer().getVehicle());
+				TownyCombatHorseUtil.registerPlayerMountForTeleport(event.getPlayer(), (AbstractHorse)event.getPlayer().getVehicle());
 			} else {
-				TownyCombatHorseUtil.deregisterPlayerMount(event.getPlayer());
+				TownyCombatHorseUtil.deregisterPlayerMountForTeleport(event.getPlayer());
 			}
 		}
 	}

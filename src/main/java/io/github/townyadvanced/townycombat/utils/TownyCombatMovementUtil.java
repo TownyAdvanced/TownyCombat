@@ -13,6 +13,8 @@ import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +28,8 @@ import java.util.ArrayList;
  *
  */
 public class TownyCombatMovementUtil {
+    private static final double GRAVITY_VELOCITY = -0.0784000015258789;  //A players has this when stationary or travelling horizontally
+    private static final double LADDER_VELOCITY = -0.22540001022815717; //A player has this when going up OR down a ladder
     public static final double VANILLA_PLAYER_MOVEMENT_SPEED = 0.1;
     public static final double VANILLA_HORSE_MAX_MOVEMENT_SPEED = 0.3375;
 
@@ -156,4 +160,42 @@ public class TownyCombatMovementUtil {
         }
         TownyCombat.info("Resident Horse Registration Cleanup Complete");
     }
+
+
+    /**
+     * This method exists to compensate for a bug in vanilla Minecraft,
+     * in which players can bypass slow-effects by jumping forward.
+     *
+     * This method compensates by applying a temporary extra slow, and a jump nerf,
+     * if a heavily encumbered player jumps or ascends an incline.
+     */
+    public static void slowEncumberedJumpingPlayers() {        
+        double velocityY;        
+        Map<Player, Double> playerEncumbrancePercentageMap = TownyCombatMovementUtil.getPlayerEncumbrancePercentageMap();
+        Double playerEncumbrancePercentage;
+        for(Player player: Bukkit.getOnlinePlayers()) {
+            velocityY = player.getVelocity().getY();  
+            if(velocityY != GRAVITY_VELOCITY && velocityY != LADDER_VELOCITY && velocityY > 0) {
+                /*
+                 * Player is jumping or ascending an incline
+                 *
+                 * If they have heavy armour, apply a temporary effect of: slow + jump-nerf
+                 * Effects starts at 8% encumbrance, with an effect duration of 1 second (20 ticks)
+                 * Every 4% encumbrance after that, adds a effect duration of 0.4 seconds (8 tics)
+                 * These numbers are hardcoded for simplicity & to avoid server misconfiguration.
+                 */
+                playerEncumbrancePercentage = playerEncumbrancePercentageMap.get(player);
+                if(playerEncumbrancePercentage != null && playerEncumbrancePercentage >= 8) {
+                    final int effectDurationTicks = (int)(20  + (((playerEncumbrancePercentage / 4) -2) * 8));
+                    TownyCombat.getPlugin().getServer().getScheduler().runTask(TownyCombat.getPlugin(), ()-> applyPlayerJumpSlowEffects(player, effectDurationTicks));
+               }
+            }
+        }
+    }
+
+    private static void applyPlayerJumpSlowEffects(Player player, int effectDurationTicks) {
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, effectDurationTicks, 4));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, effectDurationTicks, -30));
+    }
+
 }

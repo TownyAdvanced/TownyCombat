@@ -1,6 +1,5 @@
 package io.github.townyadvanced.townycombat.listeners;
 
-import com.palmergames.bukkit.towny.TownySettings;
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import io.github.townyadvanced.townycombat.utils.TownyCombatHorseUtil;
@@ -25,6 +24,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
+import org.spigotmc.event.entity.EntityDismountEvent;
 import org.spigotmc.event.entity.EntityMountEvent;
 
 /**
@@ -52,7 +53,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 			return; //Don't proceed further for causes like enderpearls
 		if(event.isCancelled()) {
 			//If something cancelled the player teleport, deregister the mount (to avoid it maybe teleporting later)
-			TownyCombatHorseUtil.deregisterPlayerMount(event.getPlayer());		
+			TownyCombatHorseUtil.deregisterPlayerMountForTeleport(event.getPlayer());		
 			return;
 		}
 		//Teleport horse with player
@@ -75,8 +76,20 @@ public class TownyCombatBukkitEventListener implements Listener {
 		}
 		//Apply speed adjustments
 		TownyCombatMovementUtil.adjustPlayerAndMountSpeeds((Player)event.getEntity());
+		//Register for charge bonus
+		TownyCombatHorseUtil.registerPlayerForChargeBonus((Player)event.getEntity());
 	}
-	
+
+	@EventHandler (ignoreCancelled = true)
+	public void on (EntityDismountEvent event) {
+		if (!TownyCombatSettings.isTownyCombatEnabled())
+			return;
+		if(!(event.getEntity() instanceof Player))
+			return;
+		//Deregister for charge bonus
+		TownyCombatHorseUtil.deregisterPlayerMountForChargeBonus((Player)event.getEntity());
+	}
+
 	@EventHandler (ignoreCancelled = true)
 	public void on (PlayerDeathEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
@@ -100,41 +113,10 @@ public class TownyCombatBukkitEventListener implements Listener {
 	}
 
 	@EventHandler (ignoreCancelled = true)
-    public void on (EntityDamageEvent event) {
-		if (!TownyCombatSettings.isTownyCombatEnabled())
-			return;
-		if(event.getEntity() instanceof Player) {
-			//Auto-pot if needed
-			if(TownyCombatSettings.isAutoPottingEnabled()
-					&& ((Player) event.getEntity()).getHealth() < TownyCombatSettings.getAutoPottingThreshold()) {
-				TownyCombatItemUtil.autopotToThreshold((Player)event.getEntity());
-			}
-			//Reduce damage to players
-			event.setDamage(event.getDamage() + (event.getDamage() * (TownyCombatSettings.getDamageAdjustmentsPlayersIncoming() / 100)));
-
-		} else if (event.getEntity() instanceof AbstractHorse) {
-			//Reduce damage to horses
-			if(TownyCombatSettings.getDamageAdjustmentsHorsesImmuneToFire()
-					&& (event.getCause() == EntityDamageEvent.DamageCause.FIRE
-					|| event.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK)) {
-				event.setCancelled(true);
-			} else {
-				event.setDamage(event.getDamage() + (event.getDamage() * (TownyCombatSettings.getDamageAdjustmentsHorsesIncoming() / 100)));
-			}
-			//Auto-pot if needed
-			if(TownyCombatSettings.isAutoPottingEnabled()
-					&& event.getEntity().getPassengers().size() > 0
-					&& event.getEntity().getPassengers().get(0) instanceof Player
-					&& ((AbstractHorse) event.getEntity()).getHealth() < TownyCombatSettings.getAutoPottingThreshold()) {
-				TownyCombatItemUtil.autopotToThreshold((Player)event.getEntity().getPassengers().get(0), (AbstractHorse)event.getEntity());
-			}
-		}
-	}
-
-	@EventHandler (ignoreCancelled = true)
 	public void on (EntityDamageByEntityEvent event) {
+		double finalDamage = event.getFinalDamage();
 		if(event.getDamager() instanceof Player) {
-			//SPEAR
+			//SPEAR: Increase damage if spear v.s. cavalry
 			if(TownyCombatSettings.isNewItemsSpearEnabled()) {
 				if(event.getEntity() instanceof AbstractHorse
 						|| (event.getEntity() instanceof Player
@@ -144,12 +126,19 @@ public class TownyCombatBukkitEventListener implements Listener {
 					if(mainHandItem.getType() == TownyCombatItemUtil.SPEAR_PLACEHOLDER_MATERIAL
 							&& mainHandItem.getEnchantments().containsKey(Enchantment.DAMAGE_ALL)
 							&& mainHandItem.getEnchantmentLevel(Enchantment.DAMAGE_ALL) == TownyCombatItemUtil.SPEAR_SHARPNESS_LEVEL) {
-						event.setDamage(event.getDamage() + (event.getDamage() * TownyCombatItemUtil.SPEAR_VS_CAVALRY_DAMAGE_ADJUSTMENT));
-						return;
+						finalDamage += TownyCombatItemUtil.SPEAR_VS_CAVALRY_EXTRA_DAMAGE;
 					}
 				}
 			}
-			//WARHAMMER
+			//CHARGING: Increase damage if charging
+			if(TownyCombatSettings.isCavalryChargeEnabled()) {
+				if(event.getDamager().isInsideVehicle()
+						&& event.getDamager().getVehicle() instanceof AbstractHorse) {
+					((Player) event.getDamager()).removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
+					finalDamage += 3;   //Equivalent to Strength I
+				}
+			}
+			//WARHAMMER: Possibly break shield if warhammer
 			if(TownyCombatSettings.isNewItemsWarhammerEnabled()) {
 				if(event.getEntity() instanceof Player) {
 					ItemStack damagerMainHand = ((Player)event.getDamager()).getInventory().getItemInMainHand();
@@ -169,6 +158,28 @@ public class TownyCombatBukkitEventListener implements Listener {
 				}
 			}
 		}
+		//GENERIC DAMAGE ADJUSTMENTS AND AUTOPOTTING
+		if(event.getEntity() instanceof Player) {
+			//Generic damage adjustment
+			finalDamage = finalDamage + (finalDamage * (TownyCombatSettings.getDamageAdjustmentAttackOnPlayer() / 100));
+			//Auto-pot if needed
+			if(TownyCombatSettings.isAutoPottingEnabled()
+					&& ((Player) event.getEntity()).getHealth() < TownyCombatSettings.getAutoPottingThreshold()) {
+				TownyCombatItemUtil.autopotToThreshold((Player)event.getEntity());
+			}
+		} else if (event.getEntity() instanceof AbstractHorse) {
+			//Generic damage adjustment
+			finalDamage = finalDamage + (finalDamage * (TownyCombatSettings.getDamageAdjustmentsAttackOnHorse() / 100));
+			//Auto-pot if needed
+			if(TownyCombatSettings.isAutoPottingEnabled()
+					&& event.getEntity().getPassengers().size() > 0
+					&& event.getEntity().getPassengers().get(0) instanceof Player
+					&& ((AbstractHorse) event.getEntity()).getHealth() < TownyCombatSettings.getAutoPottingThreshold()) {
+				TownyCombatItemUtil.autopotToThreshold((Player)event.getEntity().getPassengers().get(0), (AbstractHorse)event.getEntity());
+			}
+		}
+		//SET DAMAGE
+		event.setDamage(finalDamage);
 	}
 
 	@EventHandler (ignoreCancelled = true)
