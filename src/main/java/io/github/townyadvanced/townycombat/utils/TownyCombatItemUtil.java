@@ -29,7 +29,7 @@ public class TownyCombatItemUtil {
     public static final Material[] WARHAMMER_MATERIALS = new Material[]{null, null, Material.STONE, null, Material.STICK, null, Material.STICK, null, null}; 			
     public static final int WARHAMMER_SHARPNESS_LEVEL = 10;
     public static final double WARHAMMER_BREAK_SHIELD_CHANCE = 0.15;
-    public static final String WARHAMMER_LORE = "15% Chance To Break Enemy Shields";
+    public static final String WARHAMMER_LORE = "15% Chance To Break Shield";
 
     /**
      * Some vanilla items are forbidden
