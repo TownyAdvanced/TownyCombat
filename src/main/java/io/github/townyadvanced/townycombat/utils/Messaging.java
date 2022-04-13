@@ -52,16 +52,16 @@ public class Messaging {
 		}
 	}
 	
-	public static void sendErrorMsg(CommandSender sender, Translatable message) {
+	public static void sendErrorMsg(CommandSender sender, Translatable... messages) {
 		// Ensure the sender is not null (i.e. is an online player who is not an npc)
 		if (sender != null)
-			sender.sendMessage(prefix + Colors.Red + message.forLocale(sender));
+			sender.sendMessage(prefix + Colors.Red + Translation.translateTranslatables(sender, messages));
 	}
 
-	public static void sendMsg(CommandSender sender, Translatable message) {
+	public static void sendMsg(CommandSender sender, Translatable... messages) {
 		// Ensure the sender is not null (i.e. is an online player who is not an npc)
 		if (sender != null)
-			sender.sendMessage(prefix + Colors.White + message.forLocale(sender));
+			sender.sendMessage(prefix + Colors.White + Translation.translateTranslatables(sender, messages));
 	}
 	
 	public static void sendGlobalMessage(Translatable message) {
