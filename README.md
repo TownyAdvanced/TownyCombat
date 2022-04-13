@@ -34,13 +34,13 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
             - Leggings: 1.2%
             - Boots: 0.6%
           - Materials:
-            - Leather: +0%
-            - Chain Mail: +100%
-            - Turtle Shell: +200%
-            - Gold: +300%
-            - Iron: +400%
-            - Diamond: +500% (*literally walking around covered in rocks...*)
-            - Netherite: +600%
+            - Leather: x1
+            - Chain Mail: x2
+            - Turtle Shell: x3
+            - Gold: x4
+            - Iron: x5
+            - Diamond: x6 (*literally walking around covered in rocks...*)
+            - Netherite: x7
         - Horse Armour:
           - Leather Horse Armour: 8%
           - Gold Horse Armour: 32%
