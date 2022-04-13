@@ -61,12 +61,12 @@ public enum ConfigNodes {
 			"# - Goes into cooldown when the rider strikes a player/mob with their weapon.",
 			"# - Effect: Strength"),
 	HORSE_ENHANCEMENTS_CAVALRY_STRENGTH_EFFECT_LEVEL(
-			"horse_enhancements.cavalry_charge.strength_effect_level",
+			"horse_enhancements.cavalry_charge.effect_level",
 			"2",
 			"",
 			"# The level of the strength effect."),
 	HORSE_ENHANCEMENTS_CAVALRY_CHARGE_COOLDOWN_SECONDS(
-			"horse_enhancements.cavalry_charge.cooldown_seconds",
+			"horse_enhancements.cavalry_charge.cooldown_time_seconds",
 			"15",
 			"",
 			"# The charge effect cooldown."),
