@@ -65,8 +65,20 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
     - :horse_racing: **Cavalry Charges**  
       - Players on horseback get a Charge Bonus of Strength 1.
       - When a player mounts a horse, or hits an enemy, the Charge Bonus goes into a 10 second cooldown.
-    - :teapot: **Auto-Potting** (*The critical setting for battlefield inclusivity*)
-      - After a player's health drops below 10 (*i.e 5 hearts*), then on the next incoming attack, any available Splash-Health potions are automatically consumed from the player's inventory, to take their health to back over 10.
+    - :teapot: **Auto-Potting**
+      - In combat, Splash health potions (I and II) are automatically consumed after a player's health falls below 5 hearts.
+      - *This setting gives servers a critical choice:*
+        - A. Disabled: 
+          - Status Quo.
+          - Today (April 2022), combat is generally restricted to an elite caste of highly trained 'PVP'ers', 
+            sometimes non-roleplaying and/or belonging to cross-server PVP clans.
+          - New players are told, correctly, that they are effectively useless in combat, 
+            and should either commit to training (*usually off-server*), or adopt a peaceful supply role.
+        - B Enabled
+          - Shake Things Up.
+          - Combat is opened up more to new-players/casual-players/roleplayers/builders/traders.
+          - Example: Even a player who has never fought in MC before can still be useful in a battle, 
+            once their teams equips then with some basic military kit like bow, shield, sword, and a few health potions.
     - :military_helmet: **Military Uniforms**
       - With all the above changes, it makes little sense for an nation to put every soldier in a full-diamond/netherite kit.
       - It makes a more sense to equip all units with at least one identifying piece of kit (*e.g. a coloured leather helmet*).
