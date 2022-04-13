@@ -135,7 +135,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 				if(event.getDamager().isInsideVehicle()
 						&& event.getDamager().getVehicle() instanceof AbstractHorse) {
 					((Player) event.getDamager()).removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
-					finalDamage += 3;   //Equivalent to Strength I
+					finalDamage += (3 * TownyCombatSettings.getCavalryChargeStrengthEffectLevel());
 					TownyCombatHorseUtil.registerPlayerForChargeBonus((Player) event.getDamager());
 				}
 			}

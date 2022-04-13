@@ -62,12 +62,12 @@ public enum ConfigNodes {
 			"# - Effect: Strength"),
 	HORSE_ENHANCEMENTS_CAVALRY_STRENGTH_EFFECT_LEVEL(
 			"horse_enhancements.cavalry_charge.strength_effect_level",
-			"1",
+			"2",
 			"",
 			"# The level of the strength effect."),
 	HORSE_ENHANCEMENTS_CAVALRY_CHARGE_COOLDOWN_SECONDS(
 			"horse_enhancements.cavalry_charge.cooldown_seconds",
-			"10",
+			"15",
 			"",
 			"# The charge effect cooldown."),
 	BLOCK_GLITCHING_PREVENTION(
