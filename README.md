@@ -65,7 +65,7 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
     - :military_helmet: **Military Uniforms**
       - With all the above changes, it makes little sense for an nation to put every soldier in a full-diamond/netherite kit.
       - It makes a more sense to equip all units with at least one identifying piece of kit (*e.g. a coloured leather helmet*).
-      - Shields, being freed from purgatory by autopotting, can be particularly visually effective, as they can be decorated with banners. 
+      - Shields, made practical by autopotting (*see below*), can be very visually effective when decorated with banners. 
     - :teapot: **Auto-Potting**
       - In combat, Splash health potions (I and II) are automatically consumed after a player's health falls below 5 hearts.
       - *This setting offers servers a critical choice:*
