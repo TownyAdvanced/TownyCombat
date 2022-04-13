@@ -67,20 +67,20 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
       - When a player mounts a horse, or hits an enemy, the Charge Bonus goes into a 10 second cooldown. ***(15 in v0.2.1)***
     - :teapot: **Auto-Potting**
       - In combat, Splash health potions (I and II) are automatically consumed after a player's health falls below 5 hearts.
-      - *This setting gives servers a critical choice:*
+      - *This setting offers servers a critical choice:*
         - A. Disabled: 
           - Status Quo.
           - Combat is generally restricted to an elite caste of highly trained 'PVP'ers', 
-            sometimes non-roleplaying and/or belonging to cross-server PVP clans.
+            often non-roleplaying and/or belonging to cross-server PVP clans.
           - New players are correctly told that they are effectively useless in combat, 
             and should either commit to training (*usually off-server*), or adopt a peaceful supply role.
-          - Cross-server PVP clans are gifted with an outsized geo-political influence.
+          - Cross-Server PVP Clans are gifted with an outsized geo-political influence.
         - B Enabled
           - Shake Things Up.
           - Combat is opened up more to new-players/casual-players/roleplayers/builders/traders.
-          - Example: Even a player who has never fought in MC before can still be useful in a battle, 
+          - *Example:* A player who has never fought in MC before can still be useful in a battle, 
             once their teams equips then with some basic military kit like bow, shield, sword, and a few health potions.
-          - The geo-political influence of cross-server PVP clans is reduced.
+          - The geo-political influence of Cross-Server PVP Clans is reduced.
     - :military_helmet: **Military Uniforms**
       - With all the above changes, it makes little sense for an nation to put every soldier in a full-diamond/netherite kit.
       - It makes a more sense to equip all units with at least one identifying piece of kit (*e.g. a coloured leather helmet*).
