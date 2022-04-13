@@ -63,8 +63,8 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
       - Players: 30%
       - Horses: 60%
     - :horse_racing: **Cavalry Charges**  
-      - Players on horseback get a Charge Bonus of Strength 1.
-      - When a player mounts a horse, or hits an enemy, the Charge Bonus goes into a 10 second cooldown.
+      - Players on horseback get a Charge Bonus of Strength 1.  ***(2 in v0.2.1)***
+      - When a player mounts a horse, or hits an enemy, the Charge Bonus goes into a 10 second cooldown. ***(15 in v0.2.1)***
     - :teapot: **Auto-Potting**
       - In combat, Splash health potions (I and II) are automatically consumed after a player's health falls below 5 hearts.
       - *This setting gives servers a critical choice:*
