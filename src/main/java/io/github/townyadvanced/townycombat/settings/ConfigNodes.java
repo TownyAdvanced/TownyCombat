@@ -388,18 +388,46 @@ public enum ConfigNodes {
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
+	NEW_ITEMS_SPEAR(
+			"new_items.spear",
+			"",
+			""),
 	NEW_ITEMS_SPEAR_ENABLED(
-			"new_items.spear_enabled",
+			"new_items.spear.enabled",
 			"true",
 			"",
-			"# A spear is a cheap and light throwaway item. It cannot be repaired or comnbined.",
-			"# Its damage stats are like a wooden sword, with sharpness 8, knockback 1, and +75% v.s. cavalry"),
+			"# If true, then spears are enabled."),
+	NEW_ITEMS_SPEAR_CUSTOM_MODE_ENABLED(
+			"new_items.spear.custom_mode_enabled",
+			"false",
+			"",
+			"# If false, then the native TCM spear recipe is enabled, replacing the wooden sword.",
+			"# If true, then a custom item plugin can be used."),
+	NEW_ITEMS_SPEAR_CUSTOM_KEY(
+			"new_items.spear.custom_key",
+			"custom.spear",
+			"",
+			"# If spear mode is custom, then this value is the key to identify the custom spear item."),
+	NEW_ITEMS_WARHAMMER(
+			"new_items.warhammer",
+			"",
+			""),
 	NEW_ITEMS_WARHAMMER_ENABLED(
-			"new_items.warhammer_enabled",
+			"new_items.warhammer.enabled",
 			"true",
 			"",
-			"# A warhammer is a cheap and heavy throwaway item. It cannot be repaired or comnbined.",
-			"# Its damage stats are like a wooden axe, with sharpness 10, knockback 1, and 15% shield-break chance."),
+			"# If true, then warhammers are enabled."),
+	NEW_ITEMS_WARHAMMER_CUSTOM_MODE_ENABLED(
+			"new_items.warhammer.custom_mode_enabled",
+			"false",
+			"",
+			"# If false, then the native TCM warhammer recipe is enabled, replacing the wooden axe.",
+			"# If true, then a custom item plugin can be used."),
+	NEW_ITEMS_WARHAMMER_CUSTOM_KEY(
+			"new_items.warhammer.custom_key",
+			"custom.warhammer",
+			"",
+			"# If warhammer mode is custom, then this value is the key to identify the custom warhammer item."),
 	AUTOPOTTING(
 		"autopotting",
 			"",

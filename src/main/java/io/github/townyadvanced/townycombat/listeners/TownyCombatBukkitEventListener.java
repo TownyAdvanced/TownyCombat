@@ -16,7 +16,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
@@ -123,9 +122,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 							&& event.getEntity().isInsideVehicle()
 							&& event.getEntity().getVehicle() instanceof AbstractHorse)) {
 					ItemStack mainHandItem =  ((Player)event.getDamager()).getInventory().getItemInMainHand();
-					if(mainHandItem.getType() == TownyCombatItemUtil.SPEAR_PLACEHOLDER_MATERIAL
-							&& mainHandItem.getEnchantments().containsKey(Enchantment.DAMAGE_ALL)
-							&& mainHandItem.getEnchantmentLevel(Enchantment.DAMAGE_ALL) == TownyCombatItemUtil.SPEAR_SHARPNESS_LEVEL) {
+					if(mainHandItem.getType().getKey().toString().equals(TownyCombatSettings.getCached_spear_material_key())) {
 						finalDamage += TownyCombatItemUtil.SPEAR_VS_CAVALRY_EXTRA_DAMAGE;
 					}
 				}
@@ -143,7 +140,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 			if(TownyCombatSettings.isNewItemsWarhammerEnabled()) {
 				if(event.getEntity() instanceof Player) {
 					ItemStack damagerMainHand = ((Player)event.getDamager()).getInventory().getItemInMainHand();
-					if (damagerMainHand.getType() == TownyCombatItemUtil.WARHAMMER_PLACEHOLDER_MATERIAL) {
+					if (damagerMainHand.getType().getKey().toString().equals(TownyCombatSettings.getCached_warhammer_material_key())) {
 						if(((Player)event.getEntity()).isBlocking()) {
 							ItemStack victimMainHand = ((Player)event.getEntity()).getInventory().getItemInMainHand();
 							ItemStack victimOffHand = ((Player)event.getEntity()).getInventory().getItemInOffHand();

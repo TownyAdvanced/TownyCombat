@@ -19,17 +19,19 @@ import java.util.List;
 
 public class TownyCombatItemUtil {
 
-    public static final Material SPEAR_PLACEHOLDER_MATERIAL = Material.WOODEN_SWORD;
-    public static final Material[] SPEAR_MATERIALS = new Material[]{null, null, Material.IRON_INGOT, null, Material.STICK, null, Material.STICK, null, null}; 			
-    public static final int SPEAR_SHARPNESS_LEVEL = 8;
-    public static final double SPEAR_VS_CAVALRY_EXTRA_DAMAGE = 6.375;
-    public static final String SPEAR_LORE = "+75% Damage v.s. Cavalry";
+    public static final Material NATIVE_SPEAR_PLACEHOLDER_MATERIAL = Material.WOODEN_SWORD;
+    public static final Material[] NATIVE_SPEAR_MATERIALS = new Material[]{null, null, Material.IRON_INGOT, null, Material.STICK, null, Material.STICK, null, null}; 			
+    public static final int NATIVE_SPEAR_SHARPNESS_LEVEL = 8;
+    public static final String NATIVE_SPEAR_KEY = "minecraft:wooden_sword";
+    public static final String NATIVE_SPEAR_LORE = "+6 Damage v.s. Cavalry";
+    public static final double SPEAR_VS_CAVALRY_EXTRA_DAMAGE = 6;
 
-    public static final Material WARHAMMER_PLACEHOLDER_MATERIAL = Material.WOODEN_AXE;
-    public static final Material[] WARHAMMER_MATERIALS = new Material[]{null, null, Material.STONE, null, Material.STICK, null, Material.STICK, null, null}; 			
-    public static final int WARHAMMER_SHARPNESS_LEVEL = 10;
+    public static final Material NATIVE_WARHAMMER_PLACEHOLDER_MATERIAL = Material.WOODEN_AXE;
+    public static final Material[] NATIVE_WARHAMMER_MATERIALS = new Material[]{null, null, Material.STONE, null, Material.STICK, null, Material.STICK, null, null}; 			
+    public static final int NATIVE_WARHAMMER_SHARPNESS_LEVEL = 10;
+    public static final String NATIVE_WARHAMMER_KEY = "minecraft:wooden_axe";
+    public static final String NATIVE_WARHAMMER_LORE = "15% Chance to Break Shield";
     public static final double WARHAMMER_BREAK_SHIELD_CHANCE = 0.15;
-    public static final String WARHAMMER_LORE = "15% Chance to Break Shield";
 
     /**
      * Some vanilla items are forbidden
@@ -40,15 +42,17 @@ public class TownyCombatItemUtil {
      */
     public static boolean isForbiddenItem(ItemStack item) {
         if(TownyCombatSettings.isNewItemsSpearEnabled()
-                && item.getType() == SPEAR_PLACEHOLDER_MATERIAL
+                && !TownyCombatSettings.isNewItemsSpearCustomModeEnabled()
+                && item.getType() == NATIVE_SPEAR_PLACEHOLDER_MATERIAL
                 && (!item.getEnchantments().containsKey(Enchantment.DAMAGE_ALL)
-                    || item.getEnchantmentLevel(Enchantment.DAMAGE_ALL) != SPEAR_SHARPNESS_LEVEL)) {
+                    || item.getEnchantmentLevel(Enchantment.DAMAGE_ALL) != NATIVE_SPEAR_SHARPNESS_LEVEL)) {
             return true;  //Vanilla wooden sword
         } else if (TownyCombatSettings.isNewItemsWarhammerEnabled()
-                && item.getType() == WARHAMMER_PLACEHOLDER_MATERIAL
+                && !TownyCombatSettings.isNewItemsWarhammerCustomModeEnabled()
+                && item.getType() == NATIVE_WARHAMMER_PLACEHOLDER_MATERIAL
                 && (!item.getEnchantments().containsKey(Enchantment.DAMAGE_ALL)
-                    || item.getEnchantmentLevel(Enchantment.DAMAGE_ALL) != WARHAMMER_SHARPNESS_LEVEL)) {
-            return true;  //Vanilla stone axe
+                    || item.getEnchantmentLevel(Enchantment.DAMAGE_ALL) != NATIVE_WARHAMMER_SHARPNESS_LEVEL)) {
+            return true;  //Vanilla wooden axe
         } else {
             return false;
         }
@@ -61,9 +65,13 @@ public class TownyCombatItemUtil {
      * @return true if forbidden material
      */
     public static boolean isReservedMaterial(Material material) {
-        if(TownyCombatSettings.isNewItemsSpearEnabled() && material == SPEAR_PLACEHOLDER_MATERIAL)
+        if(TownyCombatSettings.isNewItemsSpearEnabled() 
+                && !TownyCombatSettings.isNewItemsSpearCustomModeEnabled()
+                && material == NATIVE_SPEAR_PLACEHOLDER_MATERIAL)
             return true;
-        if(TownyCombatSettings.isNewItemsWarhammerEnabled() && material == WARHAMMER_PLACEHOLDER_MATERIAL)
+        if(TownyCombatSettings.isNewItemsWarhammerEnabled() 
+                && !TownyCombatSettings.isNewItemsWarhammerCustomModeEnabled()
+                && material == NATIVE_WARHAMMER_PLACEHOLDER_MATERIAL)
             return true;
         return false;
     }
@@ -76,27 +84,29 @@ public class TownyCombatItemUtil {
      */
     public static ItemStack calculateCraftingResult(PrepareItemCraftEvent event) {
         if(TownyCombatSettings.isNewItemsSpearEnabled()
-                && doesMatrixMatch(event.getInventory().getMatrix(), SPEAR_MATERIALS)) {
-			ItemStack result = new ItemStack(SPEAR_PLACEHOLDER_MATERIAL);
+                && !TownyCombatSettings.isNewItemsSpearCustomModeEnabled()
+                && doesMatrixMatch(event.getInventory().getMatrix(), NATIVE_SPEAR_MATERIALS)) {
+			ItemStack result = new ItemStack(NATIVE_SPEAR_PLACEHOLDER_MATERIAL);
 			ItemMeta itemMeta = result.getItemMeta();
 			itemMeta.setDisplayName("Spear");
-			itemMeta.addEnchant(Enchantment.DAMAGE_ALL, SPEAR_SHARPNESS_LEVEL, true);
+			itemMeta.addEnchant(Enchantment.DAMAGE_ALL, NATIVE_SPEAR_SHARPNESS_LEVEL, true);
 			itemMeta.addEnchant(Enchantment.KNOCKBACK, 1, true);
 			List<String> lore = new ArrayList<>();
-			lore.add(SPEAR_LORE); 
+			lore.add(NATIVE_SPEAR_LORE); 
 			itemMeta.setLore(lore);
 			result.setItemMeta(itemMeta);
 			return result;
         
         } else if(TownyCombatSettings.isNewItemsWarhammerEnabled()
-                && doesMatrixMatch(event.getInventory().getMatrix(), WARHAMMER_MATERIALS)) {
-			ItemStack result = new ItemStack(WARHAMMER_PLACEHOLDER_MATERIAL);
+                && !TownyCombatSettings.isNewItemsWarhammerCustomModeEnabled()
+                && doesMatrixMatch(event.getInventory().getMatrix(), NATIVE_WARHAMMER_MATERIALS)) {
+			ItemStack result = new ItemStack(NATIVE_WARHAMMER_PLACEHOLDER_MATERIAL);
 			ItemMeta itemMeta = result.getItemMeta();
 			itemMeta.setDisplayName("Warhammer");
-			itemMeta.addEnchant(Enchantment.DAMAGE_ALL, WARHAMMER_SHARPNESS_LEVEL, true);
+			itemMeta.addEnchant(Enchantment.DAMAGE_ALL, NATIVE_WARHAMMER_SHARPNESS_LEVEL, true);
 			itemMeta.addEnchant(Enchantment.KNOCKBACK, 1, true);
 			List<String> lore = new ArrayList<>();
-			lore.add(WARHAMMER_LORE); 
+			lore.add(NATIVE_WARHAMMER_LORE); 
 			itemMeta.setLore(lore);
 			result.setItemMeta(itemMeta);
 			return result;

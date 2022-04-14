@@ -21,8 +21,14 @@ public class TownyCombatSettings {
     private static Map<Material, Double> materialEncumbrancePercentageMap = new HashMap<>();
 	private static int cavalryChargeEffectDurationTicks = 0;
 	private static int cavalryChargeCooldownMilliseconds = 0;
-
+	private static String cached_spear_material_key = "";
+	private static String cached_warhammer_material_key = "";
+	
 	public static void loadReloadCachedSetting() {
+		//Load keys
+		cached_spear_material_key = isNewItemsSpearCustomModeEnabled() ? getNewItemsSpearCustomKey(): TownyCombatItemUtil.NATIVE_SPEAR_KEY;
+		cached_warhammer_material_key = isNewItemsWarhammerCustomModeEnabled() ? getNewItemsWarhammerCustomKey(): TownyCombatItemUtil.NATIVE_WARHAMMER_KEY;
+
 		//Load cavalry charge ticks
 		cavalryChargeEffectDurationTicks = (int)((TownyCombatSettings.getCavalryChargeCooldownSeconds() + 5) * 20);
 		cavalryChargeCooldownMilliseconds = (int)(TownyCombatSettings.getCavalryChargeCooldownSeconds() * 1000);
@@ -117,8 +123,8 @@ public class TownyCombatSettings {
 		materialEncumbrancePercentageMap.put(Material.BOW, getEquipmentEncumbranceBow());
 		materialEncumbrancePercentageMap.put(Material.CROSSBOW, getEquipmentEncumbranceCrossbow());
 		materialEncumbrancePercentageMap.put(Material.SHIELD, getEquipmentEncumbranceShield());
-		materialEncumbrancePercentageMap.put(TownyCombatItemUtil.SPEAR_PLACEHOLDER_MATERIAL, getEquipmentEncumbranceSpear());
-		materialEncumbrancePercentageMap.put(TownyCombatItemUtil.WARHAMMER_PLACEHOLDER_MATERIAL, getEquipmentEncumbranceWarhammer());
+		materialEncumbrancePercentageMap.put(Material.matchMaterial(cached_spear_material_key), getEquipmentEncumbranceSpear());
+		materialEncumbrancePercentageMap.put(Material.matchMaterial(cached_warhammer_material_key), getEquipmentEncumbranceWarhammer());
 
 		//Enderchest & shulker boxes
 		materialEncumbrancePercentageMap.put(Material.ENDER_CHEST, getEquipmentEncumbranceEnderChest());
@@ -309,8 +315,24 @@ public class TownyCombatSettings {
 		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_SPEAR_ENABLED);
 	}
 
+	public static boolean isNewItemsSpearCustomModeEnabled() {
+		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_WARHAMMER_CUSTOM_MODE_ENABLED);
+	}
+
+	public static String getNewItemsSpearCustomKey() {
+		return Settings.getString(ConfigNodes.NEW_ITEMS_SPEAR_CUSTOM_KEY);
+	}
+
 	public static boolean isNewItemsWarhammerEnabled() {
 		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_WARHAMMER_ENABLED);
+	}
+
+	public static boolean isNewItemsWarhammerCustomModeEnabled() {
+		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_WARHAMMER_CUSTOM_MODE_ENABLED);
+	}
+
+	public static String getNewItemsWarhammerCustomKey() {
+		return Settings.getString(ConfigNodes.NEW_ITEMS_WARHAMMER_CUSTOM_KEY);
 	}
 
 	public static double getEquipmentEncumbranceShulkerBox() {
@@ -351,5 +373,13 @@ public class TownyCombatSettings {
 
 	public static int getCavalryChargeEffectDurationTicks() {
 		return cavalryChargeEffectDurationTicks;
+	}
+
+	public static String getCached_spear_material_key() {
+		return cached_spear_material_key;
+	}
+
+	public static String getCached_warhammer_material_key() {
+		return cached_warhammer_material_key;
 	}
 }
