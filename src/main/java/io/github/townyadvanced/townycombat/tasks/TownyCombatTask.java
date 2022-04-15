@@ -27,9 +27,11 @@ public class TownyCombatTask extends BukkitRunnable {
      * The required task run method
      */
     public void run() {
+        if (!TownyCombatSettings.isTownyCombatEnabled())
+			return;
         //Execute the jump restriction every 0.5 seconds.
-        if(TownyCombatSettings.isEncumbranceEnabled()) {
-            TownyCombatMovementUtil.slowEncumberedJumpingPlayers();
+        if(TownyCombatSettings.isEncumbranceEnabled() && TownyCombatSettings.isJumpDamageEnabled()) {
+            TownyCombatMovementUtil.punishEncumberedJumpingPlayers();
         }
         //Execute the cavalry charge refreshes every 1 second.
         if(TownyCombatSettings.isCavalryChargeEnabled()) {

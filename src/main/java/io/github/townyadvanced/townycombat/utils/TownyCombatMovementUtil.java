@@ -6,6 +6,7 @@ import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.metadata.TownyCombatResidentMetaDataController;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AbstractHorse;
@@ -161,41 +162,42 @@ public class TownyCombatMovementUtil {
         TownyCombat.info("Resident Horse Registration Cleanup Complete");
     }
 
-
     /**
      * This method exists to compensate for a bug in vanilla Minecraft,
-     * in which players can bypass slow-effects by jumping forward.
+     * in which players can bypass slowing-effects by jumping forward.
      *
-     * This method compensates by applying a temporary extra slow, and a jump nerf,
+     * This method compensates by applying a little damage,
      * if a heavily encumbered player jumps or ascends an incline.
      */
-    public static void slowEncumberedJumpingPlayers() {        
-        double velocityY;        
+    public static void punishEncumberedJumpingPlayers() {        
         Map<Player, Double> playerEncumbrancePercentageMap = TownyCombatMovementUtil.getPlayerEncumbrancePercentageMap();
+        final double JUMP_DAMAGE_THRESHOLD = TownyCombatSettings.getJumpDamageThreshold();
+        final double JUMP_DAMAGE_PER_ENCUMBRANCE_PERCENT = TownyCombatSettings.getJumpDamageDamagePerEncumbrancePercent();
         Double playerEncumbrancePercentage;
+        double velocityY;        
+        double damage;
+        double newHealth;        
         for(Player player: Bukkit.getOnlinePlayers()) {
+            if(player.getGameMode() == GameMode.CREATIVE
+                    || player.getGameMode() == GameMode.ADVENTURE
+                    || player.isInvulnerable()) {                
+                continue;
+            }
             velocityY = player.getVelocity().getY();  
             if(velocityY != GRAVITY_VELOCITY && velocityY != LADDER_VELOCITY && velocityY > 0) {
                 /*
                  * Player is jumping or ascending an incline
                  *
-                 * If they have heavy armour, apply a temporary effect of: slow + jump-nerf
-                 * Effects starts at 8% encumbrance, with an effect duration of 1 second (20 ticks)
-                 * Every 4% encumbrance after that, adds a effect duration of 0.4 seconds (8 tics)
-                 * These numbers are hardcoded for simplicity & to avoid server misconfiguration.
+                 * If they have are over the encumbrance threshold, apply damage
                  */
                 playerEncumbrancePercentage = playerEncumbrancePercentageMap.get(player);
-                if(playerEncumbrancePercentage != null && playerEncumbrancePercentage >= 8) {
-                    final int effectDurationTicks = (int)(20  + (((playerEncumbrancePercentage / 4) -2) * 8));
-                    TownyCombat.getPlugin().getServer().getScheduler().runTask(TownyCombat.getPlugin(), ()-> applyPlayerJumpSlowEffects(player, effectDurationTicks));
+                if(playerEncumbrancePercentage != null && playerEncumbrancePercentage > JUMP_DAMAGE_THRESHOLD) {
+                damage = playerEncumbrancePercentage * JUMP_DAMAGE_PER_ENCUMBRANCE_PERCENT;
+                newHealth = player.getHealth() - damage;
+                final double finalNewHealth = newHealth < 0 ? 0 : newHealth;   
+                TownyCombat.getPlugin().getServer().getScheduler().runTask(TownyCombat.getPlugin(), ()->  player.setHealth(finalNewHealth));
                }
             }
         }
     }
-
-    private static void applyPlayerJumpSlowEffects(Player player, int effectDurationTicks) {
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, effectDurationTicks, 4));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, effectDurationTicks, -30));
-    }
-
 }
