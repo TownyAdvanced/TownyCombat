@@ -347,13 +347,13 @@ public enum ConfigNodes {
 			"",
 			""),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_ENABLED(
-			"speed_adjustments.encumbrance.infantry.jump_damage_enabled",
+			"speed_adjustments.encumbrance.infantry.jump_damage.enabled",
 			"true",
 			"",
 			"# If enabled, player with heavy armour take a little damage when they jump or ascend an incline.",
 			"# TIP: This setting stop players from exploiting/encumbrance-bypassing by 'bunny hopping' their way all over the battleield."),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_THRESHOLD(
-			"speed_adjustments.encumbrance.infantry.jump_damage_threshold",
+			"speed_adjustments.encumbrance.infantry.jump_damage.threshold",
 			"8",
 			"",
 			"# Players only take jump damage when their encumbrance is above this threshold.",
