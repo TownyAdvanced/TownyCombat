@@ -352,4 +352,16 @@ public class TownyCombatSettings {
 	public static int getCavalryChargeEffectDurationTicks() {
 		return cavalryChargeEffectDurationTicks;
 	}
+	
+	public static boolean isJumpDamageEnabled() {
+		return Settings.getBoolean(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_ENABLED);
+	}
+	
+	public static double getJumpDamageThreshold() {
+		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_THRESHOLD);
+	}
+
+	public static double getJumpDamageDamagePerEncumbrancePercent() {
+		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_DAMAGE_PER_ENCUMBRANCE_PERCENT);
+	}	
 }
