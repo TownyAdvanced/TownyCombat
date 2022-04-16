@@ -115,10 +115,12 @@ public class TownyCombatBukkitEventListener implements Listener {
 	@EventHandler (ignoreCancelled = true)
 	public void on (EntityDamageEvent event) {
 		if (event.getEntity() instanceof AbstractHorse) {
-			//No fire damage to horses
+			//No fire damage to horses ridden by players
 			if(TownyCombatSettings.isHorsesImmuneToFire()
-					&& (event.getCause() == EntityDamageEvent.DamageCause.FIRE
-					|| event.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK)) {
+                                && event.getEntity().getPassengers().size() > 0
+			        && event.getEntity().getPassengers().get(0) instanceof Player
+			        && (event.getCause() == EntityDamageEvent.DamageCause.FIRE
+				    || event.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK)) {
 				event.setCancelled(true);
 			} 
 		}
