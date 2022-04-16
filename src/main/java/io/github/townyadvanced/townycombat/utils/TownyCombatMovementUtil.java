@@ -192,10 +192,9 @@ public class TownyCombatMovementUtil {
                  */
                 playerEncumbrancePercentage = playerEncumbrancePercentageMap.get(player);
                 if(playerEncumbrancePercentage != null && playerEncumbrancePercentage > JUMP_DAMAGE_THRESHOLD) {
-                damage = playerEncumbrancePercentage * JUMP_DAMAGE_PER_ENCUMBRANCE_PERCENT;
-                newHealth = player.getHealth() - damage;
-                final double finalNewHealth = newHealth < 0 ? 0 : newHealth;   
-                TownyCombat.getPlugin().getServer().getScheduler().runTask(TownyCombat.getPlugin(), ()->  player.setHealth(finalNewHealth));
+                    damage = playerEncumbrancePercentage * JUMP_DAMAGE_PER_ENCUMBRANCE_PERCENT;
+                    final double newHealth = Math.max(0, player.getHealth() - damage);
+                    TownyCombat.getPlugin().getServer().getScheduler().runTask(TownyCombat.getPlugin(), ()->  player.setHealth(newHealth));
                }
             }
         }
