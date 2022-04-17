@@ -408,6 +408,11 @@ public enum ConfigNodes {
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
+        NEW_ITEMS_LORE_CODE
+                        "new_items.common_lore_code",
+			"&a&a",
+			"",
+			"# For TC to recognize an item as for special effects, it must have a lore line starting with this."),
         NEW_ITEMS_SPEAR(
 			"new_items.spear",
 			"",
@@ -429,6 +434,11 @@ public enum ConfigNodes {
 			"",
 			"# If true, then TC native spears can be crafted",
                         "# See user guide for more details"),
+        NEW_ITEMS_SPEAR_LORE_CODE
+                        "new_items.spear.lore_code",
+			"&a",
+			"",
+			"# For TC to recognize this item as for special effects, this character must appear after the common lore code."),
         NEW_ITEMS_WARHAMMER(
 			"new_items.warhammer",
 			"",
@@ -450,6 +460,12 @@ public enum ConfigNodes {
 			"",
 			"# If true, then TC native warhammers can be crafted",
                         "# See user guide for recipe"),
+
+        NEW_ITEMS_WARHAMMER_LORE_CODE
+                        "new_items.warhammer.lore_code",
+			"&b",
+			"",
+			"# For TC to recognize this item as for special effects, this character must appear after the common lore code."),
 	AUTOPOTTING(
 		"autopotting",
 			"",
