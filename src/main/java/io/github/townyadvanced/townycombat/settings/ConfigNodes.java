@@ -67,7 +67,7 @@ public enum ConfigNodes {
 			"# The level of the strength effect."),
 	HORSE_ENHANCEMENTS_CAVALRY_CHARGE_COOLDOWN_SECONDS(
 			"horse_enhancements.cavalry_charge.cooldown_time_seconds",
-			"15",
+			"12",
 			"",
 			"# The charge effect cooldown."),
 	BLOCK_GLITCHING_PREVENTION(
@@ -264,7 +264,7 @@ public enum ConfigNodes {
 			"speed_adjustments.infantry.armour_slowing.base_item_percent",
 			"",
 			"",
-			"# The base slow percentage for each type of armour item."),
+			"# The base slow percentage for each type of item."),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_BOW(
 			"speed_adjustments.encumbrance.infantry.base_item_percent.bow",
 			"3",
@@ -320,19 +320,19 @@ public enum ConfigNodes {
 			""),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_CHAINMAIL(
 			"speed_adjustments.encumbrance.infantry.material_modification_percent.chainmail",
-			"180",
+			"200",
 			""),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_TURTLE_SHELL(
 			"speed_adjustments.encumbrance.infantry.material_modification_percent.turtle_shell",
-			"260",
+			"300",
 			""),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_GOLD(
 			"speed_adjustments.encumbrance.infantry.material_modification_percent.gold",
-			"340",
+			"300",
 			""),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_IRON(
 			"speed_adjustments.encumbrance.infantry.material_modification_percent.iron",
-			"420",
+			"400",
 			""),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_DIAMOND(
 			"speed_adjustments.encumbrance.infantry.material_modification_percent.diamond",
