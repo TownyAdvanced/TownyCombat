@@ -21,6 +21,9 @@ public class TownyCombatSettings {
     private static Map<Material, Double> materialEncumbrancePercentageMap = new HashMap<>();
 	private static int cavalryChargeEffectDurationTicks = 0;
 	private static int cavalryChargeCooldownMilliseconds = 0;
+        private static String cachedCommonLoreCode;
+        private static String cachedSpearLoreCode;
+        private static String cachedWarHammerLoreCode;
 
 	public static void loadReloadCachedSetting() {
 		//Load cavalry charge ticks
