@@ -309,8 +309,24 @@ public class TownyCombatSettings {
 		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_SPEAR_ENABLED);
 	}
 
+        public static double getNewItemsSpearBonusDamageVsCavalry() {
+		return Settings.getDouble(ConfigNodes.NEW_ITEMS_SPEAR_BONUS_DAMAGE_VS_CAVALRY);
+	}
+
+        public static boolean isNewItemsSpearNativeWeaponEnabled() {
+		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_SPEAR_NATIVE_WEAPON_ENABLED);
+	}
+
 	public static boolean isNewItemsWarhammerEnabled() {
 		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_WARHAMMER_ENABLED);
+	}
+
+        public static int getNewItemsWarhammerChanceToBreakShield() {
+                return Settings.getBoolean(ConfigNodes.NEW_ITEMS_WARHAMMER_CHANCE_TO_BREAK_SHIELD);
+	}
+
+        public static boolean isNewItemsWarhammerNativeWeaponEnabled() {
+		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_WARHAMMER_NATIVE_WEAPON_ENABLED);
 	}
 
 	public static double getEquipmentEncumbranceShulkerBox() {
