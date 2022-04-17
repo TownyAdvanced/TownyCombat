@@ -55,8 +55,8 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
             - Shulker Box: -15%
             - Ender Chest: -30%
         - Encumbrance effect on infantry jump/climb speed:
-          - Players with 8% encumbrance or more get an extra slowing effect when jumping/climbing.
-          - *Sorry this effect is a little janky, but it compensates for an MC bug which allows slowdown-bypassing via. bunny-hopping.*
+          - Players with 8% encumbrance or more get a little damage whenever they jump/climb.
+          - This compensates for an MC bug which let's players bypass movement decreases by bunny-hopping.
     - :new: **New Items**
       - Spear:
         ![image](https://user-images.githubusercontent.com/50219223/162958194-a7ecd2ae-c880-49be-afb9-6838d21e2a4d.png)
