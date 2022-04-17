@@ -357,7 +357,7 @@ public enum ConfigNodes {
 			"8",
 			"",
 			"# Players only take jump damage when their encumbrance is above this threshold.",
-			"# TIP: With default settings, jump damage will only apply to players carrying something heavier than a full chain-mail set."),
+			"# TIP: With default settings, jump damage will only apply to players carrying a full chain-mail set or heavier."),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_DAMAGE_PER_ENCUMBRANCE_PERCENT(
 			"speed_adjustments.encumbrance.infantry.jump_damage.damage_per_encumbrance_percent",
 			"0.03",
