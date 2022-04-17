@@ -412,38 +412,44 @@ public enum ConfigNodes {
 			"new_items.spear",
 			"",
 			"",
-			"# Spears do extra damage to cavalry.",
+			"# Spears do extra damage to cavalry. (horse or rider)",
                         "# For TC to recognize an item as a spear, it must have a lore line starting with &a&a&a."),
         NEW_ITEMS_SPEAR_ENABLED(
 			"new_items.spear.enabled",
 			"true",
 			"",
 			"# if true, the spear effect is enabled on the server"),
-        NEW_ITEMS_SPEAR_DAMAGE_BONUS(
-			"new_items.spear.damage_bonus",
+        NEW_ITEMS_SPEAR_DAMAGE_BONUS_VS_CAVALRY(
+			"new_items.spear.damage_bonus_vs_cavalry",
 			"6",
-			"",
-			"# Dmage bonus vs cavalry (horse or rider)."), 
-	NEW_ITEMS_SPEAR_NATIVE_SPEAR_ENABLED(
-			"new_items.spear.native_spear_enabled",
+			""),
+	NEW_ITEMS_SPEAR_NATIVE_WEAPON_ENABLED(
+			"new_items.spear.native_weapon_enabled",
 			"true",
 			"",
 			"# If true, then TC native spears can be crafted",
                         "# See user guide for more details"),
-
-
-
-
-
-
-
-
-NEW_ITEMS_WARHAMMER_ENABLED(
-			"new_items.warhammer_enabled",
+        NEW_ITEMS_WARHAMMER(
+			"new_items.warhammer",
+			"",
+			"",
+			"# warhammers have a chance to break shields on impact.",
+                        "# For TC to recognize an item as a warhammer, it must have a lore line starting with &a&a&b."),
+        NEW_ITEMS_WARHAMMER_ENABLED(
+			"new_items.warhammer.enabled",
 			"true",
 			"",
-			"# A warhammer is a cheap and heavy throwaway item. It cannot be repaired or comnbined.",
-			"# Its damage stats are like a wooden axe, with sharpness 10, knockback 1, and 15% shield-break chance."),
+			"# if true, the warhammer effect is enabled on the server."),
+        NEW_ITEMS_WARHAMMER_SHERLD_BREAK_CHANCE_PERCENT(
+			"new_items.warhammer.shield_break_chance_percent",
+			"15",
+			""), 
+	NEW_ITEMS_WARHAMMER_NATIVE_WEAPON_ENABLED(
+			"new_items.warhammer.native_weapon_enabled",
+			"true",
+			"",
+			"# If true, then TC native warhammers can be crafted",
+                        "# See user guide for recipe"),
 	AUTOPOTTING(
 		"autopotting",
 			"",
