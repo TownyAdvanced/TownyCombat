@@ -19,16 +19,21 @@ public class TownyCombatSettings {
 
 	private static List<HeldItemsCombination> tacticalInvisibilityItems = new ArrayList<>();
     private static Map<Material, Double> materialEncumbrancePercentageMap = new HashMap<>();
-	private static int cavalryChargeEffectDurationTicks = 0;
-	private static int cavalryChargeCooldownMilliseconds = 0;
+	private static int cavalryChargeEffectDurationTicks;
+	private static int cavalryChargeCooldownMilliseconds;
         private static String cachedCommonLoreCode;
         private static String cachedSpearLoreCode;
         private static String cachedWarHammerLoreCode;
 
 	public static void loadReloadCachedSetting() {
+                //Load weapon lore codes
+                cachedCommonLoreCode = getCommonLoreCode()
+                cachedSpearLoreCode = getSpearLoreCode()
+                cachedWarHammerLoreCode = getWarhammerLoreCode()
+
 		//Load cavalry charge ticks
-		cavalryChargeEffectDurationTicks = (int)((TownyCombatSettings.getCavalryChargeCooldownSeconds() + 5) * 20);
-		cavalryChargeCooldownMilliseconds = (int)(TownyCombatSettings.getCavalryChargeCooldownSeconds() * 1000);
+		cavalryChargeEffectDurationTicks = (int)((getCavalryChargeCooldownSeconds() + 5) * 20);
+		cavalryChargeCooldownMilliseconds = (int)(getCavalryChargeCooldownSeconds() * 1000);
 
 		//Load/reload tactical invisibility items
 		tacticalInvisibilityItems.clear();
@@ -308,6 +313,10 @@ public class TownyCombatSettings {
 		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_WARHAMMER);
 	}
 
+        public static String getNewItemsCommonLoreCode() {
+                return Settings.getString(ConfigNodes.NEW_ITEMS_COMMON_LORE_CODE)
+        }
+
 	public static boolean isNewItemsSpearEnabled() {
 		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_SPEAR_ENABLED);
 	}
@@ -320,6 +329,10 @@ public class TownyCombatSettings {
 		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_SPEAR_NATIVE_WEAPON_ENABLED);
 	}
 
+        public static String getSpearLoreCode() {
+		return Settings.getString(ConfigNodes.NEW_ITEMS_SPEAR_LORE_CODE);
+	}
+
 	public static boolean isNewItemsWarhammerEnabled() {
 		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_WARHAMMER_ENABLED);
 	}
@@ -330,6 +343,10 @@ public class TownyCombatSettings {
 
         public static boolean isNewItemsWarhammerNativeWeaponEnabled() {
 		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_WARHAMMER_NATIVE_WEAPON_ENABLED);
+	}
+
+        public static String getWarhammerLoreCode() {
+		return Settings.getString(ConfigNodes.NEW_ITEMS_WARHAMMER_LORE_CODE);
 	}
 
 	public static double getEquipmentEncumbranceShulkerBox() {
