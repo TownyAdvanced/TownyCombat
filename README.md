@@ -22,9 +22,9 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
     - :arrow_right: **Global Speed Increases**
       - Players: +12%
       - Horses +12%
-    - :horse_racing: **Cavalry Charges**  
-      - Players on horseback get a Charge Bonus of Strength 2.
-      - When a player mounts a horse, or hits an enemy, the Charge Bonus goes into a 12 second cooldown.
+    - :horse_racing: **Cavalry Damage Bonus**  
+      - Players on horseback get a Damage Bonus of Strength 2.
+      - When a player mounts a horse, or hits an enemy, the Damage Bonus goes into a 12 second cooldown.
     - :left_luggage: **Encumbrance**
       - Stuff is harder to carry because of weight: (*a standard RPG feature*)
       - Speed Adjustments: 
