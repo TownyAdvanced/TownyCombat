@@ -17,8 +17,8 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
     - :rainbow: Makes battles/wars more inclusive of new/casual/builder/trader/roleplaying  players.
   - :spiral_notepad: Details:
     - :shield: **Attack Damage Resistance**
-      - Players: 30%
-      - Horses: 60%
+      - Players: +30%
+      - Horses: +60%
     - :arrow_right: **Global Speed Increases**
       - Players: +10%
       - Horses +10%
