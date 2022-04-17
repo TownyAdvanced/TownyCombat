@@ -60,7 +60,7 @@ public enum ConfigNodes {
 			"# - Starts in cooldown when a player mounts a horse.",
 			"# - Goes into cooldown when the rider strikes a player/mob with their weapon.",
 			"# - Effect: Strength"),
-	HORSE_ENHANCEMENTS_CAVALRY_STRENGTH_EFFECT_LEvel(
+	HORSE_ENHANCEMENTS_CAVALRY_STRENGTH_EFFECT_LEVEL(
 			"horse_enhancements.cavalry_charge.effect_lvl",
 			"2",
 			"",
