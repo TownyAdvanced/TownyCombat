@@ -20,11 +20,11 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
       - Players: +30%
       - Horses: +60%
     - :arrow_right: **Global Speed Increases**
-      - Players: +10%
-      - Horses +10%
+      - Players: +12%
+      - Horses +12%
     - :horse_racing: **Cavalry Charges**  
-      - Players on horseback get a Charge Bonus of Strength 1.  ***(2 in v0.2.1)***
-      - When a player mounts a horse, or hits an enemy, the Charge Bonus goes into a 10 second cooldown. ***(12 in v0.2.1)***
+      - Players on horseback get a Charge Bonus of Strength 2.
+      - When a player mounts a horse, or hits an enemy, the Charge Bonus goes into a 12 second cooldown.
     - :left_luggage: **Encumbrance**
       - Stuff is harder to carry because of weight: (*a standard RPG feature*)
       - Speed Adjustments: 
@@ -32,19 +32,19 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
             - Horses are stronger than players, so any speed reduction while mounted is halved.
           - Armour:
             - Infantry:
-              - Naked: +10% (*the global speed increase*)
-              - Full Leather Set: +6%
-              - Full Chain-Mail Set: +2%
-              - Full Gold Set: -6%
-              - Full Iron Set: -10%
-              - Full Diamond Set:-14%
-              - Full Netherite Set: -18%
+              - Naked: +12% (*the global speed increase*)
+              - Full Leather Set: +8%
+              - Full Chain-Mail Set: +4%
+              - Full Gold Set: +0%
+              - Full Iron Set: -4%
+              - Full Diamond Set:-8%
+              - Full Netherite Set: -12%
             - Cavalry:
-              - Naked: +10% (*the global speed increase*)
-              - Leather Horse Armour: +2%
-              - Gold Horse Armour: -22%
-              - Iron Horse Armour: -30%
-              - Diamond Horse Armour: -38%                 
+              - Naked: +12% (*the global speed increase*)
+              - Leather Horse Armour: +4%
+              - Gold Horse Armour: -20%
+              - Iron Horse Armour: -28%
+              - Diamond Horse Armour: -36%                 
           - Weapons:
             - Bow: -3%
             - Crossbow: -6%
