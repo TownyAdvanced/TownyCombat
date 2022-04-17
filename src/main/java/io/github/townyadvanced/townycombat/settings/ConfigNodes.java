@@ -18,7 +18,7 @@ public enum ConfigNodes {
 			"towny_combat_enabled",
 			"true",
 			"",
-			"# etc."),
+			"# if true, TownyCombat is enabled."),
 	HORSE_ENHANCEMENTS(
 		"horse_enhancements",
 			"",
@@ -408,13 +408,37 @@ public enum ConfigNodes {
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
-	NEW_ITEMS_SPEAR_ENABLED(
-			"new_items.spear_enabled",
+        NEW_ITEMS_SPEAR(
+			"new_items.spear",
+			"",
+			"",
+			"# Spears do extra damage to cavalry.",
+                        "# For TC to recognize an item as a spear, it must have a lore line starting with &a&a&a."),
+        NEW_ITEMS_SPEAR_ENABLED(
+			"new_items.spear.enabled",
 			"true",
 			"",
-			"# A spear is a cheap and light throwaway item. It cannot be repaired or comnbined.",
-			"# Its damage stats are like a wooden sword, with sharpness 8, knockback 1, and +75% v.s. cavalry"),
-	NEW_ITEMS_WARHAMMER_ENABLED(
+			"# if true, the spear effect is enabled on the server"),
+        NEW_ITEMS_SPEAR_DAMAGE_BONUS(
+			"new_items.spear.damage_bonus",
+			"6",
+			"",
+			"# Dmage bonus vs cavalry (horse or rider)."), 
+	NEW_ITEMS_SPEAR_NATIVE_SPEAR_ENABLED(
+			"new_items.spear.native_spear_enabled",
+			"true",
+			"",
+			"# If true, then TC native spears can be crafted",
+                        "# See user guide for more details"),
+
+
+
+
+
+
+
+
+NEW_ITEMS_WARHAMMER_ENABLED(
 			"new_items.warhammer_enabled",
 			"true",
 			"",
