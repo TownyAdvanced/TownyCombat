@@ -387,11 +387,11 @@ public enum ConfigNodes {
 			""),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_GOLD_HORSE_ARMOUR(
 			"speed_adjustments.encumbrance.cavalry.percentage.gold_horse_armour",
-			"27",
+			"24",
 			""),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_IRON_HORSE_ARMOUR(
 			"speed_adjustments.encumbrance.cavalry.percentage.iron_horse_armour",
-			"34",
+			"32",
 			""),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_DIAMOND_HORSE_ARMOUR(
 			"speed_adjustments.encumbrance.cavalry.percentage.diamond_horse_armour",
