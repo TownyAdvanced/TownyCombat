@@ -9,13 +9,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -182,10 +181,11 @@ public class TownyCombatMovementUtil {
                     || player.isInvulnerable()) {                
                 continue;
             }
-            if(!player.isOnGround)
-                continue;
             velocityY = player.getVelocity().getY();  
-            if(velocityY != GRAVITY_VELOCITY && velocityY != LADDER_VELOCITY && velocityY > 0) {
+            if(velocityY != GRAVITY_VELOCITY 
+                    && velocityY != LADDER_VELOCITY 
+                    && velocityY > 0
+                    && player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.AIR) {
                 /*
                  * Player is jumping or ascending an incline
                  *
