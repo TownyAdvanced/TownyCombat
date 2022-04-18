@@ -9,13 +9,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -174,8 +173,7 @@ public class TownyCombatMovementUtil {
         final double JUMP_DAMAGE_THRESHOLD = TownyCombatSettings.getJumpDamageThreshold();
         final double JUMP_DAMAGE_PER_ENCUMBRANCE_PERCENT = TownyCombatSettings.getJumpDamageDamagePerEncumbrancePercent();
         Double playerEncumbrancePercentage;
-        double velocityY;        
-        double damage;
+        double velocityY;
         double newHealth;        
         for(Player player: Bukkit.getOnlinePlayers()) {
             if(player.getGameMode() == GameMode.CREATIVE
@@ -184,7 +182,10 @@ public class TownyCombatMovementUtil {
                 continue;
             }
             velocityY = player.getVelocity().getY();  
-            if(velocityY != GRAVITY_VELOCITY && velocityY != LADDER_VELOCITY && velocityY > 0) {
+            if(velocityY != GRAVITY_VELOCITY 
+                    && velocityY != LADDER_VELOCITY 
+                    && velocityY > 0
+                    && player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.AIR) {
                 /*
                  * Player is jumping or ascending an incline
                  *
@@ -192,9 +193,9 @@ public class TownyCombatMovementUtil {
                  */
                 playerEncumbrancePercentage = playerEncumbrancePercentageMap.get(player);
                 if(playerEncumbrancePercentage != null && playerEncumbrancePercentage > JUMP_DAMAGE_THRESHOLD) {
-                    damage = playerEncumbrancePercentage * JUMP_DAMAGE_PER_ENCUMBRANCE_PERCENT;
-                    final double newHealth = Math.max(0, player.getHealth() - damage);
-                    TownyCombat.getPlugin().getServer().getScheduler().runTask(TownyCombat.getPlugin(), ()->  player.setHealth(newHealth));
+                    newHealth = player.getHealth() - (playerEncumbrancePercentage * JUMP_DAMAGE_PER_ENCUMBRANCE_PERCENT);
+                    final double finalNewHealth = Math.max(0, Math.min(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue(), newHealth)); //apply min and max
+                    TownyCombat.getPlugin().getServer().getScheduler().runTask(TownyCombat.getPlugin(), ()->  player.setHealth(finalNewHealth));
                }
             }
         }
