@@ -182,6 +182,8 @@ public class TownyCombatMovementUtil {
                     || player.isInvulnerable()) {                
                 continue;
             }
+            if(!player.isOnGround)
+                continue;
             velocityY = player.getVelocity().getY();  
             if(velocityY != GRAVITY_VELOCITY && velocityY != LADDER_VELOCITY && velocityY > 0) {
                 /*
