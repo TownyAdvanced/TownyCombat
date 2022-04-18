@@ -297,7 +297,7 @@ public enum ConfigNodes {
 			"speed_adjustments.encumbrance.infantry.base_percentage.helmet",
 			"0.6",
 			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_CHESTPLATE(
+	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_CHESTPLATE(
 			"speed_adjustments.encumbrance.infantry.base_percentage.chestplate",
 			"1.6",
 			""),
@@ -320,19 +320,19 @@ public enum ConfigNodes {
 			""),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_CHAINMAIL(
 			"speed_adjustments.encumbrance.infantry.modification_percentage.chainmail",
-			"180",
+			"200",
 			""),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_TURTLE_SHELL(
 			"speed_adjustments.encumbrance.infantry.modification_percentage.turtle_shell",
-			"260",
+			"300",
 			""),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_GOLD(
 			"speed_adjustments.encumbrance.infantry.modification_percentage.gold",
-			"340",
+			"300",
 			""),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_IRON(
 			"speed_adjustments.encumbrance.infantry.modification_percentage.iron",
-			"420",
+			"400",
 			""),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_DIAMOND(
 			"speed_adjustments.encumbrance.infantry.modification_percentage.diamond",
@@ -357,7 +357,7 @@ public enum ConfigNodes {
 			"8",
 			"",
 			"# Players only take jump damage when their encumbrance is above this threshold.",
-			"# TIP: With default settings, jump damage will only apply to players carrying something heavier than a full chain-mail set."),
+			"# TIP: With default settings, jump damage will only apply to players carrying the equivalent of a full chain-mail set or heavier."),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_DAMAGE_PER_ENCUMBRANCE_PERCENT(
 			"speed_adjustments.encumbrance.infantry.jump_damage.damage_per_encumbrance_percent",
 			"0.07",

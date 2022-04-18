@@ -218,7 +218,7 @@ public class TownyCombatSettings {
 	}
 	
 	public static double getEquipmentEncumbranceBaseChestplate() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_CHESTPLATE);
+		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_CHESTPLATE);
 	}
 	
 	public static double getEquipmentEncumbranceBaseLeggings() {
