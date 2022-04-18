@@ -174,8 +174,7 @@ public class TownyCombatMovementUtil {
         final double JUMP_DAMAGE_THRESHOLD = TownyCombatSettings.getJumpDamageThreshold();
         final double JUMP_DAMAGE_PER_ENCUMBRANCE_PERCENT = TownyCombatSettings.getJumpDamageDamagePerEncumbrancePercent();
         Double playerEncumbrancePercentage;
-        double velocityY;        
-        double damage;
+        double velocityY;
         double newHealth;        
         for(Player player: Bukkit.getOnlinePlayers()) {
             if(player.getGameMode() == GameMode.CREATIVE
