@@ -1,6 +1,9 @@
 # TownyCombat
 A combat plugin for Towny, containing some fun combat/battle/pvp features.
 
+***User Guide Accurate to version 0
+2.1***
+
 ## Features:
 - :horse: :star: **Horse Teleporting:**
   - When using /t or /n spawns, your horse comes with you.
@@ -20,31 +23,30 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
       - Players: +30%
       - Horses: +60%
     - :arrow_right: **Global Speed Increases**
-      - Players: +10%
-      - Horses +10%
+      - Players: +12%
+      - Horses +12%
     - :horse_racing: **Cavalry Charges**  
-      - Players on horseback get a Charge Bonus of Strength 1.  ***(2 in v0.2.1)***
-      - When a player mounts a horse, or hits an enemy, the Charge Bonus goes into a 10 second cooldown. ***(15 in v0.2.1)***
+      - Players on horseback get a Charge Bonus of Strength 2.
+      - When a player mounts a horse, or hits an enemy, the Charge Bonus goes into a 12 second cooldown.
     - :left_luggage: **Encumbrance**
       - Stuff is harder to carry because of weight: (*a standard RPG feature*)
+      - Horses are strong, so the encumbrance of player-riders only affects them at rate of 50%.
       - Speed Adjustments: 
-          - Horse-Carry Modifier:
-            - Horses are stronger than players, so any speed reduction while mounted is halved.
           - Armour:
             - Infantry:
-              - Naked: +10% (*the global speed increase*)
-              - Full Leather Set: +6%
-              - Full Chain-Mail Set: +2%
-              - Full Gold Set: -6%
-              - Full Iron Set: -10%
-              - Full Diamond Set:-14%
-              - Full Netherite Set: -18%
+              - Naked: +12% (*the global speed increase*)
+              - Full Leather Set: +8%
+              - Full Chain-Mail Set: +4%
+              - Full Gold Set: +0%
+              - Full Iron Set: -4%
+              - Full Diamond Set:-8%
+              - Full Netherite Set: -12%
             - Cavalry:
-              - Naked: +10% (*the global speed increase*)
-              - Leather Horse Armour: +2%
-              - Gold Horse Armour: -22%
-              - Iron Horse Armour: -30%
-              - Diamond Horse Armour: -38%                 
+              - Naked: +12% (*the global speed increase*)
+              - Leather Horse Armour: +8%
+              - Gold Horse Armour: +0
+              - Iron Horse Armour: -4%
+              - Diamond Horse Armour: -8%                 
           - Weapons:
             - Bow: -3%
             - Crossbow: -6%
@@ -55,8 +57,8 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
             - Shulker Box: -15%
             - Ender Chest: -30%
         - Encumbrance effect on infantry jump/climb speed:
-          - Players with 8% encumbrance or more get an extra slowing effect when jumping/climbing.
-          - *Sorry this effect is a little janky, but it compensates for an MC bug which allows slowdown-bypassing via. bunny-hopping.*
+          - Players with 8% encumbrance or more sometimes incur some damage when jumping/climbing.
+          - This compensates for an MC bug which allows slowdown-bypassing via. bunny-hopping.
     - :new: **New Items**
       - Spear:
         ![image](https://user-images.githubusercontent.com/50219223/162958194-a7ecd2ae-c880-49be-afb9-6838d21e2a4d.png)
