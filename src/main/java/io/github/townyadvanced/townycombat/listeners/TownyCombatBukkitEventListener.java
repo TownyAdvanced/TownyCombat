@@ -67,8 +67,6 @@ public class TownyCombatBukkitEventListener implements Listener {
 			return;
 		if(!(event.getMount() instanceof AbstractHorse))
 			return;
-		//Remove legacy data
-		TownyCombatMovementUtil.resetHorseBaseSpeedToVanilla((AbstractHorse)event.getMount());
 		//Remove modifiers if system/feature is disabled		
 		if (!TownyCombatSettings.isTownyCombatEnabled() || !TownyCombatSettings.isSpeedAdjustmentsEnabled()) {
 			TownyCombatMovementUtil.removeTownyCombatMovementAttributeModifiers((AbstractHorse)event.getMount());
