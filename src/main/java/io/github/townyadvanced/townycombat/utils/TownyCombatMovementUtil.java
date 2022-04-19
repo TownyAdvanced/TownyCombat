@@ -122,7 +122,7 @@ public class TownyCombatMovementUtil {
         double scalarAdjustment = (genericSpeedAdjustmentPercentage - totalEncumbrancePercentage) / 100;
 
         //Remove old modifier
-        for(AttributeModifier attributeModifier: new ArrayList<>(player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getModifiers())) {
+        for(AttributeModifier attributeModifier: new ArrayList<>(mount.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getModifiers())) {
             if(attributeModifier.getName().equals(WALK_SPEED_ATTRIBUTE_MODIFIER_NAME)) {
                 mount.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).removeModifier(attributeModifier);
                 break;
