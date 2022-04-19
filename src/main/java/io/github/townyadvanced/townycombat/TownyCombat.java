@@ -48,8 +48,6 @@ public class TownyCombat extends JavaPlugin {
 			loadIntegrations();
 			registerCommands();
 			TownyCombatMovementUtil.removeLegacyHorseSpeedRegistrationData();
-			//TownyCombat.getPlugin().getServer().getScheduler().runTaskLater(TownyCombat.getPlugin(), TownyCombatMovementUtil::cleanupResidentHorseRegistrations, 20);
-
 			TownyCombatTask.startTownyCombatTask(this);
 			info("TownyCombat Enabled.");
 			Bukkit.getLogger().info("=============================================================");
