@@ -47,7 +47,7 @@ public class TownyCombatTownyEventListener implements Listener {
     @EventHandler
     public void onShortTime(NewShortTimeEvent event) {
         if (TownyCombatSettings.isTownyCombatEnabled()) {
-        	if(TownyCombatSettings.isEncumbranceEnabled()) {
+        	if(TownyCombatSettings.isSpeedAdjustmentsEnabled()) {
         		TownyCombatMovementUtil.adjustAllPlayerAndMountSpeeds();
 			}
 			if(TownyCombatSettings.isTacticalInvisibilityEnabled()) { 
@@ -56,12 +56,4 @@ public class TownyCombatTownyEventListener implements Listener {
 			}
         }
     }
-
-	@EventHandler
-	public void on (NewDayEvent event) {
-        if (TownyCombatSettings.isTownyCombatEnabled()) {
-			TownyCombat.getPlugin().getServer().getScheduler().runTaskLater(TownyCombat.getPlugin(), TownyCombatMovementUtil::cleanupResidentHorseRegistrations, 20);
-		}
-	}
-
 }

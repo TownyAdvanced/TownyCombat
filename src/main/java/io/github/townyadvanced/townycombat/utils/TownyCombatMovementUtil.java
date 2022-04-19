@@ -9,11 +9,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.AbstractHorse;
-import org.bukkit.entity.AnimalTamer;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
@@ -31,8 +29,8 @@ public class TownyCombatMovementUtil {
     private static final double GRAVITY_VELOCITY = -0.0784000015258789;  //A players has this when stationary or travelling horizontally
     private static final double LADDER_VELOCITY = -0.22540001022815717; //A player has this when going up OR down a ladder
     public static final double VANILLA_PLAYER_MOVEMENT_SPEED = 0.1;
-    public static final double VANILLA_HORSE_MAX_MOVEMENT_SPEED = 0.3375;
-
+    public static final String WALK_SPEED_ATTRIBUTE_MODIFIER_NAME = "TownyCombatAdjustment";
+    
     private static Map<Player, Double> playerEncumbrancePercentageMap = new HashMap<>();  //Encumbrance = Walk-speed-slow
 
     public static void adjustAllPlayerAndMountSpeeds() {
@@ -48,7 +46,20 @@ public class TownyCombatMovementUtil {
         adjustMountWalkSpeed(player);
     }
 
-    private static void adjustPlayerWalkSpeed(Player player) {
+    public static void removeTownyCombatMovementAttributeModifiers(LivingEntity livingEntity) {
+        //Remove the TCM modifiers
+        for(AttributeModifier attributeModifier: new ArrayList<>(livingEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getModifiers())) {
+            if(attributeModifier.getName().equals(WALK_SPEED_ATTRIBUTE_MODIFIER_NAME)) {
+                livingEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).removeModifier(attributeModifier);
+            }                
+        }
+    }
+
+    public static void resetPlayerBaseSpeedToVanilla(Player player) {
+        player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(VANILLA_PLAYER_MOVEMENT_SPEED);        
+    }
+
+    private static void adjustPlayerWalkSpeed(Player player) {       
         //Calculate generic speed adjustment
         double genericSpeedAdjustmentPercentage = TownyCombatSettings.getGenericInfantrySpeedAdjustmentPercentage();
 
@@ -67,38 +78,25 @@ public class TownyCombatMovementUtil {
         playerEncumbrancePercentageMap.put(player, totalEncumbrancePercentage);
 
         //Calculate total speed adjustment
-        double recalculatedSpeed = 
-            VANILLA_PLAYER_MOVEMENT_SPEED + (VANILLA_PLAYER_MOVEMENT_SPEED * ((genericSpeedAdjustmentPercentage - totalEncumbrancePercentage) / 100));
-        //Sanitize
-        recalculatedSpeed = Math.max(recalculatedSpeed, 0.05);
-        recalculatedSpeed = Math.min(recalculatedSpeed, 1);
-       //Apply
-        player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(recalculatedSpeed);
+        double scalarAdjustment = (genericSpeedAdjustmentPercentage - totalEncumbrancePercentage) / 100;
+
+        //Remove old modifier
+        for(AttributeModifier attributeModifier: new ArrayList<>(player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getModifiers())) {
+            if(attributeModifier.getName().equals(WALK_SPEED_ATTRIBUTE_MODIFIER_NAME)) {
+                player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).removeModifier(attributeModifier);
+                break;
+            }
+        }
+
+        //Add new modifier
+        AttributeModifier attributeModifier = new AttributeModifier(WALK_SPEED_ATTRIBUTE_MODIFIER_NAME, scalarAdjustment, AttributeModifier.Operation.ADD_SCALAR);       
+        player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).addModifier(attributeModifier);
     }
-    
+ 
     private static void adjustMountWalkSpeed(Player player) {
         if(!player.isInsideVehicle() || !(player.getVehicle() instanceof AbstractHorse))
             return;
         AbstractHorse mount = (AbstractHorse)player.getVehicle();
-        AnimalTamer owner = mount.getOwner();
-        if(owner == null) 
-            return;
-        
-        //Get Base Walk Speed
-        Double baseWalkSpeed;
-        UUID ownerUUID = mount.getOwner().getUniqueId();
-        
-        Resident ownerResident = TownyAPI.getInstance().getResident(ownerUUID);
-        if(ownerResident == null) {
-            //Owner has left server. Horse is sad and goes slow.
-            baseWalkSpeed = 0.1;
-        } else {
-            baseWalkSpeed = TownyCombatResidentMetaDataController.getTrainedHorseBaseSpeed(ownerResident, mount.getUniqueId());
-            if(baseWalkSpeed == null) {
-                //Register base walk speed
-                baseWalkSpeed = TownyCombatResidentMetaDataController.registerTrainedHorse(ownerResident, mount);
-            }
-        }
 
         //Calculate generic adjustment
         double genericSpeedAdjustmentPercentage = TownyCombatSettings.getGenericCavalrySpeedAdjustmentPercentage();
@@ -119,15 +117,21 @@ public class TownyCombatMovementUtil {
         //3. Reduce encumbrance due to horse strength
         totalEncumbrancePercentage =
             totalEncumbrancePercentage - (totalEncumbrancePercentage * (TownyCombatSettings.getCavalryEncumbranceReductionPercentage() / 100));
-    
+
         //Calculate total speed adjustment
-        double recalculatedSpeed = 
-            baseWalkSpeed + (baseWalkSpeed * ((genericSpeedAdjustmentPercentage - totalEncumbrancePercentage) / 100));
-        //Sanitize
-        recalculatedSpeed = Math.max(recalculatedSpeed, 0.05);
-        recalculatedSpeed = Math.min(recalculatedSpeed, 1);
-        //Apply
-        mount.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(recalculatedSpeed);
+        double scalarAdjustment = (genericSpeedAdjustmentPercentage - totalEncumbrancePercentage) / 100;
+
+        //Remove old modifier
+        for(AttributeModifier attributeModifier: new ArrayList<>(player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getModifiers())) {
+            if(attributeModifier.getName().equals(WALK_SPEED_ATTRIBUTE_MODIFIER_NAME)) {
+                mount.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).removeModifier(attributeModifier);
+                break;
+            }
+        }
+
+        //Add new modifier
+        AttributeModifier attributeModifier = new AttributeModifier(WALK_SPEED_ATTRIBUTE_MODIFIER_NAME, scalarAdjustment, AttributeModifier.Operation.ADD_SCALAR);       
+        mount.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).addModifier(attributeModifier);
     }
     
     public static Map<Player, Double> getPlayerEncumbrancePercentageMap() {
@@ -135,28 +139,30 @@ public class TownyCombatMovementUtil {
     }
 
     /**
-    * Cleanup resident horse registrations
-    * Do this by removing dead/deleted horses from the resident files
+    * Remove legacy horse-speed-registration data
+    * 
+    * Do this by:
+    * 1. Resetting the speeds of all registered horses back to their original values.
+    * 2. Removing the horse speed metadata from the resident files.
+    * 
+    * This method, along with the resident metadata class,
+    * should be removed when everyone has upgraded to 0.2.2 or above
     */
-    public static void cleanupResidentHorseRegistrations() {
+    public static void removeLegacyHorseSpeedRegistrationData() {
         Map<UUID, Double> horseSpeedMap;
-        List<UUID> entriesToDelete = new ArrayList<>();
+        AbstractHorse horse;
         for(Resident resident: TownyAPI.getInstance().getResidents()) {
+            //Reset speeds of horses back to their original values
             horseSpeedMap = TownyCombatResidentMetaDataController.getHorseSpeedMap(resident);
-            entriesToDelete.clear();
             for(Map.Entry<UUID, Double> mapEntry: horseSpeedMap.entrySet()) {
-                Entity horse = Bukkit.getEntity(mapEntry.getKey());
-                if(horse == null || horse.isDead()) {
-                    entriesToDelete.add(mapEntry.getKey());
-                }
+                horse = (AbstractHorse)Bukkit.getEntity(mapEntry.getKey());
+                if(horse != null) {
+                    horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(mapEntry.getValue());
+                }                
             }
-            if(entriesToDelete.size() > 0) {
-                for(UUID uuid: entriesToDelete) {
-                    horseSpeedMap.remove(uuid);
-                }
-                TownyCombatResidentMetaDataController.setHorseSpeedMap(resident, horseSpeedMap);
-                resident.save();
-            }
+            //Wipe resident horse metadata
+            TownyCombatResidentMetaDataController.removeHorseSpeedMap(resident);
+            resident.save();
         }
         TownyCombat.info("Resident Horse Registration Cleanup Complete");
     }

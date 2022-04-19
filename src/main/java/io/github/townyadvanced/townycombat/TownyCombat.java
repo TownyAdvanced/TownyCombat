@@ -13,6 +13,7 @@ import io.github.townyadvanced.townycombat.settings.Settings;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import io.github.townyadvanced.townycombat.tasks.TownyCombatTask;
 
+import io.github.townyadvanced.townycombat.utils.TownyCombatMovementUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -46,6 +47,9 @@ public class TownyCombat extends JavaPlugin {
 			TownyCombatSettings.loadReloadCachedSetting();
 			loadIntegrations();
 			registerCommands();
+			TownyCombatMovementUtil.removeLegacyHorseSpeedRegistrationData();
+			//TownyCombat.getPlugin().getServer().getScheduler().runTaskLater(TownyCombat.getPlugin(), TownyCombatMovementUtil::cleanupResidentHorseRegistrations, 20);
+
 			TownyCombatTask.startTownyCombatTask(this);
 			info("TownyCombat Enabled.");
 			Bukkit.getLogger().info("=============================================================");

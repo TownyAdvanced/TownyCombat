@@ -197,8 +197,8 @@ public class TownyCombatSettings {
 		return tacticalInvisibilityItems;
 	}
 
-	public static boolean isEncumbranceEnabled() {
-		return Settings.getBoolean(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_ENABLED);
+	public static boolean isSpeedAdjustmentsEnabled() {
+		return Settings.getBoolean(ConfigNodes.SPEED_ADJUSTMENTS_ENABLED);
 	}
 
 	public static double getEquipmentEncumbranceBow() {
