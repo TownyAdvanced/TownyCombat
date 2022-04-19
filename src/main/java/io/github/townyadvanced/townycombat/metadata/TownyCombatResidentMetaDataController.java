@@ -2,7 +2,7 @@ package io.github.townyadvanced.townycombat.metadata;
 
 
 import com.palmergames.bukkit.towny.object.Resident;
-import com.palmergames.bukkit.towny.object.metadata.IntegerDataField;
+
 import com.palmergames.bukkit.towny.object.metadata.StringDataField;
 import com.palmergames.bukkit.towny.utils.MetaDataUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatMovementUtil;
