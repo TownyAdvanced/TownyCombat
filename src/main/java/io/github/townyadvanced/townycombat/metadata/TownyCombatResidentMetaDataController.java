@@ -2,6 +2,7 @@ package io.github.townyadvanced.townycombat.metadata;
 
 
 import com.palmergames.bukkit.towny.object.Resident;
+
 import com.palmergames.bukkit.towny.object.metadata.StringDataField;
 import com.palmergames.bukkit.towny.utils.MetaDataUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatMovementUtil;
@@ -17,6 +18,8 @@ import java.util.*;
  * 
  * @author Goosius
  *
+ * FYI This class just exists to cleanup the legacy horse-speed-registration pattern
+ * It should be removed when everyone has upgrade to 0.2.2 or above.
  */
 public class TownyCombatResidentMetaDataController {
 
@@ -45,50 +48,9 @@ public class TownyCombatResidentMetaDataController {
 		return null;
 	}
 
-	public static double registerTrainedHorse(Resident resident, AbstractHorse horse) {
-		Map<UUID, Double> horseSpeedMap = getHorseSpeedMap(resident);
-		double baseHorseSpeed = horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue();
-		//Compensate for speed effect
-		for(PotionEffect potionEffect: horse.getActivePotionEffects()) {
-			if(potionEffect.getType() == PotionEffectType.SPEED) {
-				baseHorseSpeed = baseHorseSpeed / (100 + (potionEffect.getAmplifier() * 20)) * 100;
-			}
-			if(potionEffect.getType() == PotionEffectType.SLOW) {
-				baseHorseSpeed = baseHorseSpeed / (100 - (potionEffect.getAmplifier() * 15)) * 100;
-			}
-		}
-		//Catch all limit for edge cases
-		baseHorseSpeed = Math.min(baseHorseSpeed, TownyCombatMovementUtil.VANILLA_HORSE_MAX_MOVEMENT_SPEED);
-		horseSpeedMap.put(horse.getUniqueId(), baseHorseSpeed);
-		setHorseSpeedMap(resident, horseSpeedMap);
-		resident.save();
-		return baseHorseSpeed;		
-	}
-
-	public static void setHorseSpeedMap(Resident resident, Map<UUID,Double> mapToSet) {
-		//Build map
-		StringBuilder stringBuilderForMap = new StringBuilder();
-		boolean firstEntry = true;
-		for(Map.Entry<UUID, Double> mapEntry: mapToSet.entrySet()) {
-			if(firstEntry) {
-				firstEntry = false;
-			} else {
-				stringBuilderForMap.append(", ");
-			}
-			stringBuilderForMap.append(mapEntry.getKey().toString());
-			stringBuilderForMap.append(":");
-			stringBuilderForMap.append(mapEntry.getValue().toString());			
-		}
-		//Set value		
+	public static void removeHorseSpeedMap(Resident resident) {
 		StringDataField sdf = (StringDataField) horseSpeedMap.clone();
-		if (resident.hasMeta(sdf.getKey())) {
-			MetaDataUtil.setString(resident, sdf, stringBuilderForMap.toString(), true);
-		} else {
-			resident.addMetaData(new StringDataField("townycombat_horsespeedmap", stringBuilderForMap.toString()));
-		}
-	}
-
-	public static Double getTrainedHorseBaseSpeed(Resident resident, UUID horseUUID) {
-		return getHorseSpeedMap(resident).get(horseUUID);
+		if (resident.hasMeta(sdf.getKey()))
+			resident.removeMetaData(sdf);
 	}
 }

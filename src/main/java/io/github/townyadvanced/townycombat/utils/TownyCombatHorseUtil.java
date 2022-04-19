@@ -31,7 +31,7 @@ public class TownyCombatHorseUtil {
             AbstractHorse horse = scheduledHorseTeleports.get(event.getPlayer());
             //Protect horse until it rejoins player
             double preTeleportAbsorbtion = horse.getAbsorptionAmount();
-            horse.setAbsorptionAmount(999999);
+            horse.setAbsorptionAmount(999);
             horse.setInvisible(true);
             //Schedule Teleport
             Towny.getPlugin().getServer().getScheduler().runTaskLater(Towny.getPlugin(), () -> {
