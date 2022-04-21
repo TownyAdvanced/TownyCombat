@@ -283,7 +283,7 @@ public enum ConfigNodes {
 			""),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_CROSSBOW(
 			"speed_adjustments.encumbrance.infantry.base_percentage.cross_bow",
-			"9",
+			"12",
 			""),
 	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_WARHAMMER(
 			"speed_adjustments.encumbrance.infantry.base_percentage.warhammer",
