@@ -41,13 +41,13 @@ public enum ConfigNodes {
 			"horse_enhancements.attack_damage_resistance_percent",
 			"60",
 			"",
-			"# This setting makes mounted-horses more resistant to attack damage.",
+			"# This setting makes mounted-horses more resistant to attack damage from players.",
 			"# TIP: This setting is essential to make cavalry viable in battle, because in vanilla MC they are very weak."),
 	HORSE_ENHANCEMENTS_CAVALRY_MISSILE_SHIELD_ENABLED(
 			"horse_enhancements.cavalry_missile_shield_enabled",
 			"true",
 			"",
-			"# If this setting is true, then horses and riders are both shielded from bow-fired arrows.",
+			"# If this setting is true, then horses and riders are both shielded from arrows from player-bows",
 			"# Note that arrows fired by crossbows are not blocked.", 
 			"# TIP: This setting is essential to allow cavalry to perform the 'Tank' role, because due to lag effects, horses would otherwise be quite vulnerable to arrows."),
 	HORSE_ENHANCEMENTS_CAVALRY_FIRE_SHIELD_ENABLED(
