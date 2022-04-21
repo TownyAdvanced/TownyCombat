@@ -12,7 +12,6 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.AbstractHorse;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
@@ -20,7 +19,6 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.List;
 import java.util.ArrayList;
 
 /**
@@ -32,7 +30,7 @@ public class TownyCombatMovementUtil {
     private static final double GRAVITY_VELOCITY = -0.0784000015258789;  //A players has this when stationary or travelling horizontally
     private static final double LADDER_VELOCITY = -0.22540001022815717; //A player has this when going up OR down a ladder
     public static final double VANILLA_PLAYER_MOVEMENT_SPEED = 0.1;
-    public static final String WALK_SPEED_ATTRIBUTE_MODIFIER_NAME = "TownyCombatAdjustment";
+    public static final String ATTRIBUTE_MODIFIER_NAME = "TownyCombatAdjustment";
     
     private static Map<Player, Double> playerEncumbrancePercentageMap = new HashMap<>();  //Encumbrance = Walk-speed-slow
 
@@ -52,7 +50,7 @@ public class TownyCombatMovementUtil {
     public static void removeTownyCombatMovementAttributeModifiers(LivingEntity livingEntity) {
         //Remove the TCM modifiers
         for(AttributeModifier attributeModifier: new ArrayList<>(livingEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getModifiers())) {
-            if(attributeModifier.getName().equals(WALK_SPEED_ATTRIBUTE_MODIFIER_NAME)) {
+            if(attributeModifier.getName().equals(ATTRIBUTE_MODIFIER_NAME)) {
                 livingEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).removeModifier(attributeModifier);
             }                
         }
@@ -85,14 +83,13 @@ public class TownyCombatMovementUtil {
 
         //Remove old modifier
         for(AttributeModifier attributeModifier: new ArrayList<>(player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getModifiers())) {
-            if(attributeModifier.getName().equals(WALK_SPEED_ATTRIBUTE_MODIFIER_NAME)) {
+            if(attributeModifier.getName().equals(ATTRIBUTE_MODIFIER_NAME)) {
                 player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).removeModifier(attributeModifier);
-                break;
             }
         }
 
         //Add new modifier
-        AttributeModifier attributeModifier = new AttributeModifier(WALK_SPEED_ATTRIBUTE_MODIFIER_NAME, scalarAdjustment, AttributeModifier.Operation.ADD_SCALAR);       
+        AttributeModifier attributeModifier = new AttributeModifier(ATTRIBUTE_MODIFIER_NAME, scalarAdjustment, AttributeModifier.Operation.ADD_SCALAR);
         player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).addModifier(attributeModifier);
     }
  
@@ -126,14 +123,13 @@ public class TownyCombatMovementUtil {
 
         //Remove old modifier
         for(AttributeModifier attributeModifier: new ArrayList<>(mount.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getModifiers())) {
-            if(attributeModifier.getName().equals(WALK_SPEED_ATTRIBUTE_MODIFIER_NAME)) {
+            if(attributeModifier.getName().equals(ATTRIBUTE_MODIFIER_NAME)) {
                 mount.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).removeModifier(attributeModifier);
-                break;
             }
         }
 
         //Add new modifier
-        AttributeModifier attributeModifier = new AttributeModifier(WALK_SPEED_ATTRIBUTE_MODIFIER_NAME, scalarAdjustment, AttributeModifier.Operation.ADD_SCALAR);       
+        AttributeModifier attributeModifier = new AttributeModifier(ATTRIBUTE_MODIFIER_NAME, scalarAdjustment, AttributeModifier.Operation.ADD_SCALAR);
         mount.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).addModifier(attributeModifier);
     }
     

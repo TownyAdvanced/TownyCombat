@@ -20,7 +20,7 @@ import java.util.Map;
 public class TownyCombatHorseUtil {
 
     private static Map<Player, AbstractHorse> scheduledHorseTeleports = new HashMap<>();
-    private static Map<Player, Long> cavalryChargeRefreshTimes = new HashMap<>();
+    private static Map<Player, Long> cavalryStrengthBonusRefreshTimes = new HashMap<>();
 
     /**
      * Teleport the player's horse, if there is one
@@ -47,7 +47,6 @@ public class TownyCombatHorseUtil {
             },100);
         }
     }
-    
 
     public static void registerPlayerMountForTeleport(Player player, AbstractHorse mount) {
         scheduledHorseTeleports.put(player, mount);
@@ -57,12 +56,12 @@ public class TownyCombatHorseUtil {
         scheduledHorseTeleports.remove(player);
     }
 
-    public static void registerPlayerForChargeBonus(Player player) {
-        cavalryChargeRefreshTimes.put(player, System.currentTimeMillis() + TownyCombatSettings.getCavalryChargeCooldownMilliseconds());
+    public static void registerPlayerForCavalryStrengthBonus(Player player) {
+        cavalryStrengthBonusRefreshTimes.put(player, System.currentTimeMillis() + TownyCombatSettings.getCavalryChargeCooldownMilliseconds());
     }
 
-    public static void deregisterPlayerMountForChargeBonus(Player player) {
-        cavalryChargeRefreshTimes.remove(player);
+    public static void deregisterPlayerForCavalryStrengthBonus(Player player) {
+        cavalryStrengthBonusRefreshTimes.remove(player);
         player.removePotionEffect(PotionEffectType.INCREASE_DAMAGE); //Remove strength effect if any
     }
 
@@ -70,28 +69,28 @@ public class TownyCombatHorseUtil {
         return scheduledHorseTeleports.containsValue(horse);
     }
 
-    public static void refreshAllCavalryCharges() {
+    public static void refreshAllCavalryStrengthBonuses() {
         long now = System.currentTimeMillis();
         long nextRefreshTime = System.currentTimeMillis() + TownyCombatSettings.getCavalryChargeCooldownMilliseconds();
         int effectDurationTicks = TownyCombatSettings.getCavalryChargeEffectDurationTicks();
-        int effectAmplifier = TownyCombatSettings.getCavalryChargeStrengthEffectLevel() - 1;
+        int effectAmplifier = TownyCombatSettings.getCavalryChargeStrengthBonusEffectLevel() - 1;
 
-        for(Map.Entry<Player, Long> playerTimeEntry: (new HashMap<>(cavalryChargeRefreshTimes)).entrySet()) {
+        for(Map.Entry<Player, Long> playerTimeEntry: (new HashMap<>(cavalryStrengthBonusRefreshTimes)).entrySet()) {
             //Verify player is still on horse
             if(!playerTimeEntry.getKey().isInsideVehicle() || !(playerTimeEntry.getKey().getVehicle() instanceof AbstractHorse)) {
-                cavalryChargeRefreshTimes.remove(playerTimeEntry.getKey());
+                cavalryStrengthBonusRefreshTimes.remove(playerTimeEntry.getKey());
                 continue; //Player no longer on horse
             }
             if(now > playerTimeEntry.getValue()) {
                 //Refresh charge
-                TownyCombat.getPlugin().getServer().getScheduler().runTask(TownyCombat.getPlugin(), ()-> applyChargeEffectToPlayer(playerTimeEntry.getKey(), effectDurationTicks, effectAmplifier));
+                TownyCombat.getPlugin().getServer().getScheduler().runTask(TownyCombat.getPlugin(), ()-> applyStrengthEffectToPlayer(playerTimeEntry.getKey(), effectDurationTicks, effectAmplifier));
                 //Arrange next refresh time
-                cavalryChargeRefreshTimes.put(playerTimeEntry.getKey(), nextRefreshTime);
+                cavalryStrengthBonusRefreshTimes.put(playerTimeEntry.getKey(), nextRefreshTime);
             }
         }
     }
 
-    private static void applyChargeEffectToPlayer(Player player, int effectDurationTicks, int effectAmplifier) {
+    private static void applyStrengthEffectToPlayer(Player player, int effectDurationTicks, int effectAmplifier) {
         player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, effectDurationTicks, effectAmplifier));
     }
 
