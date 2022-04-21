@@ -12,6 +12,7 @@ import io.github.townyadvanced.townycombat.utils.TownyCombatItemUtil;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.AbstractHorse;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -25,6 +26,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.CrossbowMeta;
 import org.bukkit.potion.PotionEffectType;
 import org.spigotmc.event.entity.EntityDismountEvent;
 import org.spigotmc.event.entity.EntityMountEvent;
@@ -143,16 +145,27 @@ public class TownyCombatBukkitEventListener implements Listener {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
 
-		//CAVALRY MISSILE SHIELD: Cavalry are shielded from arrows
+		//CAVALRY MISSILE SHIELD: Cavalry are shielded from arrows fired by bows
 		if(TownyCombatSettings.isCavalryMissileShieldEnabled()) {
 			if (
-				(event.getEntity() instanceof AbstractHorse
-					&& event.getEntity().getPassengers().size() > 0
-					&& event.getEntity().getPassengers().get(0) instanceof Player)
-				|| 
-				(event.getEntity() instanceof Player
-					&& event.getEntity().isInsideVehicle()
-					&& event.getEntity().getVehicle() instanceof AbstractHorse)
+					//Cavalry under attack
+					(
+						(event.getEntity() instanceof AbstractHorse
+							&& event.getEntity().getPassengers().size() > 0
+							&& event.getEntity().getPassengers().get(0) instanceof Player)
+						||
+						(event.getEntity() instanceof Player
+							&& event.getEntity().isInsideVehicle()
+							&& event.getEntity().getVehicle() instanceof AbstractHorse)
+					)
+					&&
+					//From bow-fired arrow
+					(
+						event.getDamager() instanceof Projectile
+						&& ((Projectile)event.getDamager()).getShooter() != null
+						&& ((Projectile)event.getDamager()).getShooter() instanceof Player
+						&& ((Player)((Projectile)event.getDamager()).getShooter()).getInventory().getItemInMainHand().getType() == Material.BOW
+					)
 			) {
 				event.setCancelled(true);
 				return;				
