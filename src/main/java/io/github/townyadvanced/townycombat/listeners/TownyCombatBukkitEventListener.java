@@ -174,6 +174,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 
 		//CAVALRY MISSILE SHIELD: Cavalry are shielded from arrows fired by player-bows
 		if(TownyCombatSettings.isCavalryMissileShieldEnabled()
+				&& attackingPlayer != null
 				&& isCavalryUnderAttack
 				&& event.getDamager() instanceof Arrow
 				&& attackingPlayer.getInventory().getItemInMainHand().getType() == Material.BOW
