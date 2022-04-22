@@ -5,8 +5,20 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
 2.1***
 
 ## Features:
-- :horse: :star: **Horse Teleporting:**
-  - When using /t or /n spawns, your horse comes with you.
+- :horse: :star: **Cavalry Enhancements:**
+  - Mounted Horses (*aka cavalry*) play the role of "Tanks" on the battlefield:
+    - Tough, mobile, and with a powerful shot. 
+    - Great v.s most infantry, but vulnerable to infantry/cavalry with spears, and sustained crossbow attack.
+    - Not "one man armies", but rather do best when operating in combination with other troop types.
+  - Special Abilities:
+    - Teleport with player on /n or /t spawn.
+    - Speed Increase: +12%.
+    - Attack Damage Resistance: +60% .
+    - Fire Shield: Immune to fire.
+    - Missile Shield: Immune to arrows from bows (but not crossbows).
+    - Cavalry Strength Bonus: Strength 3 effect for 1 hit, cooldown for 10 seconds.
+  - Special Vulnerabilities:
+    - Take +9 damage when hit by a spear.
 - :snake: :x: **Prevent Towny-Block-Glitching by quick-block-place/destroy:**
   - Via a secret magical method.
   - Try it and see!
@@ -19,15 +31,9 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
     - :student: Provides everyone with new combat skills to learn.
     - :rainbow: Makes battles/wars more inclusive of new/casual/builder/trader/roleplaying  players.
   - :spiral_notepad: Details:
-    - :shield: **Attack Damage Resistance**
-      - Players: +30%
-      - Horses: +60%
     - :arrow_right: **Global Speed Increases**
       - Players: +12%
       - Horses +12%
-    - :horse_racing: **Cavalry Charges**  
-      - Players on horseback get a Charge Bonus of Strength 2.
-      - When a player mounts a horse, or hits an enemy, the Charge Bonus goes into a 12 second cooldown.
     - :left_luggage: **Encumbrance**
       - Stuff is harder to carry because of weight: (*a standard RPG feature*)
       - Horses are strong, so the encumbrance of player-riders only affects them at rate of 50%.
@@ -49,7 +55,7 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
               - Diamond Horse Armour: -8%                 
           - Weapons:
             - Bow: -3%
-            - Crossbow: -6%
+            - Crossbow: -12%
             - Spear: -5% (*new item*)
             - Warhammer: -12% (*new item*)
           - Other Items:
