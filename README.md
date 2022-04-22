@@ -26,6 +26,9 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
     ![image](https://user-images.githubusercontent.com/50219223/162958194-a7ecd2ae-c880-49be-afb9-6838d21e2a4d.png)
   - Warhammer
     ![image](https://user-images.githubusercontent.com/50219223/162962278-0a172a1c-3f6f-4299-89bc-b92700c2b288.png)
+  - Custom Weapons
+    - The special bonuses can also be given to custom weapons made by other plugins.
+    - See config file for more details.
 - :left_luggage: :brain: :shirt: **Encumbrance, Tactics, & Military Uniforms**
   - :left_luggage: Encumbrance:
     - Standard combat feature:
