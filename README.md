@@ -62,7 +62,7 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
   - Military Uniforms
     - With encumbrance in effect, it makes little sense for an nation to put every soldier in a full-diamond/netherite kit.
     - It makes a more sense to equip all units with at least one identifying piece of kit (*e.g. a coloured leather helmet*).
-- :red_heart: :plus: **Auto-Potting**
+- :sparkling_heart: :heavy_plus_sign: **Auto-Potting**
   - In combat, Splash health potions (I and II) are automatically consumed after a player's health falls below 5 hearts.
   - This feature unlocks battlefield participation for the majority of Towny players, specifically new-players/casual-players/traders/builders/roleplayers, who are otherwise excluded from battles, by an unreasonably high inventory-management skill bar.
   - Protests can be expected from a minority, namely those members of the elite PVP caste who have already cleared the participation bar, and are willing to continue excluding the majority from battles, in exchange for holding on to their own power.	
