@@ -64,8 +64,8 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
     - It makes a more sense to equip all units with at least one identifying piece of kit (*e.g. a coloured leather helmet*).
 - :sparkling_heart: :heavy_plus_sign: **Auto-Potting**
   - In combat, Splash health potions (I and II) are automatically consumed after a player's health falls below 5 hearts.
-  - This feature unlocks battlefield participation for the majority of Towny players, specifically new-players/casual-players/traders/builders/roleplayers, who are otherwise excluded from battles, by an unreasonably high inventory-management skill bar.
-  - Protests can be expected from a minority who have already cleared the participation bar, and are willing to continue excluding the majority from battles, in exchange for holding on to their own power.	
+  - This feature unlocks battlefield participation for the majority of Towny players (*e.g. new-players / casual-players / traders / builders / roleplayers*) who are otherwise massively excluded from battles, by a too-high skill bar of lightning-quick inventory-management.
+  - Protests can be expected from a minority, who having already cleared the participation bar, are willing to continue excluding the majority from battles, in exchange for holding on to their own power.	
   - More progressive PVP'ers will recognize both a challenge and an opportunity, to dominate the battlefield less by twitchy young fingers, and more by solid army organization, reliable logistics and clever military tactics.
 - :coffin: :moneybag: **Keep Stuff on Death:**
   - If you die within 400 blocks of a town-homeblock, you keep your inventory and levels.
