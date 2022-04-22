@@ -30,7 +30,7 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
     - The special bonuses can also be given to custom weapons made by other plugins.
     - See config file for more details.
 - :left_luggage: :brain: :shirt: **Encumbrance, Tactics, & Military Uniforms**
-  - :left_luggage: Encumbrance:
+  - :Encumbrance:
     - Standard combat feature:
       - All soldiers do not move at exactly the same speed.
       - Rather, encumbered soldiers move more slowly.
@@ -57,33 +57,22 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
     - Heavy Armour Jump Damage:
       - Players with 8% encumbrance or more sometimes incur some damage when jumping/climbing.
       - Compensates for an MC bug which allows slowdown-bypassing via. bunny-hopping.
-  - :brain: Tactics:
+  - Tactics:
     - With encumbrance in effect, troops types and tactics naturally become more diverse.
-  - :shirt: 
+  - Military Uniforms
     - With encumbrance in effect, it makes little sense for an nation to put every soldier in a full-diamond/netherite kit.
     - It makes a more sense to equip all units with at least one identifying piece of kit (*e.g. a coloured leather helmet*).
+- :red_heart: :plus: **Auto-Potting**
+  - In combat, Splash health potions (I and II) are automatically consumed after a player's health falls below 5 hearts.
+  - This feature unlocks battlefield participation for the majority of Towny players, specifically new-players/casual-players/traders/builders/roleplayers, who are otherwise excluded from battles, by an unreasonably high inventory-management skill bar.
+  - Protests can be expected from a minority, namely those members of the elite PVP caste who have already cleared the participation bar, and are willing to continue excluding the majority from battles, in exchange for holding on to their own power.	
+  - More progressive PVP'ers will recognize both a challenge and an opportunity, to dominate the battlefield less by twitchy young fingers, and more by solid army organization, reliable logistics and clever military tactics.
 - :coffin: :moneybag: **Keep Stuff on Death:**
   - If you die within 400 blocks of a town-homeblock, you keep your inventory and levels.
   - Any tools/weapons/armour in your inventory are subject to a 20% degrade.
 - :snake: :x: **Prevent Towny-Block-Glitching by quick-block-place/destroy:**
   - Via a secret magical method.
   - Try it and see!
-- :teapot: **Auto-Potting**
-      - In combat, Splash health potions (I and II) are automatically consumed after a player's health falls below 5 hearts.
-      - *This setting offers servers a critical choice:*
-        - A. Disabled: 
-          - Status Quo.
-          - Combat is generally restricted to an elite caste of highly trained 'PVP'ers', 
-            often non-roleplaying and/or belonging to cross-server PVP clans.
-          - New players are correctly told that they are effectively useless in combat, 
-            and should either commit to training (*usually off-server*), or adopt a peaceful supply role.
-          - Cross-Server PVP Clans are gifted with an outsized geo-political influence.
-        - B Enabled
-          - Shake Things Up.
-          - Combat is opened up more to new-players/casual-players/roleplayers/builders/traders.
-          - *Example:* A player who has never fought in MC before can still be useful in a battle, 
-            once their teams equips then with some basic military kit like bow, shield, sword, and a few health potions.
-          - The geo-political influence of Cross-Server PVP Clans is reduced.
 - :bust_in_silhouette: :footprints: **Tactical Invisibilty:** ***(Disabled By Default)***
   - Use stealth tactics by going invisible on the dynmap.
   - This is a harcore battle feature, which enables stealth tactics, in exchange for showing less activity on the dynmap.
