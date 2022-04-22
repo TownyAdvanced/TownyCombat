@@ -10,7 +10,6 @@ import io.github.townyadvanced.townycombat.utils.TownyCombatExperienceUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatItemUtil;
 
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Arrow;
@@ -175,6 +174,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 
 		//CAVALRY MISSILE SHIELD: Cavalry are shielded from arrows fired by player-bows
 		if(TownyCombatSettings.isCavalryMissileShieldEnabled()
+				&& attackingPlayer != null
 				&& isCavalryUnderAttack
 				&& event.getDamager() instanceof Arrow
 				&& attackingPlayer.getInventory().getItemInMainHand().getType() == Material.BOW
@@ -190,10 +190,8 @@ public class TownyCombatBukkitEventListener implements Listener {
 			&& event.getDamager() instanceof Player
 		) { 
 			ItemStack mainHandItem = ((Player)event.getDamager()).getInventory().getItemInMainHand();
-			if(mainHandItem.getType() == TownyCombatItemUtil.SPEAR_PLACEHOLDER_MATERIAL
-					&& mainHandItem.getEnchantments().containsKey(Enchantment.DAMAGE_ALL)
-					&& mainHandItem.getEnchantmentLevel(Enchantment.DAMAGE_ALL) == TownyCombatItemUtil.SPEAR_SHARPNESS_LEVEL) {
-				finalDamage += TownyCombatItemUtil.SPEAR_VS_CAVALRY_EXTRA_DAMAGE;
+			if(TownyCombatItemUtil.isSpear(mainHandItem)) {
+				finalDamage += TownyCombatSettings.getNewItemsSpearBonusDamageVsCavalry();
 			}
 		}
 
@@ -217,17 +215,17 @@ public class TownyCombatBukkitEventListener implements Listener {
 		//WARHAMMER: Possibly break shield
 		if(TownyCombatSettings.isNewItemsWarhammerEnabled()) {
 			if(event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-				ItemStack damagerMainHand = ((Player)event.getDamager()).getInventory().getItemInMainHand();
-				if (damagerMainHand.getType() == TownyCombatItemUtil.WARHAMMER_PLACEHOLDER_MATERIAL) {
+				ItemStack itemInAttackerMainHand = ((Player)event.getDamager()).getInventory().getItemInMainHand();
+				if (TownyCombatItemUtil.isWarhammer(itemInAttackerMainHand)) {
 					if(((Player)event.getEntity()).isBlocking()) {
 						ItemStack victimMainHand = ((Player)event.getEntity()).getInventory().getItemInMainHand();
 						ItemStack victimOffHand = ((Player)event.getEntity()).getInventory().getItemInOffHand();
 						if(victimMainHand.getType() == Material.SHIELD) {
 							//Player is blocking with shield in main hand
-							TownyCombatItemUtil.rollBreakItemInHand((Player)event.getEntity(), false, TownyCombatItemUtil.WARHAMMER_BREAK_SHIELD_CHANCE);
+							TownyCombatItemUtil.rollBreakItemInHand((Player)event.getEntity(), false, TownyCombatSettings.getNewItemsWarhammerShieldBreakChancePercent());
 						} else if (victimOffHand.getType() == Material.SHIELD) {
 							//Player is blocking with shield in off hand
-							TownyCombatItemUtil.rollBreakItemInHand((Player)event.getEntity(), true, TownyCombatItemUtil.WARHAMMER_BREAK_SHIELD_CHANCE);
+							TownyCombatItemUtil.rollBreakItemInHand((Player)event.getEntity(), true, TownyCombatSettings.getNewItemsWarhammerShieldBreakChancePercent());
 						}
 					}
 				}
@@ -264,14 +262,14 @@ public class TownyCombatBukkitEventListener implements Listener {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
 		if(event.getInventory().getResult() != null
-				&& TownyCombatItemUtil.isForbiddenItem(event.getInventory().getResult())) {
+				&& TownyCombatItemUtil.isVanillaPlaceholderItem(event.getInventory().getResult())) {
 			event.getInventory().setResult(null);
 			return; //Cannot craft or repair forbidden item
 		}
 		if(event.isRepair()) {
 			//Repair
 			if(event.getInventory().getResult() != null
-					&& TownyCombatItemUtil.isReservedMaterial(event.getInventory().getResult().getType())) {
+					&& TownyCombatItemUtil.isPlaceholderMaterial(event.getInventory().getResult().getType())) {
 				event.getInventory().setResult(null); //Cannot repair reserved material
 			}
 		} else {
@@ -285,7 +283,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
 		if(event.getResult() != null
-				&& TownyCombatItemUtil.isReservedMaterial(event.getResult().getType())) {
+				&& TownyCombatItemUtil.isPlaceholderMaterial(event.getResult().getType())) {
 			event.setResult(null);  //Cannot repair reserved material
 		}
 	}

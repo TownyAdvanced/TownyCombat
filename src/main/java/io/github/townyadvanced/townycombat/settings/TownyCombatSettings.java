@@ -3,6 +3,7 @@ package io.github.townyadvanced.townycombat.settings;
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.objects.HeldItemsCombination;
 import io.github.townyadvanced.townycombat.utils.TownyCombatItemUtil;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
@@ -117,8 +118,8 @@ public class TownyCombatSettings {
 		materialEncumbrancePercentageMap.put(Material.BOW, getEquipmentEncumbranceBow());
 		materialEncumbrancePercentageMap.put(Material.CROSSBOW, getEquipmentEncumbranceCrossbow());
 		materialEncumbrancePercentageMap.put(Material.SHIELD, getEquipmentEncumbranceShield());
-		materialEncumbrancePercentageMap.put(TownyCombatItemUtil.SPEAR_PLACEHOLDER_MATERIAL, getEquipmentEncumbranceSpear());
-		materialEncumbrancePercentageMap.put(TownyCombatItemUtil.WARHAMMER_PLACEHOLDER_MATERIAL, getEquipmentEncumbranceWarhammer());
+		materialEncumbrancePercentageMap.put(TownyCombatItemUtil.NATIVE_SPEAR_PLACEHOLDER_MATERIAL, getEquipmentEncumbranceSpear());
+		materialEncumbrancePercentageMap.put(TownyCombatItemUtil.NATIVE_WARHAMMER_PLACEHOLDER_MATERIAL, getEquipmentEncumbranceWarhammer());
 
 		//Enderchest & shulker boxes
 		materialEncumbrancePercentageMap.put(Material.ENDER_CHEST, getEquipmentEncumbranceEnderChest());
@@ -305,8 +306,40 @@ public class TownyCombatSettings {
 		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_SPEAR_ENABLED);
 	}
 
+	public static String getSpearLore() {
+		return Settings.getString(ConfigNodes.NEW_ITEMS_SPEAR_LORE);
+	}
+
+	public static int getNewItemsSpearBonusDamageVsCavalry() {
+		return Settings.getInt(ConfigNodes.NEW_ITEMS_SPEAR_BONUS_DAMAGE_VS_CAVALRY);
+	}
+
+    public static boolean isNewItemsSpearNativeWeaponEnabled() {
+		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_SPEAR_NATIVE_WEAPON_ENABLED);
+	}
+
+    public static String getNewItemsSpearNativeWeaponName() {
+		return Settings.getString(ConfigNodes.NEW_ITEMS_SPEAR_NATIVE_WEAPON_NAME);
+	}
+
 	public static boolean isNewItemsWarhammerEnabled() {
 		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_WARHAMMER_ENABLED);
+	}
+
+	public static String getWarhammerLore() {
+		return Settings.getString(ConfigNodes.NEW_ITEMS_WARHAMMER_LORE);
+	}
+
+	public static int getNewItemsWarhammerShieldBreakChancePercent() {
+		return Settings.getInt(ConfigNodes.NEW_ITEMS_WARHAMMER_SHERLD_BREAK_CHANCE_PERCENT);
+	}
+
+	public static boolean isNewItemsWarhammerNativeWeaponEnabled() {
+		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_WARHAMMER_NATIVE_WEAPON_ENABLED);
+	}
+
+    public static String getNewItemsWarhammerNativeWeaponName() {
+		return Settings.getString(ConfigNodes.NEW_ITEMS_WARHAMMER_NATIVE_WEAPON_NAME);
 	}
 
 	public static double getEquipmentEncumbranceShulkerBox() {
@@ -363,5 +396,9 @@ public class TownyCombatSettings {
 
 	public static double getJumpDamageDamagePerEncumbrancePercent() {
 		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_DAMAGE_PER_ENCUMBRANCE_PERCENT);
-	}	
+	}
+
+	public static String translateColoursInString(final String string) {
+	  	return ChatColor.translateAlternateColorCodes('&', string);
+	}
 }
