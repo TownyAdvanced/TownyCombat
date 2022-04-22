@@ -425,7 +425,7 @@ public enum ConfigNodes {
 			"new_items.spear.lore",
 			"+9 Damage v.s. Cavalry",
 			"",
-			"# It an item has this on any of its lore lines, it gets the spear effect"),
+			"# It an item has this text for any of its lore lines, it gets the spear effect."),
 	NEW_ITEMS_SPEAR_BONUS_DAMAGE_VS_CAVALRY(
 			"new_items.spear.bonus_damage_vs_cavalry",
 			"9",
@@ -455,7 +455,7 @@ public enum ConfigNodes {
 			"new_items.warhammer.lore",
 			"15% Chance to Break Shield",
 			"",
-			"# It an item has this on any of its lore lines, it gets the spear effect"),
+			"# It an item has this text for any of its lore lines, it gets the warhammer effect"),
 	NEW_ITEMS_WARHAMMER_SHERLD_BREAK_CHANCE_PERCENT(
 			"new_items.warhammer.shield_break_chance_percent",
 			"15",
