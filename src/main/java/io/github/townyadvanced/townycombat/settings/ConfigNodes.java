@@ -412,11 +412,11 @@ public enum ConfigNodes {
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
-	NEW_ITEMS_LORE_CODE(
+	NEW_ITEMS_COMMON_LORE_CODE(
 		 	"new_items.common_lore_code",
 			"&a&a",
 			"",
-			"# For TC to recognize an item as for special effects, it must have a lore line starting with this."),
+			"# For TC to recognize an item as for special effects, the first lore line must start with this."),
 	NEW_ITEMS_SPEAR(
 			"new_items.spear",
 			"",
@@ -431,11 +431,11 @@ public enum ConfigNodes {
 			"&a",
 			"",
 			"# For TCM to recognize an weapon for the bonus damage effects, this character must appear after the common lore code."),
-	NEW_ITEMS_SPEAR_DAMAGE_BONUS_VS_CAVALRY(
-			"new_items.spear.damage_bonus_vs_cavalry",
+	NEW_ITEMS_SPEAR_BONUS_DAMAGE_VS_CAVALRY(
+			"new_items.spear.bonus_damage_vs_cavalry",
 			"9",
 			"",
-			"# Bonus damage to cavalry (horse or rider)"),
+			"# Bonus damage to cavalry (horse or rider). Integer only"),
 	NEW_ITEMS_SPEAR_NATIVE_WEAPON_ENABLED(
 			"new_items.spear.native_weapon_enabled",
 			"true",
@@ -459,7 +459,8 @@ public enum ConfigNodes {
 	NEW_ITEMS_WARHAMMER_SHERLD_BREAK_CHANCE_PERCENT(
 			"new_items.warhammer.shield_break_chance_percent",
 			"15",
-			""), 
+			"",
+			"# Percentage chance to break shield. Integer only."), 
 	NEW_ITEMS_WARHAMMER_NATIVE_WEAPON_ENABLED(
 			"new_items.warhammer.native_weapon_enabled",
 			"true",

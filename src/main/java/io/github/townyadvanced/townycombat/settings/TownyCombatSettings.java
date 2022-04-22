@@ -21,8 +21,14 @@ public class TownyCombatSettings {
     private static Map<Material, Double> materialEncumbrancePercentageMap = new HashMap<>();
 	private static int cavalryChargeEffectDurationTicks = 0;
 	private static int cavalryChargeCooldownMilliseconds = 0;
+	private static String cachedSpearLoreCode;
+	private static String cachedWarhammerLoreCode;
 
 	public static void loadReloadCachedSetting() {
+		//Load weapon lores
+		cachedSpearLoreCode = getCommonLoreCode() + getSpearLoreCode();
+		cachedWarhammerLoreCode = getCommonLoreCode() + getWarhammerLoreCode();
+
 		//Load cavalry charge ticks
 		cavalryChargeEffectDurationTicks = (int)((TownyCombatSettings.getCavalryStrengthBonusCooldownSeconds() + 5) * 20);
 		cavalryChargeCooldownMilliseconds = (int)(TownyCombatSettings.getCavalryStrengthBonusCooldownSeconds() * 1000);
@@ -117,8 +123,8 @@ public class TownyCombatSettings {
 		materialEncumbrancePercentageMap.put(Material.BOW, getEquipmentEncumbranceBow());
 		materialEncumbrancePercentageMap.put(Material.CROSSBOW, getEquipmentEncumbranceCrossbow());
 		materialEncumbrancePercentageMap.put(Material.SHIELD, getEquipmentEncumbranceShield());
-		materialEncumbrancePercentageMap.put(TownyCombatItemUtil.SPEAR_PLACEHOLDER_MATERIAL, getEquipmentEncumbranceSpear());
-		materialEncumbrancePercentageMap.put(TownyCombatItemUtil.WARHAMMER_PLACEHOLDER_MATERIAL, getEquipmentEncumbranceWarhammer());
+		materialEncumbrancePercentageMap.put(TownyCombatItemUtil.NATIVE_SPEAR_PLACEHOLDER_MATERIAL, getEquipmentEncumbranceSpear());
+		materialEncumbrancePercentageMap.put(TownyCombatItemUtil.NATIVE_WARHAMMER_PLACEHOLDER_MATERIAL, getEquipmentEncumbranceWarhammer());
 
 		//Enderchest & shulker boxes
 		materialEncumbrancePercentageMap.put(Material.ENDER_CHEST, getEquipmentEncumbranceEnderChest());
@@ -301,12 +307,40 @@ public class TownyCombatSettings {
 		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_WARHAMMER);
 	}
 
+	public static String getCommonLoreCode() {
+		return Settings.getString(ConfigNodes.NEW_ITEMS_COMMON_LORE_CODE);
+	}
+
 	public static boolean isNewItemsSpearEnabled() {
 		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_SPEAR_ENABLED);
 	}
 
+	public static String getSpearLoreCode() {
+		return Settings.getString(ConfigNodes.NEW_ITEMS_SPEAR_LORE_CODE);
+	}
+
+	public static int getNewItemsSpearBonusDamageVsCavalry() {
+		return Settings.getInt(ConfigNodes.NEW_ITEMS_SPEAR_BONUS_DAMAGE_VS_CAVALRY);
+	}
+
+    public static boolean isNewItemsSpearNativeWeaponEnabled() {
+		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_SPEAR_NATIVE_WEAPON_ENABLED);
+	}
+
 	public static boolean isNewItemsWarhammerEnabled() {
 		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_WARHAMMER_ENABLED);
+	}
+
+	public static String getWarhammerLoreCode() {
+		return Settings.getString(ConfigNodes.NEW_ITEMS_WARHAMMER_LORE_CODE);
+	}
+
+	public static int getNewItemsWarhammerShieldBreakChancePercent() {
+		return Settings.getInt(ConfigNodes.NEW_ITEMS_WARHAMMER_SHERLD_BREAK_CHANCE_PERCENT);
+	}
+
+	public static boolean isNewItemsWarhammerNativeWeaponEnabled() {
+		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_WARHAMMER_NATIVE_WEAPON_ENABLED);
 	}
 
 	public static double getEquipmentEncumbranceShulkerBox() {
@@ -363,5 +397,13 @@ public class TownyCombatSettings {
 
 	public static double getJumpDamageDamagePerEncumbrancePercent() {
 		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_DAMAGE_PER_ENCUMBRANCE_PERCENT);
-	}	
+	}
+
+	public static String getCachedSpearLoreCode() {
+		return cachedSpearLoreCode;
+	}
+
+	public static String getCachedWarhammerLoreCode() {
+		return cachedWarhammerLoreCode;
+	}
 }

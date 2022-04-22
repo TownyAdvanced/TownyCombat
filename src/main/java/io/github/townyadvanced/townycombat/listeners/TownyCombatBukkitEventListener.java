@@ -10,7 +10,6 @@ import io.github.townyadvanced.townycombat.utils.TownyCombatExperienceUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatItemUtil;
 
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Arrow;
@@ -190,10 +189,8 @@ public class TownyCombatBukkitEventListener implements Listener {
 			&& event.getDamager() instanceof Player
 		) { 
 			ItemStack mainHandItem = ((Player)event.getDamager()).getInventory().getItemInMainHand();
-			if(mainHandItem.getType() == TownyCombatItemUtil.SPEAR_PLACEHOLDER_MATERIAL
-					&& mainHandItem.getEnchantments().containsKey(Enchantment.DAMAGE_ALL)
-					&& mainHandItem.getEnchantmentLevel(Enchantment.DAMAGE_ALL) == TownyCombatItemUtil.SPEAR_SHARPNESS_LEVEL) {
-				finalDamage += TownyCombatItemUtil.SPEAR_VS_CAVALRY_EXTRA_DAMAGE;
+			if(TownyCombatItemUtil.isSpear(mainHandItem)) {
+				finalDamage += TownyCombatSettings.getNewItemsSpearBonusDamageVsCavalry();
 			}
 		}
 
@@ -217,17 +214,17 @@ public class TownyCombatBukkitEventListener implements Listener {
 		//WARHAMMER: Possibly break shield
 		if(TownyCombatSettings.isNewItemsWarhammerEnabled()) {
 			if(event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-				ItemStack damagerMainHand = ((Player)event.getDamager()).getInventory().getItemInMainHand();
-				if (damagerMainHand.getType() == TownyCombatItemUtil.WARHAMMER_PLACEHOLDER_MATERIAL) {
+				ItemStack itemInAttackerMainHand = ((Player)event.getDamager()).getInventory().getItemInMainHand();
+				if (TownyCombatItemUtil.isWarhammer(itemInAttackerMainHand)) {
 					if(((Player)event.getEntity()).isBlocking()) {
 						ItemStack victimMainHand = ((Player)event.getEntity()).getInventory().getItemInMainHand();
 						ItemStack victimOffHand = ((Player)event.getEntity()).getInventory().getItemInOffHand();
 						if(victimMainHand.getType() == Material.SHIELD) {
 							//Player is blocking with shield in main hand
-							TownyCombatItemUtil.rollBreakItemInHand((Player)event.getEntity(), false, TownyCombatItemUtil.WARHAMMER_BREAK_SHIELD_CHANCE);
+							TownyCombatItemUtil.rollBreakItemInHand((Player)event.getEntity(), false, TownyCombatSettings.getNewItemsWarhammerShieldBreakChancePercent());
 						} else if (victimOffHand.getType() == Material.SHIELD) {
 							//Player is blocking with shield in off hand
-							TownyCombatItemUtil.rollBreakItemInHand((Player)event.getEntity(), true, TownyCombatItemUtil.WARHAMMER_BREAK_SHIELD_CHANCE);
+							TownyCombatItemUtil.rollBreakItemInHand((Player)event.getEntity(), true, TownyCombatSettings.getNewItemsWarhammerShieldBreakChancePercent());
 						}
 					}
 				}
