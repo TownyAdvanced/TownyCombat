@@ -1,6 +1,7 @@
 package io.github.townyadvanced.townycombat.utils;
 
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
@@ -90,10 +91,9 @@ public class TownyCombatItemUtil {
 			itemMeta.addEnchant(Enchantment.DAMAGE_ALL, NATIVE_SPEAR_SHARPNESS_LEVEL, true);
 			List<String> lore = new ArrayList<>();
             lore.add(
-                TownyCombatSettings.getCommonLoreCode()
-                + TownyCombatSettings.getSpearLoreCode()
-                + "+"  //todo bukkit colour code
-                + TownyCombatSettings.getNewItemsSpearBonusDamageVsCavalry()
+                TownyCombatSettings.getCachedSpearLoreCode()
+                + ChatColor.translateAlternateColorCodes('&',"&a")  
+                + "+" + TownyCombatSettings.getNewItemsSpearBonusDamageVsCavalry()
                 + "% Damage v.s. Cavalry");
 			itemMeta.setLore(lore);
 			result.setItemMeta(itemMeta);
@@ -109,9 +109,8 @@ public class TownyCombatItemUtil {
 			itemMeta.addEnchant(Enchantment.KNOCKBACK, 1, true);
 			List<String> lore = new ArrayList<>();
             lore.add(
-                TownyCombatSettings.getCommonLoreCode()
-                + TownyCombatSettings.getWarhammerLoreCode()
-                + ""  //todo bukkit colour code
+                TownyCombatSettings.getCachedWarhammerLoreCode()
+                + ChatColor.translateAlternateColorCodes('&',"&a")  
                 + TownyCombatSettings.getNewItemsWarhammerShieldBreakChancePercent()
                 + "% Chance to Break Shield");
 			itemMeta.setLore(lore);

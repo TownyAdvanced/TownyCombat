@@ -3,6 +3,7 @@ package io.github.townyadvanced.townycombat.settings;
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.objects.HeldItemsCombination;
 import io.github.townyadvanced.townycombat.utils.TownyCombatItemUtil;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
@@ -26,8 +27,8 @@ public class TownyCombatSettings {
 
 	public static void loadReloadCachedSetting() {
 		//Load weapon lores
-		cachedSpearLoreCode = getCommonLoreCode() + getSpearLoreCode();
-		cachedWarhammerLoreCode = getCommonLoreCode() + getWarhammerLoreCode();
+		cachedSpearLoreCode = ChatColor.translateAlternateColorCodes('&', getCommonLoreCode() + getSpearLoreCode());
+		cachedWarhammerLoreCode = ChatColor.translateAlternateColorCodes('&', getCommonLoreCode() + getWarhammerLoreCode());
 
 		//Load cavalry charge ticks
 		cavalryChargeEffectDurationTicks = (int)((TownyCombatSettings.getCavalryStrengthBonusCooldownSeconds() + 5) * 20);
