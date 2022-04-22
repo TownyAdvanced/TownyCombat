@@ -412,11 +412,6 @@ public enum ConfigNodes {
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
-	NEW_ITEMS_COMMON_LORE_CODE(
-		 	"new_items.common_lore_code",
-			"&a&a",
-			"",
-			"# For TC to recognize an item as for special effects, the first lore line must start with this."),
 	NEW_ITEMS_SPEAR(
 			"new_items.spear",
 			"",
@@ -426,11 +421,11 @@ public enum ConfigNodes {
 			"true",
 			"",
 			"# if true, then the spear effect is enabled."),
-	NEW_ITEMS_SPEAR_LORE_CODE(
-			"new_items.spear.lore_code",
-			"&a",
+	NEW_ITEMS_SPEAR_LORE(
+			"new_items.spear.lore",
+			"+9 Damage v.s. Cavalry",
 			"",
-			"# For TCM to recognize an weapon for the bonus damage effects, this character must appear after the common lore code."),
+			"# It an item has this on any of its lore lines, it gets the spear effect"),
 	NEW_ITEMS_SPEAR_BONUS_DAMAGE_VS_CAVALRY(
 			"new_items.spear.bonus_damage_vs_cavalry",
 			"9",
@@ -442,6 +437,11 @@ public enum ConfigNodes {
 			"",
 			"# If true, then native spears TCM can be crafted, and regular wooden swords cannot.",
 			"# See user guide for recipe."),
+	NEW_ITEMS_SPEAR_NATIVE_WEAPON_NAME(
+			"new_items.spear.native_weapon_name",
+			"Spear",
+			"",
+			"# The name of the native weapon, when crafted."),
 	NEW_ITEMS_WARHAMMER(
 			"new_items.warhammer",
 			"",
@@ -451,11 +451,11 @@ public enum ConfigNodes {
 			"true",
 			"",
 			"# if true, then the warhammer effect is enabled."),
-	NEW_ITEMS_WARHAMMER_LORE_CODE(
-			"new_items.warhammer.lore_code",
-			"&b",
+	NEW_ITEMS_WARHAMMER_LORE(
+			"new_items.warhammer.lore",
+			"15% Chance to Break Shield",
 			"",
-			"# For TCM to recognize an weapon for the bonus damage effects, this character must appear after the common lore code."),
+			"# It an item has this on any of its lore lines, it gets the spear effect"),
 	NEW_ITEMS_WARHAMMER_SHERLD_BREAK_CHANCE_PERCENT(
 			"new_items.warhammer.shield_break_chance_percent",
 			"15",
@@ -467,6 +467,11 @@ public enum ConfigNodes {
 			"",
 			"# If true, then native spears TCM warhammers be crafted, and regular wooden axes cannot.",
 			"# See user guide for recipe."),
+	NEW_ITEMS_WARHAMMER_NATIVE_WEAPON_NAME(
+			"new_items.warhammer.native_weapon_name",
+			"Spear",
+			"",
+			"# The name of the native weapon, when crafted."),
 	AUTOPOTTING(
 		"autopotting",
 			"",

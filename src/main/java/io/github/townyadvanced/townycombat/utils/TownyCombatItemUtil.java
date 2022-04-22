@@ -1,7 +1,6 @@
 package io.github.townyadvanced.townycombat.utils;
 
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
@@ -15,8 +14,7 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class TownyCombatItemUtil {
 
@@ -27,6 +25,12 @@ public class TownyCombatItemUtil {
     public static final Material NATIVE_WARHAMMER_PLACEHOLDER_MATERIAL = Material.WOODEN_AXE;
     public static final Material[] NATIVE_WARHAMMER_MATERIALS = new Material[]{null, null, Material.STONE, null, Material.STICK, null, Material.STICK, null, null}; 			
     public static final int WARHAMMER_SHARPNESS_LEVEL = 10;
+
+    //After we have identified a weapon as spear or not spear, we list it here
+    public static Map<ItemStack, Boolean> spearIdentificationMap = new HashMap<>();
+
+    //After we have identified a weapon as warhammer or not warhammer, we list it here
+    public static Map<ItemStack, Boolean> warhammerIdentificationMap = new HashMap<>();
 
     /**
      * Some vanilla items are forbidden
@@ -87,14 +91,12 @@ public class TownyCombatItemUtil {
                 && doesMatrixMatch(event.getInventory().getMatrix(), NATIVE_SPEAR_MATERIALS)) {
 			ItemStack result = new ItemStack(NATIVE_SPEAR_PLACEHOLDER_MATERIAL);
 			ItemMeta itemMeta = result.getItemMeta();
-			itemMeta.setDisplayName("Spear");
+			itemMeta.setDisplayName(TownyCombatSettings.getNewItemsSpearNativeWeaponName());
+			//Add enchants
 			itemMeta.addEnchant(Enchantment.DAMAGE_ALL, NATIVE_SPEAR_SHARPNESS_LEVEL, true);
+			//Add lore
 			List<String> lore = new ArrayList<>();
-            lore.add(
-                TownyCombatSettings.getCachedSpearLoreCode()
-                + ChatColor.translateAlternateColorCodes('&',"&a")  
-                + "+" + TownyCombatSettings.getNewItemsSpearBonusDamageVsCavalry()
-                + "% Damage v.s. Cavalry");
+            lore.add(TownyCombatSettings.getSpearLore());
 			itemMeta.setLore(lore);
 			result.setItemMeta(itemMeta);
 			return result;
@@ -104,15 +106,13 @@ public class TownyCombatItemUtil {
                 && doesMatrixMatch(event.getInventory().getMatrix(), NATIVE_WARHAMMER_MATERIALS)) {
 			ItemStack result = new ItemStack(NATIVE_WARHAMMER_PLACEHOLDER_MATERIAL);
 			ItemMeta itemMeta = result.getItemMeta();
-			itemMeta.setDisplayName("Warhammer");
+			itemMeta.setDisplayName(TownyCombatSettings.getNewItemsWarhammerNativeWeaponName());
+			//Add enchants
 			itemMeta.addEnchant(Enchantment.DAMAGE_ALL, WARHAMMER_SHARPNESS_LEVEL, true);
 			itemMeta.addEnchant(Enchantment.KNOCKBACK, 1, true);
+			//Add lore
 			List<String> lore = new ArrayList<>();
-            lore.add(
-                TownyCombatSettings.getCachedWarhammerLoreCode()
-                + ChatColor.translateAlternateColorCodes('&',"&a")  
-                + TownyCombatSettings.getNewItemsWarhammerShieldBreakChancePercent()
-                + "% Chance to Break Shield");
+            lore.add(TownyCombatSettings.getWarhammerLore());
 			itemMeta.setLore(lore);
 			result.setItemMeta(itemMeta);
 			return result;
@@ -238,14 +238,20 @@ public class TownyCombatItemUtil {
      * @return true if the item is a spear
      */
     public static boolean isSpear(ItemStack item) {
-        if(item.getItemMeta() != null
-                && item.getItemMeta().getLore() != null
-                && item.getItemMeta().getLore().size() > 0
-                && item.getItemMeta().getLore().get(0).startsWith(TownyCombatSettings.getCachedSpearLoreCode())) {
-            return true;        
-        } else {
-            return false;
+        Boolean result = spearIdentificationMap.get(item);
+        if(result == null) {
+            result = false;
+            if(item.getItemMeta() != null && item.getItemMeta().getLore() != null) {
+                for(String loreLine: item.getItemMeta().getLore()) {
+                    if(loreLine.equals(TownyCombatSettings.getSpearLore())) {
+                        result = true;
+                        break;
+                    }
+                }
+            }
+            spearIdentificationMap.put(item, result);
         }
+        return result;
     }
 
     /**
@@ -255,13 +261,19 @@ public class TownyCombatItemUtil {
      * @return true if the item is a warhammer
      */
     public static boolean isWarhammer(ItemStack item) {
-        if(item.getItemMeta() != null
-                && item.getItemMeta().getLore() != null
-                && item.getItemMeta().getLore().size() > 0
-                && item.getItemMeta().getLore().get(0).startsWith(TownyCombatSettings.getCachedWarhammerLoreCode())) {
-            return true;        
-        } else {
-            return false;
+        Boolean result = warhammerIdentificationMap.get(item);
+        if(result == null) {
+            result = false;
+            if(item.getItemMeta() != null && item.getItemMeta().getLore() != null) {
+                for(String loreLine: item.getItemMeta().getLore()) {
+                    if(loreLine.equals(TownyCombatSettings.getWarhammerLore())) {
+                        result = true;
+                        break;
+                    }
+                }
+            }
+            warhammerIdentificationMap.put(item, result);
         }
+        return result;
     }
 }
