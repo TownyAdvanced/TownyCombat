@@ -48,7 +48,7 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
     - Armour Material Modifiers:
       - Leather: x1
       - Chain-Mail: x2
-      - Gold/Turtle-Shell: x3
+      - Gold/Turtle: x3
       - Iron: x4
       - Diamond: x5
       - Netherite: x6
