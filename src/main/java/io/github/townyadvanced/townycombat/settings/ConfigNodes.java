@@ -412,18 +412,60 @@ public enum ConfigNodes {
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
+	NEW_ITEMS_LORE_CODE(
+		 	"new_items.common_lore_code",
+			"&a&a",
+			"",
+			"# For TC to recognize an item as for special effects, it must have a lore line starting with this."),
+	NEW_ITEMS_SPEAR(
+			"new_items.spear",
+			"",
+			""),
 	NEW_ITEMS_SPEAR_ENABLED(
-			"new_items.spear_enabled",
+			"new_items.spear.enabled",
 			"true",
 			"",
-			"# A spear is a cheap and light throwaway item. It cannot be repaired or comnbined.",
-			"# Its damage stats are like a wooden sword, with sharpness 8, knockback 1, and +75% v.s. cavalry"),
+			"# if true, then the spear effect is enabled."),
+	NEW_ITEMS_SPEAR_LORE_CODE(
+			"new_items.spear.lore_code",
+			"&a",
+			"",
+			"# For TCM to recognize an weapon for the bonus damage effects, this character must appear after the common lore code."),
+	NEW_ITEMS_SPEAR_DAMAGE_BONUS_VS_CAVALRY(
+			"new_items.spear.damage_bonus_vs_cavalry",
+			"9",
+			"",
+			"# Bonus damage to cavalry (horse or rider)"),
+	NEW_ITEMS_SPEAR_NATIVE_WEAPON_ENABLED(
+			"new_items.spear.native_weapon_enabled",
+			"true",
+			"",
+			"# If true, then native spears TCM can be crafted, and regular wooden swords cannot.",
+			"# See user guide for recipe."),
+	NEW_ITEMS_WARHAMMER(
+			"new_items.warhammer",
+			"",
+			""),
 	NEW_ITEMS_WARHAMMER_ENABLED(
-			"new_items.warhammer_enabled",
+			"new_items.warhammer.enabled",
 			"true",
 			"",
-			"# A warhammer is a cheap and heavy throwaway item. It cannot be repaired or comnbined.",
-			"# Its damage stats are like a wooden axe, with sharpness 10, knockback 1, and 15% shield-break chance."),
+			"# if true, then the warhammer effect is enabled."),
+	NEW_ITEMS_WARHAMMER_LORE_CODE(
+			"new_items.warhammer.lore_code",
+			"&b",
+			"",
+			"# For TCM to recognize an weapon for the bonus damage effects, this character must appear after the common lore code."),
+	NEW_ITEMS_WARHAMMER_SHERLD_BREAK_CHANCE_PERCENT(
+			"new_items.warhammer.shield_break_chance_percent",
+			"15",
+			""), 
+	NEW_ITEMS_WARHAMMER_NATIVE_WEAPON_ENABLED(
+			"new_items.warhammer.native_weapon_enabled",
+			"true",
+			"",
+			"# If true, then native spears TCM warhammers be crafted, and regular wooden axes cannot.",
+			"# See user guide for recipe."),
 	AUTOPOTTING(
 		"autopotting",
 			"",
