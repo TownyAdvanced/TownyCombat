@@ -13,6 +13,7 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Arrow;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -67,10 +68,12 @@ public class TownyCombatBukkitEventListener implements Listener {
 			return;
 		if(!(event.getMount() instanceof AbstractHorse))
 			return;
-		//Remove modifiers if system/feature is disabled		
+		//Remove modifiers if system/speed-feature is disabled		
 		if (!TownyCombatSettings.isTownyCombatEnabled() || !TownyCombatSettings.isSpeedAdjustmentsEnabled()) {
 			TownyCombatMovementUtil.removeTownyCombatMovementAttributeModifiers((AbstractHorse)event.getMount());
 		}
+		if (!TownyCombatSettings.isTownyCombatEnabled())
+			return;
 		//Prevent mount if the horse is about to be TP'd to owner
 		if(TownyCombatSettings.isTeleportMountWithPlayerEnabled()
 				&& event.getMount() instanceof AbstractHorse
@@ -81,7 +84,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		//Apply speed adjustments
 		TownyCombatMovementUtil.adjustPlayerAndMountSpeeds((Player)event.getEntity());
 		//Register for charge bonus
-		TownyCombatHorseUtil.registerPlayerForChargeBonus((Player)event.getEntity());
+		TownyCombatHorseUtil.registerPlayerForCavalryStrengthBonus((Player)event.getEntity());
 	}
 
 	@EventHandler (ignoreCancelled = true)
@@ -91,7 +94,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		if(!(event.getEntity() instanceof Player))
 			return;
 		//Deregister for charge bonus
-		TownyCombatHorseUtil.deregisterPlayerMountForChargeBonus((Player)event.getEntity());
+		TownyCombatHorseUtil.deregisterPlayerForCavalryStrengthBonus((Player)event.getEntity());
 	}
 
 	@EventHandler (ignoreCancelled = true)
@@ -116,15 +119,18 @@ public class TownyCombatBukkitEventListener implements Listener {
 		//Remove modifiers if system/feature is disabled
 		if (!TownyCombatSettings.isTownyCombatEnabled() || !TownyCombatSettings.isSpeedAdjustmentsEnabled()) {
 			TownyCombatMovementUtil.removeTownyCombatMovementAttributeModifiers(event.getPlayer());
-		} 		
-		TownyCombatMovementUtil.adjustPlayerAndMountSpeeds(event.getPlayer());
+		} else {
+			TownyCombatMovementUtil.adjustPlayerAndMountSpeeds(event.getPlayer());
+		}
 	}
 
 	@EventHandler (ignoreCancelled = true)
 	public void on (EntityDamageEvent event) {
+		if (!TownyCombatSettings.isTownyCombatEnabled())
+			return;
 		if (event.getEntity() instanceof AbstractHorse) {
 			//No fire damage to horses ridden by players
-			if(TownyCombatSettings.isHorsesImmuneToFire()
+			if(TownyCombatSettings.isCavalryFireShieldEnabled()
                                 && event.getEntity().getPassengers().size() > 0
 			        && event.getEntity().getPassengers().get(0) instanceof Player
 			        && (event.getCause() == EntityDamageEvent.DamageCause.FIRE
@@ -136,63 +142,110 @@ public class TownyCombatBukkitEventListener implements Listener {
 
 	@EventHandler (ignoreCancelled = true)
 	public void on (EntityDamageByEntityEvent event) {
-		double finalDamage = event.getFinalDamage();
+		if (!TownyCombatSettings.isTownyCombatEnabled())
+			return;
+
+		//Get attacking player (if any)	
+		Player attackingPlayer;
 		if(event.getDamager() instanceof Player) {
-			//SPEAR: Increase damage if spear v.s. cavalry
-			if(TownyCombatSettings.isNewItemsSpearEnabled()) {
-				if(event.getEntity() instanceof AbstractHorse
-						|| (event.getEntity() instanceof Player
-							&& event.getEntity().isInsideVehicle()
-							&& event.getEntity().getVehicle() instanceof AbstractHorse)) {
-					ItemStack mainHandItem =  ((Player)event.getDamager()).getInventory().getItemInMainHand();
-					if(mainHandItem.getType() == TownyCombatItemUtil.SPEAR_PLACEHOLDER_MATERIAL
-							&& mainHandItem.getEnchantments().containsKey(Enchantment.DAMAGE_ALL)
-							&& mainHandItem.getEnchantmentLevel(Enchantment.DAMAGE_ALL) == TownyCombatItemUtil.SPEAR_SHARPNESS_LEVEL) {
-						finalDamage += TownyCombatItemUtil.SPEAR_VS_CAVALRY_EXTRA_DAMAGE;
-					}
-				}
+			attackingPlayer = (Player)event.getDamager();
+		} else if (event.getDamager() instanceof Arrow
+				&& ((Arrow)event.getDamager()).getShooter() != null
+				&& ((Arrow)event.getDamager()).getShooter() instanceof Player) {
+			attackingPlayer = (Player)((Arrow)event.getDamager()).getShooter();
+		} else {
+			attackingPlayer = null;
+		}
+		
+		//Discover if cavalry is under attack
+		boolean isCavalryUnderAttack;
+		if(	
+			(event.getEntity() instanceof AbstractHorse
+				&& event.getEntity().getPassengers().size() > 0
+				&& event.getEntity().getPassengers().get(0) instanceof Player)
+			||
+			(event.getEntity() instanceof Player
+				&& event.getEntity().isInsideVehicle()
+				&& event.getEntity().getVehicle() instanceof AbstractHorse)
+		) {
+			isCavalryUnderAttack = true;
+		} else {
+			isCavalryUnderAttack = false;
+		}
+
+		//CAVALRY MISSILE SHIELD: Cavalry are shielded from arrows fired by player-bows
+		if(TownyCombatSettings.isCavalryMissileShieldEnabled()
+				&& isCavalryUnderAttack
+				&& event.getDamager() instanceof Arrow
+				&& attackingPlayer.getInventory().getItemInMainHand().getType() == Material.BOW
+		) {
+			event.setCancelled(true);
+			return;				
+		}
+
+		//SPEAR: Do extra damage to cavalry
+		double finalDamage = event.getFinalDamage();
+		if(TownyCombatSettings.isNewItemsSpearEnabled()
+			&& isCavalryUnderAttack
+			&& event.getDamager() instanceof Player
+		) { 
+			ItemStack mainHandItem = ((Player)event.getDamager()).getInventory().getItemInMainHand();
+			if(mainHandItem.getType() == TownyCombatItemUtil.SPEAR_PLACEHOLDER_MATERIAL
+					&& mainHandItem.getEnchantments().containsKey(Enchantment.DAMAGE_ALL)
+					&& mainHandItem.getEnchantmentLevel(Enchantment.DAMAGE_ALL) == TownyCombatItemUtil.SPEAR_SHARPNESS_LEVEL) {
+				finalDamage += TownyCombatItemUtil.SPEAR_VS_CAVALRY_EXTRA_DAMAGE;
 			}
-			//CHARGING: Increase damage if charging
-			if(TownyCombatSettings.isCavalryChargeEnabled()) {
-				if(event.getDamager().isInsideVehicle()
-						&& event.getDamager().getVehicle() instanceof AbstractHorse) {
-					((Player) event.getDamager()).removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
-					finalDamage += (3 * TownyCombatSettings.getCavalryChargeStrengthEffectLevel());
-					TownyCombatHorseUtil.registerPlayerForChargeBonus((Player) event.getDamager());
-				}
-			}
-			//WARHAMMER: Possibly break shield if warhammer
-			if(TownyCombatSettings.isNewItemsWarhammerEnabled()) {
-				if(event.getEntity() instanceof Player) {
-					ItemStack damagerMainHand = ((Player)event.getDamager()).getInventory().getItemInMainHand();
-					if (damagerMainHand.getType() == TownyCombatItemUtil.WARHAMMER_PLACEHOLDER_MATERIAL) {
-						if(((Player)event.getEntity()).isBlocking()) {
-							ItemStack victimMainHand = ((Player)event.getEntity()).getInventory().getItemInMainHand();
-							ItemStack victimOffHand = ((Player)event.getEntity()).getInventory().getItemInOffHand();
-							if(victimMainHand.getType() == Material.SHIELD) {
-								//Player is blocking with shield in main hand
-								TownyCombatItemUtil.rollBreakItemInHand((Player)event.getEntity(), false, TownyCombatItemUtil.WARHAMMER_BREAK_SHIELD_CHANCE);
-							} else if (victimOffHand.getType() == Material.SHIELD) {
-								//Player is blocking with shield in off hand
-								TownyCombatItemUtil.rollBreakItemInHand((Player)event.getEntity(), true, TownyCombatItemUtil.WARHAMMER_BREAK_SHIELD_CHANCE);
-							}
+		}
+
+		//CAVALRY STRENGTH BONUS: Do extra damage to player infantry
+		if(TownyCombatSettings.isCavalryStrengthBonusEnabled()
+			&&
+			//Cavalry Attacker 
+			(attackingPlayer != null && attackingPlayer.isInsideVehicle() && attackingPlayer.getVehicle() instanceof AbstractHorse) 				
+			&&						
+			//Infantry Victim
+			(event.getEntity() instanceof Player && (!event.getEntity().isInsideVehicle() || !(event.getEntity().getVehicle() instanceof AbstractHorse)))
+			&&
+			//Bonus is charged-up
+			attackingPlayer.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE)
+		) {
+			attackingPlayer.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
+			finalDamage += (3 * TownyCombatSettings.getCavalryChargeStrengthBonusEffectLevel());
+			TownyCombatHorseUtil.registerPlayerForCavalryStrengthBonus(attackingPlayer);
+		}
+
+		//WARHAMMER: Possibly break shield
+		if(TownyCombatSettings.isNewItemsWarhammerEnabled()) {
+			if(event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
+				ItemStack damagerMainHand = ((Player)event.getDamager()).getInventory().getItemInMainHand();
+				if (damagerMainHand.getType() == TownyCombatItemUtil.WARHAMMER_PLACEHOLDER_MATERIAL) {
+					if(((Player)event.getEntity()).isBlocking()) {
+						ItemStack victimMainHand = ((Player)event.getEntity()).getInventory().getItemInMainHand();
+						ItemStack victimOffHand = ((Player)event.getEntity()).getInventory().getItemInOffHand();
+						if(victimMainHand.getType() == Material.SHIELD) {
+							//Player is blocking with shield in main hand
+							TownyCombatItemUtil.rollBreakItemInHand((Player)event.getEntity(), false, TownyCombatItemUtil.WARHAMMER_BREAK_SHIELD_CHANCE);
+						} else if (victimOffHand.getType() == Material.SHIELD) {
+							//Player is blocking with shield in off hand
+							TownyCombatItemUtil.rollBreakItemInHand((Player)event.getEntity(), true, TownyCombatItemUtil.WARHAMMER_BREAK_SHIELD_CHANCE);
 						}
 					}
 				}
 			}
 		}
-		//GENERIC DAMAGE ADJUSTMENTS AND AUTOPOTTING
+
+		//DAMAGE RESISTANCE AND AUTOPOTTING
 		if(event.getEntity() instanceof Player) {
-			//Generic damage adjustment
-			finalDamage = finalDamage + (finalDamage * (TownyCombatSettings.getDamageAdjustmentAttackOnPlayer() / 100));
 			//Auto-pot if needed
 			if(TownyCombatSettings.isAutoPottingEnabled()
 					&& ((Player) event.getEntity()).getHealth() < TownyCombatSettings.getAutoPottingThreshold()) {
 				TownyCombatItemUtil.autopotToThreshold((Player)event.getEntity());
 			}
 		} else if (event.getEntity() instanceof AbstractHorse) {
-			//Generic damage adjustment
-			finalDamage = finalDamage + (finalDamage * (TownyCombatSettings.getDamageAdjustmentsAttackOnHorse() / 100));
+			//Horse damage resistance
+			if(attackingPlayer != null) {
+				finalDamage = finalDamage - (finalDamage * (TownyCombatSettings.getDamageResistanceHorsesPercent() / 100));
+			}
 			//Auto-pot if needed
 			if(TownyCombatSettings.isAutoPottingEnabled()
 					&& event.getEntity().getPassengers().size() > 0
@@ -201,12 +254,15 @@ public class TownyCombatBukkitEventListener implements Listener {
 				TownyCombatItemUtil.autopotToThreshold((Player)event.getEntity().getPassengers().get(0), (AbstractHorse)event.getEntity());
 			}
 		}
+
 		//SET DAMAGE
 		event.setDamage(finalDamage);
 	}
 
 	@EventHandler (ignoreCancelled = true)
 	public void on (PrepareItemCraftEvent event) {
+		if (!TownyCombatSettings.isTownyCombatEnabled())
+			return;
 		if(event.getInventory().getResult() != null
 				&& TownyCombatItemUtil.isForbiddenItem(event.getInventory().getResult())) {
 			event.getInventory().setResult(null);
@@ -226,6 +282,8 @@ public class TownyCombatBukkitEventListener implements Listener {
 
 	@EventHandler (ignoreCancelled = true)
 	public void on (PrepareAnvilEvent event) {
+		if (!TownyCombatSettings.isTownyCombatEnabled())
+			return;
 		if(event.getResult() != null
 				&& TownyCombatItemUtil.isReservedMaterial(event.getResult().getType())) {
 			event.setResult(null);  //Cannot repair reserved material

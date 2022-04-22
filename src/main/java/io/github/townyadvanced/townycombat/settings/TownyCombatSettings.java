@@ -24,8 +24,8 @@ public class TownyCombatSettings {
 
 	public static void loadReloadCachedSetting() {
 		//Load cavalry charge ticks
-		cavalryChargeEffectDurationTicks = (int)((TownyCombatSettings.getCavalryChargeCooldownSeconds() + 5) * 20);
-		cavalryChargeCooldownMilliseconds = (int)(TownyCombatSettings.getCavalryChargeCooldownSeconds() * 1000);
+		cavalryChargeEffectDurationTicks = (int)((TownyCombatSettings.getCavalryStrengthBonusCooldownSeconds() + 5) * 20);
+		cavalryChargeCooldownMilliseconds = (int)(TownyCombatSettings.getCavalryStrengthBonusCooldownSeconds() * 1000);
 
 		//Load/reload tactical invisibility items
 		tacticalInvisibilityItems.clear();
@@ -285,12 +285,8 @@ public class TownyCombatSettings {
 		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_GENERIC_CAVALRY_ADJUSTMENT_PERCENTAGE);
 	}
 
-	public static double getDamageAdjustmentAttackOnPlayer() {
-		return Settings.getDouble(ConfigNodes.DAMAGE_ADJUSTMENTS_PLAYERS_INCOMING);
-	}
-
-	public static double getDamageAdjustmentsAttackOnHorse() {
-		return Settings.getDouble(ConfigNodes.DAMAGE_ADJUSTMENTS_HORSES_INCOMING);
+	public static double getDamageResistanceHorsesPercent() {
+		return Settings.getDouble(ConfigNodes.HORSE_ENHANCEMENTS_ATTACK_DAMAGE_RESISTANCE_PERCENT);
 	}
 
 	public static double getCavalryEncumbranceReductionPercentage() {
@@ -329,20 +325,24 @@ public class TownyCombatSettings {
 		return Settings.getDouble(ConfigNodes.AUTOPOTTING_HEALTH_THRESHOLD);
 	}
 
-	public static boolean isHorsesImmuneToFire() {
-		return Settings.getBoolean(ConfigNodes.HORSE_ENHANCEMENTS_HORSE_FIRE_IMMUNITY_ENABLED);
+	public static boolean isCavalryFireShieldEnabled() {
+		return Settings.getBoolean(ConfigNodes.HORSE_ENHANCEMENTS_CAVALRY_FIRE_SHIELD_ENABLED);
+	}
+	
+	public static boolean isCavalryMissileShieldEnabled() {
+		return Settings.getBoolean(ConfigNodes.HORSE_ENHANCEMENTS_CAVALRY_MISSILE_SHIELD_ENABLED);
+	}
+	
+	public static boolean isCavalryStrengthBonusEnabled() {
+		return Settings.getBoolean(ConfigNodes.HORSE_ENHANCEMENTS_CAVALRY_STRENGTH_BONUS_ENABLED);
 	}
 
-	public static boolean isCavalryChargeEnabled() {
-		return Settings.getBoolean(ConfigNodes.HORSE_ENHANCEMENTS_CAVALRY_CHARGE_ENABLED);
+	public static int getCavalryChargeStrengthBonusEffectLevel() {
+		return Settings.getInt(ConfigNodes.HORSE_ENHANCEMENTS_CAVALRY_STRENGTH_BONUS_EFFECT_LEVEL);
 	}
 
-	public static int getCavalryChargeStrengthEffectLevel() {
-		return Settings.getInt(ConfigNodes.HORSE_ENHANCEMENTS_CAVALRY_STRENGTH_EFFECT_LEVEL);
-	}
-
-	public static double getCavalryChargeCooldownSeconds() {
-		return Settings.getDouble(ConfigNodes.HORSE_ENHANCEMENTS_CAVALRY_CHARGE_COOLDOWN_SECONDS);
+	public static double getCavalryStrengthBonusCooldownSeconds() {
+		return Settings.getDouble(ConfigNodes.HORSE_ENHANCEMENTS_CAVALRY_STRENGTH_BONUS_COOLDOWN_SECONDS);
 	}
 
 	public static int getCavalryChargeCooldownMilliseconds() {
