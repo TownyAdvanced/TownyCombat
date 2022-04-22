@@ -68,10 +68,12 @@ public class TownyCombatBukkitEventListener implements Listener {
 			return;
 		if(!(event.getMount() instanceof AbstractHorse))
 			return;
-		//Remove modifiers if system/feature is disabled		
+		//Remove modifiers if system/speed-feature is disabled		
 		if (!TownyCombatSettings.isTownyCombatEnabled() || !TownyCombatSettings.isSpeedAdjustmentsEnabled()) {
 			TownyCombatMovementUtil.removeTownyCombatMovementAttributeModifiers((AbstractHorse)event.getMount());
 		}
+		if (!TownyCombatSettings.isTownyCombatEnabled())
+			return;
 		//Prevent mount if the horse is about to be TP'd to owner
 		if(TownyCombatSettings.isTeleportMountWithPlayerEnabled()
 				&& event.getMount() instanceof AbstractHorse
