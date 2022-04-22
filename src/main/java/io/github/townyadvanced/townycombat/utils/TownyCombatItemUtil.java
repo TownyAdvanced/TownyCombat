@@ -96,7 +96,7 @@ public class TownyCombatItemUtil {
 			itemMeta.addEnchant(Enchantment.DAMAGE_ALL, NATIVE_SPEAR_SHARPNESS_LEVEL, true);
 			//Add lore
 			List<String> lore = new ArrayList<>();
-            lore.add(TownyCombatSettings.getSpearLore());
+			lore.add(TownyCombatSettings.getSpearLore());
 			itemMeta.setLore(lore);
 			result.setItemMeta(itemMeta);
 			return result;
@@ -112,7 +112,7 @@ public class TownyCombatItemUtil {
 			itemMeta.addEnchant(Enchantment.KNOCKBACK, 1, true);
 			//Add lore
 			List<String> lore = new ArrayList<>();
-            lore.add(TownyCombatSettings.getWarhammerLore());
+			lore.add(TownyCombatSettings.getWarhammerLore());
 			itemMeta.setLore(lore);
 			result.setItemMeta(itemMeta);
 			return result;
