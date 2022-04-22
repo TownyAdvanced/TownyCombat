@@ -24,7 +24,7 @@ public class TownyCombatItemUtil {
 
     public static final Material NATIVE_WARHAMMER_PLACEHOLDER_MATERIAL = Material.WOODEN_AXE;
     public static final Material[] NATIVE_WARHAMMER_MATERIALS = new Material[]{null, null, Material.STONE, null, Material.STICK, null, Material.STICK, null, null}; 			
-    public static final int WARHAMMER_SHARPNESS_LEVEL = 10;
+    public static final int NATIVE_WARHAMMER_SHARPNESS_LEVEL = 10;
 
     //After we have identified a weapon as spear or not spear, we list it here
     public static Map<ItemStack, Boolean> spearIdentificationMap = new HashMap<>();
@@ -33,24 +33,21 @@ public class TownyCombatItemUtil {
     public static Map<ItemStack, Boolean> warhammerIdentificationMap = new HashMap<>();
 
     /**
-     * Some vanilla items are forbidden
-     * because they would cause confusion with custom TownyCombat items
+     * Check if the given item is a vanilla placeholder version of a custom item.
      * 
      * @param item the item
-     * @return true if forbidden item
+     * @return true if placeholder item
      */
-    public static boolean isForbiddenItem(ItemStack item) {
+    public static boolean isVanillaPlaceholderItem(ItemStack item) {
         if(TownyCombatSettings.isNewItemsSpearEnabled()
                 && TownyCombatSettings.isNewItemsSpearNativeWeaponEnabled()
                 && item.getType() == NATIVE_SPEAR_PLACEHOLDER_MATERIAL
-                && (!item.getEnchantments().containsKey(Enchantment.DAMAGE_ALL)
-                    || item.getEnchantmentLevel(Enchantment.DAMAGE_ALL) != NATIVE_SPEAR_SHARPNESS_LEVEL)) {
+                && !isSpear(item)) {
             return true;  //Vanilla wooden sword
         } else if (TownyCombatSettings.isNewItemsWarhammerEnabled()
                 && TownyCombatSettings.isNewItemsWarhammerNativeWeaponEnabled()
                 && item.getType() == NATIVE_WARHAMMER_PLACEHOLDER_MATERIAL
-                && (!item.getEnchantments().containsKey(Enchantment.DAMAGE_ALL)
-                    || item.getEnchantmentLevel(Enchantment.DAMAGE_ALL) != WARHAMMER_SHARPNESS_LEVEL)) {
+                && !isWarhammer(item)) {
             return true;  //Vanilla stone axe
         } else {
             return false;
@@ -58,12 +55,12 @@ public class TownyCombatItemUtil {
     }
 
     /**
-     * Calculate if the given material is reserved for special, non-vanilla items
+     * Check if the given material is s placeholder for special, non-vanilla items
      * 
      * @param material the material
      * @return true if forbidden material
      */
-    public static boolean isReservedMaterial(Material material) {
+    public static boolean isPlaceholderMaterial(Material material) {
         if(TownyCombatSettings.isNewItemsSpearEnabled() 
                 && TownyCombatSettings.isNewItemsSpearNativeWeaponEnabled()
                 && material == NATIVE_SPEAR_PLACEHOLDER_MATERIAL) {
@@ -108,7 +105,7 @@ public class TownyCombatItemUtil {
 			ItemMeta itemMeta = result.getItemMeta();
 			itemMeta.setDisplayName(TownyCombatSettings.getNewItemsWarhammerNativeWeaponName());
 			//Add enchants
-			itemMeta.addEnchant(Enchantment.DAMAGE_ALL, WARHAMMER_SHARPNESS_LEVEL, true);
+			itemMeta.addEnchant(Enchantment.DAMAGE_ALL, NATIVE_WARHAMMER_SHARPNESS_LEVEL, true);
 			itemMeta.addEnchant(Enchantment.KNOCKBACK, 1, true);
 			//Add lore
 			List<String> lore = new ArrayList<>();

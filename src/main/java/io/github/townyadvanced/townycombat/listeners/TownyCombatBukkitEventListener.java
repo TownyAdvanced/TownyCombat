@@ -262,14 +262,14 @@ public class TownyCombatBukkitEventListener implements Listener {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
 		if(event.getInventory().getResult() != null
-				&& TownyCombatItemUtil.isForbiddenItem(event.getInventory().getResult())) {
+				&& TownyCombatItemUtil.isVanillaPlaceholderItem(event.getInventory().getResult())) {
 			event.getInventory().setResult(null);
 			return; //Cannot craft or repair forbidden item
 		}
 		if(event.isRepair()) {
 			//Repair
 			if(event.getInventory().getResult() != null
-					&& TownyCombatItemUtil.isReservedMaterial(event.getInventory().getResult().getType())) {
+					&& TownyCombatItemUtil.isPlaceholderMaterial(event.getInventory().getResult().getType())) {
 				event.getInventory().setResult(null); //Cannot repair reserved material
 			}
 		} else {
@@ -283,7 +283,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
 		if(event.getResult() != null
-				&& TownyCombatItemUtil.isReservedMaterial(event.getResult().getType())) {
+				&& TownyCombatItemUtil.isPlaceholderMaterial(event.getResult().getType())) {
 			event.setResult(null);  //Cannot repair reserved material
 		}
 	}
