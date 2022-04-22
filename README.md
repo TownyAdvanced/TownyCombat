@@ -59,7 +59,6 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
   - :shirt: 
     - With encumbrance in effect, it makes little sense for an nation to put every soldier in a full-diamond/netherite kit.
     - It makes a more sense to equip all units with at least one identifying piece of kit (*e.g. a coloured leather helmet*).
-    - This includes shields, which can be decorated with banners. 
 - :coffin: :moneybag: **Keep Stuff on Death:**
   - If you die within 400 blocks of a town-homeblock, you keep your inventory and levels.
   - Any tools/weapons/armour in your inventory are subject to a 20% degrade.
