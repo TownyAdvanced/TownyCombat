@@ -21,8 +21,10 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
     - Take +9 damage when hit by a spear.
 - :crossed_swords: :new: **New Weapons**
   - Spear:
+    - +9 Damage v.s. Cavalry
     ![image](https://user-images.githubusercontent.com/50219223/162958194-a7ecd2ae-c880-49be-afb9-6838d21e2a4d.png)
   - Warhammer
+    - 15% Chance to Break Shield
     ![image](https://user-images.githubusercontent.com/50219223/162962278-0a172a1c-3f6f-4299-89bc-b92700c2b288.png)
   - Custom Weapons
     - The special bonuses can also be given to custom weapons made by other plugins. See config file for more details.
