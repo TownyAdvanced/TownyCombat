@@ -68,7 +68,7 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
   - This feature unlocks battlefield participation for the majority of Towny players (*e.g. new-players / casual-players / traders / builders / roleplayers*) who are otherwise massively excluded from battles, by a too-high skill bar of lightning-quick inventory-management.
   - Protests can be expected from a minority, who having already cleared the participation bar, are willing to continue excluding the majority from battles, in exchange for holding on to their own power.	
   - More progressive PVP'ers will recognize both a challenge and an opportunity, to dominate the battlefield less by twitchy young fingers, and more by solid army organization, reliable logistics and clever military tactics.
-- :coffin: :moneybag: **Keep Stuff on Death:**
+- :coffin: :moneybag: **Keep Inventory on Death:**
   - If you die within 400 blocks of a town-homeblock, you keep your inventory and levels.
   - Any tools/weapons/armour in your inventory are subject to a 20% degrade.
 - :snake: :x: **Prevent Towny-Block-Glitching by quick-block-place/destroy:**
