@@ -32,7 +32,7 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
   - Speed Increase: +12%
 - :left_luggage: :brain: :shirt: **Encumbrance, Tactics, & Military Uniforms**
   - :Encumbrance:
-    - Standard combat feature:
+    - Standard RPG feature:
       - All soldiers do not move at exactly the same speed.
       - Rather, encumbered soldiers move more slowly.
     - Base Encumbrance / Speed adjustments:
