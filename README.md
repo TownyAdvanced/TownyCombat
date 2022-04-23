@@ -46,6 +46,7 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
       - Warhammer: 12% (*new item*)
       - Shield: 4%
       - Shulker Box: 15%
+      - Ender Chest: 30%
     - Armour Material Modifiers:
       - Leather: x1
       - Chain-Mail: x2
