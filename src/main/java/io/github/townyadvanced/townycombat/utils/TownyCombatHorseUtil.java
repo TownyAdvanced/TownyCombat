@@ -73,7 +73,6 @@ public class TownyCombatHorseUtil {
         long now = System.currentTimeMillis();
         long nextRefreshTime = System.currentTimeMillis() + TownyCombatSettings.getCavalryChargeCooldownMilliseconds();
         int effectDurationTicks = TownyCombatSettings.getCavalryChargeEffectDurationTicks();
-        int effectAmplifier = TownyCombatSettings.getCavalryChargeStrengthBonusEffectLevel() - 1;
 
         for(Map.Entry<Player, Long> playerTimeEntry: (new HashMap<>(cavalryStrengthBonusRefreshTimes)).entrySet()) {
             //Verify player is still on horse
@@ -83,15 +82,19 @@ public class TownyCombatHorseUtil {
             }
             if(now > playerTimeEntry.getValue()) {
                 //Refresh charge
-                TownyCombat.getPlugin().getServer().getScheduler().runTask(TownyCombat.getPlugin(), ()-> applyStrengthEffectToPlayer(playerTimeEntry.getKey(), effectDurationTicks, effectAmplifier));
+                TownyCombat.getPlugin().getServer().getScheduler().runTask(TownyCombat.getPlugin(), ()-> applyPlaceholderStrengthEffectToPlayer(playerTimeEntry.getKey(), effectDurationTicks));
                 //Arrange next refresh time
                 cavalryStrengthBonusRefreshTimes.put(playerTimeEntry.getKey(), nextRefreshTime);
             }
         }
     }
 
-    private static void applyStrengthEffectToPlayer(Player player, int effectDurationTicks, int effectAmplifier) {
-        player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, effectDurationTicks, effectAmplifier));
+    /**
+     * Apply a "placeholder" strength effect to the player
+     * This has no effect on its own, but is used to indicate the strength bonus is ready for use.
+     */
+    private static void applyPlaceholderStrengthEffectToPlayer(Player player, int effectDurationTicks) {
+        player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, effectDurationTicks,-1));
     }
 
 }

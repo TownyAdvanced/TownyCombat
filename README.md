@@ -13,10 +13,10 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
   - Special Abilities:
     - Teleport with player on /n or /t spawn.
     - Speed Increase: +12%.
-    - Knockback Resistance: +75%
     - Resistance to PVP Attack Damage: +60% .
+    - Knockback Resistance: +75%.
     - Missile Shield: Immune to PVP arrows (except from crossbows).
-    - Cavalry Strength Bonus: PVP Strength 3 Effect for 1 hit, cooldown for 10 seconds.
+    - Cavalry Strength Bonus: +3 PVP Strength Bonus vs Infantry for 1 hit. Cooldown for 10 seconds.
   - Special Vulnerabilities:
     - Take +9 damage when hit by a spear in PVP.
 - :guard: :star: **Infantry Enchancements**
