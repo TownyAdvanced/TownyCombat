@@ -14,20 +14,20 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
     - Teleport with player on /n or /t spawn.
     - Speed Increase: +12%.
     - Knockback Resistance: +75%
-    - Attack Damage Resistance: +60% .
-    - Missile Shield: Immune to arrows (except from crossbows).
-    - Cavalry Strength Bonus: Strength 3 effect for 1 hit, cooldown for 10 seconds.
+    - Resistance to PVP Attack Damage: +60% .
+    - Missile Shield: Immune to PVP arrows (except from crossbows).
+    - Cavalry Strength Bonus: PVP Strength 3 Effect for 1 hit, cooldown for 10 seconds.
   - Special Vulnerabilities:
-    - Take +9 damage when hit by a spear.
+    - Take +9 damage when hit by a spear in PVP.
 - :guard: :star: **Infantry Enchancements**
   - Speed Increase: +12%
   - Knockback Resistance: +25%
 - :crossed_swords: :new: **New Weapons**
   - Spear:
-    - +9 Damage v.s. Cavalry
+    - +9 PVP Damage v.s. Cavalry
     ![image](https://user-images.githubusercontent.com/50219223/162958194-a7ecd2ae-c880-49be-afb9-6838d21e2a4d.png)
   - Warhammer
-    - 15% Chance to Break Shield
+    - 15% PVP Chance to Break Shield
     ![image](https://user-images.githubusercontent.com/50219223/162962278-0a172a1c-3f6f-4299-89bc-b92700c2b288.png)
   - Custom Weapons
     - The special bonuses can also be given to custom weapons made by other plugins. See config file for more details.
