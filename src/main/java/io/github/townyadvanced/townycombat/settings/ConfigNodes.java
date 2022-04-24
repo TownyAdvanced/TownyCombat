@@ -59,17 +59,16 @@ public enum ConfigNodes {
 			"cavalry_enhancements.cavalry_missile_shield_enabled",
 			"true",
 			"",
-			"# If this setting is true, then horses and riders are both shielded from arrows from player-bows",
-			"# Note that arrows fired by crossbows are not blocked.", 
+			"# If this setting is true, then horses and riders are both shielded from arrows, except from crossbows.",
 			"# TIP: This setting is essential to allow cavalry to perform the 'Tank' role, because due to lag effects, horses would otherwise be quite vulnerable to arrows."),
-	CAVALRY_ENHANCEMENTS_CAVALRY_FIRE_SHIELD_ENABLED(
-			"cavalry_enhancements.cavalry_fire_shield_enabled",
+	CAVALRY_ENHANCEMENTS_HORSE_REARING_PREVENTION_ENABLED(
+			"cavalry_enhancements.horse_rearing_prevention_enabled",
 			"true",
 			"",
-			"# If this setting is true, then horses and riders are both shielded from fire damage.",
-			"# TIP: This setting is essential to allow cavalry to perform the 'Tank' role, because due to rearing-effects, horses are useless when on fire."),
+			"# If this setting is true, then horses do not rear up when damaged.",
+			"# TIP: This setting is essential as otherwise horses become useless if set on fire, poisoned etc."),
 	CAVALRY_ENHANCEMENTS_CAVALRY_STRENGTH_BONUS(
-		"cavalry_enhancements.cavalry_strength_bonus",
+			"cavalry_enhancements.cavalry_strength_bonus",
 			"",
 			"",
 			"",

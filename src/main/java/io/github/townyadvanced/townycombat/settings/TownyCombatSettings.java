@@ -3,7 +3,6 @@ package io.github.townyadvanced.townycombat.settings;
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.objects.HeldItemsCombination;
 import io.github.townyadvanced.townycombat.utils.TownyCombatItemUtil;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
@@ -362,14 +361,14 @@ public class TownyCombatSettings {
 		return Settings.getDouble(ConfigNodes.AUTOPOTTING_HEALTH_THRESHOLD);
 	}
 
-	public static boolean isCavalryFireShieldEnabled() {
-		return Settings.getBoolean(ConfigNodes.CAVALRY_ENHANCEMENTS_CAVALRY_FIRE_SHIELD_ENABLED);
-	}
-	
 	public static boolean isCavalryMissileShieldEnabled() {
 		return Settings.getBoolean(ConfigNodes.CAVALRY_ENHANCEMENTS_CAVALRY_MISSILE_SHIELD_ENABLED);
 	}
 	
+	public static boolean isHorseRearingPreventionEnabled() {
+		return Settings.getBoolean(ConfigNodes.CAVALRY_ENHANCEMENTS_HORSE_REARING_PREVENTION_ENABLED);
+	}
+
 	public static boolean isCavalryStrengthBonusEnabled() {
 		return Settings.getBoolean(ConfigNodes.CAVALRY_ENHANCEMENTS_CAVALRY_STRENGTH_BONUS_ENABLED);
 	}

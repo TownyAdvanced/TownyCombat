@@ -10,6 +10,7 @@ import io.github.townyadvanced.townycombat.utils.TownyCombatExperienceUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatItemUtil;
 
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Arrow;
@@ -128,14 +129,15 @@ public class TownyCombatBukkitEventListener implements Listener {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
 		if (event.getEntity() instanceof AbstractHorse) {
-			//No fire damage to horses ridden by players
-			if(TownyCombatSettings.isCavalryFireShieldEnabled()
-                                && event.getEntity().getPassengers().size() > 0
-			        && event.getEntity().getPassengers().get(0) instanceof Player
-			        && (event.getCause() == EntityDamageEvent.DamageCause.FIRE
-				    || event.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK)) {
+			//No rearing when horse is damaged. Do this by cancelling the event, then applying the same damage in a simple set operation.
+			if(TownyCombatSettings.isHorseRearingPreventionEnabled()
+					&& event.getEntity().getPassengers().size() > 0
+			        && event.getEntity().getPassengers().get(0) instanceof Player) {
 				event.setCancelled(true);
-			} 
+				AbstractHorse horse = (AbstractHorse)event.getEntity();
+				double newHealth = horse.getHealth() - event.getDamage();
+				horse.setHealth(Math.max(0, Math.min(horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue(), newHealth)));
+			}
 		}
 	}
 
@@ -200,16 +202,21 @@ public class TownyCombatBukkitEventListener implements Listener {
 			&&
 			//Cavalry Attacker 
 			(attackingPlayer != null && attackingPlayer.isInsideVehicle() && attackingPlayer.getVehicle() instanceof AbstractHorse) 				
-			&&						
-			//Infantry Victim
+			&&
+			//Infantry defender
 			(event.getEntity() instanceof Player && (!event.getEntity().isInsideVehicle() || !(event.getEntity().getVehicle() instanceof AbstractHorse)))
 			&&
 			//Bonus is charged-up
-			attackingPlayer.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE)
-		) {
+			(attackingPlayer.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE) && attackingPlayer.getPotionEffect(PotionEffectType.INCREASE_DAMAGE).getAmplifier() == 0))
+		{
+			/*
+			 * Note: The bonus is not already contained in the damage.
+			 * Because the str amplifier is power 0
+			 * So we need to explicitly add the damage.
+			 */
+			TownyCombatHorseUtil.registerPlayerForCavalryStrengthBonus(attackingPlayer);
 			attackingPlayer.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
 			finalDamage += (3 * TownyCombatSettings.getCavalryChargeStrengthBonusEffectLevel());
-			TownyCombatHorseUtil.registerPlayerForCavalryStrengthBonus(attackingPlayer);
 		}
 
 		//WARHAMMER: Possibly break shield
