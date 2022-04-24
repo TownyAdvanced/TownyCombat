@@ -45,14 +45,23 @@ public class TownyCombatMovementUtil {
         adjustPlayerWalkSpeed(player);
         //Apply adjustments to mount walk speed
         adjustMountWalkSpeed(player);
+        //Apply adjustments to player knockback resistance
+        adjustPlayerKnockbackResistance(player);
+        //Apply adjustments to mount knockback resistance
+        adjustMountKnockbackResistance(player);
     }
 
-    public static void removeTownyCombatMovementAttributeModifiers(LivingEntity livingEntity) {
+    public static void removeTownyCombatMovementModifiers(LivingEntity livingEntity) {
         //Remove the TCM modifiers
         for(AttributeModifier attributeModifier: new ArrayList<>(livingEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getModifiers())) {
             if(attributeModifier.getName().equals(ATTRIBUTE_MODIFIER_NAME)) {
                 livingEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).removeModifier(attributeModifier);
             }                
+        }
+        for(AttributeModifier attributeModifier: new ArrayList<>(livingEntity.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).getModifiers())) {
+            if(attributeModifier.getName().equals(ATTRIBUTE_MODIFIER_NAME)) {
+                livingEntity.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).removeModifier(attributeModifier);
+            }
         }
     }
 
@@ -132,7 +141,44 @@ public class TownyCombatMovementUtil {
         AttributeModifier attributeModifier = new AttributeModifier(ATTRIBUTE_MODIFIER_NAME, scalarAdjustment, AttributeModifier.Operation.ADD_SCALAR);
         mount.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).addModifier(attributeModifier);
     }
-    
+
+    public static void adjustPlayerKnockbackResistance(Player player) {
+        double scalarAdjustment =TownyCombatSettings.getKnockbackResistanceInfantryPercent() / 100;
+        if(scalarAdjustment == 0)
+            return;
+
+        //Remove old modifier
+        for(AttributeModifier attributeModifier: new ArrayList<>(player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getModifiers())) {
+            if(attributeModifier.getName().equals(ATTRIBUTE_MODIFIER_NAME)) {
+                player.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).removeModifier(attributeModifier);
+            }
+        }
+
+        //Add new modifier
+        AttributeModifier attributeModifier = new AttributeModifier(ATTRIBUTE_MODIFIER_NAME, scalarAdjustment, AttributeModifier.Operation.ADD_NUMBER);
+        player.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).addModifier(attributeModifier);
+    }
+
+    public static void adjustMountKnockbackResistance(Player player) {
+        if(!player.isInsideVehicle() || !(player.getVehicle() instanceof AbstractHorse))
+            return;
+        AbstractHorse mount = (AbstractHorse)player.getVehicle();
+        double scalarAdjustment =TownyCombatSettings.getKnockbackResistanceHorsesPercent() / 100;
+        if(scalarAdjustment == 0)
+            return;
+
+        //Remove old modifier
+        for(AttributeModifier attributeModifier: new ArrayList<>(mount.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getModifiers())) {
+            if(attributeModifier.getName().equals(ATTRIBUTE_MODIFIER_NAME)) {
+                mount.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).removeModifier(attributeModifier);
+            }
+        }
+
+        //Add new modifier
+        AttributeModifier attributeModifier = new AttributeModifier(ATTRIBUTE_MODIFIER_NAME, scalarAdjustment, AttributeModifier.Operation.ADD_NUMBER);
+        mount.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).addModifier(attributeModifier);
+    }
+
     public static Map<Player, Double> getPlayerEncumbrancePercentageMap() {
         return playerEncumbrancePercentageMap;
     }

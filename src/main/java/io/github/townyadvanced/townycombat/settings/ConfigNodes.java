@@ -19,44 +19,56 @@ public enum ConfigNodes {
 			"true",
 			"",
 			"# etc."),
-	HORSE_ENHANCEMENTS(
-		"horse_enhancements",
+	CAVALRY_ENHANCEMENTS(
+		"cavalry_enhancements",
 			"",
 			"",
 			"",
 			"############################################################",
 			"# +------------------------------------------------------+ #",
-			"# |                   HORSE ENHANCEMENTS                 | #",
+			"# |                   CAVALRY ENHANCEMENTS                 | #",
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
-	HORSE_ENHANCEMENTS_TELEPORT_MOUNT_WITH_PLAYER_ENABLED(
-			"horse_enhancements.teleport_mount_with_player_enabled",
+	CAVALRY_ENHANCEMENTS_TELEPORT_MOUNT_WITH_PLAYER_ENABLED(
+			"cavalry_enhancements.teleport_mount_with_player_enabled",
 			"true",
 			"",
 			"# If true, then when a player uses /n or /t spawn, their mount (e.g. a horse) comes with them.",
 			"# After the player spawns, the mount takes 5 seconds to arrive.",
 			"# TIP: The setting is essential to allow cavalry to get to battlefields."),
-	HORSE_ENHANCEMENTS_ATTACK_DAMAGE_RESISTANCE_PERCENT(
-			"horse_enhancements.attack_damage_resistance_percent",
+	CAVALRY_ENHANCEMENTS_GENERIC_CAVALRY_ADJUSTMENT_PERCENTAGE(
+			"cavalry_enhancements.generic_speed_adjustment_percent",
+			"12",
+			"",
+			"# Adjusts the walking speed of all player mounts.",
+			"# TIP: Giving all player mounts a small speed boost helps sugar-coat the concept of encumbrance."),
+	CAVALRY_ENHANCEMENTS_ATTACK_DAMAGE_RESISTANCE_PERCENT(
+			"cavalry_enhancements.attack_damage_resistance_percent",
 			"60",
 			"",
 			"# This setting makes mounted-horses more resistant to attack damage from players.",
 			"# TIP: This setting is essential to make cavalry viable in battle, because in vanilla MC they are very weak."),
-	HORSE_ENHANCEMENTS_CAVALRY_MISSILE_SHIELD_ENABLED(
-			"horse_enhancements.cavalry_missile_shield_enabled",
+	CAVALRY_ENHANCEMENTS_KNOCKBACK_RESISTANCE_PERCENT(
+			"cavalry_enhancements.knockback_resistance_percent",
+			"75",
+			"",
+			"# This setting makes mounted-horses resistant to knockback.",
+			"# TIP: This setting helps cavalry to avoid getting knocked into holes/ganks etc."),
+	CAVALRY_ENHANCEMENTS_CAVALRY_MISSILE_SHIELD_ENABLED(
+			"cavalry_enhancements.cavalry_missile_shield_enabled",
 			"true",
 			"",
 			"# If this setting is true, then horses and riders are both shielded from arrows, except from crossbows.",
 			"# TIP: This setting is essential to allow cavalry to perform the 'Tank' role, because due to lag effects, horses would otherwise be quite vulnerable to arrows."),
-	HORSE_ENHANCEMENTS_CAVALRY_REARING_PREVENTION_ENABLED(
-			"horse_enhancements.cavalry_rearing_prevention_enabled",
+	CAVALRY_ENHANCEMENTS_HORSE_REARING_PREVENTION_ENABLED(
+			"cavalry_enhancements.horse_rearing_prevention_enabled",
 			"true",
 			"",
 			"# If this setting is true, then horses do not rear up when damaged.",
 			"# TIP: This setting is essential as otherwise horses become useless if set on fire, poisoned etc."),
-	HORSE_ENHANCEMENTS_CAVALRY_STRENGTH_BONUS(
-		"horse_enhancements.cavalry_strength_bonus",
+	CAVALRY_ENHANCEMENTS_CAVALRY_STRENGTH_BONUS(
+			"cavalry_enhancements.cavalry_strength_bonus",
 			"",
 			"",
 			"",
@@ -64,8 +76,8 @@ public enum ConfigNodes {
 			"# |                 CAVALRY STRENGTH BONUS               | #",
 			"# +------------------------------------------------------+ #",
 			""),
-	HORSE_ENHANCEMENTS_CAVALRY_STRENGTH_BONUS_ENABLED(
-			"horse_enhancements.cavalry_strength_bonus.enabled",
+	CAVALRY_ENHANCEMENTS_CAVALRY_STRENGTH_BONUS_ENABLED(
+			"cavalry_enhancements.cavalry_strength_bonus.enabled",
 			"true",
 			"",
 			"# If this setting is true, then the Cavalry Strength Bonus is enabled:",
@@ -81,16 +93,39 @@ public enum ConfigNodes {
 			"#   - Good vs infantry",
 			"#   - Counterable by other cavalry, or specialized infantry (spearmen)",
 			"#"),
-	HORSE_ENHANCEMENTS_CAVALRY_STRENGTH_BONUS_EFFECT_LEVEL(
-			"horse_enhancements.cavalry_strength_bonus.effect_level",
+	CAVALRY_ENHANCEMENTS_CAVALRY_STRENGTH_BONUS_EFFECT_LEVEL(
+			"cavalry_enhancements.cavalry_strength_bonus.effect_level",
 			"3",
 			"",
 			"# The level of the bonus strength effect."),
-	HORSE_ENHANCEMENTS_CAVALRY_STRENGTH_BONUS_COOLDOWN_SECONDS(
-			"horse_enhancements.cavalry_strength_bonus.cooldown_time_seconds",
+	CAVALRY_ENHANCEMENTS_CAVALRY_STRENGTH_BONUS_COOLDOWN_SECONDS(
+			"cavalry_enhancements.cavalry_strength_bonus.cooldown_time_seconds",
 			"10",
 			"",
 			"# The bonus effect cooldown."),
+	INFANTRY_ENHANCEMENTS(
+		"infantry_enhancements",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |                   INFANTRY ENHANCEMENTS                 | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
+	INFANTRY_ENHANCEMENTS_GENERIC_SPEED_ADJUSTMENT_PERCENT(
+			"infantry_enhancements.generic_speed_adjustment_percent",
+			"12",
+			"",
+			"# Adjusts the walking speed of all players.",
+			"# TIP: Giving all players a small speed boost helps sugar-coat the concept of encumbrance."),
+	INFANTRY_ENHANCEMENTS_KNOCKBACK_RESISTANCE_PERCENT(
+			"infantry_enhancements.knockback_resistance_percent",
+			"25",
+			"",
+			"# This setting makes players resistant to knockback.",
+			"# TIP: This setting helps players to avoid getting knocked into holes/ganks etc."),
 	BLOCK_GLITCHING_PREVENTION(
 		"block_glitching_prevention",
 			"",
@@ -207,55 +242,20 @@ public enum ConfigNodes {
 			"# Example 1:  An entry with 'shield|diamond_sword' grants the feature to soldiers.",
 			"# Example 2:  An entry with 'compass|diamond_sword' grants the feature to scouts/explorers.",
 			"# Example 3:  An entry with 'compass|air' grants the feature to very peaceful explorers.",
-			"# Example 4:  An entry with 'compass|any' grants the feature to many players including builders/miners/lumberjacks."),
-	SPEED_ADJUSTMENTS(
-			"speed_adjustments",
+			"# Example 4:  An entry with 'compass|any' grants the feature to many players including builders/miners/lumberjacks."),	
+	ENCUMBRANCE(
+			"encumbrance",
 			"",
 			"",
 			"",
 			"############################################################",
 			"# +------------------------------------------------------+ #",
-			"# |                   SPEED ADJUSTMENTS                    | #",
+			"# |                     ENCUMBRANCE                      | #",
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
-	SPEED_ADJUSTMENTS_ENABLED(
-			"speed_adjustments.enabled",
-			"true",
-			"",
-			"# If this value is true, then speed adjustments are enabled:",
-			"# 1. The generic speed adjustments are usually set up too give a speed boost to all e.g. +12%.",
-			"# 2. Encumbrance, a standard concept across game genres, reduces player speed if they are carrying heavy stuff.",
-			"# ",
-			"# TIP 1: Encumbrance significantly boosts the tactical options available to armies.",
-			"# e.g instead of 'heavy infantry or ur loser', an army can seriously consider light infantry, light cavalry, heavy cavalry, archers, and skirmishers.",
-            "# ",
-			"# TIP 2: Encumbrance allows for the development of combat-useful uniforms.",
-			"# e.g. each nation may design national uniforms for different soldier types, including different materials, and (with leather items) colours."),
-	SPEED_ADJUSTMENTS_GENERIC(
-			"speed_adjustments.generic",
-			"",
-			"",
-			""),
-	SPEED_ADJUSTMENTS_GENERIC_INFANTRY_ADJUSTMENT_PERCENTAGE(
-			"speed_adjustments.generic.infantry_adjust_percent",
-			"12",
-			"",
-			"# Adjusts the walking speed of all players.",
-			"# TIP: Giving all players a small speed boost helps sugar-coat the concept of encumbrance."),
-	SPEED_ADJUSTMENTS_GENERIC_CAVALRY_ADJUSTMENT_PERCENTAGE(
-			"speed_adjustments.generic.cavalry_adjust_percent",
-			"12",
-			"",
-			"# Adjusts the walking speed of all player mounts.",
-			"# TIP: Giving all player mounts a small speed boost helps sugar-coat the concept of encumbrance."),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE(
-			"speed_adjustments.encumbrance",
-			"",
-			"",
-			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY(
-			"speed_adjustments.encumbrance.infantry",
+	ENCUMBRANCE_INFANTRY(
+			"encumbrance.infantry",
 			"",
 			"",
 			"",
@@ -263,110 +263,110 @@ public enum ConfigNodes {
 			"# |                      INFANTRY                        | #",
 			"# +------------------------------------------------------+ #",
 			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE(
-			"speed_adjustments.encumbrance.infantry.base_percentage",
+	ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE(
+			"encumbrance.infantry.base_percentage",
 			"",
 			"",
 			"# The base slow percentage for each type of item."),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_BOW(
-			"speed_adjustments.encumbrance.infantry.base_percentage.bow",
+	ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_BOW(
+			"encumbrance.infantry.base_percentage.bow",
 			"3",
 			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_SHIELD(
-			"speed_adjustments.encumbrance.infantry.base_percentage.shield",
+	ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_SHIELD(
+			"encumbrance.infantry.base_percentage.shield",
 			"4",
 			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_SPEAR(
-			"speed_adjustments.encumbrance.infantry.base_percentage.spear",
+	ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_SPEAR(
+			"encumbrance.infantry.base_percentage.spear",
 			"5",
 			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_CROSSBOW(
-			"speed_adjustments.encumbrance.infantry.base_percentage.cross_bow",
+	ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_CROSSBOW(
+			"encumbrance.encumbrance.infantry.base_percentage.cross_bow",
 			"12",
 			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_WARHAMMER(
-			"speed_adjustments.encumbrance.infantry.base_percentage.warhammer",
+	ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_WARHAMMER(
+			"encumbrance.encumbrance.infantry.base_percentage.warhammer",
 			"12",
 			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_SHULKER_BOX(
-			"speed_adjustments.encumbrance.infantry.base_percentage.shulker_box",
+	ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_SHULKER_BOX(
+			"encumbrance.encumbrance.infantry.base_percentage.shulker_box",
 			"15",
 			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_ENDER_CHEST(
-			"speed_adjustments.encumbrance.infantry.base_percentage.ender_chest",
+	ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_ENDER_CHEST(
+			"encumbrance.encumbrance.infantry.base_percentage.ender_chest",
 			"30",
 			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_HELMET(
-			"speed_adjustments.encumbrance.infantry.base_percentage.helmet",
+	ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_HELMET(
+			"encumbrance.encumbrance.infantry.base_percentage.helmet",
 			"0.6",
 			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_CHESTPLATE(
-			"speed_adjustments.encumbrance.infantry.base_percentage.chestplate",
+	ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_CHESTPLATE(
+			"encumbrance.encumbrance.infantry.base_percentage.chestplate",
 			"1.6",
 			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_LEGGINGS(
-			"speed_adjustments.encumbrance.infantry.base_percentage.leggings",
+	ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_LEGGINGS(
+			"encumbrance.encumbrance.infantry.base_percentage.leggings",
 			"1.2",
 			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_BOOTS(
-			"speed_adjustments.encumbrance.infantry.base_percentage.boots",
+	ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_BOOTS(
+			"encumbrance.encumbrance.infantry.base_percentage.boots",
 			"0.6",
 			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE(
-			"speed_adjustments.encumbrance.infantry.modification_percentage",
+	ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE(
+			"encumbrance.encumbrance.infantry.modification_percentage",
 			"",
 			"",
 			"# The modification to encumbrance, of each material."),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_LEATHER(
-			"speed_adjustments.encumbrance.infantry.modification_percentage.leather",
+	ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_LEATHER(
+			"encumbrance.encumbrance.infantry.modification_percentage.leather",
 			"100",
 			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_CHAINMAIL(
-			"speed_adjustments.encumbrance.infantry.modification_percentage.chainmail",
+	ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_CHAINMAIL(
+			"encumbrance.encumbrance.infantry.modification_percentage.chainmail",
 			"200",
 			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_TURTLE_SHELL(
-			"speed_adjustments.encumbrance.infantry.modification_percentage.turtle_shell",
+	ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_TURTLE_SHELL(
+			"encumbrance.encumbrance.infantry.modification_percentage.turtle_shell",
 			"300",
 			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_GOLD(
-			"speed_adjustments.encumbrance.infantry.modification_percentage.gold",
+	ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_GOLD(
+			"encumbrance.encumbrance.infantry.modification_percentage.gold",
 			"300",
 			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_IRON(
-			"speed_adjustments.encumbrance.infantry.modification_percentage.iron",
+	ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_IRON(
+			"encumbrance.encumbrance.infantry.modification_percentage.iron",
 			"400",
 			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_DIAMOND(
-			"speed_adjustments.encumbrance.infantry.modification_percentage.diamond",
+	ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_DIAMOND(
+			"encumbrance.encumbrance.infantry.modification_percentage.diamond",
 			"500",
 			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_NETHERITE(
-			"speed_adjustments.encumbrance.infantry.modification_percentage.netherite",
+	ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_NETHERITE(
+			"encumbrance.encumbrance.infantry.modification_percentage.netherite",
 			"600",
 			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_JUMP_DAMAGE(
-			"speed_adjustments.encumbrance.infantry.jump_damage",
+	ENCUMBRANCE_INFANTRY_JUMP_DAMAGE(
+			"encumbrance.encumbrance.infantry.jump_damage",
 			"",
 			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_ENABLED(
-			"speed_adjustments.encumbrance.infantry.jump_damage.enabled",
+	ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_ENABLED(
+			"encumbrance.encumbrance.infantry.jump_damage.enabled",
 			"true",
 			"",
 			"# If enabled, player with heavy armour sometimes take damage when they jump or ascend an incline.",
 			"# TIP: This setting stop players from exploiting/encumbrance-bypassing by 'bunny hopping' their way all over the battlefield."),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_THRESHOLD(
-			"speed_adjustments.encumbrance.infantry.jump_damage.threshold",
+	ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_THRESHOLD(
+			"encumbrance.encumbrance.infantry.jump_damage.threshold",
 			"8",
 			"",
 			"# Players only take jump damage when their encumbrance is above this threshold.",
 			"# TIP: With default settings, jump damage will only apply to players carrying the equivalent of a full chain-mail set or heavier."),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_DAMAGE_PER_ENCUMBRANCE_PERCENT(
-			"speed_adjustments.encumbrance.infantry.jump_damage.damage_per_encumbrance_percent",
+	ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_DAMAGE_PER_ENCUMBRANCE_PERCENT(
+			"encumbrance.encumbrance.infantry.jump_damage.damage_per_encumbrance_percent",
 			"0.07",
 			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY(
-			"speed_adjustments.encumbrance.cavalry",
+	ENCUMBRANCE_CAVALRY(
+			"encumbrance.encumbrance.cavalry",
 			"",
 			"",
 			"",
@@ -374,30 +374,30 @@ public enum ConfigNodes {
 			"# |                      CAVALRY                         | #",
 			"# +------------------------------------------------------+ #",
 			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_REDUCTION_PERCENTAGE(
-			"speed_adjustments.encumbrance.cavalry.reduction_percentage",
+	ENCUMBRANCE_CAVALRY_REDUCTION_PERCENTAGE(
+			"encumbrance.encumbrance.cavalry.reduction_percentage",
 			"50",
 			"",
 			"# Horses, being stronger, can carry more weight, thus their encumbrance is reduced"),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE(
-			"speed_adjustments.encumbrance.cavalry.percentage",
+	ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE(
+			"encumbrance.encumbrance.cavalry.percentage",
 			"",
 			"",
 			"# The slow percentage for each type of cavalry armour item."),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_LEATHER_HORSE_ARMOUR(
-			"speed_adjustments.encumbrance.cavalry.percentage.leather_horse_armour",
+	ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_LEATHER_HORSE_ARMOUR(
+			"encumbrance.encumbrance.cavalry.percentage.leather_horse_armour",
 			"8",
 			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_GOLD_HORSE_ARMOUR(
-			"speed_adjustments.encumbrance.cavalry.percentage.gold_horse_armour",
+	ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_GOLD_HORSE_ARMOUR(
+			"encumbrance.encumbrance.cavalry.percentage.gold_horse_armour",
 			"24",
 			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_IRON_HORSE_ARMOUR(
-			"speed_adjustments.encumbrance.cavalry.percentage.iron_horse_armour",
+	ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_IRON_HORSE_ARMOUR(
+			"encumbrance.encumbrance.cavalry.percentage.iron_horse_armour",
 			"32",
 			""),
-	SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_DIAMOND_HORSE_ARMOUR(
-			"speed_adjustments.encumbrance.cavalry.percentage.diamond_horse_armour",
+	ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_DIAMOND_HORSE_ARMOUR(
+			"encumbrance.encumbrance.cavalry.percentage.diamond_horse_armour",
 			"40",
 			""),
 	NEW_ITEMS(

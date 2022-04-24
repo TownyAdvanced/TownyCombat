@@ -12,7 +12,6 @@ import io.github.townyadvanced.townycombat.utils.TownyCombatItemUtil;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AbstractHorse;
-import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Arrow;
 import org.bukkit.event.EventHandler;
@@ -70,8 +69,8 @@ public class TownyCombatBukkitEventListener implements Listener {
 		if(!(event.getMount() instanceof AbstractHorse))
 			return;
 		//Remove modifiers if system/speed-feature is disabled		
-		if (!TownyCombatSettings.isTownyCombatEnabled() || !TownyCombatSettings.isSpeedAdjustmentsEnabled()) {
-			TownyCombatMovementUtil.removeTownyCombatMovementAttributeModifiers((AbstractHorse)event.getMount());
+		if (!TownyCombatSettings.isTownyCombatEnabled()) {
+			TownyCombatMovementUtil.removeTownyCombatMovementModifiers((AbstractHorse)event.getMount());
 		}
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
@@ -118,8 +117,8 @@ public class TownyCombatBukkitEventListener implements Listener {
 		//Remove legacy data
 		TownyCombatMovementUtil.resetPlayerBaseSpeedToVanilla(event.getPlayer());
 		//Remove modifiers if system/feature is disabled
-		if (!TownyCombatSettings.isTownyCombatEnabled() || !TownyCombatSettings.isSpeedAdjustmentsEnabled()) {
-			TownyCombatMovementUtil.removeTownyCombatMovementAttributeModifiers(event.getPlayer());
+		if (!TownyCombatSettings.isTownyCombatEnabled()) {
+			TownyCombatMovementUtil.removeTownyCombatMovementModifiers(event.getPlayer());
 		} else {
 			TownyCombatMovementUtil.adjustPlayerAndMountSpeeds(event.getPlayer());
 		}
@@ -131,7 +130,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 			return;
 		if (event.getEntity() instanceof AbstractHorse) {
 			//No rearing when horse is damaged. Do this by cancelling the event, then applying the same damage in a simple set operation.
-			if(TownyCombatSettings.isCavalryRearingPreventionEnabled()
+			if(TownyCombatSettings.isHorseRearingPreventionEnabled()
 					&& event.getEntity().getPassengers().size() > 0
 			        && event.getEntity().getPassengers().get(0) instanceof Player) {
 				event.setCancelled(true);
@@ -250,7 +249,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		} else if (event.getEntity() instanceof AbstractHorse) {
 			//Horse damage resistance
 			if(attackingPlayer != null) {
-				finalDamage = finalDamage - (finalDamage * (TownyCombatSettings.getDamageResistanceHorsesPercent() / 100));
+				finalDamage = finalDamage - (finalDamage * (TownyCombatSettings.getAttackDamageResistanceHorsesPercent() / 100));
 			}
 			//Auto-pot if needed
 			if(TownyCombatSettings.isAutoPottingEnabled()

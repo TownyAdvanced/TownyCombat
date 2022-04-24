@@ -46,14 +46,12 @@ public class TownyCombatTownyEventListener implements Listener {
 	
     @EventHandler
     public void onShortTime(NewShortTimeEvent event) {
-        if (TownyCombatSettings.isTownyCombatEnabled()) {
-        	if(TownyCombatSettings.isSpeedAdjustmentsEnabled()) {
-        		TownyCombatMovementUtil.adjustAllPlayerAndMountSpeeds();
-			}
-			if(TownyCombatSettings.isTacticalInvisibilityEnabled()) { 
-	            TownyCombatMapUtil.evaluateTacticalInvisibility();
-				TownyCombatMapUtil.applyTacticalInvisibilityToPlayers();
-			}
-        }
+        if (!TownyCombatSettings.isTownyCombatEnabled())
+        	return;
+		TownyCombatMovementUtil.adjustAllPlayerAndMountSpeeds();
+		if(TownyCombatSettings.isTacticalInvisibilityEnabled()) {
+			TownyCombatMapUtil.evaluateTacticalInvisibility();
+			TownyCombatMapUtil.applyTacticalInvisibilityToPlayers();
+		}
     }
 }
