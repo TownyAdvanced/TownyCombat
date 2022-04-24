@@ -3,6 +3,7 @@ package io.github.townyadvanced.townycombat.utils;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Player;
@@ -209,18 +210,15 @@ public class TownyCombatItemUtil {
                 PotionData potionData = ((PotionMeta) itemStack.getItemMeta()).getBasePotionData();
                 if(potionData.getType() != PotionType.INSTANT_HEAL)
                     continue;
-                //Use potion
-                if(potionData.isUpgraded()) {
-                    primaryRecipient.setHealth(primaryRecipient.getHealth() + 10);
-                    if(secondaryRecipient != null) {
-                        secondaryRecipient.setHealth(secondaryRecipient.getHealth() + 10);
-                    }
-                } else {
-                    primaryRecipient.setHealth(primaryRecipient.getHealth() + 5);
-                    if(secondaryRecipient != null) {
-                        secondaryRecipient.setHealth(secondaryRecipient.getHealth() + 5);
-                    }
-                }
+                double healAmount = potionData.isUpgraded() ? 10: 5;
+
+                //Heal Primary
+                healLivingEntity(primaryRecipient, healAmount);
+
+                //Heal Secondary
+                if(secondaryRecipient != null)
+                    healLivingEntity(secondaryRecipient, healAmount);
+
                 //Remove potion
                 itemStack.setAmount(0);
                 //Return if the primary recipient is healed enough
@@ -229,6 +227,12 @@ public class TownyCombatItemUtil {
                 }
             }
         }
+    }
+
+    private static void healLivingEntity(LivingEntity recipient, double healAmount) {
+        double newHealth = recipient.getHealth() + healAmount;
+        final double finalHealth = Math.max(0, Math.min(recipient.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue(), newHealth)); //apply min and max
+        recipient.setHealth(finalHealth);
     }
 
     /**

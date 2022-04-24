@@ -147,7 +147,7 @@ public class TownyCombatSettings {
 	}
 
 	public static boolean isTeleportMountWithPlayerEnabled() {
-		return Settings.getBoolean(ConfigNodes.HORSE_ENHANCEMENTS_TELEPORT_MOUNT_WITH_PLAYER_ENABLED);
+		return Settings.getBoolean(ConfigNodes.CAVALRY_ENHANCEMENTS_TELEPORT_MOUNT_WITH_PLAYER_ENABLED);
 	}
 
 	public static boolean isBlockGlitchingPreventionEnabled() {
@@ -198,80 +198,76 @@ public class TownyCombatSettings {
 		return tacticalInvisibilityItems;
 	}
 
-	public static boolean isSpeedAdjustmentsEnabled() {
-		return Settings.getBoolean(ConfigNodes.SPEED_ADJUSTMENTS_ENABLED);
-	}
-
 	public static double getEquipmentEncumbranceBow() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_BOW);
+		return Settings.getDouble(ConfigNodes.ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_BOW);
 	}
 
 	public static double getEquipmentEncumbranceCrossbow() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_CROSSBOW);
+		return Settings.getDouble(ConfigNodes.ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_CROSSBOW);
 	}
 
 	public static double getEquipmentEncumbranceShield() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_SHIELD);
+		return Settings.getDouble(ConfigNodes.ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_SHIELD);
 	}
 
 	public static double getEquipmentEncumbranceBaseHelmet() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_HELMET);
+		return Settings.getDouble(ConfigNodes.ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_HELMET);
 	}
 	
 	public static double getEquipmentEncumbranceBaseChestplate() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_CHESTPLATE);
+		return Settings.getDouble(ConfigNodes.ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_CHESTPLATE);
 	}
 	
 	public static double getEquipmentEncumbranceBaseLeggings() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_LEGGINGS);
+		return Settings.getDouble(ConfigNodes.ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_LEGGINGS);
 	}
 	
 	public static double getEquipmentEncumbranceBaseBoots() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_BOOTS);
+		return Settings.getDouble(ConfigNodes.ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_BOOTS);
 	}
 	
 	public static double getEquipmentEncumbranceModificationLeather() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_LEATHER);
+		return Settings.getDouble(ConfigNodes.ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_LEATHER);
 	}
 	
 	public static double getEquipmentEncumbranceModificationChainmail() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_CHAINMAIL);
+		return Settings.getDouble(ConfigNodes.ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_CHAINMAIL);
 	}
 
 	public static double getEquipmentEncumbranceModificationTurtleShell() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_TURTLE_SHELL);
+		return Settings.getDouble(ConfigNodes.ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_TURTLE_SHELL);
 	}
 
 	public static double getEquipmentEncumbranceModificationGold() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_GOLD);
+		return Settings.getDouble(ConfigNodes.ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_GOLD);
 	}		
 
 	public static double getEquipmentEncumbranceModificationIron() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_IRON);
+		return Settings.getDouble(ConfigNodes.ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_IRON);
 	}
 	
 	public static double getEquipmentEncumbranceModificationDiamond() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_DIAMOND);
+		return Settings.getDouble(ConfigNodes.ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_DIAMOND);
 	}		
 
 	public static double getEquipmentEncumbranceModificationNetherite() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_NETHERITE);
+		return Settings.getDouble(ConfigNodes.ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_NETHERITE);
 	}		
 	
 	public static double getEquipmentEncumbranceLeatherHorseArmour() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_LEATHER_HORSE_ARMOUR);		
+		return Settings.getDouble(ConfigNodes.ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_LEATHER_HORSE_ARMOUR);		
 	}
 
 	public static double getEquipmentEncumbranceGoldHorseArmour() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_GOLD_HORSE_ARMOUR);		
+		return Settings.getDouble(ConfigNodes.ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_GOLD_HORSE_ARMOUR);		
 	}
 
 	public static double getEquipmentEncumbranceIronHorseArmour() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_IRON_HORSE_ARMOUR);		
+		return Settings.getDouble(ConfigNodes.ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_IRON_HORSE_ARMOUR);		
 	}
 
 	public static double getEquipmentEncumbranceDiamondHorseArmour() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_DIAMOND_HORSE_ARMOUR);		
+		return Settings.getDouble(ConfigNodes.ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_DIAMOND_HORSE_ARMOUR);		
 	}
 
 	public static Map<Material, Double> getMaterialEncumbrancePercentageMap() {
@@ -279,31 +275,35 @@ public class TownyCombatSettings {
 	}
 
 	public static double getGenericInfantrySpeedAdjustmentPercentage() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_GENERIC_INFANTRY_ADJUSTMENT_PERCENTAGE);
+		return Settings.getDouble(ConfigNodes.INFANTRY_ENHANCEMENTS_GENERIC_SPEED_ADJUSTMENT_PERCENT);
 	}
 	
 	public static double getGenericCavalrySpeedAdjustmentPercentage() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_GENERIC_CAVALRY_ADJUSTMENT_PERCENTAGE);
+		return Settings.getDouble(ConfigNodes.CAVALRY_ENHANCEMENTS_GENERIC_CAVALRY_ADJUSTMENT_PERCENTAGE);
 	}
 
-	public static double getDamageResistanceHorsesPercent() {
-		return Settings.getDouble(ConfigNodes.HORSE_ENHANCEMENTS_ATTACK_DAMAGE_RESISTANCE_PERCENT);
+	public static double getAttackDamageResistanceHorsesPercent() {
+		return Settings.getDouble(ConfigNodes.CAVALRY_ENHANCEMENTS_ATTACK_DAMAGE_RESISTANCE_PERCENT);
 	}
 
 	public static double getKnockbackResistanceHorsesPercent() {
-		return Settings.getInt(ConfigNodes.HORSE_ENHANCEMENTS_KNOCKBACK_RESISTANCE_PERCENT);
+		return Settings.getInt(ConfigNodes.CAVALRY_ENHANCEMENTS_KNOCKBACK_RESISTANCE_PERCENT);
+	}
+
+	public static double getKnockbackResistanceInfantryPercent() {
+		return Settings.getInt(ConfigNodes.INFANTRY_ENHANCEMENTS_KNOCKBACK_RESISTANCE_PERCENT);
 	}
 
 	public static double getCavalryEncumbranceReductionPercentage() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_REDUCTION_PERCENTAGE);
+		return Settings.getDouble(ConfigNodes.ENCUMBRANCE_CAVALRY_REDUCTION_PERCENTAGE);
 	}
 
 	public static double getEquipmentEncumbranceSpear() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_SPEAR);
+		return Settings.getDouble(ConfigNodes.ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_SPEAR);
 	}
 
 	public static double getEquipmentEncumbranceWarhammer() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_WARHAMMER);
+		return Settings.getDouble(ConfigNodes.ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_WARHAMMER);
 	}
 
 	public static boolean isNewItemsSpearEnabled() {
@@ -347,11 +347,11 @@ public class TownyCombatSettings {
 	}
 
 	public static double getEquipmentEncumbranceShulkerBox() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_SHULKER_BOX);
+		return Settings.getDouble(ConfigNodes.ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_SHULKER_BOX);
 	}
 
 	public static double getEquipmentEncumbranceEnderChest() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_ENDER_CHEST);
+		return Settings.getDouble(ConfigNodes.ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_ENDER_CHEST);
 	}
 
 	public static boolean isAutoPottingEnabled() {
@@ -363,23 +363,23 @@ public class TownyCombatSettings {
 	}
 
 	public static boolean isCavalryFireShieldEnabled() {
-		return Settings.getBoolean(ConfigNodes.HORSE_ENHANCEMENTS_CAVALRY_FIRE_SHIELD_ENABLED);
+		return Settings.getBoolean(ConfigNodes.CAVALRY_ENHANCEMENTS_CAVALRY_FIRE_SHIELD_ENABLED);
 	}
 	
 	public static boolean isCavalryMissileShieldEnabled() {
-		return Settings.getBoolean(ConfigNodes.HORSE_ENHANCEMENTS_CAVALRY_MISSILE_SHIELD_ENABLED);
+		return Settings.getBoolean(ConfigNodes.CAVALRY_ENHANCEMENTS_CAVALRY_MISSILE_SHIELD_ENABLED);
 	}
 	
 	public static boolean isCavalryStrengthBonusEnabled() {
-		return Settings.getBoolean(ConfigNodes.HORSE_ENHANCEMENTS_CAVALRY_STRENGTH_BONUS_ENABLED);
+		return Settings.getBoolean(ConfigNodes.CAVALRY_ENHANCEMENTS_CAVALRY_STRENGTH_BONUS_ENABLED);
 	}
 
 	public static int getCavalryChargeStrengthBonusEffectLevel() {
-		return Settings.getInt(ConfigNodes.HORSE_ENHANCEMENTS_CAVALRY_STRENGTH_BONUS_EFFECT_LEVEL);
+		return Settings.getInt(ConfigNodes.CAVALRY_ENHANCEMENTS_CAVALRY_STRENGTH_BONUS_EFFECT_LEVEL);
 	}
 
 	public static double getCavalryStrengthBonusCooldownSeconds() {
-		return Settings.getDouble(ConfigNodes.HORSE_ENHANCEMENTS_CAVALRY_STRENGTH_BONUS_COOLDOWN_SECONDS);
+		return Settings.getDouble(ConfigNodes.CAVALRY_ENHANCEMENTS_CAVALRY_STRENGTH_BONUS_COOLDOWN_SECONDS);
 	}
 
 	public static int getCavalryChargeCooldownMilliseconds() {
@@ -391,18 +391,14 @@ public class TownyCombatSettings {
 	}
 	
 	public static boolean isJumpDamageEnabled() {
-		return Settings.getBoolean(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_ENABLED);
+		return Settings.getBoolean(ConfigNodes.ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_ENABLED);
 	}
 	
 	public static double getJumpDamageThreshold() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_THRESHOLD);
+		return Settings.getDouble(ConfigNodes.ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_THRESHOLD);
 	}
 
 	public static double getJumpDamageDamagePerEncumbrancePercent() {
-		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_DAMAGE_PER_ENCUMBRANCE_PERCENT);
-	}
-
-	public static String translateColoursInString(final String string) {
-	  	return ChatColor.translateAlternateColorCodes('&', string);
+		return Settings.getDouble(ConfigNodes.ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_DAMAGE_PER_ENCUMBRANCE_PERCENT);
 	}
 }
