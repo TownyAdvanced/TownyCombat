@@ -358,14 +358,14 @@ public class TownyCombatSettings {
 		return Settings.getDouble(ConfigNodes.AUTOPOTTING_HEALTH_THRESHOLD);
 	}
 
-	public static boolean isCavalryFireShieldEnabled() {
-		return Settings.getBoolean(ConfigNodes.HORSE_ENHANCEMENTS_CAVALRY_FIRE_SHIELD_ENABLED);
-	}
-	
 	public static boolean isCavalryMissileShieldEnabled() {
 		return Settings.getBoolean(ConfigNodes.HORSE_ENHANCEMENTS_CAVALRY_MISSILE_SHIELD_ENABLED);
 	}
 	
+	public static boolean isCavalryRearingPreventionEnabled() {
+		return Settings.getBoolean(ConfigNodes.HORSE_ENHANCEMENTS_CAVALRY_REARING_PREVENTION_ENABLED);
+	}
+
 	public static boolean isCavalryStrengthBonusEnabled() {
 		return Settings.getBoolean(ConfigNodes.HORSE_ENHANCEMENTS_CAVALRY_STRENGTH_BONUS_ENABLED);
 	}
