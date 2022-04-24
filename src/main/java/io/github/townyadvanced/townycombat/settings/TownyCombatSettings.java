@@ -290,6 +290,10 @@ public class TownyCombatSettings {
 		return Settings.getDouble(ConfigNodes.HORSE_ENHANCEMENTS_ATTACK_DAMAGE_RESISTANCE_PERCENT);
 	}
 
+	public static double getKnockbackResistanceHorsesPercent() {
+		return Settings.getInt(ConfigNodes.HORSE_ENHANCEMENTS_KNOCKBACK_RESISTANCE_PERCENT);
+	}
+
 	public static double getCavalryEncumbranceReductionPercentage() {
 		return Settings.getDouble(ConfigNodes.SPEED_ADJUSTMENTS_ENCUMBRANCE_CAVALRY_REDUCTION_PERCENTAGE);
 	}

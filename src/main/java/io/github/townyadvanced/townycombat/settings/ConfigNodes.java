@@ -43,6 +43,12 @@ public enum ConfigNodes {
 			"",
 			"# This setting makes mounted-horses more resistant to attack damage from players.",
 			"# TIP: This setting is essential to make cavalry viable in battle, because in vanilla MC they are very weak."),
+	HORSE_ENHANCEMENTS_KNOCKBACK_RESISTANCE_PERCENT(
+			"horse_enhancements.knockback_resistance_level",
+			"75",
+			"",
+			"# This setting makes mounted-horses resistant to knockback.",
+			"# TIP: This setting helps cavalry to avoid getting knocked into holes/ganks etc."),
 	HORSE_ENHANCEMENTS_CAVALRY_MISSILE_SHIELD_ENABLED(
 			"horse_enhancements.cavalry_missile_shield_enabled",
 			"true",
