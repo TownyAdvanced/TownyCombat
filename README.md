@@ -15,7 +15,7 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
     - Speed Increase: +12%.
     - Knockback Resistance: +75%
     - Attack Damage Resistance: +60% .
-    - Missile Shield: Immune to arrows from bows (but not crossbows).
+    - Missile Shield: Immune to arrows (except from crossbows).
     - Cavalry Strength Bonus: Strength 3 effect for 1 hit, cooldown for 10 seconds.
   - Special Vulnerabilities:
     - Take +9 damage when hit by a spear.
