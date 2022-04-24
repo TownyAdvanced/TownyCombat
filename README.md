@@ -19,6 +19,8 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
     - Cavalry Strength Bonus: Strength 3 effect for 1 hit, cooldown for 10 seconds.
   - Special Vulnerabilities:
     - Take +9 damage when hit by a spear.
+- :guard: :star: **Infantry Enchancements**
+  - Speed Increase: +12%
 - :crossed_swords: :new: **New Weapons**
   - Spear:
     - +9 Damage v.s. Cavalry
@@ -28,8 +30,6 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
     ![image](https://user-images.githubusercontent.com/50219223/162962278-0a172a1c-3f6f-4299-89bc-b92700c2b288.png)
   - Custom Weapons
     - The special bonuses can also be given to custom weapons made by other plugins. See config file for more details.
-- :guard: :star: **Infantry Enchancements**
-  - Speed Increase: +12%
 - :left_luggage: :brain: :shirt: **Encumbrance, Tactics, & Military Uniforms**
   - :Encumbrance:
     - Standard RPG feature:
