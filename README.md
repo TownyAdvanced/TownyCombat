@@ -46,8 +46,8 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
       - Boots: 0.6%
       - Bow: 3%
       - Crossbow: 12%
-      - Spear: 5% (*new item*)
-      - Warhammer: 12% (*new item*)
+      - Spear: 5%
+      - Warhammer: 12%
       - Shield: 4%
       - Shulker Box: 15%
       - Ender Chest: 30%
