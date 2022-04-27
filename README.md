@@ -72,7 +72,7 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
   - In combat, Splash health potions (I and II) are automatically consumed after a player's health falls below 5 hearts.
   - This feature unlocks battlefield participation for the majority of Towny players (*e.g. new-players / casual-players / traders / builders / roleplayers*) who are otherwise massively excluded from battles, by a too-high skill bar of lightning-quick inventory-management.
   - Protests can be expected from a minority, who having already cleared the participation bar, are willing to continue excluding the majority from battles, in exchange for holding on to their own power.	
-  - More progressive PVP'ers will recognize both a challenge and an opportunity, to dominate the battlefield less by twitchy young fingers, and more by solid army organization, reliable logistics and clever military tactics.
+  - More progressive PVP'ers may recognize both a challenge and an opportunity, to dominate the battlefield less by twitchy young fingers, and more by solid army organization, good discipline, reliable logistics and clever tactics.
 - :bust_in_silhouette: :footprints: **Tactical Invisibilty:** ***(Disabled By Default)***
   - Use stealth tactics by going invisible on the dynmap.
   - This is a harcore battle feature, which enables stealth tactics, in exchange for showing less activity on the dynmap.
