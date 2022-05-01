@@ -61,7 +61,7 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
     - Horse Carry Modifier:
       - -50%
     - Heavy Armour Jump Damage:
-      - Players with 8% encumbrance or more sometimes incur some damage when jumping/climbing.
+      - Players with 8% encumbrance or more sometimes incur some damage when jumping or going up a hill.
       - Compensates for an MC bug which allows slowdown-bypassing via. bunny-hopping.
   - Tactics:
     - With encumbrance in effect, troops types and tactics naturally become more diverse.
