@@ -18,6 +18,7 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
     - Not "one man armies", but rather do best when operating in combination with other troop types.
   - Special Abilities:
     - Teleport with player on /n or /t spawn.
+    - Do not rear up on taking damage.
     - Speed Increase: +12%.
     - Resistance to PVP Attack Damage: +60% .
     - Knockback Resistance: +75%.
