@@ -245,7 +245,7 @@ public class TownyCombatItemUtil {
         Boolean result = spearIdentificationMap.get(item);
         if(result == null) {
             result = false;
-            if(item.getItemMeta() == null) {
+            if(item.getItemMeta() != null) {
                 final int CONFIGURED_CUSTOM_MODEL_DATA_ID = TownyCombatSettings.getNewItemsSpearCustomModelDataID();
                 if(CONFIGURED_CUSTOM_MODEL_DATA_ID != -1) { 
                     if(item.getItemMeta().hasCustomModelData()
@@ -277,7 +277,7 @@ public class TownyCombatItemUtil {
         Boolean result = warhammerIdentificationMap.get(item);
         if(result == null) {
             result = false;
-            if(item.getItemMeta() == null) {
+            if(item.getItemMeta() != null) {
                 final int CONFIGURED_CUSTOM_MODEL_DATA_ID = TownyCombatSettings.getNewItemsWarhammerCustomModelDataID();
                 if(CONFIGURED_CUSTOM_MODEL_DATA_ID != -1) { 
                     if(item.getItemMeta().hasCustomModelData()
