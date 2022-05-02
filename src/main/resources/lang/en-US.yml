@@ -1,5 +1,5 @@
 name: TownyCombat
-version: 0.01
+version: 0.02
 language: english
 author: Goosius
 website: 'http://townyadvanced.github.io/'
@@ -30,3 +30,6 @@ msg_inventory_degrade_warning: '&4WARNING: &cSome of your gear is close to break
 admin_help_reload: 'Reload the config and language file.'
 config_and_lang_file_reloaded_successfully: 'Config and Language file reloaded successfully.'
 config_and_lang_file_could_not_be_reloaded: 'Reload unsuccessful. See console for details.'
+
+# Added in 0.02
+msg_warning_jump_damage: '&cWARNING: Your encumbrance level is above %d percent. Be careful when jumping or climbing a hill, as this will cause tiredness-damage.'
