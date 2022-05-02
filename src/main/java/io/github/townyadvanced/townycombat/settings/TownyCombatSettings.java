@@ -309,8 +309,12 @@ public class TownyCombatSettings {
 		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_SPEAR_ENABLED);
 	}
 
-	public static String getSpearLore() {
+	public static String getNewItemsSpearLore() {
 		return Settings.getString(ConfigNodes.NEW_ITEMS_SPEAR_LORE);
+	}
+
+	public static int getNewItemsSpearCustomModelDataID() {
+		return Settings.getInt(ConfigNodes.NEW_ITEMS_SPEAR_CUSTOM_MODEL_DATA_ID);
 	}
 
 	public static int getNewItemsSpearBonusDamageVsCavalry() {
@@ -329,8 +333,12 @@ public class TownyCombatSettings {
 		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_WARHAMMER_ENABLED);
 	}
 
-	public static String getWarhammerLore() {
+	public static String getNewItemsWarhammerLore() {
 		return Settings.getString(ConfigNodes.NEW_ITEMS_WARHAMMER_LORE);
+	}
+
+	public static int getNewItemsWarhammerCustomModelDataID() {
+		return Settings.getInt(ConfigNodes.NEW_ITEMS_WARHAMMER_CUSTOM_MODEL_DATA_ID);
 	}
 
 	public static int getNewItemsWarhammerShieldBreakChancePercent() {

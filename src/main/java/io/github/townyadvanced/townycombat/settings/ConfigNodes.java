@@ -430,6 +430,11 @@ public enum ConfigNodes {
 			"+9 Damage v.s. Cavalry",
 			"",
 			"# It an item has this text for any of its lore lines, it gets the spear effect."),
+	NEW_ITEMS_SPEAR_CUSTOM_MODEL_DATA_ID(
+			"new_items.spear.custom_model_data_id",
+			"-1",
+			"",
+			"# If this setting is not -1, then the identification-by-lore is disabled, and spears are located by the given customModelData id."),
 	NEW_ITEMS_SPEAR_BONUS_DAMAGE_VS_CAVALRY(
 			"new_items.spear.bonus_damage_vs_cavalry",
 			"9",
@@ -460,6 +465,11 @@ public enum ConfigNodes {
 			"15% Chance to Break Shield",
 			"",
 			"# It an item has this text for any of its lore lines, it gets the warhammer effect"),
+	NEW_ITEMS_WARHAMMER_CUSTOM_MODEL_DATA_ID(
+			"new_items.spear.custom_model_data_id",
+			"-1",
+			"",
+			"# If this setting is not -1, then the identification-by-lore is disabled, and warhammers are located by the given customModelData id."),
 	NEW_ITEMS_WARHAMMER_SHERLD_BREAK_CHANCE_PERCENT(
 			"new_items.warhammer.shield_break_chance_percent",
 			"15",

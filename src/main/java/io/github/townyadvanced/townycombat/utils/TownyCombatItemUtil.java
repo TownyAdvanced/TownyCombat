@@ -97,7 +97,7 @@ public class TownyCombatItemUtil {
 			itemMeta.addEnchant(Enchantment.DAMAGE_ALL, NATIVE_SPEAR_SHARPNESS_LEVEL, true);
 			//Add lore
 			List<String> lore = new ArrayList<>();
-			lore.add(TownyCombatSettings.getSpearLore());
+			lore.add(TownyCombatSettings.getNewItemsSpearLore());
 			itemMeta.setLore(lore);
 			result.setItemMeta(itemMeta);
 			return result;
@@ -113,7 +113,7 @@ public class TownyCombatItemUtil {
 			itemMeta.addEnchant(Enchantment.KNOCKBACK, 1, true);
 			//Add lore
 			List<String> lore = new ArrayList<>();
-			lore.add(TownyCombatSettings.getWarhammerLore());
+			lore.add(TownyCombatSettings.getNewItemsWarhammerLore());
 			itemMeta.setLore(lore);
 			result.setItemMeta(itemMeta);
 			return result;
@@ -245,11 +245,20 @@ public class TownyCombatItemUtil {
         Boolean result = spearIdentificationMap.get(item);
         if(result == null) {
             result = false;
-            if(item.getItemMeta() != null && item.getItemMeta().getLore() != null) {
-                for(String loreLine: item.getItemMeta().getLore()) {
-                    if(loreLine.equals(TownyCombatSettings.getSpearLore())) {
-                        result = true;
-                        break;
+            if(item.getItemMeta() != null) {
+                final int CONFIGURED_CUSTOM_MODEL_DATA_ID = TownyCombatSettings.getNewItemsSpearCustomModelDataID();
+                if(CONFIGURED_CUSTOM_MODEL_DATA_ID != -1) { 
+                    if(item.getItemMeta().hasCustomModelData()
+                            && item.getItemMeta().getCustomModelData() == CONFIGURED_CUSTOM_MODEL_DATA_ID) {
+                        result = true;     
+                    }
+                
+                } else if (item.getItemMeta().getLore() != null) {
+                    for(String loreLine: item.getItemMeta().getLore()) {
+                        if(loreLine.equals(TownyCombatSettings.getNewItemsSpearLore())) {
+                            result = true;
+                            break;
+                        }
                     }
                 }
             }
@@ -268,11 +277,20 @@ public class TownyCombatItemUtil {
         Boolean result = warhammerIdentificationMap.get(item);
         if(result == null) {
             result = false;
-            if(item.getItemMeta() != null && item.getItemMeta().getLore() != null) {
-                for(String loreLine: item.getItemMeta().getLore()) {
-                    if(loreLine.equals(TownyCombatSettings.getWarhammerLore())) {
-                        result = true;
-                        break;
+            if(item.getItemMeta() != null) {
+                final int CONFIGURED_CUSTOM_MODEL_DATA_ID = TownyCombatSettings.getNewItemsWarhammerCustomModelDataID();
+                if(CONFIGURED_CUSTOM_MODEL_DATA_ID != -1) { 
+                    if(item.getItemMeta().hasCustomModelData()
+                            && item.getItemMeta().getCustomModelData() == CONFIGURED_CUSTOM_MODEL_DATA_ID) {
+                        result = true;     
+                    }
+                
+                } else if (item.getItemMeta().getLore() != null) {
+                    for(String loreLine: item.getItemMeta().getLore()) {
+                        if(loreLine.equals(TownyCombatSettings.getNewItemsWarhammerLore())) {
+                            result = true;
+                            break;
+                        }
                     }
                 }
             }
