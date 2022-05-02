@@ -401,11 +401,15 @@ public class TownyCombatSettings {
 		return Settings.getBoolean(ConfigNodes.ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_ENABLED);
 	}
 	
-	public static double getJumpDamageThreshold() {
-		return Settings.getDouble(ConfigNodes.ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_THRESHOLD);
+	public static int getJumpDamageThreshold() {
+		return Settings.getInt(ConfigNodes.ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_THRESHOLD);
 	}
 
 	public static double getJumpDamageDamagePerEncumbrancePercent() {
 		return Settings.getDouble(ConfigNodes.ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_DAMAGE_PER_ENCUMBRANCE_PERCENT);
+	}
+
+	public static int getJumpDamageWarningIntervalMinutes() {
+		return Settings.getInt(ConfigNodes.ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_WARNING_INTERVAL_MINUTES);
 	}
 }

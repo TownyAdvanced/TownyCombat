@@ -281,89 +281,94 @@ public enum ConfigNodes {
 			"5",
 			""),
 	ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_CROSSBOW(
-			"encumbrance.encumbrance.infantry.base_percentage.cross_bow",
+			"encumbrance.infantry.base_percentage.cross_bow",
 			"12",
 			""),
 	ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_WARHAMMER(
-			"encumbrance.encumbrance.infantry.base_percentage.warhammer",
+			"encumbrance.infantry.base_percentage.warhammer",
 			"12",
 			""),
 	ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_SHULKER_BOX(
-			"encumbrance.encumbrance.infantry.base_percentage.shulker_box",
+			"encumbrance.infantry.base_percentage.shulker_box",
 			"15",
 			""),
 	ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_ENDER_CHEST(
-			"encumbrance.encumbrance.infantry.base_percentage.ender_chest",
+			"encumbrance.infantry.base_percentage.ender_chest",
 			"30",
 			""),
 	ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_HELMET(
-			"encumbrance.encumbrance.infantry.base_percentage.helmet",
+			"encumbrance.infantry.base_percentage.helmet",
 			"0.6",
 			""),
 	ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_CHESTPLATE(
-			"encumbrance.encumbrance.infantry.base_percentage.chestplate",
+			"encumbrance.infantry.base_percentage.chestplate",
 			"1.6",
 			""),
 	ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_LEGGINGS(
-			"encumbrance.encumbrance.infantry.base_percentage.leggings",
+			"encumbrance.infantry.base_percentage.leggings",
 			"1.2",
 			""),
 	ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_BOOTS(
-			"encumbrance.encumbrance.infantry.base_percentage.boots",
+			"encumbrance.infantry.base_percentage.boots",
 			"0.6",
 			""),
 	ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE(
-			"encumbrance.encumbrance.infantry.modification_percentage",
+			"encumbrance.infantry.modification_percentage",
 			"",
 			"",
 			"# The modification to encumbrance, of each material."),
 	ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_LEATHER(
-			"encumbrance.encumbrance.infantry.modification_percentage.leather",
+			"encumbrance.infantry.modification_percentage.leather",
 			"100",
 			""),
 	ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_CHAINMAIL(
-			"encumbrance.encumbrance.infantry.modification_percentage.chainmail",
+			"encumbrance.infantry.modification_percentage.chainmail",
 			"200",
 			""),
 	ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_TURTLE_SHELL(
-			"encumbrance.encumbrance.infantry.modification_percentage.turtle_shell",
+			"encumbrance.infantry.modification_percentage.turtle_shell",
 			"300",
 			""),
 	ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_GOLD(
-			"encumbrance.encumbrance.infantry.modification_percentage.gold",
+			"encumbrance.infantry.modification_percentage.gold",
 			"300",
 			""),
 	ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_IRON(
-			"encumbrance.encumbrance.infantry.modification_percentage.iron",
+			"encumbrance.infantry.modification_percentage.iron",
 			"400",
 			""),
 	ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_DIAMOND(
-			"encumbrance.encumbrance.infantry.modification_percentage.diamond",
+			"encumbrance.infantry.modification_percentage.diamond",
 			"500",
 			""),
 	ENCUMBRANCE_INFANTRY_MATERIAL_MODIFICATION_PERCENTAGE_NETHERITE(
-			"encumbrance.encumbrance.infantry.modification_percentage.netherite",
+			"encumbrance.infantry.modification_percentage.netherite",
 			"600",
 			""),
 	ENCUMBRANCE_INFANTRY_JUMP_DAMAGE(
-			"encumbrance.encumbrance.infantry.jump_damage",
+			"encumbrance.infantry.jump_damage",
 			"",
 			""),
 	ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_ENABLED(
-			"encumbrance.encumbrance.infantry.jump_damage.enabled",
+			"encumbrance.infantry.jump_damage.enabled",
 			"true",
 			"",
 			"# If enabled, player with heavy armour sometimes take damage when they jump or ascend an incline.",
 			"# TIP: This setting stop players from exploiting/encumbrance-bypassing by 'bunny hopping' their way all over the battlefield."),
 	ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_THRESHOLD(
-			"encumbrance.encumbrance.infantry.jump_damage.threshold",
+			"encumbrance.infantry.jump_damage.threshold",
 			"8",
 			"",
+			"# Integer only",
 			"# Players only take jump damage when their encumbrance is above this threshold.",
 			"# TIP: With default settings, jump damage will only apply to players carrying the equivalent of a full chain-mail set or heavier."),
 	ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_DAMAGE_PER_ENCUMBRANCE_PERCENT(
-			"encumbrance.encumbrance.infantry.jump_damage.damage_per_encumbrance_percent",
+			"encumbrance.infantry.jump_damage.damage_per_encumbrance_percent",
 			"0.07",
+			""),
+	ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_WARNING_INTERVAL_MINUTES(
+			"encumbrance.infantry.jump_damage.warning_interval_minutes",
+			"60",
 			""),
 	ENCUMBRANCE_CAVALRY(
 			"encumbrance.encumbrance.cavalry",

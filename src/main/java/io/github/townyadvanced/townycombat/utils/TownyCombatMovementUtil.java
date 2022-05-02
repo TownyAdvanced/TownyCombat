@@ -2,6 +2,7 @@ package io.github.townyadvanced.townycombat.utils;
 
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.Translatable;
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.metadata.TownyCombatResidentMetaDataController;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
@@ -33,6 +34,8 @@ public class TownyCombatMovementUtil {
     public static final String ATTRIBUTE_MODIFIER_NAME = "TownyCombatAdjustment";
     
     private static Map<Player, Double> playerEncumbrancePercentageMap = new HashMap<>();  //Encumbrance = Walk-speed-slow
+
+    private static Map<Player,Long> jumpDamageNextWarningTimesMap = new HashMap<>();  //When were players last warned about jump damage
 
     public static void adjustAllPlayerAndMountSpeeds() {
         for(Player player: Bukkit.getOnlinePlayers()) {
@@ -100,6 +103,16 @@ public class TownyCombatMovementUtil {
         //Add new modifier
         AttributeModifier attributeModifier = new AttributeModifier(ATTRIBUTE_MODIFIER_NAME, scalarAdjustment, AttributeModifier.Operation.ADD_SCALAR);
         player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).addModifier(attributeModifier);
+
+        //Warn player about jump damage
+        if(totalEncumbrancePercentage >= TownyCombatSettings.getJumpDamageThreshold()) {
+            Long nextWarningTime = jumpDamageNextWarningTimesMap.get(player);
+            if(nextWarningTime == null
+                    || System.currentTimeMillis() > nextWarningTime) {
+                Messaging.sendErrorMsg(player, Translatable.of("msg_warning_jump_damage", TownyCombatSettings.getJumpDamageThreshold()));
+                jumpDamageNextWarningTimesMap.put(player, System.currentTimeMillis() + (TownyCombatSettings.getJumpDamageWarningIntervalMinutes() * 60 * 1000));
+            }
+        }
     }
  
     private static void adjustMountWalkSpeed(Player player) {
@@ -245,8 +258,13 @@ public class TownyCombatMovementUtil {
                 playerEncumbrancePercentage = playerEncumbrancePercentageMap.get(player);
                 if(playerEncumbrancePercentage != null && playerEncumbrancePercentage > JUMP_DAMAGE_THRESHOLD) {
                     newHealth = player.getHealth() - (playerEncumbrancePercentage * JUMP_DAMAGE_PER_ENCUMBRANCE_PERCENT);
-                    final double finalNewHealth = Math.max(0, Math.min(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue(), newHealth)); //apply min and max
-                    TownyCombat.getPlugin().getServer().getScheduler().runTask(TownyCombat.getPlugin(), ()->  player.setHealth(finalNewHealth));
+                    newHealth = Math.max(0, Math.min(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue(), newHealth)); //apply min and max
+                    if(newHealth > 0) {
+                        player.setHealth(newHealth);
+                    } else {
+                        double finalNewHealth = newHealth;
+                        TownyCombat.getPlugin().getServer().getScheduler().runTask(TownyCombat.getPlugin(), ()->  player.setHealth(finalNewHealth));
+                    }
                }
             }
         }
