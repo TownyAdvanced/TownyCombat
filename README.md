@@ -76,7 +76,7 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
   - More progressive PVP'ers may recognize both a challenge and an opportunity, to dominate the battlefield less by twitchy young fingers, and more by solid army organization, good discipline, reliable logistics and clever tactics.
 - :bust_in_silhouette: :footprints: **Tactical Invisibilty:** ***(Disabled By Default)***
   - Use stealth tactics by going invisible on the dynmap.
-  - This is a harcore battle feature, which enables stealth tactics, in exchange for showing less activity on the dynmap.
+  - This is a hardcore battle feature, which enables stealth tactics, in exchange for showing less activity on the dynmap.
   - There are 2 Modes:
     - Automatic: You go map-invisible when in the wilderness.
     - Triggered: You go map-invisible when holding a certain combination of items in your hands (*e.g. double diamond swords*).  
