@@ -112,7 +112,7 @@ public class TownyCombatMovementUtil {
                 Long nextWarningTime = jumpDamageNextWarningTimesMap.get(player);
                 if(nextWarningTime == null
                         || System.currentTimeMillis() > nextWarningTime) {
-                    Messaging.sendErrorMsg(player, Translatable.of("msg_warning_jump_damage", TownyCombatSettings.getJumpDamageThreshold()));
+                    Messaging.sendMsg(player, Translatable.of("msg_warning_jump_damage", TownyCombatSettings.getJumpDamageThreshold()));
                     jumpDamageNextWarningTimesMap.put(player, System.currentTimeMillis() + (TownyCombatSettings.getJumpDamageWarningIntervalMinutes() * 60 * 1000));
                 }
             }
