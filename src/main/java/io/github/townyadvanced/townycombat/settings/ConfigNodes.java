@@ -254,6 +254,11 @@ public enum ConfigNodes {
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
+	ENCUMBRANCE_ENABLED(
+			"encumbrance.enabled",
+			"true",
+			"",
+			"# If true, encumbrance is enabled."),
 	ENCUMBRANCE_INFANTRY(
 			"encumbrance.infantry",
 			"",
@@ -371,7 +376,7 @@ public enum ConfigNodes {
 			"60",
 			""),
 	ENCUMBRANCE_CAVALRY(
-			"encumbrance.encumbrance.cavalry",
+			"encumbrance.cavalry",
 			"",
 			"",
 			"",
@@ -380,29 +385,29 @@ public enum ConfigNodes {
 			"# +------------------------------------------------------+ #",
 			""),
 	ENCUMBRANCE_CAVALRY_REDUCTION_PERCENTAGE(
-			"encumbrance.encumbrance.cavalry.reduction_percentage",
+			"encumbrance.cavalry.reduction_percentage",
 			"50",
 			"",
 			"# Horses, being stronger, can carry more weight, thus their encumbrance is reduced"),
 	ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE(
-			"encumbrance.encumbrance.cavalry.percentage",
+			"encumbrance.cavalry.percentage",
 			"",
 			"",
 			"# The slow percentage for each type of cavalry armour item."),
 	ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_LEATHER_HORSE_ARMOUR(
-			"encumbrance.encumbrance.cavalry.percentage.leather_horse_armour",
+			"encumbrance.cavalry.percentage.leather_horse_armour",
 			"8",
 			""),
 	ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_GOLD_HORSE_ARMOUR(
-			"encumbrance.encumbrance.cavalry.percentage.gold_horse_armour",
+			"encumbrance.cavalry.percentage.gold_horse_armour",
 			"24",
 			""),
 	ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_IRON_HORSE_ARMOUR(
-			"encumbrance.encumbrance.cavalry.percentage.iron_horse_armour",
+			"encumbrance.cavalry.percentage.iron_horse_armour",
 			"32",
 			""),
 	ENCUMBRANCE_CAVALRY_ITEM_PERCENTAGE_DIAMOND_HORSE_ARMOUR(
-			"encumbrance.encumbrance.cavalry.percentage.diamond_horse_armour",
+			"encumbrance.cavalry.percentage.diamond_horse_armour",
 			"40",
 			""),
 	NEW_ITEMS(

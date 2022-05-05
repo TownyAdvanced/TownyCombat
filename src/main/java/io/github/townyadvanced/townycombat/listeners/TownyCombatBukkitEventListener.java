@@ -186,14 +186,14 @@ public class TownyCombatBukkitEventListener implements Listener {
 		}
 
 		//SPEAR: Do extra damage to cavalry
-		double finalDamage = event.getFinalDamage();
+		double damage = event.getDamage();
 		if(TownyCombatSettings.isNewItemsSpearEnabled()
 			&& isCavalryUnderAttack
 			&& event.getDamager() instanceof Player
 		) { 
 			ItemStack mainHandItem = ((Player)event.getDamager()).getInventory().getItemInMainHand();
 			if(TownyCombatItemUtil.isSpear(mainHandItem)) {
-				finalDamage += TownyCombatSettings.getNewItemsSpearBonusDamageVsCavalry();
+				damage += TownyCombatSettings.getNewItemsSpearBonusDamageVsCavalry();
 			}
 		}
 
@@ -216,7 +216,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 			 */
 			TownyCombatHorseUtil.registerPlayerForCavalryStrengthBonus(attackingPlayer);
 			attackingPlayer.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
-			finalDamage += (3 * TownyCombatSettings.getCavalryChargeStrengthBonusEffectLevel());
+			damage += (3 * TownyCombatSettings.getCavalryChargeStrengthBonusEffectLevel());
 		}
 
 		//WARHAMMER: Possibly break shield
@@ -249,7 +249,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		} else if (event.getEntity() instanceof AbstractHorse) {
 			//Horse damage resistance
 			if(attackingPlayer != null) {
-				finalDamage = finalDamage - (finalDamage * (TownyCombatSettings.getAttackDamageResistanceHorsesPercent() / 100));
+				damage = damage - (damage * (TownyCombatSettings.getAttackDamageResistanceHorsesPercent() / 100));
 			}
 			//Auto-pot if needed
 			if(TownyCombatSettings.isAutoPottingEnabled()
@@ -261,7 +261,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		}
 
 		//SET DAMAGE
-		event.setDamage(finalDamage);
+		event.setDamage(damage);
 	}
 
 	@EventHandler (ignoreCancelled = true)
