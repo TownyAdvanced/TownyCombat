@@ -77,18 +77,20 @@ public class TownyCombatMovementUtil {
         double genericSpeedAdjustmentPercentage = TownyCombatSettings.getGenericInfantrySpeedAdjustmentPercentage();
 
         //Calculate slow due to encumbrance
-        Map<Material, Double> materialEncumbrancePercentageMap = TownyCombatSettings.getMaterialEncumbrancePercentageMap();
         double totalEncumbrancePercentage = 0;
-        Double itemEncumbrancePercentage;
-        for(ItemStack itemStack: player.getInventory().getContents()) {
-            if(itemStack != null) {
-                itemEncumbrancePercentage = materialEncumbrancePercentageMap.get(itemStack.getType());
-                if(itemEncumbrancePercentage != null) {
-                    totalEncumbrancePercentage += itemEncumbrancePercentage;
+        if(TownyCombatSettings.isEncumbranceEnabled()) {
+            Map<Material, Double> materialEncumbrancePercentageMap = TownyCombatSettings.getMaterialEncumbrancePercentageMap();
+            Double itemEncumbrancePercentage;
+            for(ItemStack itemStack: player.getInventory().getContents()) {
+                if(itemStack != null) {
+                    itemEncumbrancePercentage = materialEncumbrancePercentageMap.get(itemStack.getType());
+                    if(itemEncumbrancePercentage != null) {
+                        totalEncumbrancePercentage += itemEncumbrancePercentage;
+                    }
                 }
             }
-        }      
-        playerEncumbrancePercentageMap.put(player, totalEncumbrancePercentage);
+            playerEncumbrancePercentageMap.put(player, totalEncumbrancePercentage);
+        }
 
         //Calculate total speed adjustment
         double scalarAdjustment = (genericSpeedAdjustmentPercentage - totalEncumbrancePercentage) / 100;
@@ -105,12 +107,14 @@ public class TownyCombatMovementUtil {
         player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).addModifier(attributeModifier);
 
         //Warn player about jump damage
-        if(totalEncumbrancePercentage >= TownyCombatSettings.getJumpDamageThreshold()) {
-            Long nextWarningTime = jumpDamageNextWarningTimesMap.get(player);
-            if(nextWarningTime == null
-                    || System.currentTimeMillis() > nextWarningTime) {
-                Messaging.sendErrorMsg(player, Translatable.of("msg_warning_jump_damage", TownyCombatSettings.getJumpDamageThreshold()));
-                jumpDamageNextWarningTimesMap.put(player, System.currentTimeMillis() + (TownyCombatSettings.getJumpDamageWarningIntervalMinutes() * 60 * 1000));
+        if(TownyCombatSettings.isEncumbranceEnabled() && TownyCombatSettings.isJumpDamageEnabled()) {
+            if(totalEncumbrancePercentage >= TownyCombatSettings.getJumpDamageThreshold()) {
+                Long nextWarningTime = jumpDamageNextWarningTimesMap.get(player);
+                if(nextWarningTime == null
+                        || System.currentTimeMillis() > nextWarningTime) {
+                    Messaging.sendErrorMsg(player, Translatable.of("msg_warning_jump_damage", TownyCombatSettings.getJumpDamageThreshold()));
+                    jumpDamageNextWarningTimesMap.put(player, System.currentTimeMillis() + (TownyCombatSettings.getJumpDamageWarningIntervalMinutes() * 60 * 1000));
+                }
             }
         }
     }

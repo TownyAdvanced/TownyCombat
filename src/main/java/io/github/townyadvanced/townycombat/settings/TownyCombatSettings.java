@@ -197,6 +197,10 @@ public class TownyCombatSettings {
 		return tacticalInvisibilityItems;
 	}
 
+	public static boolean isEncumbranceEnabled() {
+		return Settings.getBoolean(ConfigNodes.ENCUMBRANCE_ENABLED);
+	}
+
 	public static double getEquipmentEncumbranceBow() {
 		return Settings.getDouble(ConfigNodes.ENCUMBRANCE_INFANTRY_BASE_ITEM_PERCENTAGE_BOW);
 	}
