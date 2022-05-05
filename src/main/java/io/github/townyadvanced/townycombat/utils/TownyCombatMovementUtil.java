@@ -88,7 +88,7 @@ public class TownyCombatMovementUtil {
                         totalEncumbrancePercentage += itemEncumbrancePercentage;
                     }
                 }
-            }      
+            }
             playerEncumbrancePercentageMap.put(player, totalEncumbrancePercentage);
         }
 
@@ -107,7 +107,7 @@ public class TownyCombatMovementUtil {
         player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).addModifier(attributeModifier);
 
         //Warn player about jump damage
-        if(TownyCombatSettings.isJumpDamageEnabled()) {
+        if(TownyCombatSettings.isEncumbranceEnabled() && TownyCombatSettings.isJumpDamageEnabled()) {
             if(totalEncumbrancePercentage >= TownyCombatSettings.getJumpDamageThreshold()) {
                 Long nextWarningTime = jumpDamageNextWarningTimesMap.get(player);
                 if(nextWarningTime == null
