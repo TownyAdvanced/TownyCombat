@@ -12,10 +12,10 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
   - Speed Increase: +12%
   - Knockback Resistance: +25%
 - :horse: :star: **Cavalry Enhancements:**
-  - Mounted Horses (*aka cavalry*) play the role of "Tanks" on the battlefield:
-    - Tough, mobile, and with a powerful shot. 
+  - Overview:
+    - Mounted Horses (*aka cavalry*) play the role of "Tanks" on the battlefield: tough + mobile + powerful shot. 
     - Great v.s most infantry, but very vulnerable to infantry/cavalry with spears, and sustained crossbow attack.
-    - Not "one man armies", but rather do best when operating in combination with other troop types.
+    - Not "one man armies", but instead they do best when operating in combination with other troop types.
   - Special Abilities:
     - Teleport with player on /n or /t spawn.
     - Do not rear up on taking damage.
