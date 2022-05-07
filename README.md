@@ -27,6 +27,7 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
   - Special Vulnerabilities:
     - Take +9 damage when hit by a spear in PVP.
 - :crossed_swords: :new: **New Weapons**
+  - ***Warning***: While native weapons are enabled, wooden swords and stone axes are not craftable (*to avoid battlefield confusion*).
   - Spear:
     - +9 PVP Damage v.s. Cavalry
     ![image](https://user-images.githubusercontent.com/50219223/162958194-a7ecd2ae-c880-49be-afb9-6838d21e2a4d.png)
