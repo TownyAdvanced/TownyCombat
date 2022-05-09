@@ -1,6 +1,7 @@
 package io.github.townyadvanced.townycombat.listeners;
 
 import io.github.townyadvanced.townycombat.TownyCombat;
+import io.github.townyadvanced.townycombat.events.TownyCombatSpecialCavalryHitEvent;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import io.github.townyadvanced.townycombat.utils.TownyCombatHorseUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatMovementUtil;
@@ -9,6 +10,7 @@ import io.github.townyadvanced.townycombat.utils.TownyCombatInventoryUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatExperienceUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatItemUtil;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AbstractHorse;
@@ -103,6 +105,8 @@ public class TownyCombatBukkitEventListener implements Listener {
 			return;
 		if(!TownyCombatDistanceUtil.isCloseToATown(event.getEntity(), TownyCombatSettings.getKeepStuffOnDeathTownProximityBlocks()))
 			return;
+		//Call event here todo
+		//Keep inv functions
 		if(TownyCombatSettings.isKeepInventoryOnDeathEnabled()) {
 			TownyCombatInventoryUtil.degradeInventory(event);
 			TownyCombatInventoryUtil.keepInventory(event);
@@ -209,14 +213,18 @@ public class TownyCombatBukkitEventListener implements Listener {
 			//Bonus is charged-up
 			(attackingPlayer.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE) && attackingPlayer.getPotionEffect(PotionEffectType.INCREASE_DAMAGE).getAmplifier() == 0))
 		{
-			/*
-			 * Note: The bonus is not already contained in the damage.
-			 * Because the str amplifier is power 0
-			 * So we need to explicitly add the damage.
-			 */
-			TownyCombatHorseUtil.registerPlayerForCavalryStrengthBonus(attackingPlayer);
-			attackingPlayer.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
-			damage += (3 * TownyCombatSettings.getCavalryChargeStrengthBonusEffectLevel());
+			TownyCombatSpecialCavalryHitEvent specialCavalryHit = new TownyCombatSpecialCavalryHitEvent(attackingPlayer, event.getEntity(), true);
+			Bukkit.getPluginManager().callEvent(specialCavalryHit);
+			if(specialCavalryHit.isSpecialHit()) {
+				/*
+				 * Note: The bonus is not already contained in the damage.
+				 * Because the str amplifier is power 0
+				 * So we need to explicitly add the damage.
+				 */
+				TownyCombatHorseUtil.registerPlayerForCavalryStrengthBonus(attackingPlayer);
+				attackingPlayer.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
+				damage += (3 * TownyCombatSettings.getCavalryChargeStrengthBonusEffectLevel());
+			}
 		}
 
 		//WARHAMMER: Possibly break shield
