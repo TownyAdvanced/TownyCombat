@@ -113,7 +113,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 					TownyCombatSettings.isKeepInventoryOnDeathEnabled(),
 					TownyCombatSettings.isKeepExperienceOnDeathEnabled());
 		Bukkit.getPluginManager().callEvent(keepInventoryEvent);
-		//Keep env functions
+		//Keep inv functions
 		if(keepInventoryEvent.isDegradeInventory())
 			TownyCombatInventoryUtil.degradeInventory(event);
 		if(keepInventoryEvent.isKeepInventory())
