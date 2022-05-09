@@ -107,12 +107,13 @@ public class TownyCombatBukkitEventListener implements Listener {
 			return;
 		//Call event here todo
 		//Keep inv functions
-		if(TownyCombatSettings.isKeepInventoryOnDeathEnabled())
+		if(TownyCombatSettings.isKeepInventoryOnDeathEnabled()) {
 			TownyCombatInventoryUtil.degradeInventory(event);
-		if(TownyCombatSettings.isKeepInventoryOnDeathEnabled())
 			TownyCombatInventoryUtil.keepInventory(event);
-		if(TownyCombatSettings.isKeepExperienceOnDeathEnabled())
+		}
+		if(TownyCombatSettings.isKeepExperienceOnDeathEnabled()) {
 			TownyCombatExperienceUtil.keepExperience(event);
+		}
 	}
 
 	@EventHandler (ignoreCancelled = true)
