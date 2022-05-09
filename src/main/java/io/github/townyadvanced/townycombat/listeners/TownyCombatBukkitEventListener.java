@@ -2,6 +2,7 @@ package io.github.townyadvanced.townycombat.listeners;
 
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.events.TownyCombatKeepInventoryOnDeathEvent;
+import io.github.townyadvanced.townycombat.events.TownyCombatSpecialCavalryHit;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import io.github.townyadvanced.townycombat.utils.TownyCombatHorseUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatMovementUtil;
@@ -219,14 +220,18 @@ public class TownyCombatBukkitEventListener implements Listener {
 			//Bonus is charged-up
 			(attackingPlayer.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE) && attackingPlayer.getPotionEffect(PotionEffectType.INCREASE_DAMAGE).getAmplifier() == 0))
 		{
-			/*
-			 * Note: The bonus is not already contained in the damage.
-			 * Because the str amplifier is power 0
-			 * So we need to explicitly add the damage.
-			 */
-			TownyCombatHorseUtil.registerPlayerForCavalryStrengthBonus(attackingPlayer);
-			attackingPlayer.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
-			damage += (3 * TownyCombatSettings.getCavalryChargeStrengthBonusEffectLevel());
+			TownyCombatSpecialCavalryHit specialCavalryHit = new TownyCombatSpecialCavalryHit(attackingPlayer, event.getEntity(), true);
+			Bukkit.getPluginManager().callEvent(specialCavalryHit);
+			if(specialCavalryHit.isSpecialHit()) {
+				/*
+				 * Note: The bonus is not already contained in the damage.
+				 * Because the str amplifier is power 0
+				 * So we need to explicitly add the damage.
+				 */
+				TownyCombatHorseUtil.registerPlayerForCavalryStrengthBonus(attackingPlayer);
+				attackingPlayer.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
+				damage += (3 * TownyCombatSettings.getCavalryChargeStrengthBonusEffectLevel());
+			}
 		}
 
 		//WARHAMMER: Possibly break shield
