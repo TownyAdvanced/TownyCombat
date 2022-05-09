@@ -2,7 +2,7 @@ package io.github.townyadvanced.townycombat.listeners;
 
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.events.TownyCombatKeepInventoryOnDeathEvent;
-import io.github.townyadvanced.townycombat.events.TownyCombatSpecialCavalryHit;
+import io.github.townyadvanced.townycombat.events.TownyCombatSpecialCavalryHitEvent;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import io.github.townyadvanced.townycombat.utils.TownyCombatHorseUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatMovementUtil;
@@ -220,7 +220,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 			//Bonus is charged-up
 			(attackingPlayer.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE) && attackingPlayer.getPotionEffect(PotionEffectType.INCREASE_DAMAGE).getAmplifier() == 0))
 		{
-			TownyCombatSpecialCavalryHit specialCavalryHit = new TownyCombatSpecialCavalryHit(attackingPlayer, event.getEntity(), true);
+			TownyCombatSpecialCavalryHitEvent specialCavalryHit = new TownyCombatSpecialCavalryHitEvent(attackingPlayer, event.getEntity(), true);
 			Bukkit.getPluginManager().callEvent(specialCavalryHit);
 			if(specialCavalryHit.isSpecialHit()) {
 				/*

@@ -8,14 +8,14 @@ import org.bukkit.event.HandlerList;
 /**
  * An event that marks a special 'bonus' hit by cavalry
  */
-public class TownyCombatSpecialCavalryHit extends Event {
+public class TownyCombatSpecialCavalryHitEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
     private final Player damager;
     private final Entity victim;
     private boolean specialHit;
 
-    public TownyCombatSpecialCavalryHit(Player damager, Entity victim, boolean specialHit){
+    public TownyCombatSpecialCavalryHitEvent(Player damager, Entity victim, boolean specialHit){
         this.damager = damager;
         this.victim = victim;
         this.specialHit = specialHit;
