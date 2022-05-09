@@ -1,5 +1,6 @@
 package io.github.townyadvanced.townycombat.events;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -16,6 +17,7 @@ public class TownyCombatSpecialCavalryHitEvent extends Event {
     private boolean specialHit;
 
     public TownyCombatSpecialCavalryHitEvent(Player damager, Entity victim, boolean specialHit){
+        super(!Bukkit.getServer().isPrimaryThread());
         this.damager = damager;
         this.victim = victim;
         this.specialHit = specialHit;

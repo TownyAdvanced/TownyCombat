@@ -1,7 +1,6 @@
 package io.github.townyadvanced.townycombat.listeners;
 
 import io.github.townyadvanced.townycombat.TownyCombat;
-import io.github.townyadvanced.townycombat.events.TownyCombatKeepInventoryOnDeathEvent;
 import io.github.townyadvanced.townycombat.events.TownyCombatSpecialCavalryHitEvent;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import io.github.townyadvanced.townycombat.utils.TownyCombatHorseUtil;
@@ -106,20 +105,13 @@ public class TownyCombatBukkitEventListener implements Listener {
 			return;
 		if(!TownyCombatDistanceUtil.isCloseToATown(event.getEntity(), TownyCombatSettings.getKeepStuffOnDeathTownProximityBlocks()))
 			return;
-		//Call event
-		TownyCombatKeepInventoryOnDeathEvent keepInventoryEvent =
-			new TownyCombatKeepInventoryOnDeathEvent(
-					event.getEntity(),
-					TownyCombatSettings.isKeepInventoryOnDeathEnabled(),
-					TownyCombatSettings.isKeepInventoryOnDeathEnabled(),
-					TownyCombatSettings.isKeepExperienceOnDeathEnabled());
-		Bukkit.getPluginManager().callEvent(keepInventoryEvent);
+		//Call event here todo
 		//Keep inv functions
-		if(keepInventoryEvent.isDegradeInventory())
+		if(TownyCombatSettings.isKeepInventoryOnDeathEnabled())
 			TownyCombatInventoryUtil.degradeInventory(event);
-		if(keepInventoryEvent.isKeepInventory())
+		if(TownyCombatSettings.isKeepInventoryOnDeathEnabled())
 			TownyCombatInventoryUtil.keepInventory(event);
-		if(keepInventoryEvent.isKeepExperience())
+		if(TownyCombatSettings.isKeepExperienceOnDeathEnabled())
 			TownyCombatExperienceUtil.keepExperience(event);
 	}
 
