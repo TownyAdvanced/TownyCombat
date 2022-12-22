@@ -1,6 +1,5 @@
 package io.github.townyadvanced.townycombat.listeners;
 
-import com.palmergames.bukkit.towny.event.NewDayEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyBuildEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyDestroyEvent;
 import com.palmergames.bukkit.towny.event.time.NewShortTimeEvent;

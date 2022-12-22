@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.github.townyadvanced</groupId>
   <artifactId>TownyCombat</artifactId>
-  <version>0.3.0</version>
+  <version>0.3.1</version>
   <name>townycombat</name> <!-- Leave lower-cased -->
 
   <properties>
@@ -40,7 +40,7 @@
 	<dependency>
       <groupId>com.palmergames.bukkit.towny</groupId>
       <artifactId>towny</artifactId>
-      <version>0.98.0.0</version>
+      <version>0.98.4.0</version>
       <scope>provided</scope>
 	</dependency>
     <dependency>
@@ -56,6 +56,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.10.1</version>
         <configuration>
           <source>1.8</source>
           <target>1.8</target>

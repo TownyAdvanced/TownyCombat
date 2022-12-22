@@ -5,12 +5,6 @@ import com.palmergames.bukkit.towny.object.Resident;
 
 import com.palmergames.bukkit.towny.object.metadata.StringDataField;
 import com.palmergames.bukkit.towny.utils.MetaDataUtil;
-import io.github.townyadvanced.townycombat.utils.TownyCombatMovementUtil;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.entity.AbstractHorse;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-
 import javax.annotation.Nullable;
 import java.util.*;
 
