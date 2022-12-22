@@ -20,6 +20,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
@@ -132,7 +133,8 @@ public class TownyCombatBukkitEventListener implements Listener {
 	public void on (EntityDamageEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
-		if (event.getEntity() instanceof AbstractHorse) {
+		// When it is a horse and it is not being hurt by a bush/cactus, try to prevent the rearing.
+		if (event.getEntity() instanceof AbstractHorse && !instantHorseDeathCause(event.getCause())) {
 			//No rearing when horse is damaged. Do this by cancelling the event, then applying the same damage in a simple set operation.
 			if(TownyCombatSettings.isHorseRearingPreventionEnabled()
 					&& event.getEntity().getPassengers().size() > 0
@@ -143,6 +145,14 @@ public class TownyCombatBukkitEventListener implements Listener {
 				horse.setHealth(Math.max(0, Math.min(horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue(), newHealth)));
 			}
 		}
+	}
+
+	/**
+	 * @param cause DamageCause
+	 * @return true if this is a DamageCause that shreds horse health.
+	 */
+	private boolean instantHorseDeathCause(DamageCause cause) {
+		return cause.equals(DamageCause.CONTACT) || cause.equals(DamageCause.FIRE);
 	}
 
 	@EventHandler (ignoreCancelled = true)
