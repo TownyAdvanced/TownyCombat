@@ -145,6 +145,10 @@ public class TownyCombatSettings {
 		return Settings.getBoolean(ConfigNodes.TOWNY_COMBAT_ENABLED);
 	}
 
+	public static boolean isMovementModificationEnabled() {
+		return Settings.getBoolean(ConfigNodes.TOWNY_COMBAT_MOVEMENT_MODIFICATIONS_ENABLED);
+	}
+
 	public static boolean isTeleportMountWithPlayerEnabled() {
 		return Settings.getBoolean(ConfigNodes.CAVALRY_ENHANCEMENTS_TELEPORT_MOUNT_WITH_PLAYER_ENABLED);
 	}

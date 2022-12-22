@@ -83,8 +83,10 @@ public class TownyCombatBukkitEventListener implements Listener {
 			event.setCancelled(true);
 			event.getEntity().getUniqueId();
 		}
+
 		//Apply speed adjustments
-		TownyCombatMovementUtil.adjustPlayerAndMountSpeeds((Player)event.getEntity());
+		if (TownyCombatSettings.isMovementModificationEnabled())
+			TownyCombatMovementUtil.adjustPlayerAndMountSpeeds((Player)event.getEntity());
 		//Register for charge bonus
 		TownyCombatHorseUtil.registerPlayerForCavalryStrengthBonus((Player)event.getEntity());
 	}
@@ -110,10 +112,14 @@ public class TownyCombatBukkitEventListener implements Listener {
 		if(TownyCombatSettings.isKeepInventoryOnDeathEnabled()) {
 			TownyCombatInventoryUtil.degradeInventory(event);
 			TownyCombatInventoryUtil.keepInventory(event);
+		} else if (TownyCombatSettings.isMovementModificationEnabled()) {
+			// Remove any movement penalties if inventory is not kept.
+			TownyCombatMovementUtil.removeTownyCombatMovementModifiers(event.getEntity());
 		}
 		if(TownyCombatSettings.isKeepExperienceOnDeathEnabled()) {
 			TownyCombatExperienceUtil.keepExperience(event);
 		}
+
 	}
 
 	@EventHandler (ignoreCancelled = true)
@@ -121,7 +127,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		//Remove legacy data
 		TownyCombatMovementUtil.resetPlayerBaseSpeedToVanilla(event.getPlayer());
 		//Remove modifiers if system/feature is disabled
-		if (!TownyCombatSettings.isTownyCombatEnabled()) {
+		if (!TownyCombatSettings.isTownyCombatEnabled() || !TownyCombatSettings.isMovementModificationEnabled()) {
 			TownyCombatMovementUtil.removeTownyCombatMovementModifiers(event.getPlayer());
 		} else {
 			TownyCombatMovementUtil.adjustPlayerAndMountSpeeds(event.getPlayer());

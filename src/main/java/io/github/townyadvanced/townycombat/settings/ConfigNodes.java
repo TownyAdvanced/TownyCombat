@@ -18,7 +18,13 @@ public enum ConfigNodes {
 			"towny_combat_enabled",
 			"true",
 			"",
-			"# etc."),
+			"# Enables the entire plugin."),
+	TOWNY_COMBAT_MOVEMENT_MODIFICATIONS_ENABLED(
+			"movement_modifications_enabled",
+			"true",
+			"",
+			"# Enables the entire movements-modifications system."),
+
 	CAVALRY_ENHANCEMENTS(
 		"cavalry_enhancements",
 			"",

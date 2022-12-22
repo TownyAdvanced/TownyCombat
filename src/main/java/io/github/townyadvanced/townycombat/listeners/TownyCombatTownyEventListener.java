@@ -1,6 +1,5 @@
 package io.github.townyadvanced.townycombat.listeners;
 
-import com.palmergames.bukkit.towny.event.NewDayEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyBuildEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyDestroyEvent;
 import com.palmergames.bukkit.towny.event.time.NewShortTimeEvent;
@@ -48,7 +47,8 @@ public class TownyCombatTownyEventListener implements Listener {
     public void onShortTime(NewShortTimeEvent event) {
         if (!TownyCombatSettings.isTownyCombatEnabled())
         	return;
-		TownyCombatMovementUtil.adjustAllPlayerAndMountSpeeds();
+        if (TownyCombatSettings.isMovementModificationEnabled())
+        	TownyCombatMovementUtil.adjustAllPlayerAndMountSpeeds();
 		if(TownyCombatSettings.isTacticalInvisibilityEnabled()) {
 			TownyCombatMapUtil.evaluateTacticalInvisibility();
 			TownyCombatMapUtil.applyTacticalInvisibilityToPlayers();
