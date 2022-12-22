@@ -23,7 +23,7 @@ public class TownyCombat extends JavaPlugin {
 	
 	private static TownyCombat plugin = null;
 	private static DynmapIntegration dynmapIntegration = null;
-	private static final Version requiredTownyVersion = Version.fromString("0.98.0.0");
+	private static final Version requiredTownyVersion = Version.fromString("0.98.4.0");
 	private static BukkitTask townyCombatTask = null;
 
     @Override
