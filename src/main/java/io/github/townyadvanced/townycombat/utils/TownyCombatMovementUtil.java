@@ -165,7 +165,7 @@ public class TownyCombatMovementUtil {
             return;
 
         //Remove old modifier
-        for(AttributeModifier attributeModifier: new ArrayList<>(player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getModifiers())) {
+        for(AttributeModifier attributeModifier: new ArrayList<>(player.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).getModifiers())) {
             if(attributeModifier.getName().equals(ATTRIBUTE_MODIFIER_NAME)) {
                 player.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).removeModifier(attributeModifier);
             }
@@ -185,7 +185,7 @@ public class TownyCombatMovementUtil {
             return;
 
         //Remove old modifier
-        for(AttributeModifier attributeModifier: new ArrayList<>(mount.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getModifiers())) {
+        for(AttributeModifier attributeModifier: new ArrayList<>(mount.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).getModifiers())) {
             if(attributeModifier.getName().equals(ATTRIBUTE_MODIFIER_NAME)) {
                 mount.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).removeModifier(attributeModifier);
             }
