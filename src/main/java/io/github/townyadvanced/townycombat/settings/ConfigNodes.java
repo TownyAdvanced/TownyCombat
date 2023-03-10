@@ -488,7 +488,7 @@ public enum ConfigNodes {
 			"# See user guide for recipe."),
 	NEW_ITEMS_WARHAMMER_NATIVE_WEAPON_NAME(
 			"new_items.warhammer.native_weapon_name",
-			"Spear",
+			"Warhammer",
 			"",
 			"# The name of the native weapon, when crafted."),
 	AUTOPOTTING(
