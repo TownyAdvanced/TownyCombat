@@ -9,6 +9,7 @@ import io.github.townyadvanced.townycombat.utils.TownyCombatMovementUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatBlockUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatMapUtil;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 /**
@@ -25,7 +26,7 @@ public class TownyCombatTownyEventListener implements Listener {
 		plugin = instance;
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void on (TownyDestroyEvent event) {
         if(TownyCombatSettings.isTownyCombatEnabled() 
 	        	&& TownyCombatSettings.isBlockGlitchingPreventionEnabled()
@@ -34,7 +35,7 @@ public class TownyCombatTownyEventListener implements Listener {
         }
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void on (TownyBuildEvent event) {
         if(TownyCombatSettings.isTownyCombatEnabled() 
         		&& TownyCombatSettings.isBlockGlitchingPreventionEnabled()
