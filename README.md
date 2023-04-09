@@ -72,7 +72,7 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
     - It makes a more sense to equip all units with at least one identifying piece of kit (*e.g. a coloured leather helmet*).
 - :sparkling_heart: :heavy_plus_sign: **Auto-Potting**
   - In combat, Splash health potions (I and II) are automatically consumed after a player's health falls below 5 hearts.
-  - This feature helps ensure that your battlefields are not completely dominated by PVP professionals -> because by reducing the importance of fast-twitch inventory management and reflexes developed over years, it allows more casual players to get involved and have fun.
+  - This feature helps ensure that your battlefields are not completely dominated by PVP professionals -> because by reducing the importance of fast-twitch inventory management skills developed over years, it allows more casual players to get involved and have fun.
 - :bust_in_silhouette: :footprints: **Tactical Invisibilty:** ***(Disabled By Default)***
   - Use stealth tactics by going invisible on the dynmap.
   - This is a hardcore battle feature, which enables stealth tactics, in exchange for showing less activity on the dynmap.
