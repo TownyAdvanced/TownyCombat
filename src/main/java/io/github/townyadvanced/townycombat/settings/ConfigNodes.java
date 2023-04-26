@@ -411,7 +411,7 @@ public enum ConfigNodes {
 			"40",
 			""),
 	BATTLEFIELD_ROLES(
-			"battlefield_role",
+			"battlefield_roles",
 			"",
 			"",
 			"",

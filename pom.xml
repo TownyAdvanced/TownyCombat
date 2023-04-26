@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.github.townyadvanced</groupId>
   <artifactId>TownyCombat</artifactId>
-  <version>0.4.0</version>
+  <version>1.0.0</version>
   <name>townycombat</name> <!-- Leave lower-cased -->
 
   <properties>

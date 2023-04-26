@@ -2,15 +2,14 @@ package io.github.townyadvanced.townycombat.metadata;
 
 
 import com.palmergames.bukkit.towny.object.Resident;
-
-import com.palmergames.bukkit.towny.object.metadata.IntegerDataField;
 import com.palmergames.bukkit.towny.object.metadata.LongDataField;
 import com.palmergames.bukkit.towny.object.metadata.StringDataField;
 import com.palmergames.bukkit.towny.utils.MetaDataUtil;
-import com.sun.istack.internal.NotNull;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * 
@@ -54,8 +53,7 @@ public class TownyCombatResidentMetaDataController {
 		if (resident.hasMeta(sdf.getKey()))
 			resident.removeMetaData(sdf);
 	}
-
-	@NotNull
+	
 	public static String getBattlefieldRole(Resident resident) {
 		StringDataField sdf = (StringDataField) battlefieldRole.clone();
 		if (resident.hasMeta(sdf.getKey()))
@@ -70,8 +68,7 @@ public class TownyCombatResidentMetaDataController {
 		}
 		resident.addMetaData(new StringDataField("townycombat_battlefieldrole", newBattlefieldRole));
 	}
-
-	@NotNull
+	
 	public static long getLastBattlefieldRoleSwitchTime(Resident resident) {
 		LongDataField ldf = (LongDataField) lastBattlefieldRoleSwitchTime.clone();
 		if (resident.hasMeta(ldf.getKey()))

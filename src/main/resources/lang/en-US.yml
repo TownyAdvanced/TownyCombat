@@ -42,11 +42,11 @@ battlefield.role.heavy: "Heavy"
 
 #Resident screen
 
-status_resident_hover_title_battlefield_role: "%s[%sBattlefield Role: %s%s]"
-status_resident_content_light_line_1: "&aMelee Weapons: &2Wood"
-status_resident_content_light_line_2: "&aMissile Weapons: &2Bow"
-status_resident_content_light_line_3: "&aPassive Ability: &2+1 to Speed/Jump_Boost Effects"
-status_resident_content_light_super_potion_line: "&aSuper Potion (1/day): &2Potion of True Invisibility (5 minutes)"
+status_resident_hover_title_battlefield_role: "%s[&2Battlefield Role: &a%s%s]"
+status_resident_content_light_line_1: "&2Melee Weapons: &aWood"
+status_resident_content_light_line_2: "&2Missile Weapons: &aBow"
+status_resident_content_light_line_3: "&2Passive Ability: &a+1 to Speed/Jump_Boost Effects"
+status_resident_content_light_super_potion_line: "&2Super Potion (1/day): &aTrue Invisibility (5 minutes)"
 
 # Change-Role Warnings
 
