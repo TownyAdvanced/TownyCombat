@@ -1,8 +1,11 @@
 package io.github.townyadvanced.townycombat.listeners;
 
+import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.object.Resident;
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.events.TownyCombatSpecialCavalryHitEvent;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
+import io.github.townyadvanced.townycombat.utils.TownyCombatBattlefieldRoleUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatHorseUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatMovementUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatDistanceUtil;
@@ -22,8 +25,13 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryInteractEvent;
+import org.bukkit.event.inventory.InventoryMoveItemEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
+import org.bukkit.event.player.PlayerInventoryEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -32,6 +40,9 @@ import org.bukkit.potion.PotionEffectType;
 import org.spigotmc.event.entity.EntityDismountEvent;
 import org.spigotmc.event.entity.EntityMountEvent;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * 
  * @author Goosius
@@ -39,6 +50,7 @@ import org.spigotmc.event.entity.EntityMountEvent;
  */
 public class TownyCombatBukkitEventListener implements Listener {
 
+	private static final List<Material> lightPlayerArmour = Arrays.asList(Material.LEATHER_BOOTS, Material.LEATHER_CHESTPLATE, Material.LEATHER_HELMET, Material.LEATHER_LEGGINGS);
 
 	@SuppressWarnings("unused")
 	private final TownyCombat plugin;
@@ -313,4 +325,36 @@ public class TownyCombatBukkitEventListener implements Listener {
 		}
 	}
 
+	@EventHandler
+	public void on (InventoryClickEvent event) {
+		if (!TownyCombatSettings.isTownyCombatEnabled() || !TownyCombatSettings.isBattlefieldRolesEnabled())
+			return;
+
+		Resident resident = TownyAPI.getInstance().getResident(event.getWhoClicked().getUniqueId());
+		if(resident == null)
+			return;
+
+		/**
+		 * Armour: 
+		 *   When listening for an inventory click event,
+		 *   if the slot is armor and the cursor is not AIR, 
+		 *   then it is a wear event.
+		 * 
+		 */
+
+		switch(TownyCombatBattlefieldRoleUtil.getBattlefieldRole(resident)) {
+			case LIGHT:
+				if(event.getSlotType() == InventoryType.SlotType.ARMOR 
+						&& event.getCursor() != null 
+						&& event.getCursor().getType() != Material.AIR
+						&& !lightPlayerArmour.contains(event.getCursor().getType())) {
+
+					TownyCombat.info("You cannot wear this armour douchebag ");
+					event.setCancelled(true);
+				}
+				break;
+			default:
+				throw new RuntimeException("Unknown battlefield role");
+		}
+	}
 }
