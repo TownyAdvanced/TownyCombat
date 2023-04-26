@@ -410,6 +410,27 @@ public enum ConfigNodes {
 			"encumbrance.cavalry.percentage.diamond_horse_armour",
 			"40",
 			""),
+	BATTLEFIELD_ROLES(
+			"battlefield_role",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |                 BATTLEFIELD ROLES                    | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
+	BATTLEFIELD_ROLES_ENABLED(
+			"battlefield_roles.enabled",
+			"false",
+			"",
+			"# If true, battlefield roles are enabled. See user guide for details."),
+	BATTLEFIELD_ROLES_SUPER_POTIONS_ENABLED(
+			"battlefield_roles.super_potions_enabled",
+			"true",
+			"",
+			"# If true, super potions are enabled for players with battlefield roles. See user guide for details."),
 	NEW_ITEMS(
 		"new_items",
 			"",

@@ -413,7 +413,12 @@ public class TownyCombatSettings {
 		return Settings.getDouble(ConfigNodes.ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_DAMAGE_PER_ENCUMBRANCE_PERCENT);
 	}
 
-	public static int getJumpDamageWarningIntervalMinutes() {
-		return Settings.getInt(ConfigNodes.ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_WARNING_INTERVAL_MINUTES);
+	public static boolean isBattlefieldRolesEnabled() {
+		return Settings.getBoolean(ConfigNodes.BATTLEFIELD_ROLES_ENABLED);
 	}
+
+	public static boolean isBattlefieldRolesSuperPotionsEnabled() {
+		return Settings.getBoolean(ConfigNodes.BATTLEFIELD_ROLES_SUPER_POTIONS_ENABLED);
+	}
+
 }

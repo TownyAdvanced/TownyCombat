@@ -33,3 +33,21 @@ config_and_lang_file_could_not_be_reloaded: 'Reload unsuccessful. See console fo
 
 # Added in 0.02
 msg_warning_jump_damage: '&cWARNING: Your encumbrance level is above %d percent. Be careful when jumping or climbing a hill, as this will cause tiredness-damage.'
+    
+battlefield.role.light: "Light"
+battlefield.role.medium: "Medium"
+battlefield.role.heavy: "Heavy"
+status_resident_hover_title_battlefield_role: "%s[%sBattlefield Role: %s%s]"
+status_resident_content_light_line_1: "&aMelee Weapons: &2Wood"
+status_resident_content_light_line_2: "&aMissile Weapons: &2Bow"
+status_resident_content_light_line_3: "&aPassive Ability: &2+1 to Speed/Jump_Boost Effects"
+status_resident_content_light_line_4: "&aSuper Potion: &2Potion of True Invisibility (5 minutes)"
+
+
+Weapons Melee: Wood
+Weapons Missile: Bow
+Passive Ability: +1 to any Speed/Jump-Boost effects
+Super Potion (1/day): Potion of True Invisibility (5 minutes)
+
+msg_warning_cannot_wear_this_armour: "Only players with a battlefield role of %s can wear this type of armor. Do you wish to switch your battlefield role from '%s' to '%s' ?"
+msg_warning_cannot_wield_this_weapon: "Only players with a battlefield role of %s can wield this type of weapon. Do you wish to switch your battlefield role from '%s' to '%s' ?"
