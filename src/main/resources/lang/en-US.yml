@@ -46,9 +46,11 @@ status_resident_hover_title_battlefield_role: "%s[%sBattlefield Role: %s%s]"
 status_resident_content_light_line_1: "&aMelee Weapons: &2Wood"
 status_resident_content_light_line_2: "&aMissile Weapons: &2Bow"
 status_resident_content_light_line_3: "&aPassive Ability: &2+1 to Speed/Jump_Boost Effects"
-status_resident_content_light_line_4: "&aSuper Potion (1/day): &2Potion of True Invisibility (5 minutes)"
+status_resident_content_light_super_potion_line: "&aSuper Potion (1/day): &2Potion of True Invisibility (5 minutes)"
 
 # Change-Role Warnings
 
-msg_warning_cannot_wear_this_armour: "Only players with a battlefield role of %s can wear this type of armor. Do you wish to change your battlefield role from '%s' to '%s' ?"
-msg_warning_cannot_wield_this_weapon: "Only players with a battlefield role of %s can wield this type of weapon. Do you wish to change your battlefield role from '%s' to '%s' ?"
+msg_warning_cannot_wear_this_armour: "You cannot wear this type of armor, because you do not have the required Battlefield Role (%s)."
+msg_warning_cannot_wield_this_weapon: "You cannot wield this type of weapon, because you do not have the required Battlefield Role (%s)."
+msg_warning_do_you_wish_to_change_role: "  Do you wish to change your Battlefield Role from %s to %s ?"
+msg_warning_cannot_change_role: "  You cannot change your battlefield role for another %s."

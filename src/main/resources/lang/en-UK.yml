@@ -23,5 +23,4 @@ description: >
 # DarkPurple = &9, LightGreen = &a, LightBlue = &b
 # Rose = &c, LightPurple = &d, Yellow = &e, White = &f
 
-
-msg_warning_cannot_wear_this_armour: "Only players with a battlefield role of %s can wear this type of armour. Do you wish to switch your battlefield role from '%s' to '%s' ?"
+msg_warning_cannot_wear_this_armour: "You cannot wear this type of armour, because you do not have the required Battlefield Role (%s)."

@@ -56,7 +56,7 @@ public class TownyCombatResidentMetaDataController {
 	}
 
 	@NotNull
-	private static String getBattlefieldRole(Resident resident) {
+	public static String getBattlefieldRole(Resident resident) {
 		StringDataField sdf = (StringDataField) battlefieldRole.clone();
 		if (resident.hasMeta(sdf.getKey()))
 			return MetaDataUtil.getString(resident, sdf);
@@ -72,7 +72,7 @@ public class TownyCombatResidentMetaDataController {
 	}
 
 	@NotNull
-	public long getLastBattlefieldRoleSwitchTime(Resident resident) {
+	public static long getLastBattlefieldRoleSwitchTime(Resident resident) {
 		LongDataField ldf = (LongDataField) lastBattlefieldRoleSwitchTime.clone();
 		if (resident.hasMeta(ldf.getKey()))
 			return MetaDataUtil.getLong(resident, ldf);
