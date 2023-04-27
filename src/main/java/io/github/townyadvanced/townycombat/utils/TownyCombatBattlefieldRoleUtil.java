@@ -54,32 +54,30 @@ public class TownyCombatBattlefieldRoleUtil {
             return;
 
         //Identify Invalid Armour
-        ItemStack[] inventoryContents = player.getInventory().getContents();
+        List<ItemStack> inventoryContentsList = Arrays.asList(player.getInventory().getContents());
         BattlefieldRole playerBattlefieldRole = getBattlefieldRole(resident);
-        List<Integer> invalidArmour = new ArrayList<>();
-        ItemStack itemStack;
-        for(int inventoryIndex = 0; inventoryIndex < inventoryContents.length; inventoryIndex++) {
-            itemStack = inventoryContents[inventoryIndex];
+        List<Integer> invalidArmourIndexes = new ArrayList<>();
+        for(ItemStack itemStack: player.getInventory().getArmorContents()) {
             if(itemStack != null && getBattlefieldRole(itemStack.getType()) != playerBattlefieldRole) {
-                invalidArmour.add(inventoryIndex);
+                invalidArmourIndexes.add(inventoryContentsList.indexOf(itemStack));
             }
         }
         //Identify Invalid Weapons
-        List<Integer> invalidWeapons = new ArrayList<>();
+        List<Integer> invalidWeaponIndexes = new ArrayList<>();
         //Drop all Invalid Items           
-        List<Integer> invalidItems = new ArrayList<>();
-        invalidItems.addAll(invalidArmour);
-        invalidItems.addAll(invalidWeapons);
+        List<Integer> invalidItemIndexes = new ArrayList<>();
+        invalidItemIndexes.addAll(invalidArmourIndexes);
+        invalidItemIndexes.addAll(invalidWeaponIndexes);
         Towny.getPlugin().getServer().getScheduler().runTask(Towny.getPlugin(), () -> {
-            for(Integer inventoryIndex: invalidItems) {
+            for(Integer inventoryIndex: invalidItemIndexes) {
                 //Drop item on ground
-                player.getWorld().dropItemNaturally(player.getLocation(), inventoryContents[inventoryIndex]);
+                player.getWorld().dropItemNaturally(player.getLocation(), player.getInventory().getContents()[inventoryIndex]);
                 //Remove item from inventory
                 player.getInventory().clear(inventoryIndex);
             }
         });
         //Send warning message(s)
-        if(invalidArmour.size() > 0) {
+        if(invalidArmourIndexes.size() > 0) {
             Translatable errorMessage = Translatable.of("msg_warning_cannot_wear_this_armour");
             errorMessage.append(Translatable.of("msg_warning_how_to_view_and_change_role"));
             Messaging.sendErrorMsg(player, errorMessage);

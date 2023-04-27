@@ -52,11 +52,13 @@ public class TownyCombatStatusScreenListener implements Listener {
 		Component text = Component.empty();
 		switch(battlefieldRole) {
 			case LIGHT:
-				text = text.append(Component.text(translator.of("status_resident_content_light_line_1")));
+				text = text.append(Component.text(translator.of("status_resident_content_light_line_armour")));
 				text = text.append(Component.newline());
-				text = text.append(Component.text(translator.of("status_resident_content_light_line_2")));
+				text = text.append(Component.text(translator.of("status_resident_content_light_line_melee_weapons")));
 				text = text.append(Component.newline());
-				text = text.append(Component.text(translator.of("status_resident_content_light_line_3")));
+				text = text.append(Component.text(translator.of("status_resident_content_light_line_missile_weapons")));
+				text = text.append(Component.newline());
+				text = text.append(Component.text(translator.of("status_resident_content_light_line_passive_ability")));
 				if(TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()) {
 					text = text.append(Component.newline());
 					text = text.append(Component.text(translator.of("status_resident_content_light_super_potion_line")));
