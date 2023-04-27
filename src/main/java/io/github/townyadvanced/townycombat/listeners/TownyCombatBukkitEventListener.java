@@ -26,6 +26,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
@@ -318,13 +319,9 @@ public class TownyCombatBukkitEventListener implements Listener {
 	}
 
 	@EventHandler
-	public void on (InventoryClickEvent event) {
+	public void on (InventoryCloseEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled() || !TownyCombatSettings.isBattlefieldRolesEnabled())
 			return;
-		if(event.getSlotType() == InventoryType.SlotType.ARMOR) {
-			TownyCombatBattlefieldRoleUtil.processPlayerArmourWearAttempt(event);
-		} else if (event.getSlotType() != InventoryType.SlotType.QUICKBAR) {
-			TownyCombatBattlefieldRoleUtil.processPlayerWeaponWieldAttempt(event);
-		}
+		TownyCombatBattlefieldRoleUtil.validateInventoryContents(event.getPlayer());
 	}
 }

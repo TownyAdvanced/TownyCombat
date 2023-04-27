@@ -50,7 +50,7 @@ status_resident_content_light_super_potion_line: "&2Super Potion (1/day): &aTrue
 
 # Change-Role Warnings
 
-msg_warning_cannot_wear_this_armour: "&cYou cannot wear this type of armor, because you do not have the required Battlefield Role (%s)."
-msg_warning_cannot_wield_this_weapon: "&cYou cannot wield this type of weapon, because you do not have the required Battlefield Role (%s)."
+msg_warning_cannot_wear_this_armour: "&cArmour dropped, because you do not have the required Battlefield Role to wear it."
+msg_warning_cannot_wield_this_weapon: "&cWeapon dropped, because you do not have the required Battlefield Role to wield it."
 msg_warning_how_to_view_and_change_role: " To view your Battlefield Role, type /resident. To change your Battlefield Role, type /tcm changerole <role>."
 msg_warning_cannot_change_role_now: "&cYou cannot change your battlefield role for another %s."
