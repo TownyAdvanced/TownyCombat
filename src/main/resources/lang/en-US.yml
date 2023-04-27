@@ -52,5 +52,5 @@ status_resident_content_light_super_potion_line: "&2Super Potion (1/day): &aTrue
 
 msg_warning_cannot_wear_this_armour: "You cannot wear this type of armor, because you do not have the required Battlefield Role (%s)."
 msg_warning_cannot_wield_this_weapon: "You cannot wield this type of weapon, because you do not have the required Battlefield Role (%s)."
-msg_warning_do_you_wish_to_change_role: "  Do you wish to change your Battlefield Role from %s to %s ?"
-msg_warning_cannot_change_role: "  You cannot change your battlefield role for another %s."
+msg_warning_do_you_wish_to_change_role_now: "  Do you wish to change your Battlefield Role from %s to %s ?"
+msg_warning_cannot_change_role_now: "  You cannot change your battlefield role for another %s."
