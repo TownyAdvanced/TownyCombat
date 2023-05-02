@@ -69,7 +69,6 @@ public class TownyCombatCommand implements TabExecutor {
 				showHelp(sender);
 		}
 	}
-
 	private void showHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/townycombat"));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/tcm", "changerole", Translatable.of("command_help_changerole").forLocale(sender)));

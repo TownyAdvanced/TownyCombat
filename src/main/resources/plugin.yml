@@ -17,6 +17,11 @@ commands:
         aliases: [tcm]
         
 permissions:
+    townycombat.command:
+        description: User is able to use all townycombat non-admin commands.
+        default: true
+        children:
+            townycombat.command.*: true
     townycombat.admin:
         description: User is able to use all townycombat admin commands.
         default: op
