@@ -12,6 +12,8 @@ description: A combat plugin for Towny
 
 commands:
     townycombatadmin:
+        aliases: [tcma]
+    townycombat:
         aliases: [tcm]
         
 permissions:

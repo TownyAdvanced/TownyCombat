@@ -9,7 +9,11 @@ public enum TownyCombatPermissionNodes {
 
 	// ----- Admin Command Nodes -----
 	TOWNYCOMBAT_ADMIN_COMMAND("townycombat.admin.command.*"),
-		TOWNYCOMBAT_ADMIN_COMMAND_RELOAD("townycombat.admin.command.reload");
+		TOWNYCOMBAT_ADMIN_COMMAND_RELOAD("townycombat.admin.command.reload"),
+
+	// ------- Command nodes -----------
+	TOWNYCOMBAT_COMMAND("townycombat.command.*"),
+		TOWNYCOMBAT_COMMAND_CHANGEROLE("townycombat.command.changerole");
 
 	private String value;
 

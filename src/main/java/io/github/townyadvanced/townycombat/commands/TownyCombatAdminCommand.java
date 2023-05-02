@@ -67,7 +67,7 @@ public class TownyCombatAdminCommand implements TabExecutor {
 
 	private void showHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/townycombatadmin"));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/tcm", "reload", Translatable.of("admin_help_reload").forLocale(sender)));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/tcma", "reload", Translatable.of("admin_help_reload").forLocale(sender)));
 	}
 
 	private void parseReloadCommand(CommandSender sender) {

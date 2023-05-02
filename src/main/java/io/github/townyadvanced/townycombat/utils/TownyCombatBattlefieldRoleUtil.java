@@ -2,14 +2,19 @@ package io.github.townyadvanced.townycombat.utils;
 
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
+import com.palmergames.util.TimeMgmt;
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.events.BattlefieldRole;
 import io.github.townyadvanced.townycombat.metadata.TownyCombatResidentMetaDataController;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
@@ -93,6 +98,7 @@ public class TownyCombatBattlefieldRoleUtil {
         ItemStack item = inventoryClickEvent.getCursor();
         BattlefieldRole materialBattlefieldRole = getBattlefieldRole(item.getType());
         BattlefieldRole playerBattlefieldRole = getBattlefieldRole(resident);
+
         
         if(materialBattlefieldRole != playerBattlefieldRole) {
             //Compose error message
@@ -120,11 +126,32 @@ public class TownyCombatBattlefieldRoleUtil {
         return true;
     }
     
-    private static String getFormattedTimeUntilNextRoleChange(Resident resident) {
-        return "Never hur hur";
+    
+    private static long getTimeOfNextRoleChange(Resident resident) {
+        return 0;
     }
+    
 
     public static void processPlayerWeaponWieldAttempt(InventoryClickEvent inventoryClickEvent) {
         
+    }
+
+    public static void processChangeRoleAttempt(CommandSender commandSender, String roleAsString) throws TownyException {
+        //Check if the player can change role
+        if(!(commandSender instanceof Player))
+            throw new TownyException("Cannot run this command from console"); //Scenario too rare to add translation
+        Player player= (Player)commandSender;
+        Resident resident = TownyAPI.getInstance().getResident(player.getUniqueId());
+        if(resident == null)
+            throw new RuntimeException("Unknown resident"); //Scenario too rare too add translation
+        long timeOfNextRoleChange = getTimeOfNextRoleChange(resident);
+        if(System.currentTimeMillis() < timeOfNextRoleChange) {
+            String timeOfNextRoleChangeFormatted = TimeMgmt.getFormattedTimeValue(timeOfNextRoleChange);
+            Translatable errorMessage = Translatable.of("msg_warning_cannot_change_role_now", timeOfNextRoleChangeFormatted);
+            throw new TownyException(errorMessage);
+        }
+        //Change Role
+        TownyCombatResidentMetaDataController.setBattlefieldRole(resident, roleAsString);
+        resident.save();
     }
 }
