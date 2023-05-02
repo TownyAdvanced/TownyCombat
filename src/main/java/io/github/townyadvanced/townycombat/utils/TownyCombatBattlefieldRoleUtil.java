@@ -143,7 +143,7 @@ public class TownyCombatBattlefieldRoleUtil {
         Player player= (Player)commandSender;
         Resident resident = TownyAPI.getInstance().getResident(player.getUniqueId());
         if(resident == null)
-            throw new RuntimeException("Unknown resident"); //Scenario too rare too add translation
+            throw new TownyException("Unknown resident"); //Scenario too rare too add translation
         long timeOfNextRoleChange = getTimeOfNextRoleChange(resident);
         if(System.currentTimeMillis() < timeOfNextRoleChange) {
             String timeOfNextRoleChangeFormatted = TimeMgmt.getFormattedTimeValue(timeOfNextRoleChange);
@@ -151,7 +151,9 @@ public class TownyCombatBattlefieldRoleUtil {
             throw new TownyException(errorMessage);
         }
         //Change Role
-        TownyCombatResidentMetaDataController.setBattlefieldRole(resident, roleAsString);
+        TownyCombatResidentMetaDataController.setBattlefieldRole(resident, roleAsString.toLowerCase());
         resident.save();
+        //Send success message
+        Messaging.sendMsg(commandSender, Translatable.of("msg_changerole_success", roleAsString).translate(Locale.ROOT));
     }
 }

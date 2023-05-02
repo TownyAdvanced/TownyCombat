@@ -55,3 +55,11 @@ msg_warning_cannot_wear_this_armour: "&cArmour dropped, because you do not have 
 msg_warning_cannot_wield_this_weapon: "&cWeapon dropped, because you do not have the required Battlefield Role to wield it."
 msg_warning_how_to_view_and_change_role: " To view your Battlefield Role, type /resident. To change your Battlefield Role, type /tcm changerole <role>."
 msg_warning_cannot_change_role_now: "&cYou cannot change your battlefield role for another %s."
+
+# Change-Role Success
+
+msg_changerole_success: "&bYou successfully changed your Battlefield Role to: %s"
+
+# Help
+
+command_help_changerole: "Change your Battlefield Role. Options: Light | Medium | Heavy."

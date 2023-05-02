@@ -22,8 +22,8 @@ import java.util.List;
 public class TownyCombatCommand implements TabExecutor {
 
 	private static final List<String> tabCompletes = Arrays.asList("changerole");
-
-	private static final List<String> changeRoleTabCompletes = Arrays.asList("light", "medium", "heavy");
+	private static final List<String> changeRoleTabCompletes = Arrays.asList("Light", "Medium", "Heavy");
+	private static final List<String> battlefieldRolesList = Arrays.asList("light", "medium", "heavy");
 	
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 		switch (args[0].toLowerCase()) {
@@ -70,8 +70,8 @@ public class TownyCombatCommand implements TabExecutor {
 		}
 	}
 	private void showHelp(CommandSender sender) {
-		sender.sendMessage(ChatTools.formatTitle("/townycombat"));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/tcm", "changerole", Translatable.of("command_help_changerole").forLocale(sender)));
+		Messaging.sendMsg(sender, ChatTools.formatTitle("/townycombat"));
+		Messaging.sendMsg(sender, ChatTools.formatCommand("Eg", "/tcm", "changerole", Translatable.of("command_help_changerole").forLocale(sender)));
 	}
 
 	private void parseChangeRoleCommand(CommandSender sender, String[] args) {
@@ -79,14 +79,14 @@ public class TownyCombatCommand implements TabExecutor {
 			showHelp(sender);
 			return; //No role included
 		}
-		if(!changeRoleTabCompletes.contains(args[0].toLowerCase())) {
+		if(!battlefieldRolesList.contains(args[1].toLowerCase())) {
 			showHelp(sender);
 			return; //Given role was not valid
 		}
 		try {
 			TownyCombatBattlefieldRoleUtil.processChangeRoleAttempt(sender, args[1]);
 		} catch (TownyException townyException) {
-			sender.sendMessage(townyException.getMessage());
+			Messaging.sendMsg(sender, townyException.getMessage());
 			townyException.printStackTrace();
 		}
 	}
