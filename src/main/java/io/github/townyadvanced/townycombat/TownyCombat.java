@@ -4,9 +4,11 @@ import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.util.Colors;
 import com.palmergames.bukkit.util.Version;
 import io.github.townyadvanced.townycombat.commands.TownyCombatAdminCommand;
+import io.github.townyadvanced.townycombat.commands.TownyCombatCommand;
 import io.github.townyadvanced.townycombat.integrations.dynmap.DynmapIntegration;
 import io.github.townyadvanced.townycombat.listeners.TownyCombatBukkitEventListener;
 import io.github.townyadvanced.townycombat.listeners.TownyCombatNationEventListener;
+import io.github.townyadvanced.townycombat.listeners.TownyCombatStatusScreenListener;
 import io.github.townyadvanced.townycombat.listeners.TownyCombatTownEventListener;
 import io.github.townyadvanced.townycombat.listeners.TownyCombatTownyEventListener;
 import io.github.townyadvanced.townycombat.settings.Settings;
@@ -76,6 +78,7 @@ public class TownyCombat extends JavaPlugin {
 
 	private void registerCommands() {
 		getCommand("townycombatadmin").setExecutor(new TownyCombatAdminCommand());
+		getCommand("townycombat").setExecutor(new TownyCombatCommand());
 	}
 
 	public String getVersion() {
@@ -101,7 +104,8 @@ public class TownyCombat extends JavaPlugin {
 	private void registerListeners() {
 		PluginManager pm = getServer().getPluginManager();		
 		pm.registerEvents(new TownyCombatBukkitEventListener(this), this);
-		pm.registerEvents(new TownyCombatTownEventListener(this), this);		
+		pm.registerEvents(new TownyCombatTownEventListener(this), this);
+		pm.registerEvents(new TownyCombatStatusScreenListener(this), this);
 		pm.registerEvents(new TownyCombatNationEventListener(this), this);
 		pm.registerEvents(new TownyCombatTownyEventListener(this), this);
 	}

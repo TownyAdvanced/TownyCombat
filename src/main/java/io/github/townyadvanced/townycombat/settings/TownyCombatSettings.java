@@ -416,4 +416,21 @@ public class TownyCombatSettings {
 	public static int getJumpDamageWarningIntervalMinutes() {
 		return Settings.getInt(ConfigNodes.ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_WARNING_INTERVAL_MINUTES);
 	}
+
+	public static boolean isUnlockCombatForRegularPlayersEnabled() {
+		return Settings.getBoolean(ConfigNodes.UNLOCK_PVP_COMBAT_FOR_REGULAR_PLAYERS_ENABLED);
+	}
+
+	public static boolean isBattlefieldRolesEnabled() {
+		return Settings.getBoolean(ConfigNodes.BATTLEFIELD_ROLES_ENABLED);
+	}
+
+	public static boolean isBattlefieldRolesSuperPotionsEnabled() {
+		return Settings.getBoolean(ConfigNodes.BATTLEFIELD_ROLES_SUPER_POTIONS_ENABLED);
+	}
+
+	public static double getBattlefieldRolesMinimumTimeBetweenRoleChangesDays() {
+		return Settings.getDouble(ConfigNodes.BATTLEFIELD_ROLES_MINIMUM_TIME_BETWEEN_ROLE_CHANGES_DAYS);
+	}
+
 }

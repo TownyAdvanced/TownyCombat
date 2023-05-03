@@ -3,6 +3,7 @@ package io.github.townyadvanced.townycombat.listeners;
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.events.TownyCombatSpecialCavalryHitEvent;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
+import io.github.townyadvanced.townycombat.utils.TownyCombatBattlefieldRoleUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatHorseUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatMovementUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatDistanceUtil;
@@ -22,6 +23,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -313,4 +315,10 @@ public class TownyCombatBukkitEventListener implements Listener {
 		}
 	}
 
+	@EventHandler
+	public void on (InventoryCloseEvent event) {
+		if (!TownyCombatSettings.isTownyCombatEnabled() || !TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() || !TownyCombatSettings.isBattlefieldRolesEnabled())
+			return;
+		TownyCombatBattlefieldRoleUtil.validateInventoryContents(event.getPlayer());
+	}
 }
