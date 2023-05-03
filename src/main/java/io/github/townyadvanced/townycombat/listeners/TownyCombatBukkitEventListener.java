@@ -317,7 +317,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 
 	@EventHandler
 	public void on (InventoryCloseEvent event) {
-		if (!TownyCombatSettings.isTownyCombatEnabled() || !TownyCombatSettings.isBattlefieldRolesEnabled())
+		if (!TownyCombatSettings.isTownyCombatEnabled() || !TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() || !TownyCombatSettings.isBattlefieldRolesEnabled())
 			return;
 		TownyCombatBattlefieldRoleUtil.validateInventoryContents(event.getPlayer());
 	}

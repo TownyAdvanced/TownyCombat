@@ -28,22 +28,22 @@ public class TownyCombatStatusScreenListener implements Listener {
 	 */
 	@EventHandler
 	public void onResidentStatusScreen(ResidentStatusScreenEvent event) {
-		if(TownyCombatSettings.isTownyCombatEnabled() && TownyCombatSettings.isBattlefieldRolesEnabled()) {
+		if (!TownyCombatSettings.isTownyCombatEnabled() || !TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() || !TownyCombatSettings.isBattlefieldRolesEnabled())
+			return;
 
-			//Create the hover item subcomponents
-			BattlefieldRole battlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole(event.getResident());
-			final Translator translator = Translator.locale(event.getCommandSender());
-			Component hoverItemContentSubComponent = getBattlefieldRoleHoverItemContentComponent(battlefieldRole, translator);
-			Component hoverItemButtonSubComponent = getBattlefieldRoleHoverItemButtonComponent(battlefieldRole, translator);
+		//Create the hover item subcomponents
+		BattlefieldRole battlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole(event.getResident());
+		final Translator translator = Translator.locale(event.getCommandSender());
+		Component hoverItemContentSubComponent = getBattlefieldRoleHoverItemContentComponent(battlefieldRole, translator);
+		Component hoverItemButtonSubComponent = getBattlefieldRoleHoverItemButtonComponent(battlefieldRole, translator);
 
-			//Create the hover item
-			Component hoverItemComponent = Component.empty()
-					.append(hoverItemButtonSubComponent)
-					.hoverEvent(HoverEvent.showText(hoverItemContentSubComponent));
+		//Create the hover item
+		Component hoverItemComponent = Component.empty()
+				.append(hoverItemButtonSubComponent)
+				.hoverEvent(HoverEvent.showText(hoverItemContentSubComponent));
 
-			//Add the hover item to the screen
-			event.getStatusScreen().addComponentOf("townyCombat_battlefieldRole", hoverItemComponent);
-		}
+		//Add the hover item to the screen
+		event.getStatusScreen().addComponentOf("townyCombat_battlefieldRole", hoverItemComponent);
 	}
 
 	private Component getBattlefieldRoleHoverItemContentComponent(BattlefieldRole battlefieldRole, Translator translator) {

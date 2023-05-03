@@ -417,6 +417,10 @@ public class TownyCombatSettings {
 		return Settings.getInt(ConfigNodes.ENCUMBRANCE_INFANTRY_JUMP_DAMAGE_WARNING_INTERVAL_MINUTES);
 	}
 
+	public static boolean isUnlockCombatForRegularPlayersEnabled() {
+		return Settings.getBoolean(ConfigNodes.UNLOCK_PVP_COMBAT_FOR_REGULAR_PLAYERS_ENABLED);
+	}
+
 	public static boolean isBattlefieldRolesEnabled() {
 		return Settings.getBoolean(ConfigNodes.BATTLEFIELD_ROLES_ENABLED);
 	}
