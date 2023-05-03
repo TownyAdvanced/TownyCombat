@@ -1,11 +1,9 @@
 package io.github.townyadvanced.townycombat.metadata;
 
-
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.metadata.LongDataField;
 import com.palmergames.bukkit.towny.object.metadata.StringDataField;
 import com.palmergames.bukkit.towny.utils.MetaDataUtil;
-
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;

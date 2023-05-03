@@ -1,7 +1,5 @@
 package io.github.townyadvanced.townycombat.listeners;
 
-import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.object.Resident;
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.events.TownyCombatSpecialCavalryHitEvent;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
@@ -25,9 +23,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -44,6 +40,7 @@ import org.spigotmc.event.entity.EntityMountEvent;
  *
  */
 public class TownyCombatBukkitEventListener implements Listener {
+
 
 	@SuppressWarnings("unused")
 	private final TownyCombat plugin;

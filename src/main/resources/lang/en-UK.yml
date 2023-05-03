@@ -23,4 +23,6 @@ description: >
 # DarkPurple = &9, LightGreen = &a, LightBlue = &b
 # Rose = &c, LightPurple = &d, Yellow = &e, White = &f
 
-msg_warning_cannot_wear_this_armour: "You cannot wear this type of armour, because you do not have the required Battlefield Role (%s)."
+status_resident_content_light_line_armour: "&2Armour: &aLeather"
+msg_warning_cannot_wear_this_armour: "&cArmour dropped, because you do not have the required Battlefield Role to wear it."
+
