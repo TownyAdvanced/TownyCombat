@@ -8,14 +8,13 @@ import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.util.TimeMgmt;
 import io.github.townyadvanced.townycombat.events.BattlefieldRole;
 import io.github.townyadvanced.townycombat.metadata.TownyCombatResidentMetaDataController;
+import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -111,8 +110,10 @@ public class TownyCombatBattlefieldRoleUtil {
         }
     }
     
-    private static long getTimeOfNextRoleChange(Resident resident) {
-        return 0;
+    private static long getTimeUntilNextRoleChange(Resident resident) {
+        long timeOfLastRoleChange = TownyCombatResidentMetaDataController.getLastBattlefieldRoleSwitchTime(resident);
+        long timeOfNextRoleChange = timeOfLastRoleChange + (long)(TownyCombatSettings.getBattlefieldRolesMinimumTimeBetweenRoleChangesDays() * TimeMgmt.ONE_DAY_IN_MILLIS);
+        return timeOfNextRoleChange - System.currentTimeMillis();
     }
 
     public static void processChangeRoleAttempt(CommandSender commandSender, String roleAsString) throws TownyException {
@@ -123,14 +124,15 @@ public class TownyCombatBattlefieldRoleUtil {
         Resident resident = TownyAPI.getInstance().getResident(player.getUniqueId());
         if(resident == null)
             throw new TownyException("Unknown resident"); //Scenario too rare too add translation
-        long timeOfNextRoleChange = getTimeOfNextRoleChange(resident);
-        if(System.currentTimeMillis() < timeOfNextRoleChange) {
-            String timeOfNextRoleChangeFormatted = TimeMgmt.getFormattedTimeValue(timeOfNextRoleChange);
-            Translatable errorMessage = Translatable.of("msg_warning_cannot_change_role_now", timeOfNextRoleChangeFormatted);
+        long timeUntilNextRoleChange = getTimeUntilNextRoleChange(resident);
+        if(timeUntilNextRoleChange > 0) {
+            String timeUntilNextRoleChangeFormatted = TimeMgmt.getFormattedTimeValue(timeUntilNextRoleChange);
+            Translatable errorMessage = Translatable.of("msg_warning_cannot_change_role_now", timeUntilNextRoleChangeFormatted);
             throw new TownyException(errorMessage);
         }
         //Change Role
         TownyCombatResidentMetaDataController.setBattlefieldRole(resident, roleAsString.toLowerCase());
+        TownyCombatResidentMetaDataController.setLastBattlefieldRoleSwitchTime(resident, System.currentTimeMillis());
         resident.save();
         //Send success message
         Messaging.sendMsg(commandSender, Translatable.of("msg_changerole_success", roleAsString).translate(Locale.ROOT));

@@ -425,4 +425,8 @@ public class TownyCombatSettings {
 		return Settings.getBoolean(ConfigNodes.BATTLEFIELD_ROLES_SUPER_POTIONS_ENABLED);
 	}
 
+	public static double getBattlefieldRolesMinimumTimeBetweenRoleChangesDays() {
+		return Settings.getDouble(ConfigNodes.BATTLEFIELD_ROLES_MINIMUM_TIME_BETWEEN_ROLE_CHANGES_DAYS);
+	}
+
 }

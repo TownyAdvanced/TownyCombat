@@ -426,6 +426,11 @@ public enum ConfigNodes {
 			"false",
 			"",
 			"# If true, battlefield roles are enabled. See user guide for details."),
+	BATTLEFIELD_ROLES_MINIMUM_TIME_BETWEEN_ROLE_CHANGES_DAYS(
+			"battlefield_roles.time_between_role_changes_days",
+			"7.0",
+			"",
+			"# This value determines the minimum time between each role-change."),
 	BATTLEFIELD_ROLES_SUPER_POTIONS_ENABLED(
 			"battlefield_roles.super_potions_enabled",
 			"true",
