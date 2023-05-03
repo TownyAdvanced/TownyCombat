@@ -13,8 +13,6 @@ import io.github.townyadvanced.townycombat.utils.TownyCombatBattlefieldRoleUtil;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-;
-
 public class TownyCombatStatusScreenListener implements Listener {
 
 	@SuppressWarnings("unused")
