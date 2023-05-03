@@ -13,8 +13,15 @@ import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionData;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -136,5 +143,51 @@ public class TownyCombatBattlefieldRoleUtil {
         resident.save();
         //Send success message
         Messaging.sendMsg(commandSender, Translatable.of("msg_changerole_success", roleAsString).translate(Locale.ROOT));
+    }
+    
+    public static @Nullable ItemStack getAmplifiedPotion(Player player, ItemStack potionItemStack) {
+        Resident resident = TownyAPI.getInstance().getResident(player.getUniqueId());
+        if (resident == null)
+            return null;
+        BattlefieldRole battlefieldRole = getBattlefieldRole(resident);
+        PotionMeta potionMeta = (PotionMeta) potionItemStack.getItemMeta();
+        if(potionMeta == null)
+            return null;
+        switch (battlefieldRole) {
+            case LIGHT:
+                if (potionMeta.getBasePotionData().getType().getEffectType() == PotionEffectType.SPEED) {
+                    return getAmplifiedSpeedPotion(potionMeta.getBasePotionData());
+                }
+                break;
+            default:
+                throw new RuntimeException("Unknown Role");
+        }
+        return null;
+    }
+    
+    private static @Nullable ItemStack getAmplifiedSpeedPotion(PotionData basePotionData) {
+        return getAmplifiedPotion(basePotionData, 180, 480);
+    }
+
+    private static @Nullable ItemStack getAmplifiedPotion(PotionData basePotionData, int nonExtendedDurationSeconds, int extendedDurationSeconds) {
+        //Create the updated effect
+        int amplifier = basePotionData.isUpgraded() ? 2 : 1;
+        int duration = basePotionData.isExtended() ? extendedDurationSeconds * 20 : nonExtendedDurationSeconds * 20;
+        amplifier++;
+        if(basePotionData.getType().getEffectType() == null)
+            return null;
+        PotionEffect newPotionEffect = new PotionEffect(basePotionData.getType().getEffectType(), duration, amplifier, true, true, true);
+
+        //Create the updated potion
+        ItemStack newPotion = new ItemStack(Material.POTION);
+        newPotion.setAmount(1);
+        PotionMeta newPotionMeta = (PotionMeta) newPotion.getItemMeta();
+        if(newPotionMeta == null)
+            return null;
+        newPotionMeta.addCustomEffect(newPotionEffect, true);
+        newPotion.setItemMeta(newPotionMeta);
+
+        //Return the update potion
+        return newPotion;
     }
 }

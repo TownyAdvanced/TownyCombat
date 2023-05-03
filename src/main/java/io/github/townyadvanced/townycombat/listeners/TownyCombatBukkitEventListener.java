@@ -26,10 +26,12 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.spigotmc.event.entity.EntityDismountEvent;
 import org.spigotmc.event.entity.EntityMountEvent;
@@ -321,4 +323,17 @@ public class TownyCombatBukkitEventListener implements Listener {
 			return;
 		TownyCombatBattlefieldRoleUtil.validateInventoryContents(event.getPlayer());
 	}
+
+	@EventHandler
+	public void on (PlayerItemConsumeEvent event) {
+		if (!TownyCombatSettings.isTownyCombatEnabled() || !TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() || !TownyCombatSettings.isBattlefieldRolesEnabled())
+			return;
+		if (event.getItem().getType() == Material.POTION) {
+			ItemStack updatedPotion = TownyCombatBattlefieldRoleUtil.getAmplifiedPotion(event.getPlayer(), event.getItem());
+			if (updatedPotion != null) {
+				event.setItem(updatedPotion);
+			}
+		}
+	}
+
 }
