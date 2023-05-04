@@ -14,44 +14,81 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionData;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 public class TownyCombatBattlefieldRoleUtil {
-
-    public static final List<Material> lightRoleArmour = Arrays.asList(Material.LEATHER_BOOTS, Material.LEATHER_CHESTPLATE, Material.LEATHER_HELMET, Material.LEATHER_LEGGINGS);
-    public static final List<Material> lightRoleWeapons = Arrays.asList(Material.BOW, Material.WOODEN_SWORD, Material.WOODEN_AXE);
-    public static final Map<Material, List<BattlefieldRole>> armourBattlefieldRoleMap;
-    public static final Map<Material, List<BattlefieldRole>> weaponBattlefieldRoleMap;
+    public static final String leatherArmourKey = "LEATHER";
+    public static final String ironArmourKey = "IRON";
+    public static final String chainArmourKey = "CHAINMAIL";
+    public static final String turtleArmourKey = "TURTLE";
+    public static final String diamondArmourKey = "DIAMOND";
+    public static final String goldArmourKey = "GOLDEN";
+    public static final String netheriteArmourKey = "NETHERITE";
+    public static final String woodenWeaponKey = "WOODEN";
+    public static final String bowKey = "BOW";
+    public static final String crossbowKey = "CROSSBOW";
+    public static final String ironWeaponKey = "IRON";
+    public static final String stoneWeaponKey = "STONE";
+    public static final String diamondWeaponKey = "DIAMOND";
+    public static final String netheriteWeaponKey = "NETHERITE";
+    public static final Map<String, Set<BattlefieldRole>> armourBattlefieldRoleMap;
+    public static final Map<String, Set<BattlefieldRole>> weaponBattlefieldRoleMap;
 
     static {
         armourBattlefieldRoleMap = new HashMap<>();
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, leatherArmourKey, BattlefieldRole.LIGHT);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, ironArmourKey, BattlefieldRole.MEDIUM);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, chainArmourKey, BattlefieldRole.MEDIUM);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, turtleArmourKey, BattlefieldRole.MEDIUM);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, goldArmourKey, BattlefieldRole.MEDIUM);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, diamondArmourKey, BattlefieldRole.HEAVY);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, netheriteArmourKey, BattlefieldRole.HEAVY);
+        
         weaponBattlefieldRoleMap = new HashMap<>();
-        addToMaterialBattlefieldRoleMap(armourBattlefieldRoleMap, lightRoleArmour, BattlefieldRole.LIGHT);
-        addToMaterialBattlefieldRoleMap(weaponBattlefieldRoleMap, lightRoleWeapons, BattlefieldRole.LIGHT);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, woodenWeaponKey, BattlefieldRole.LIGHT);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, bowKey, BattlefieldRole.LIGHT);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, stoneWeaponKey, BattlefieldRole.MEDIUM);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, ironWeaponKey, BattlefieldRole.MEDIUM);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, crossbowKey, BattlefieldRole.MEDIUM);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, diamondWeaponKey, BattlefieldRole.HEAVY);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, netheriteWeaponKey, BattlefieldRole.HEAVY);
     }
-    
-    private static void addToMaterialBattlefieldRoleMap(Map<Material, List<BattlefieldRole>> materialBattlefieldRoleMap, List<Material> materialList, BattlefieldRole battlefieldRole) {
-        for(Material material: materialList) {
-            if(materialBattlefieldRoleMap.containsKey(material)) {
-                materialBattlefieldRoleMap.get(material).add(battlefieldRole);
-            } else {
-                List<BattlefieldRole> battlefieldRoleList = new ArrayList<>();
-                battlefieldRoleList.add(battlefieldRole);
-                materialBattlefieldRoleMap.put(material, battlefieldRoleList);
-            }
+
+    private static void addMaterialsToBattlefieldRoleMap(Map<String, Set<BattlefieldRole>> materialBattlefieldRoleMap, String materialKey, BattlefieldRole battlefieldRole) {
+        if(materialBattlefieldRoleMap.containsKey(materialKey)) {
+            materialBattlefieldRoleMap.get(materialKey).add(battlefieldRole);
+        } else {
+            Set<BattlefieldRole> battlefieldRoleSet = new HashSet<>();
+            battlefieldRoleSet.add(battlefieldRole);
+            materialBattlefieldRoleMap.put(materialKey, battlefieldRoleSet);
         }
     }
+
+    public static boolean isItemAllowedByBattlefieldRole(ItemStack itemStack, Player player) {
+        Resident resident = TownyAPI.getInstance().getResident(player.getUniqueId());
+        if (resident == null)
+            return true;  //Edge case
+        BattlefieldRole playerBattlefieldRole = getBattlefieldRole(resident);
+        return isMaterialAllowedByBattlefieldRole(weaponBattlefieldRoleMap, itemStack.getType(), playerBattlefieldRole);
+    }
     
-    public static boolean isMaterialAllowedByBattlefieldRole(Map<Material, List<BattlefieldRole>> materialRoleMap, Material material, BattlefieldRole battlefieldRole) {
-        List<BattlefieldRole> rolesWhichCanUseThisItem = materialRoleMap.get(material);
+    private static boolean isMaterialAllowedByBattlefieldRole(Map<String, Set<BattlefieldRole>> materialRoleMap, Material material, BattlefieldRole battlefieldRole) {
+        String materialKey = material.getData().getName().split("_")[0];
+        Set<BattlefieldRole> rolesWhichCanUseThisItem = materialRoleMap.get(materialKey);
         if(rolesWhichCanUseThisItem == null) {
-            return true; //Anyone can use it
+            return true; //No restrictions on this material
         } else {
             return rolesWhichCanUseThisItem.contains(battlefieldRole);
         }
@@ -62,35 +99,24 @@ public class TownyCombatBattlefieldRoleUtil {
         return BattlefieldRole.parseString(roleAsString);
     }
 
-    public static void validateInventoryContents(HumanEntity player) {
+    public static void validateArmourSlots(HumanEntity player) {
         Resident resident = TownyAPI.getInstance().getResident(player.getUniqueId());
         if (resident == null)
             return;
         //Create Convenience variables
         BattlefieldRole playerBattlefieldRole = getBattlefieldRole(resident);
         ItemStack[] inventoryContents = player.getInventory().getContents();
-        List<Integer> invalidArmourIndexes = new ArrayList<>();
-        List<Integer> invalidWeaponIndexes = new ArrayList<>();
+        List<Integer> invalidInventoryIndexes = new ArrayList<>();
         //Identify invalid armour (Slots 36-39)
         for(int i = 36; i <= 39; i++) {
             ItemStack itemStack = inventoryContents[i];
             if(itemStack != null && isMaterialAllowedByBattlefieldRole(armourBattlefieldRoleMap, itemStack.getType(), playerBattlefieldRole)) {
-                invalidArmourIndexes.add(i);
+                invalidInventoryIndexes.add(i);
             }
         }
-        //Identify Invalid Weapons (Slots 0-8 is hotbar)
-        for(int i = 0; i <= 8; i++) {
-            ItemStack itemStack = inventoryContents[i];
-            if(itemStack != null && isMaterialAllowedByBattlefieldRole(armourBattlefieldRoleMap, itemStack.getType(), playerBattlefieldRole)) {
-                invalidWeaponIndexes.add(i);
-            }
-        }
-        //Drop all Invalid Items           
-        List<Integer> invalidItemIndexes = new ArrayList<>();
-        invalidItemIndexes.addAll(invalidArmourIndexes);
-        invalidItemIndexes.addAll(invalidWeaponIndexes);
+        //Drop Invalid armour           
         Towny.getPlugin().getServer().getScheduler().runTask(Towny.getPlugin(), () -> {
-            for(Integer inventoryIndex: invalidItemIndexes) {
+            for(int inventoryIndex: invalidInventoryIndexes) {
                 //Drop item on ground
                 player.getWorld().dropItemNaturally(player.getLocation(), inventoryContents[inventoryIndex]);
                 //Remove item from inventory
@@ -98,18 +124,13 @@ public class TownyCombatBattlefieldRoleUtil {
             }
         });
         //Send warning message(s)
-        if(invalidArmourIndexes.size() > 0) {
+        if(invalidInventoryIndexes.size() > 0) {
             Translatable errorMessage = Translatable.of("msg_warning_cannot_wear_this_armour");
             errorMessage.append(Translatable.of("msg_warning_how_to_view_and_change_role"));
             Messaging.sendErrorMsg(player, errorMessage);
         }
-        if(invalidWeaponIndexes.size() > 0) {
-            Translatable errorMessage = Translatable.of("msg_warning_cannot_wield_this_weapon");
-            errorMessage.append(Translatable.of("msg_warning_how_to_view_and_change_role"));
-            Messaging.sendErrorMsg(player, errorMessage);
-        }
     }
-    
+
     private static long getTimeUntilNextRoleChange(Resident resident) {
         long timeOfLastRoleChange = TownyCombatResidentMetaDataController.getLastBattlefieldRoleSwitchTime(resident);
         long timeOfNextRoleChange = timeOfLastRoleChange + (long)(TownyCombatSettings.getBattlefieldRolesMinimumTimeBetweenRoleChangesDays() * TimeMgmt.ONE_DAY_IN_MILLIS);
@@ -136,5 +157,51 @@ public class TownyCombatBattlefieldRoleUtil {
         resident.save();
         //Send success message
         Messaging.sendMsg(commandSender, Translatable.of("msg_changerole_success", roleAsString).translate(Locale.ROOT));
+    }
+    
+    public static @Nullable ItemStack getAmplifiedPotion(Player player, ItemStack potionItemStack) {
+        Resident resident = TownyAPI.getInstance().getResident(player.getUniqueId());
+        if (resident == null)
+            return null;
+        BattlefieldRole battlefieldRole = getBattlefieldRole(resident);
+        PotionMeta potionMeta = (PotionMeta) potionItemStack.getItemMeta();
+        if(potionMeta == null)
+            return null;
+        switch (battlefieldRole) {
+            case LIGHT:
+                if (potionMeta.getBasePotionData().getType().getEffectType() == PotionEffectType.SPEED) {
+                    return getAmplifiedSpeedPotion(potionMeta.getBasePotionData());
+                }
+                break;
+            default:
+                throw new RuntimeException("Unknown Role");
+        }
+        return null;
+    }
+    
+    private static @Nullable ItemStack getAmplifiedSpeedPotion(PotionData basePotionData) {
+        return getAmplifiedPotion(basePotionData, 180, 480);
+    }
+
+    private static @Nullable ItemStack getAmplifiedPotion(PotionData basePotionData, int nonExtendedDurationSeconds, int extendedDurationSeconds) {
+        //Create the updated effect
+        int amplifier = basePotionData.isUpgraded() ? 2 : 1;
+        int duration = basePotionData.isExtended() ? extendedDurationSeconds * 20 : nonExtendedDurationSeconds * 20;
+        amplifier++;
+        if(basePotionData.getType().getEffectType() == null)
+            return null;
+        PotionEffect newPotionEffect = new PotionEffect(basePotionData.getType().getEffectType(), duration, amplifier, true, true, true);
+
+        //Create the updated potion
+        ItemStack newPotion = new ItemStack(Material.POTION);
+        newPotion.setAmount(1);
+        PotionMeta newPotionMeta = (PotionMeta) newPotion.getItemMeta();
+        if(newPotionMeta == null)
+            return null;
+        newPotionMeta.addCustomEffect(newPotionEffect, true);
+        newPotion.setItemMeta(newPotionMeta);
+
+        //Return the update potion
+        return newPotion;
     }
 }
