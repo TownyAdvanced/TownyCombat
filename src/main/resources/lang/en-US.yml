@@ -61,9 +61,9 @@ status_resident_content_heavy_line_armour: "&2Armor: &aDiamond, Netherite"
 status_resident_content_heavy_line_melee_weapons: "&2Melee Weapons: &aDiamond, Netherite"
 status_resident_content_heavy_line_missile_weapons: "&2Missile Weapons: &aNone"
 status_resident_content_heavy_line_passive_ability: "&2Passive Ability: &a+1 Resistance when wearing armor"
-status_resident_content_heavy_line_disadvantage3: "&2Disadvantage: &aCannot use Speed Potions"
 status_resident_content_heavy_line_disadvantage1: "&2Disadvantage: &aSlowness 1 when wearing armor"
 status_resident_content_heavy_line_disadvantage2: "&2Disadvantage: &aLeaping -1 when wearing armor"
+status_resident_content_heavy_line_disadvantage3: "&2Disadvantage: &aCannot use Speed Potions"
 status_resident_content_heavy_super_potion_line: "&2Super Potion (1/day): &a TODO"
 
 # Change-Battlefield-Role Warnings

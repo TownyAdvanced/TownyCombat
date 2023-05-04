@@ -99,6 +99,14 @@ public class TownyCombatBattlefieldRoleUtil {
         return BattlefieldRole.parseString(roleAsString);
     }
 
+    public static BattlefieldRole getBattlefieldRole(Player player) {
+        Resident resident = TownyAPI.getInstance().getResident(player.getUniqueId());
+        if (resident == null)
+            return BattlefieldRole.LIGHT;  //Edge case
+        String roleAsString = TownyCombatResidentMetaDataController.getBattlefieldRole(resident);
+        return BattlefieldRole.parseString(roleAsString);
+    }
+    
     public static void validateArmourSlots(HumanEntity player) {
         Resident resident = TownyAPI.getInstance().getResident(player.getUniqueId());
         if (resident == null)
@@ -220,5 +228,13 @@ public class TownyCombatBattlefieldRoleUtil {
         }
         //Return the update potion
         return newPotion;
+    }
+
+    public static boolean isPlayerWearingArmour(Player player) {
+        for(ItemStack armourPiece: player.getInventory().getArmorContents()) {
+            if(armourPiece != null) 
+                return true;
+        }
+        return false;
     }
 }
