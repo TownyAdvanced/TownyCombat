@@ -363,7 +363,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		if (!TownyCombatSettings.isTownyCombatEnabled() || !TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() || !TownyCombatSettings.isBattlefieldRolesEnabled())
 			return;
 		if (event.getItem().getType() == Material.POTION) {
-			ItemStack updatedPotion = TownyCombatBattlefieldRoleUtil.getAmplifiedPotion(event.getPlayer(), event.getItem());
+			ItemStack updatedPotion = TownyCombatBattlefieldRoleUtil.getUpdatedPotion(event.getPlayer(), event.getItem());
 			if (updatedPotion != null) {
 				event.setItem(updatedPotion);
 			}
