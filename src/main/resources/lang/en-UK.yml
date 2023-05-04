@@ -24,7 +24,7 @@ description: >
 # Rose = &c, LightPurple = &d, Yellow = &e, White = &f
 
 status_resident_content_light_line_armour: "&2Armour: &aLeather"
-status_resident_content_medium_line_armour: "&2Armour: &aGolden, Chainmail, Iron, Turtle"
+status_resident_content_medium_line_armour: "&2Armour: &aGold, Chainmail, Iron, Turtle"
 status_resident_content_heavy_line_armour: "&2Armor: &aDiamond, Netherite"
 
 status_resident_content_heavy_line_disadvantage1: "&2Disadvantage: &aSlowness 1 when wearing armour"

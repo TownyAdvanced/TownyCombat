@@ -17,6 +17,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AbstractHorse;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Arrow;
 import org.bukkit.event.EventHandler;
@@ -25,7 +26,9 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.LingeringPotionSplashEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
@@ -162,6 +165,24 @@ public class TownyCombatBukkitEventListener implements Listener {
 	}
 
 	@EventHandler
+	public void on (PotionSplashEvent event) {
+		if (!TownyCombatSettings.isTownyCombatEnabled())
+			return;
+
+		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && TownyCombatSettings.isBattlefieldRolesEnabled()) {
+			for (LivingEntity livingEntity : event.getAffectedEntities()) {
+				if (livingEntity instanceof Player) {
+					TownyCombatBattlefieldRoleUtil.evaluateEffectOfSplashPotion(event, (Player)livingEntity);
+				}
+			}
+		}
+	}
+
+	@EventHandler
+	public void on (LingeringPotionSplashEvent event) {
+	}
+
+	@EventHandler
 	public void on (EntityShootBowEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
@@ -173,7 +194,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 				return;
 			if(!TownyCombatBattlefieldRoleUtil.isItemAllowedByBattlefieldRole(event.getBow(), (Player)event.getEntity())) {
 				event.setCancelled(true);
-				Messaging.sendMsg(event.getEntity(), Translatable.of("msg_warning_cannot_wield_this_weapon").append("msg_warning_how_to_view_and_change_role"));
+				Messaging.sendMsg(event.getEntity(), Translatable.of("msg_warning_cannot_wield_this_missile_weapon").append(Translatable.of("msg_warning_how_to_view_and_change_role")));
 			}
 		}
 	}
@@ -193,7 +214,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 						((Player)event.getDamager()).getInventory().getItemInMainHand(), 
 						(Player)event.getDamager())) {
 					event.setCancelled(true);
-					Messaging.sendMsg(event.getDamager(), Translatable.of("msg_warning_cannot_wield_this_weapon").append("msg_warning_how_to_view_and_change_role"));
+					Messaging.sendMsg(event.getDamager(), Translatable.of("msg_warning_cannot_wield_this_melee_weapon").append("msg_warning_how_to_view_and_change_role"));
 				}
 			}
 		}
@@ -363,10 +384,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		if (!TownyCombatSettings.isTownyCombatEnabled() || !TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() || !TownyCombatSettings.isBattlefieldRolesEnabled())
 			return;
 		if (event.getItem().getType() == Material.POTION) {
-			ItemStack updatedPotion = TownyCombatBattlefieldRoleUtil.getUpdatedPotion(event.getPlayer(), event.getItem());
-			if (updatedPotion != null) {
-				event.setItem(updatedPotion);
-			}
+			TownyCombatBattlefieldRoleUtil.evaluateEffectOfDrinkingPotion(event);
 		}
 	}
 
