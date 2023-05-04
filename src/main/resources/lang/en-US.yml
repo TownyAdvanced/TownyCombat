@@ -62,7 +62,7 @@ status_resident_content_heavy_line_melee_weapons: "&2Melee Weapons: &aDiamond, N
 status_resident_content_heavy_line_missile_weapons: "&2Missile Weapons: &aNone"
 status_resident_content_heavy_line_passive_ability: "&2Passive Ability: &a+1 Resistance 1 when wearing armor"
 status_resident_content_heavy_line_disadvantage1: "&2Disadvantage: &aSlowness 1 when wearing armor"
-status_resident_content_heavy_line_disadvantage2: "&2Disadvantage: &aLeaping -2 when wearing armor"
+status_resident_content_heavy_line_disadvantage2: "&2Disadvantage: &JumpBoost -2 when wearing armor"
 status_resident_content_heavy_line_disadvantage3: "&2Disadvantage: &aCannot use Potions of Swiftness"
 status_resident_content_heavy_super_potion_line: "&2Super Potion (1/day): &a TODO"
     

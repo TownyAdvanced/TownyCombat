@@ -91,8 +91,6 @@ public class TownyCombatBattlefieldRoleUtil {
     
     private static boolean isMaterialAllowedByBattlefieldRole(Map<String, Set<BattlefieldRole>> materialRoleMap, Material material, BattlefieldRole battlefieldRole) {
         String materialKey = material.name().split("_")[0];
-
-        TownyCombat.info("MATERIAL NAME: " + materialKey);
         
         Set<BattlefieldRole> rolesWhichCanUseThisItem = materialRoleMap.get(materialKey);
         if(rolesWhichCanUseThisItem == null) {
@@ -217,20 +215,20 @@ public class TownyCombatBattlefieldRoleUtil {
         ItemStack replacementPotion = null;
         switch (battlefieldRole) {
             case LIGHT:
-                if (potionMeta.getBasePotionData().getType().getEffectType() == PotionEffectType.SPEED) {
+                if (potionMeta.getBasePotionData().getType().getEffectType().equals(PotionEffectType.SPEED)) {
                     replacementPotion = getUpdatedSpeedPotion(potionMeta.getBasePotionData(), 1);
                 }
                 break;
             case MEDIUM:
-                if (potionMeta.getBasePotionData().getType().getEffectType() == PotionEffectType.INCREASE_DAMAGE) {
+                if (potionMeta.getBasePotionData().getType().getEffectType().equals(PotionEffectType.INCREASE_DAMAGE)) {
                     replacementPotion =  getUpdatedStrengthPotion(potionMeta.getBasePotionData(), 1);
                 }
-                if (potionMeta.getBasePotionData().getType().getEffectType() == PotionEffectType.SPEED) {
+                if (potionMeta.getBasePotionData().getType().getEffectType().equals(PotionEffectType.SPEED)) {
                     replacementPotion = getUpdatedSpeedPotion(potionMeta.getBasePotionData(), -1);
                 }
                 break;
             case HEAVY:
-                if (potionMeta.getBasePotionData().getType().getEffectType() == PotionEffectType.SPEED) {
+                if (potionMeta.getBasePotionData().getType().getEffectType().equals(PotionEffectType.SPEED)) {
                     replacementPotion = getUpdatedSpeedPotion(potionMeta.getBasePotionData(), -2);
                 }
                 break;
@@ -259,7 +257,7 @@ public class TownyCombatBattlefieldRoleUtil {
         if(basePotionData.getType().getEffectType() != null) {
             int amplifier = basePotionData.isUpgraded() ? 1 : 0;
             amplifier += powerModifier;
-            if(amplifier > 0) {
+            if(amplifier >= 0) {
                 int duration = basePotionData.isExtended() ? extendedDurationSeconds * 20 : nonExtendedDurationSeconds * 20;
                 PotionEffect newPotionEffect = new PotionEffect(basePotionData.getType().getEffectType(), duration, amplifier, true, true, true);
                 PotionMeta newPotionMeta = (PotionMeta) newPotion.getItemMeta();
@@ -280,45 +278,45 @@ public class TownyCombatBattlefieldRoleUtil {
         switch (battlefieldRole) {
             case LIGHT:
                 for(PotionEffect potionEffect: event.getPotion().getEffects()) {
-                    if(potionEffect.getType() == PotionEffectType.SPEED) {
-                        //Set original effect on player to zero
-                        event.setIntensity(player, 0);
+                    if(potionEffect.getType().equals(PotionEffectType.SPEED)) {
                         //Give a new effect to the player
                         int amplifier = potionEffect.getAmplifier() + 1;
                         int duration = (int)((double)potionEffect.getDuration() * event.getIntensity(player));
                         givePotionEffectToPlayerUnlessAmplifierIsNegative(potionEffect.getType(), amplifier, duration, player);
+                        //Set the upcoming event effect on player to zero
+                        event.setIntensity(player, 0);
                     }
                 }
                 break;
             case MEDIUM:
                 for(PotionEffect potionEffect: event.getPotion().getEffects()) {
-                    if(potionEffect.getType() == PotionEffectType.SPEED) {
-                        //Set original effect on player to zero
-                        event.setIntensity(player, 0);
+                    if(potionEffect.getType().equals(PotionEffectType.SPEED)) {
                         //Give a new effect to the player
                         int amplifier = potionEffect.getAmplifier() - 1;
                         int duration = (int)((double)potionEffect.getDuration() * event.getIntensity(player));
                         givePotionEffectToPlayerUnlessAmplifierIsNegative(potionEffect.getType(), amplifier, duration, player);
-                    }
-                    if(potionEffect.getType() == PotionEffectType.INCREASE_DAMAGE) {
-                        //Set original effect on player to zero
+                        //Set the upcoming event effect on player to zero
                         event.setIntensity(player, 0);
+                    }
+                    if(potionEffect.getType().equals(PotionEffectType.INCREASE_DAMAGE)) {
                         //Give a new effect to the player
                         int amplifier = potionEffect.getAmplifier() + 1;
                         int duration = (int)((double)potionEffect.getDuration() * event.getIntensity(player));
                         givePotionEffectToPlayerUnlessAmplifierIsNegative(potionEffect.getType(), amplifier, duration, player);
+                        //Set the upcoming event effect on player to zero
+                        event.setIntensity(player, 0);
                     }
                 }
                 break;
             case HEAVY:
                 for(PotionEffect potionEffect: event.getPotion().getEffects()) {
-                    if(potionEffect.getType() == PotionEffectType.SPEED) {
-                        //Set original effect on player to zero
-                        event.setIntensity(player, 0);
+                    if(potionEffect.getType().equals(PotionEffectType.SPEED)) {
                         //Give a new effect to the player
                         int amplifier = potionEffect.getAmplifier() - 2;
                         int duration = (int)((double)potionEffect.getDuration() * event.getIntensity(player));
                         givePotionEffectToPlayerUnlessAmplifierIsNegative(potionEffect.getType(), amplifier, duration, player);
+                        //Set the upcoming event effect on player to zero
+                        event.setIntensity(player, 0);
                     }
                 }
                 break;
@@ -328,7 +326,7 @@ public class TownyCombatBattlefieldRoleUtil {
     }
 
     private static void givePotionEffectToPlayerUnlessAmplifierIsNegative(PotionEffectType potionEffectType, int amplifier, int durationInTicks, Player player) {
-        if(amplifier > 0) {
+        if(amplifier >= 0) {
             Towny.getPlugin().getServer().getScheduler().runTask(Towny.getPlugin(), new Runnable() {
                 public void run() {
                     player.addPotionEffect(new PotionEffect(potionEffectType, durationInTicks, amplifier));
