@@ -21,7 +21,6 @@ import org.bukkit.potion.PotionEffectType;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -30,53 +29,50 @@ import java.util.Map;
 import java.util.Set;
 
 public class TownyCombatBattlefieldRoleUtil {
-
-    public static final List<Material> leatherArmour = Arrays.asList(Material.LEATHER_BOOTS, Material.LEATHER_CHESTPLATE, Material.LEATHER_HELMET, Material.LEATHER_LEGGINGS);
-    public static final List<Material> ironArmour = Arrays.asList(Material.IRON_BOOTS, Material.IRON_CHESTPLATE, Material.IRON_HELMET, Material.IRON_LEGGINGS);
-    public static final List<Material> chainArmour = Arrays.asList(Material.CHAINMAIL_BOOTS, Material.CHAINMAIL_CHESTPLATE, Material.CHAINMAIL_HELMET, Material.CHAINMAIL_LEGGINGS);
-    public static final List<Material> turtleArmour = Arrays.asList(Material.TURTLE_HELMET);
-    public static final List<Material> goldArmour = Arrays.asList(Material.GOLDEN_BOOTS, Material.GOLDEN_CHESTPLATE, Material.GOLDEN_HELMET, Material.GOLDEN_LEGGINGS);
-    public static final List<Material> diamondArmour = Arrays.asList(Material.DIAMOND_BOOTS, Material.DIAMOND_CHESTPLATE, Material.DIAMOND_HELMET, Material.DIAMOND_LEGGINGS);
-    public static final List<Material> netheriteArmour = Arrays.asList(Material.NETHERITE_BOOTS, Material.NETHERITE_CHESTPLATE, Material.NETHERITE_HELMET, Material.NETHERITE_LEGGINGS);
-    public static final List<Material> woodenWeapons = Arrays.asList(Material.WOODEN_SWORD, Material.WOODEN_AXE);
-    public static final List<Material> stoneWeapons = Arrays.asList(Material.STONE_SWORD, Material.STONE_AXE);
-    public static final List<Material> ironWeapons = Arrays.asList(Material.IRON_SWORD, Material.IRON_AXE);
-    public static final List<Material> diamondWeapons = Arrays.asList(Material.DIAMOND_SWORD, Material.DIAMOND_AXE);
-    public static final List<Material> netheriteWeapons = Arrays.asList(Material.NETHERITE_SWORD, Material.NETHERITE_AXE);
-    public static final List<Material> bows = Arrays.asList(Material.BOW);
-    public static final List<Material> crossbows = Arrays.asList(Material.CROSSBOW);
-    public static final Map<Material, Set<BattlefieldRole>> armourBattlefieldRoleMap;
-    public static final Map<Material, Set<BattlefieldRole>> weaponBattlefieldRoleMap;
+    public static final String leatherArmourKey = "LEATHER";
+    public static final String ironArmourKey = "IRON";
+    public static final String chainArmourKey = "CHAINMAIL";
+    public static final String turtleArmourKey = "TURTLE";
+    public static final String diamondArmourKey = "DIAMOND";
+    public static final String goldArmourKey = "GOLDEN";
+    public static final String netheriteArmourKey = "NETHERITE";
+    public static final String woodenWeaponKey = "WOODEN";
+    public static final String bowKey = "BOW";
+    public static final String crossbowKey = "CROSSBOW";
+    public static final String ironWeaponKey = "IRON";
+    public static final String stoneWeaponKey = "STONE";
+    public static final String diamondWeaponKey = "DIAMOND";
+    public static final String netheriteWeaponKey = "NETHERITE";
+    public static final Map<String, Set<BattlefieldRole>> armourBattlefieldRoleMap;
+    public static final Map<String, Set<BattlefieldRole>> weaponBattlefieldRoleMap;
 
     static {
         armourBattlefieldRoleMap = new HashMap<>();
-        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, leatherArmour, BattlefieldRole.LIGHT);
-        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, ironArmour, BattlefieldRole.MEDIUM);
-        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, chainArmour, BattlefieldRole.MEDIUM);
-        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, turtleArmour, BattlefieldRole.MEDIUM);
-        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, goldArmour, BattlefieldRole.MEDIUM);
-        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, diamondArmour, BattlefieldRole.HEAVY);
-        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, netheriteArmour, BattlefieldRole.HEAVY);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, leatherArmourKey, BattlefieldRole.LIGHT);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, ironArmourKey, BattlefieldRole.MEDIUM);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, chainArmourKey, BattlefieldRole.MEDIUM);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, turtleArmourKey, BattlefieldRole.MEDIUM);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, goldArmourKey, BattlefieldRole.MEDIUM);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, diamondArmourKey, BattlefieldRole.HEAVY);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, netheriteArmourKey, BattlefieldRole.HEAVY);
         
         weaponBattlefieldRoleMap = new HashMap<>();
-        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, woodenWeapons, BattlefieldRole.LIGHT);
-        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, bows, BattlefieldRole.LIGHT);
-        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, stoneWeapons, BattlefieldRole.MEDIUM);
-        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, ironWeapons, BattlefieldRole.MEDIUM);
-        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, crossbows, BattlefieldRole.MEDIUM);
-        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, diamondWeapons, BattlefieldRole.HEAVY);
-        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, netheriteWeapons, BattlefieldRole.HEAVY);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, woodenWeaponKey, BattlefieldRole.LIGHT);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, bowKey, BattlefieldRole.LIGHT);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, stoneWeaponKey, BattlefieldRole.MEDIUM);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, ironWeaponKey, BattlefieldRole.MEDIUM);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, crossbowKey, BattlefieldRole.MEDIUM);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, diamondWeaponKey, BattlefieldRole.HEAVY);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, netheriteWeaponKey, BattlefieldRole.HEAVY);
     }
 
-    private static void addMaterialsToBattlefieldRoleMap(Map<Material, Set<BattlefieldRole>> materialBattlefieldRoleMap, List<Material> materialList, BattlefieldRole battlefieldRole) {
-        for(Material material: materialList) {
-            if(materialBattlefieldRoleMap.containsKey(material)) {
-                materialBattlefieldRoleMap.get(material).add(battlefieldRole);
-            } else {
-                Set<BattlefieldRole> battlefieldRoleSet = new HashSet<>();
-                battlefieldRoleSet.add(battlefieldRole);
-                materialBattlefieldRoleMap.put(material, battlefieldRoleSet);
-            }
+    private static void addMaterialsToBattlefieldRoleMap(Map<String, Set<BattlefieldRole>> materialBattlefieldRoleMap, String materialKey, BattlefieldRole battlefieldRole) {
+        if(materialBattlefieldRoleMap.containsKey(materialKey)) {
+            materialBattlefieldRoleMap.get(materialKey).add(battlefieldRole);
+        } else {
+            Set<BattlefieldRole> battlefieldRoleSet = new HashSet<>();
+            battlefieldRoleSet.add(battlefieldRole);
+            materialBattlefieldRoleMap.put(materialKey, battlefieldRoleSet);
         }
     }
 
@@ -88,8 +84,9 @@ public class TownyCombatBattlefieldRoleUtil {
         return isMaterialAllowedByBattlefieldRole(weaponBattlefieldRoleMap, itemStack.getType(), playerBattlefieldRole);
     }
     
-    private static boolean isMaterialAllowedByBattlefieldRole(Map<Material, Set<BattlefieldRole>> materialRoleMap, Material material, BattlefieldRole battlefieldRole) {
-        Set<BattlefieldRole> rolesWhichCanUseThisItem = materialRoleMap.get(material);
+    private static boolean isMaterialAllowedByBattlefieldRole(Map<String, Set<BattlefieldRole>> materialRoleMap, Material material, BattlefieldRole battlefieldRole) {
+        String materialKey = material.getData().getName().split("_")[0];
+        Set<BattlefieldRole> rolesWhichCanUseThisItem = materialRoleMap.get(materialKey);
         if(rolesWhichCanUseThisItem == null) {
             return true; //No restrictions on this material
         } else {
