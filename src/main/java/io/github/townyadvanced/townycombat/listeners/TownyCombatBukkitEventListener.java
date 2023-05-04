@@ -1,8 +1,12 @@
 package io.github.townyadvanced.townycombat.listeners;
 
+import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.Translatable;
 import io.github.townyadvanced.townycombat.TownyCombat;
+import io.github.townyadvanced.townycombat.events.BattlefieldRole;
 import io.github.townyadvanced.townycombat.events.TownyCombatSpecialCavalryHitEvent;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
+import io.github.townyadvanced.townycombat.utils.Messaging;
 import io.github.townyadvanced.townycombat.utils.TownyCombatBattlefieldRoleUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatHorseUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatMovementUtil;
@@ -22,6 +26,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
@@ -31,7 +36,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.spigotmc.event.entity.EntityDismountEvent;
 import org.spigotmc.event.entity.EntityMountEvent;
@@ -159,11 +163,43 @@ public class TownyCombatBukkitEventListener implements Listener {
 		return cause.equals(DamageCause.CONTACT) || cause.equals(DamageCause.FIRE);
 	}
 
+	@EventHandler
+	public void on (EntityShootBowEvent event) {
+		if (!TownyCombatSettings.isTownyCombatEnabled())
+			return;
+
+		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && TownyCombatSettings.isBattlefieldRolesEnabled()) {
+			if(event.getBow() == null)
+				return;
+			if(!(event.getEntity() instanceof Player)) 
+				return;
+			if(!TownyCombatBattlefieldRoleUtil.isItemAllowedByBattlefieldRole(event.getBow(), (Player)event.getEntity())) {
+				event.setCancelled(true);
+				Messaging.sendMsg(event.getEntity(), Translatable.of("msg_warning_cannot_wield_this_weapon").append("msg_warning_how_to_view_and_change_role"));
+			}
+		}
+	}
+	
 	@EventHandler (ignoreCancelled = true)
 	public void on (EntityDamageByEntityEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
 
+		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && TownyCombatSettings.isBattlefieldRolesEnabled()) {
+			if(event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
+				/*
+				 * PVP event Detected
+				 * Cancel if the damager is holding a disallowed weapon
+				 */
+				if(!TownyCombatBattlefieldRoleUtil.isItemAllowedByBattlefieldRole(
+						((Player)event.getDamager()).getInventory().getItemInMainHand(), 
+						(Player)event.getDamager())) {
+					event.setCancelled(true);
+					Messaging.sendMsg(event.getDamager(), Translatable.of("msg_warning_cannot_wield_this_weapon").append("msg_warning_how_to_view_and_change_role"));
+				}
+			}
+		}
+		
 		//Get attacking player (if any)	
 		Player attackingPlayer;
 		if(event.getDamager() instanceof Player) {
@@ -321,7 +357,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 	public void on (InventoryCloseEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled() || !TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() || !TownyCombatSettings.isBattlefieldRolesEnabled())
 			return;
-		TownyCombatBattlefieldRoleUtil.validateInventoryContents(event.getPlayer());
+		TownyCombatBattlefieldRoleUtil.validateArmourSlots(event.getPlayer());
 	}
 
 	@EventHandler

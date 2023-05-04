@@ -13,52 +13,81 @@ import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 public class TownyCombatBattlefieldRoleUtil {
 
-    public static final List<Material> lightRoleArmour = Arrays.asList(Material.LEATHER_BOOTS, Material.LEATHER_CHESTPLATE, Material.LEATHER_HELMET, Material.LEATHER_LEGGINGS);
-    public static final List<Material> lightRoleWeapons = Arrays.asList(Material.BOW, Material.WOODEN_SWORD, Material.WOODEN_AXE);
-    public static final Map<Material, List<BattlefieldRole>> armourBattlefieldRoleMap;
-    public static final Map<Material, List<BattlefieldRole>> weaponBattlefieldRoleMap;
+    public static final List<Material> leatherArmour = Arrays.asList(Material.LEATHER_BOOTS, Material.LEATHER_CHESTPLATE, Material.LEATHER_HELMET, Material.LEATHER_LEGGINGS);
+    public static final List<Material> ironArmour = Arrays.asList(Material.IRON_BOOTS, Material.IRON_CHESTPLATE, Material.IRON_HELMET, Material.IRON_LEGGINGS);
+    public static final List<Material> chainArmour = Arrays.asList(Material.CHAINMAIL_BOOTS, Material.CHAINMAIL_CHESTPLATE, Material.CHAINMAIL_HELMET, Material.CHAINMAIL_LEGGINGS);
+    public static final List<Material> turtleArmour = Arrays.asList(Material.TURTLE_HELMET);
+    public static final List<Material> goldArmour = Arrays.asList(Material.GOLDEN_BOOTS, Material.GOLDEN_CHESTPLATE, Material.GOLDEN_HELMET, Material.GOLDEN_LEGGINGS);
+    public static final List<Material> diamondArmour = Arrays.asList(Material.DIAMOND_BOOTS, Material.DIAMOND_CHESTPLATE, Material.DIAMOND_HELMET, Material.DIAMOND_LEGGINGS);
+    public static final List<Material> netheriteArmour = Arrays.asList(Material.NETHERITE_BOOTS, Material.NETHERITE_CHESTPLATE, Material.NETHERITE_HELMET, Material.NETHERITE_LEGGINGS);
+    public static final List<Material> woodenWeapons = Arrays.asList(Material.WOODEN_SWORD, Material.WOODEN_AXE);
+    public static final List<Material> stoneWeapons = Arrays.asList(Material.STONE_SWORD, Material.STONE_AXE);
+    public static final List<Material> ironWeapons = Arrays.asList(Material.IRON_SWORD, Material.IRON_AXE);
+    public static final List<Material> diamondWeapons = Arrays.asList(Material.DIAMOND_SWORD, Material.DIAMOND_AXE);
+    public static final List<Material> netheriteWeapons = Arrays.asList(Material.NETHERITE_SWORD, Material.NETHERITE_AXE);
+    public static final Map<Material, Set<BattlefieldRole>> armourBattlefieldRoleMap;
+    public static final Map<Material, Set<BattlefieldRole>> weaponBattlefieldRoleMap;
 
     static {
         armourBattlefieldRoleMap = new HashMap<>();
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, leatherArmour, BattlefieldRole.LIGHT);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, ironArmour, BattlefieldRole.MEDIUM);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, chainArmour, BattlefieldRole.MEDIUM);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, turtleArmour, BattlefieldRole.MEDIUM);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, goldArmour, BattlefieldRole.MEDIUM);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, diamondArmour, BattlefieldRole.HEAVY);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, netheriteArmour, BattlefieldRole.HEAVY);
+        
         weaponBattlefieldRoleMap = new HashMap<>();
-        addToMaterialBattlefieldRoleMap(armourBattlefieldRoleMap, lightRoleArmour, BattlefieldRole.LIGHT);
-        addToMaterialBattlefieldRoleMap(weaponBattlefieldRoleMap, lightRoleWeapons, BattlefieldRole.LIGHT);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, woodenWeapons, BattlefieldRole.LIGHT);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, stoneWeapons, BattlefieldRole.MEDIUM);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, ironWeapons, BattlefieldRole.MEDIUM);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, diamondWeapons, BattlefieldRole.HEAVY);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, netheriteWeapons, BattlefieldRole.HEAVY);
     }
-    
-    private static void addToMaterialBattlefieldRoleMap(Map<Material, List<BattlefieldRole>> materialBattlefieldRoleMap, List<Material> materialList, BattlefieldRole battlefieldRole) {
+
+    private static void addMaterialsToBattlefieldRoleMap(Map<Material, Set<BattlefieldRole>> materialBattlefieldRoleMap, List<Material> materialList, BattlefieldRole battlefieldRole) {
         for(Material material: materialList) {
             if(materialBattlefieldRoleMap.containsKey(material)) {
                 materialBattlefieldRoleMap.get(material).add(battlefieldRole);
             } else {
-                List<BattlefieldRole> battlefieldRoleList = new ArrayList<>();
-                battlefieldRoleList.add(battlefieldRole);
-                materialBattlefieldRoleMap.put(material, battlefieldRoleList);
+                Set<BattlefieldRole> battlefieldRoleSet = new HashSet<>();
+                battlefieldRoleSet.add(battlefieldRole);
+                materialBattlefieldRoleMap.put(material, battlefieldRoleSet);
             }
         }
     }
+
+    public static boolean isItemAllowedByBattlefieldRole(ItemStack itemStack, Player player) {
+        Resident resident = TownyAPI.getInstance().getResident(player.getUniqueId());
+        if (resident == null)
+            return true;  //Edge case
+        BattlefieldRole playerBattlefieldRole = getBattlefieldRole(resident);
+        return isMaterialAllowedByBattlefieldRole(weaponBattlefieldRoleMap, itemStack.getType(), playerBattlefieldRole);
+    }
     
-    public static boolean isMaterialAllowedByBattlefieldRole(Map<Material, List<BattlefieldRole>> materialRoleMap, Material material, BattlefieldRole battlefieldRole) {
-        List<BattlefieldRole> rolesWhichCanUseThisItem = materialRoleMap.get(material);
+    private static boolean isMaterialAllowedByBattlefieldRole(Map<Material, Set<BattlefieldRole>> materialRoleMap, Material material, BattlefieldRole battlefieldRole) {
+        Set<BattlefieldRole> rolesWhichCanUseThisItem = materialRoleMap.get(material);
         if(rolesWhichCanUseThisItem == null) {
-            return true; //Anyone can use it
+            return true; //No restrictions on this material
         } else {
             return rolesWhichCanUseThisItem.contains(battlefieldRole);
         }
@@ -69,35 +98,24 @@ public class TownyCombatBattlefieldRoleUtil {
         return BattlefieldRole.parseString(roleAsString);
     }
 
-    public static void validateInventoryContents(HumanEntity player) {
+    public static void validateArmourSlots(HumanEntity player) {
         Resident resident = TownyAPI.getInstance().getResident(player.getUniqueId());
         if (resident == null)
             return;
         //Create Convenience variables
         BattlefieldRole playerBattlefieldRole = getBattlefieldRole(resident);
         ItemStack[] inventoryContents = player.getInventory().getContents();
-        List<Integer> invalidArmourIndexes = new ArrayList<>();
-        List<Integer> invalidWeaponIndexes = new ArrayList<>();
+        List<Integer> invalidInventoryIndexes = new ArrayList<>();
         //Identify invalid armour (Slots 36-39)
         for(int i = 36; i <= 39; i++) {
             ItemStack itemStack = inventoryContents[i];
             if(itemStack != null && isMaterialAllowedByBattlefieldRole(armourBattlefieldRoleMap, itemStack.getType(), playerBattlefieldRole)) {
-                invalidArmourIndexes.add(i);
+                invalidInventoryIndexes.add(i);
             }
         }
-        //Identify Invalid Weapons (Slots 0-8 is hotbar)
-        for(int i = 0; i <= 8; i++) {
-            ItemStack itemStack = inventoryContents[i];
-            if(itemStack != null && isMaterialAllowedByBattlefieldRole(armourBattlefieldRoleMap, itemStack.getType(), playerBattlefieldRole)) {
-                invalidWeaponIndexes.add(i);
-            }
-        }
-        //Drop all Invalid Items           
-        List<Integer> invalidItemIndexes = new ArrayList<>();
-        invalidItemIndexes.addAll(invalidArmourIndexes);
-        invalidItemIndexes.addAll(invalidWeaponIndexes);
+        //Drop Invalid armour           
         Towny.getPlugin().getServer().getScheduler().runTask(Towny.getPlugin(), () -> {
-            for(Integer inventoryIndex: invalidItemIndexes) {
+            for(int inventoryIndex: invalidInventoryIndexes) {
                 //Drop item on ground
                 player.getWorld().dropItemNaturally(player.getLocation(), inventoryContents[inventoryIndex]);
                 //Remove item from inventory
@@ -105,18 +123,13 @@ public class TownyCombatBattlefieldRoleUtil {
             }
         });
         //Send warning message(s)
-        if(invalidArmourIndexes.size() > 0) {
+        if(invalidInventoryIndexes.size() > 0) {
             Translatable errorMessage = Translatable.of("msg_warning_cannot_wear_this_armour");
             errorMessage.append(Translatable.of("msg_warning_how_to_view_and_change_role"));
             Messaging.sendErrorMsg(player, errorMessage);
         }
-        if(invalidWeaponIndexes.size() > 0) {
-            Translatable errorMessage = Translatable.of("msg_warning_cannot_wield_this_weapon");
-            errorMessage.append(Translatable.of("msg_warning_how_to_view_and_change_role"));
-            Messaging.sendErrorMsg(player, errorMessage);
-        }
     }
-    
+
     private static long getTimeUntilNextRoleChange(Resident resident) {
         long timeOfLastRoleChange = TownyCombatResidentMetaDataController.getLastBattlefieldRoleSwitchTime(resident);
         long timeOfNextRoleChange = timeOfLastRoleChange + (long)(TownyCombatSettings.getBattlefieldRolesMinimumTimeBetweenRoleChangesDays() * TimeMgmt.ONE_DAY_IN_MILLIS);
