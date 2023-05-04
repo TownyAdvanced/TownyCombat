@@ -63,25 +63,7 @@ public class TownyCombatTownyEventListener implements Listener {
 			TownyCombatMapUtil.applyTacticalInvisibilityToPlayers();
 		}
 		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && TownyCombatSettings.isBattlefieldRolesEnabled()) {
-			//Any players with the heavy role who are wearing armour, get some effects.
-			for(Player player: Bukkit.getOnlinePlayers()) {
-				if(TownyCombatBattlefieldRoleUtil.getBattlefieldRole(player) == BattlefieldRole.HEAVY
-					&& TownyCombatBattlefieldRoleUtil.isPlayerWearingArmour(player)) {
-
-					final int effectDurationTicks = (int)(TimeTools.convertToTicks(TownySettings.getShortInterval() + 10));
-					Towny.getPlugin().getServer().getScheduler().runTask(Towny.getPlugin(), new Runnable() {
-						public void run() {
-							player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, effectDurationTicks,0));
-							player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, effectDurationTicks,0));
-							player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, effectDurationTicks,-1));
-						}
-					});
-
-				}
-			}
-			
-			
-			
+			TownyCombatBattlefieldRoleUtil.giveEffectsToHeavyPlayersWearingArmour();
 		}
     }
 }

@@ -2,13 +2,16 @@ package io.github.townyadvanced.townycombat.utils;
 
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.util.TimeMgmt;
+import com.palmergames.util.TimeTools;
 import io.github.townyadvanced.townycombat.events.BattlefieldRole;
 import io.github.townyadvanced.townycombat.metadata.TownyCombatResidentMetaDataController;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
@@ -237,4 +240,23 @@ public class TownyCombatBattlefieldRoleUtil {
         }
         return false;
     }
+
+    public static void giveEffectsToHeavyPlayersWearingArmour() {
+        //Any players with the heavy role who are wearing armour, get some effects.
+        for(Player player: Bukkit.getOnlinePlayers()) {
+            if(TownyCombatBattlefieldRoleUtil.getBattlefieldRole(player) == BattlefieldRole.HEAVY
+                    && TownyCombatBattlefieldRoleUtil.isPlayerWearingArmour(player)) {
+
+                final int effectDurationTicks = (int)(TimeTools.convertToTicks(TownySettings.getShortInterval() + 10));
+                Towny.getPlugin().getServer().getScheduler().runTask(Towny.getPlugin(), new Runnable() {
+                    public void run() {
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, effectDurationTicks,0));
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, effectDurationTicks,0));
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, effectDurationTicks,-1));
+                    }
+                });
+            }
+        }
+    }
+
 }
