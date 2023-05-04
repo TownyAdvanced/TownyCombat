@@ -147,7 +147,7 @@ public class TownyCombatBattlefieldRoleUtil {
         }
     }
 
-    private static long getTimeUntilNextRoleChange(Resident resident) {
+    public static long getTimeUntilNextRoleChange(Resident resident) {
         long timeOfLastRoleChange = TownyCombatResidentMetaDataController.getLastBattlefieldRoleSwitchTime(resident);
         long timeOfNextRoleChange = timeOfLastRoleChange + (long)(TownyCombatSettings.getBattlefieldRolesMinimumTimeBetweenRoleChangesDays() * TimeMgmt.ONE_DAY_IN_MILLIS);
         return timeOfNextRoleChange - System.currentTimeMillis();

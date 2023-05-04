@@ -4,8 +4,10 @@ package io.github.townyadvanced.townycombat.listeners;
 import com.palmergames.adventure.text.Component;
 import com.palmergames.adventure.text.event.HoverEvent;
 import com.palmergames.bukkit.towny.event.statusscreen.ResidentStatusScreenEvent;
+import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.Translator;
+import com.palmergames.util.TimeMgmt;
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.events.BattlefieldRole;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
@@ -32,9 +34,9 @@ public class TownyCombatStatusScreenListener implements Listener {
 			return;
 
 		//Create the hover item subcomponents
-		BattlefieldRole battlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole(event.getResident());
 		final Translator translator = Translator.locale(event.getCommandSender());
-		Component hoverItemContentSubComponent = getBattlefieldRoleHoverItemContentComponent(battlefieldRole, translator);
+		BattlefieldRole battlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole(event.getResident());
+		Component hoverItemContentSubComponent = getBattlefieldRoleHoverItemContentComponent(event.getResident(), battlefieldRole, translator);
 		Component hoverItemButtonSubComponent = getBattlefieldRoleHoverItemButtonComponent(battlefieldRole, translator);
 
 		//Create the hover item
@@ -46,8 +48,9 @@ public class TownyCombatStatusScreenListener implements Listener {
 		event.getStatusScreen().addComponentOf("townyCombat_battlefieldRole", hoverItemComponent);
 	}
 
-	private Component getBattlefieldRoleHoverItemContentComponent(BattlefieldRole battlefieldRole, Translator translator) {
+	private Component getBattlefieldRoleHoverItemContentComponent(Resident resident, BattlefieldRole battlefieldRole, Translator translator) {
 		Component text = Component.empty();
+		//Battlefield Role Details
 		switch(battlefieldRole) {
 			case LIGHT:
 				text = text.append(Component.text(translator.of("status_resident_content_light_line_armour")));
@@ -57,7 +60,7 @@ public class TownyCombatStatusScreenListener implements Listener {
 				text = text.append(Component.text(translator.of("status_resident_content_light_line_missile_weapons")));
 				text = text.append(Component.newline());
 				text = text.append(Component.text(translator.of("status_resident_content_light_line_passive_ability")));
-				if(TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()) {
+				if (TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()) {
 					text = text.append(Component.newline());
 					text = text.append(Component.text(translator.of("status_resident_content_light_super_potion_line")));
 				}
@@ -72,7 +75,7 @@ public class TownyCombatStatusScreenListener implements Listener {
 				text = text.append(Component.text(translator.of("status_resident_content_medium_line_passive_ability")));
 				text = text.append(Component.newline());
 				text = text.append(Component.text(translator.of("status_resident_content_medium_line_disadvantage")));
-				if(TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()) {
+				if (TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()) {
 					text = text.append(Component.newline());
 					text = text.append(Component.text(translator.of("status_resident_content_medium_super_potion_line")));
 				}
@@ -91,7 +94,7 @@ public class TownyCombatStatusScreenListener implements Listener {
 				text = text.append(Component.text(translator.of("status_resident_content_heavy_line_disadvantage2")));
 				text = text.append(Component.newline());
 				text = text.append(Component.text(translator.of("status_resident_content_heavy_line_disadvantage3")));
-				if(TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()) {
+				if (TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()) {
 					text = text.append(Component.newline());
 					text = text.append(Component.text(translator.of("status_resident_content_heavy_super_potion_line")));
 				}
@@ -99,9 +102,13 @@ public class TownyCombatStatusScreenListener implements Listener {
 			default:
 				throw new RuntimeException("Unknown battlefield role");
 		}
-		
-		TODO ------------ ADD Something here to show when next switch is allowed
-		
+		//Time Until Next Role Change
+		long timeUntilNextRoleChange = TownyCombatBattlefieldRoleUtil.getTimeUntilNextRoleChange(resident);
+		if(timeUntilNextRoleChange > 0) {
+			String timeUntilNextRoleChangeFormatted = TimeMgmt.getFormattedTimeValue(timeUntilNextRoleChange);
+			text = text.append(Component.newline());
+			text = text.append(Component.text(translator.of("status_resident_content_time_until_next_role_change", timeUntilNextRoleChangeFormatted)));
+		}
 		return text;
 	}
 
