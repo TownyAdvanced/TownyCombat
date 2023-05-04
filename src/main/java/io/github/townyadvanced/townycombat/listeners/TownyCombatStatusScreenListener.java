@@ -99,6 +99,9 @@ public class TownyCombatStatusScreenListener implements Listener {
 			default:
 				throw new RuntimeException("Unknown battlefield role");
 		}
+		
+		TODO ------------ ADD Something here to show when next switch is allowed
+		
 		return text;
 	}
 
