@@ -30,6 +30,7 @@ public class TownyCombatStatusScreenListener implements Listener {
 	public void onResidentStatusScreen(ResidentStatusScreenEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled() || !TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() || !TownyCombatSettings.isBattlefieldRolesEnabled())
 			return;
+
 		//Create the hover item subcomponents
 		BattlefieldRole battlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole(event.getResident());
 		final Translator translator = Translator.locale(event.getCommandSender());
