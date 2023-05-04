@@ -43,6 +43,8 @@ public class TownyCombatBattlefieldRoleUtil {
     public static final List<Material> ironWeapons = Arrays.asList(Material.IRON_SWORD, Material.IRON_AXE);
     public static final List<Material> diamondWeapons = Arrays.asList(Material.DIAMOND_SWORD, Material.DIAMOND_AXE);
     public static final List<Material> netheriteWeapons = Arrays.asList(Material.NETHERITE_SWORD, Material.NETHERITE_AXE);
+    public static final List<Material> bows = Arrays.asList(Material.BOW);
+    public static final List<Material> crossbows = Arrays.asList(Material.CROSSBOW);
     public static final Map<Material, Set<BattlefieldRole>> armourBattlefieldRoleMap;
     public static final Map<Material, Set<BattlefieldRole>> weaponBattlefieldRoleMap;
 
@@ -58,8 +60,10 @@ public class TownyCombatBattlefieldRoleUtil {
         
         weaponBattlefieldRoleMap = new HashMap<>();
         addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, woodenWeapons, BattlefieldRole.LIGHT);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, bows, BattlefieldRole.LIGHT);
         addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, stoneWeapons, BattlefieldRole.MEDIUM);
         addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, ironWeapons, BattlefieldRole.MEDIUM);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, crossbows, BattlefieldRole.MEDIUM);
         addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, diamondWeapons, BattlefieldRole.HEAVY);
         addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, netheriteWeapons, BattlefieldRole.HEAVY);
     }
