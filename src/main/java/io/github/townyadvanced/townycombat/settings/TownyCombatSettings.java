@@ -152,30 +152,6 @@ public class TownyCombatSettings {
 		return Settings.getString(ConfigNodes.NEW_ITEMS_SPEAR_NATIVE_WEAPON_NAME);
 	}
 
-	public static boolean isNewItemsWarhammerEnabled() {
-		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_WARHAMMER_ENABLED);
-	}
-
-	public static String getNewItemsWarhammerLore() {
-		return Settings.getString(ConfigNodes.NEW_ITEMS_WARHAMMER_LORE);
-	}
-
-	public static int getNewItemsWarhammerCustomModelDataID() {
-		return Settings.getInt(ConfigNodes.NEW_ITEMS_WARHAMMER_CUSTOM_MODEL_DATA_ID);
-	}
-
-	public static int getNewItemsWarhammerShieldBreakChancePercent() {
-		return Settings.getInt(ConfigNodes.NEW_ITEMS_WARHAMMER_SHERLD_BREAK_CHANCE_PERCENT);
-	}
-
-	public static boolean isNewItemsWarhammerNativeWeaponEnabled() {
-		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_WARHAMMER_NATIVE_WEAPON_ENABLED);
-	}
-
-    public static String getNewItemsWarhammerNativeWeaponName() {
-		return Settings.getString(ConfigNodes.NEW_ITEMS_WARHAMMER_NATIVE_WEAPON_NAME);
-	}
-
 	public static boolean isCavalryMissileShieldEnabled() {
 		return Settings.getBoolean(ConfigNodes.CAVALRY_ENHANCEMENTS_CAVALRY_MISSILE_SHIELD_ENABLED);
 	}

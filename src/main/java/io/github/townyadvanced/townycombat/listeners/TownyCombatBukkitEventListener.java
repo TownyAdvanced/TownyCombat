@@ -289,28 +289,8 @@ public class TownyCombatBukkitEventListener implements Listener {
 				damage += (3 * TownyCombatSettings.getCavalryChargeStrengthBonusEffectLevel());
 			}
 		}
-
-		//WARHAMMER: Possibly break shield
-		if(TownyCombatSettings.isNewItemsWarhammerEnabled()) {
-			if(event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-				ItemStack itemInAttackerMainHand = ((Player)event.getDamager()).getInventory().getItemInMainHand();
-				if (TownyCombatItemUtil.isWarhammer(itemInAttackerMainHand)) {
-					if(((Player)event.getEntity()).isBlocking()) {
-						ItemStack victimMainHand = ((Player)event.getEntity()).getInventory().getItemInMainHand();
-						ItemStack victimOffHand = ((Player)event.getEntity()).getInventory().getItemInOffHand();
-						if(victimMainHand.getType() == Material.SHIELD) {
-							//Player is blocking with shield in main hand
-							TownyCombatItemUtil.rollBreakItemInHand((Player)event.getEntity(), false, TownyCombatSettings.getNewItemsWarhammerShieldBreakChancePercent());
-						} else if (victimOffHand.getType() == Material.SHIELD) {
-							//Player is blocking with shield in off hand
-							TownyCombatItemUtil.rollBreakItemInHand((Player)event.getEntity(), true, TownyCombatSettings.getNewItemsWarhammerShieldBreakChancePercent());
-						}
-					}
-				}
-			}
-		}
-
-		//DAMAGE RESISTANCE AND AUTOPOTTING
+		
+		//DAMAGE RESISTANCE
 		if (event.getEntity() instanceof AbstractHorse) {
 			//Horse damage resistance
 			if(attackingPlayer != null) {
