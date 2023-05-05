@@ -143,8 +143,8 @@ public class TownyCombatBukkitEventListener implements Listener {
 			return;
 		if(!TownyCombatSettings.isHorseRearingPreventionEnabled())
 			return;
-		// When it is a horse, and it is not being hurt by a bush/cactus, try to prevent the rearing.
-		if (event.getEntity() instanceof AbstractHorse && !event.getCause().equals(DamageCause.CONTACT)) {
+		// When it is a horse, and it is not being hurt by a bush/cactus, or fire block, try to prevent the rearing.
+		if (event.getEntity() instanceof AbstractHorse && !event.getCause().equals(DamageCause.CONTACT) && !event.getCause().equals(DamageCause.FIRE)) {
 			//Prevent the rearing by cancelling the event, then applying the same damage in a simple set operation.
 			if(TownyCombatHorseUtil.getPlayerRider(event.getEntity()) != null) {
 				event.setCancelled(true);
