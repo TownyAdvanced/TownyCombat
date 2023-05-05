@@ -87,7 +87,6 @@ public class TownyCombatCommand implements TabExecutor {
 			TownyCombatBattlefieldRoleUtil.processChangeRoleAttempt(sender, args[1]);
 		} catch (TownyException townyException) {
 			Messaging.sendMsg(sender, townyException.getMessage());
-			townyException.printStackTrace();
 		}
 	}
 }

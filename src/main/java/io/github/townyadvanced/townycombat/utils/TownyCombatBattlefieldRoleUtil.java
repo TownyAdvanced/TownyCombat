@@ -2,17 +2,23 @@ package io.github.townyadvanced.townycombat.utils;
 
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.util.TimeMgmt;
+import com.palmergames.util.TimeTools;
+import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.events.BattlefieldRole;
 import io.github.townyadvanced.townycombat.metadata.TownyCombatResidentMetaDataController;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.PotionSplashEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
@@ -24,7 +30,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -85,7 +90,8 @@ public class TownyCombatBattlefieldRoleUtil {
     }
     
     private static boolean isMaterialAllowedByBattlefieldRole(Map<String, Set<BattlefieldRole>> materialRoleMap, Material material, BattlefieldRole battlefieldRole) {
-        String materialKey = material.getData().getName().split("_")[0];
+        String materialKey = material.name().split("_")[0];
+        
         Set<BattlefieldRole> rolesWhichCanUseThisItem = materialRoleMap.get(materialKey);
         if(rolesWhichCanUseThisItem == null) {
             return true; //No restrictions on this material
@@ -99,6 +105,14 @@ public class TownyCombatBattlefieldRoleUtil {
         return BattlefieldRole.parseString(roleAsString);
     }
 
+    public static BattlefieldRole getBattlefieldRole(Player player) {
+        Resident resident = TownyAPI.getInstance().getResident(player.getUniqueId());
+        if (resident == null)
+            return BattlefieldRole.LIGHT;  //Edge case
+        String roleAsString = TownyCombatResidentMetaDataController.getBattlefieldRole(resident);
+        return BattlefieldRole.parseString(roleAsString);
+    }
+    
     public static void validateArmourSlots(HumanEntity player) {
         Resident resident = TownyAPI.getInstance().getResident(player.getUniqueId());
         if (resident == null)
@@ -110,7 +124,7 @@ public class TownyCombatBattlefieldRoleUtil {
         //Identify invalid armour (Slots 36-39)
         for(int i = 36; i <= 39; i++) {
             ItemStack itemStack = inventoryContents[i];
-            if(itemStack != null && isMaterialAllowedByBattlefieldRole(armourBattlefieldRoleMap, itemStack.getType(), playerBattlefieldRole)) {
+            if(itemStack != null && !isMaterialAllowedByBattlefieldRole(armourBattlefieldRoleMap, itemStack.getType(), playerBattlefieldRole)) {
                 invalidInventoryIndexes.add(i);
             }
         }
@@ -131,7 +145,7 @@ public class TownyCombatBattlefieldRoleUtil {
         }
     }
 
-    private static long getTimeUntilNextRoleChange(Resident resident) {
+    public static long getTimeUntilNextRoleChange(Resident resident) {
         long timeOfLastRoleChange = TownyCombatResidentMetaDataController.getLastBattlefieldRoleSwitchTime(resident);
         long timeOfNextRoleChange = timeOfLastRoleChange + (long)(TownyCombatSettings.getBattlefieldRolesMinimumTimeBetweenRoleChangesDays() * TimeMgmt.ONE_DAY_IN_MILLIS);
         return timeOfNextRoleChange - System.currentTimeMillis();
@@ -156,40 +170,75 @@ public class TownyCombatBattlefieldRoleUtil {
         TownyCombatResidentMetaDataController.setLastBattlefieldRoleSwitchTime(resident, System.currentTimeMillis());
         resident.save();
         //Send success message
-        Messaging.sendMsg(commandSender, Translatable.of("msg_changerole_success", roleAsString).translate(Locale.ROOT));
+        Messaging.sendMsg(commandSender, Translatable.of("msg_changerole_success", roleAsString));
+    }
+
+    public static boolean isPlayerWearingArmour(Player player) {
+        for(ItemStack armourPiece: player.getInventory().getArmorContents()) {
+            if(armourPiece != null) 
+                return true;
+        }
+        return false;
+    }
+
+    public static void giveEffectsToHeavyPlayersWearingArmour() {
+        //Any players with the heavy role who are wearing armour, get some effects.
+        for(Player player: Bukkit.getOnlinePlayers()) {
+            if(TownyCombatBattlefieldRoleUtil.getBattlefieldRole(player) == BattlefieldRole.HEAVY
+                    && TownyCombatBattlefieldRoleUtil.isPlayerWearingArmour(player)) {
+
+                final int effectDurationTicks = (int)(TimeTools.convertToTicks(TownySettings.getShortInterval() + 10));
+                Towny.getPlugin().getServer().getScheduler().runTask(Towny.getPlugin(), new Runnable() {
+                    public void run() {
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, effectDurationTicks,0));
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, effectDurationTicks,0));
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, effectDurationTicks,-2));
+                    }
+                });
+            }
+        }
     }
     
-    public static @Nullable ItemStack getUpdatedPotion(Player player, ItemStack potionItemStack) {
+    /////////////// Non-Splash Potions ///////////////
+    public static void evaluateEffectOfDrinkingPotion(PlayerItemConsumeEvent event) {
+        //Convenience variables and basic checks
+        Player player = event.getPlayer();
+        ItemStack potionItemStack = event.getItem();
         Resident resident = TownyAPI.getInstance().getResident(player.getUniqueId());
         if (resident == null)
-            return null;
+            return;
         BattlefieldRole battlefieldRole = getBattlefieldRole(resident);
         PotionMeta potionMeta = (PotionMeta) potionItemStack.getItemMeta();
         if(potionMeta == null)
-            return null;
+            return;
+        //Create a replacement potion if required
+        ItemStack replacementPotion = null;
         switch (battlefieldRole) {
             case LIGHT:
-                if (potionMeta.getBasePotionData().getType().getEffectType() == PotionEffectType.SPEED) {
-                    return getUpdatedSpeedPotion(potionMeta.getBasePotionData(), 1);
+                if (potionMeta.getBasePotionData().getType().getEffectType().equals(PotionEffectType.SPEED)) {
+                    replacementPotion = getUpdatedSpeedPotion(potionMeta.getBasePotionData(), 1);
                 }
                 break;
             case MEDIUM:
-                if (potionMeta.getBasePotionData().getType().getEffectType() == PotionEffectType.INCREASE_DAMAGE) {
-                    return getUpdatedStrengthPotion(potionMeta.getBasePotionData(), 1);
+                if (potionMeta.getBasePotionData().getType().getEffectType().equals(PotionEffectType.INCREASE_DAMAGE)) {
+                    replacementPotion =  getUpdatedStrengthPotion(potionMeta.getBasePotionData(), 1);
                 }
-                if (potionMeta.getBasePotionData().getType().getEffectType() == PotionEffectType.SPEED) {
-                    return getUpdatedSpeedPotion(potionMeta.getBasePotionData(), -1);
+                if (potionMeta.getBasePotionData().getType().getEffectType().equals(PotionEffectType.SPEED)) {
+                    replacementPotion = getUpdatedSpeedPotion(potionMeta.getBasePotionData(), -1);
                 }
                 break;
             case HEAVY:
-                if (potionMeta.getBasePotionData().getType().getEffectType() == PotionEffectType.SPEED) {
-                    return getUpdatedSpeedPotion(potionMeta.getBasePotionData(), -2);
+                if (potionMeta.getBasePotionData().getType().getEffectType().equals(PotionEffectType.SPEED)) {
+                    replacementPotion = getUpdatedSpeedPotion(potionMeta.getBasePotionData(), -2);
                 }
                 break;
             default:
                 throw new RuntimeException("Unknown Battlefield Role");
         }
-        return null;
+        //Set the replacement potion into the event
+        if (replacementPotion != null) {
+            event.setItem(replacementPotion);
+        }
     }
 
     private static @Nullable ItemStack getUpdatedSpeedPotion(PotionData basePotionData, int powerModifier) {
@@ -208,7 +257,7 @@ public class TownyCombatBattlefieldRoleUtil {
         if(basePotionData.getType().getEffectType() != null) {
             int amplifier = basePotionData.isUpgraded() ? 1 : 0;
             amplifier += powerModifier;
-            if(amplifier > 0) {
+            if(amplifier >= 0) {
                 int duration = basePotionData.isExtended() ? extendedDurationSeconds * 20 : nonExtendedDurationSeconds * 20;
                 PotionEffect newPotionEffect = new PotionEffect(basePotionData.getType().getEffectType(), duration, amplifier, true, true, true);
                 PotionMeta newPotionMeta = (PotionMeta) newPotion.getItemMeta();
@@ -221,4 +270,69 @@ public class TownyCombatBattlefieldRoleUtil {
         //Return the update potion
         return newPotion;
     }
+
+    //////////////// Splash Potions /////////////////
+    
+    public static void evaluateEffectOfSplashPotion(PotionSplashEvent event, Player player) {
+        BattlefieldRole battlefieldRole = getBattlefieldRole(player);
+        switch (battlefieldRole) {
+            case LIGHT:
+                for(PotionEffect potionEffect: event.getPotion().getEffects()) {
+                    if(potionEffect.getType().equals(PotionEffectType.SPEED)) {
+                        //Give a new effect to the player
+                        int amplifier = potionEffect.getAmplifier() + 1;
+                        int duration = (int)((double)potionEffect.getDuration() * event.getIntensity(player));
+                        givePotionEffectToPlayerUnlessAmplifierIsNegative(potionEffect.getType(), amplifier, duration, player);
+                        //Set the upcoming event effect on player to zero
+                        event.setIntensity(player, 0);
+                    }
+                }
+                break;
+            case MEDIUM:
+                for(PotionEffect potionEffect: event.getPotion().getEffects()) {
+                    if(potionEffect.getType().equals(PotionEffectType.SPEED)) {
+                        //Give a new effect to the player
+                        int amplifier = potionEffect.getAmplifier() - 1;
+                        int duration = (int)((double)potionEffect.getDuration() * event.getIntensity(player));
+                        givePotionEffectToPlayerUnlessAmplifierIsNegative(potionEffect.getType(), amplifier, duration, player);
+                        //Set the upcoming event effect on player to zero
+                        event.setIntensity(player, 0);
+                    }
+                    if(potionEffect.getType().equals(PotionEffectType.INCREASE_DAMAGE)) {
+                        //Give a new effect to the player
+                        int amplifier = potionEffect.getAmplifier() + 1;
+                        int duration = (int)((double)potionEffect.getDuration() * event.getIntensity(player));
+                        givePotionEffectToPlayerUnlessAmplifierIsNegative(potionEffect.getType(), amplifier, duration, player);
+                        //Set the upcoming event effect on player to zero
+                        event.setIntensity(player, 0);
+                    }
+                }
+                break;
+            case HEAVY:
+                for(PotionEffect potionEffect: event.getPotion().getEffects()) {
+                    if(potionEffect.getType().equals(PotionEffectType.SPEED)) {
+                        //Give a new effect to the player
+                        int amplifier = potionEffect.getAmplifier() - 2;
+                        int duration = (int)((double)potionEffect.getDuration() * event.getIntensity(player));
+                        givePotionEffectToPlayerUnlessAmplifierIsNegative(potionEffect.getType(), amplifier, duration, player);
+                        //Set the upcoming event effect on player to zero
+                        event.setIntensity(player, 0);
+                    }
+                }
+                break;
+            default:
+                throw new RuntimeException("Unknown Battlefield Role");
+        }
+    }
+
+    private static void givePotionEffectToPlayerUnlessAmplifierIsNegative(PotionEffectType potionEffectType, int amplifier, int durationInTicks, Player player) {
+        if(amplifier >= 0) {
+            Towny.getPlugin().getServer().getScheduler().runTask(Towny.getPlugin(), new Runnable() {
+                public void run() {
+                    player.addPotionEffect(new PotionEffect(potionEffectType, durationInTicks, amplifier));
+                }
+            });
+        }
+    }
+
 }

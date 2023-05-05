@@ -24,5 +24,11 @@ description: >
 # Rose = &c, LightPurple = &d, Yellow = &e, White = &f
 
 status_resident_content_light_line_armour: "&2Armour: &aLeather"
+status_resident_content_medium_line_armour: "&2Armour: &aGold, Chainmail, Iron, Turtle"
+status_resident_content_heavy_line_armour: "&2Armor: &aDiamond, Netherite"
+
+status_resident_content_heavy_line_disadvantage1: "&2Disadvantage: &aSlowness 1 when wearing armour"
+status_resident_content_heavy_line_disadvantage2: "&2Disadvantage: &aLeaping -1 when wearing armour"
+
 msg_warning_cannot_wear_this_armour: "&cArmour dropped, because you do not have the required Battlefield Role to wear it."
 
