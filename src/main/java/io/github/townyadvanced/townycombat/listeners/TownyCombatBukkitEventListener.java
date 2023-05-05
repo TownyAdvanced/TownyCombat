@@ -306,20 +306,20 @@ public class TownyCombatBukkitEventListener implements Listener {
 	public void on (PrepareItemCraftEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
-		if(event.getInventory().getResult() != null
-				&& TownyCombatItemUtil.isVanillaPlaceholderItem(event.getInventory().getResult())) {
-			event.getInventory().setResult(null);
-			return; //Cannot craft or repair forbidden item
-		}
-		if(event.isRepair()) {
-			//Repair
-			if(event.getInventory().getResult() != null
-					&& TownyCombatItemUtil.isPlaceholderMaterial(event.getInventory().getResult().getType())) {
-				event.getInventory().setResult(null); //Cannot repair reserved material
+		if (!TownyCombatSettings.isNewItemsSpearEnabled() || !TownyCombatSettings.isNewItemsSpearNativeWeaponEnabled())
+			return;
+		if(event.getInventory().getResult() != null) {
+			if (event.isRepair()) {
+				//Cannot repair native spear
+				if (event.getInventory().getResult().getType() == Material.WOODEN_SWORD) {
+					event.getInventory().setResult(null);
+				}
+			} else {
+				//Craft native spear	
+				if (event.getInventory().getResult().getType() == Material.WOODEN_SWORD) {
+					event.getInventory().setResult(TownyCombatItemUtil.createNativeSpear());
+				}
 			}
-		} else {
-			//Craft
-			event.getInventory().setResult(TownyCombatItemUtil.calculateCraftingResult(event));
 		}
 	}
 
@@ -327,9 +327,10 @@ public class TownyCombatBukkitEventListener implements Listener {
 	public void on (PrepareAnvilEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
-		if(event.getResult() != null
-				&& TownyCombatItemUtil.isPlaceholderMaterial(event.getResult().getType())) {
-			event.setResult(null);  //Cannot repair reserved material
+		if (!TownyCombatSettings.isNewItemsSpearEnabled() || !TownyCombatSettings.isNewItemsSpearNativeWeaponEnabled())
+			return;
+		if(event.getResult() != null && event.getResult().getType() == Material.WOODEN_SWORD) {
+			event.setResult(null);  //Cannot repair native spear
 		}
 	}
 

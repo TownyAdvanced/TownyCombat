@@ -3,7 +3,6 @@ package io.github.townyadvanced.townycombat.utils;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -13,73 +12,12 @@ import java.util.List;
 import java.util.Map;
 
 public class TownyCombatItemUtil {
-
-    public static final Material NATIVE_SPEAR_PLACEHOLDER_MATERIAL = Material.WOODEN_SWORD;
-    public static final Material[] NATIVE_SPEAR_MATERIALS = new Material[]{null, null, Material.IRON_INGOT, null, Material.STICK, null, Material.STICK, null, null}; 			
+    
     public static final int NATIVE_SPEAR_SHARPNESS_LEVEL = 8;
 
     //After we have identified a weapon as spear or not spear, we list it here
     public static Map<ItemStack, Boolean> spearIdentificationMap = new HashMap<>();
-
-    /**
-     * Check if the given item is a vanilla placeholder version of a custom item.
-     * 
-     * @param item the item
-     * @return true if placeholder item
-     */
-    public static boolean isVanillaPlaceholderItem(ItemStack item) {
-        if(TownyCombatSettings.isNewItemsSpearEnabled()
-                && TownyCombatSettings.isNewItemsSpearNativeWeaponEnabled()
-                && item.getType() == NATIVE_SPEAR_PLACEHOLDER_MATERIAL
-                && !isSpear(item)) {
-            return true;  //Vanilla wooden sword
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Check if the given material is s placeholder for special, non-vanilla items
-     * 
-     * @param material the material
-     * @return true if forbidden material
-     */
-    public static boolean isPlaceholderMaterial(Material material) {
-        if(TownyCombatSettings.isNewItemsSpearEnabled() 
-                && TownyCombatSettings.isNewItemsSpearNativeWeaponEnabled()
-                && material == NATIVE_SPEAR_PLACEHOLDER_MATERIAL) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Calculate the result of the given crafting
-     *
-     * @param event the event
-     * @return the result
-     */
-    public static ItemStack calculateCraftingResult(PrepareItemCraftEvent event) {
-        if(TownyCombatSettings.isNewItemsSpearEnabled()
-                && TownyCombatSettings.isNewItemsSpearNativeWeaponEnabled()
-                && doesMatrixMatch(event.getInventory().getMatrix(), NATIVE_SPEAR_MATERIALS)) {
-			ItemStack result = new ItemStack(NATIVE_SPEAR_PLACEHOLDER_MATERIAL);
-			ItemMeta itemMeta = result.getItemMeta();
-			itemMeta.setDisplayName(TownyCombatSettings.getNewItemsSpearNativeWeaponName());
-			//Add enchants
-			itemMeta.addEnchant(Enchantment.DAMAGE_ALL, NATIVE_SPEAR_SHARPNESS_LEVEL, true);
-			//Add lore
-			List<String> lore = new ArrayList<>();
-			lore.add(TownyCombatSettings.getNewItemsSpearLore());
-			itemMeta.setLore(lore);
-			result.setItemMeta(itemMeta);
-			return result;
-        } else {
-            return event.getInventory().getResult();
-        }
-    }
-
+    
     /**
      * Check if the matrix matches
      * 
@@ -137,6 +75,20 @@ public class TownyCombatItemUtil {
             }
             spearIdentificationMap.put(item, result);
         }
+        return result;
+    }
+
+    public static ItemStack createNativeSpear() {
+        ItemStack result = new ItemStack(Material.WOODEN_SWORD);
+        ItemMeta itemMeta = result.getItemMeta();
+        itemMeta.setDisplayName(TownyCombatSettings.getNewItemsSpearNativeWeaponName());
+        //Add enchants
+        itemMeta.addEnchant(Enchantment.DAMAGE_ALL, NATIVE_SPEAR_SHARPNESS_LEVEL, true);
+        //Add lore
+        List<String> lore = new ArrayList<>();
+        lore.add(TownyCombatSettings.getNewItemsSpearLore());
+        itemMeta.setLore(lore);
+        result.setItemMeta(itemMeta);
         return result;
     }
 }
