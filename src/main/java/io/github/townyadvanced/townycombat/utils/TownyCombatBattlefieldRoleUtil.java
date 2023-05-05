@@ -8,14 +8,15 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.util.TimeMgmt;
 import com.palmergames.util.TimeTools;
-import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.events.BattlefieldRole;
 import io.github.townyadvanced.townycombat.metadata.TownyCombatResidentMetaDataController;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Horse;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
@@ -112,8 +113,8 @@ public class TownyCombatBattlefieldRoleUtil {
         String roleAsString = TownyCombatResidentMetaDataController.getBattlefieldRole(resident);
         return BattlefieldRole.parseString(roleAsString);
     }
-    
-    public static void validateArmourSlots(HumanEntity player) {
+
+    public static void validateArmour(Player player) {
         Resident resident = TownyAPI.getInstance().getResident(player.getUniqueId());
         if (resident == null)
             return;
@@ -143,8 +144,32 @@ public class TownyCombatBattlefieldRoleUtil {
             errorMessage.append(Translatable.of("msg_warning_how_to_view_and_change_role"));
             Messaging.sendErrorMsg(player, errorMessage);
         }
+        //Validate mount armour
+        validateMountArmour(player, playerBattlefieldRole);
     }
 
+    private static void validateMountArmour(Player player, BattlefieldRole playerBattlefieldRole) {
+        //Validate mount armour
+        Horse mount = TownyCombatHorseUtil.getMount(player);
+        if(mount != null) {
+            ItemStack horseArmour = mount.getInventory().getArmor();
+            if(horseArmour != null && !isMaterialAllowedByBattlefieldRole(armourBattlefieldRoleMap, horseArmour.getType(), playerBattlefieldRole)) {
+                //Drop Invalid armour           
+                Towny.getPlugin().getServer().getScheduler().runTask(Towny.getPlugin(), () -> {
+                    //Drop item on ground
+                    player.getWorld().dropItemNaturally(player.getLocation(), horseArmour);
+                    //Remove item from inventory
+                    mount.getInventory().clear(1);
+                });
+                //Send warning message(s)
+                Translatable errorMessage = Translatable.of("msg_warning_horse_cannot_wear_this_armour");
+                errorMessage.append(Translatable.of("msg_warning_how_to_view_and_change_role"));
+                Messaging.sendErrorMsg(player, errorMessage);
+            }
+        }
+
+    }
+    
     public static long getTimeUntilNextRoleChange(Resident resident) {
         long timeOfLastRoleChange = TownyCombatResidentMetaDataController.getLastBattlefieldRoleSwitchTime(resident);
         long timeOfNextRoleChange = timeOfLastRoleChange + (long)(TownyCombatSettings.getBattlefieldRolesMinimumTimeBetweenRoleChangesDays() * TimeMgmt.ONE_DAY_IN_MILLIS);
@@ -169,6 +194,8 @@ public class TownyCombatBattlefieldRoleUtil {
         TownyCombatResidentMetaDataController.setBattlefieldRole(resident, roleAsString.toLowerCase());
         TownyCombatResidentMetaDataController.setLastBattlefieldRoleSwitchTime(resident, System.currentTimeMillis());
         resident.save();
+        //Validate Armour
+        TownyCombatBattlefieldRoleUtil.validateArmour(player);
         //Send success message
         Messaging.sendMsg(commandSender, Translatable.of("msg_changerole_success", roleAsString));
     }
@@ -181,22 +208,41 @@ public class TownyCombatBattlefieldRoleUtil {
         return false;
     }
 
+    /**
+     * Any players with the heavy role who are wearing armour, get some effects.
+     * 
+     * Their mounts, if any, get the effects also
+     */
     public static void giveEffectsToHeavyPlayersWearingArmour() {
-        //Any players with the heavy role who are wearing armour, get some effects.
+        
         for(Player player: Bukkit.getOnlinePlayers()) {
-            if(TownyCombatBattlefieldRoleUtil.getBattlefieldRole(player) == BattlefieldRole.HEAVY
-                    && TownyCombatBattlefieldRoleUtil.isPlayerWearingArmour(player)) {
-
-                final int effectDurationTicks = (int)(TimeTools.convertToTicks(TownySettings.getShortInterval() + 10));
-                Towny.getPlugin().getServer().getScheduler().runTask(Towny.getPlugin(), new Runnable() {
-                    public void run() {
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, effectDurationTicks,0));
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, effectDurationTicks,0));
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, effectDurationTicks,-2));
-                    }
-                });
+            if(TownyCombatBattlefieldRoleUtil.getBattlefieldRole(player) == BattlefieldRole.HEAVY) {
+                //Give effects to player
+                if(TownyCombatBattlefieldRoleUtil.isPlayerWearingArmour(player)) {
+                    giveHeavyEffects(player);
+                }
+                //Give effects to mount
+                Horse mount = TownyCombatHorseUtil.getMount(player);
+                if(mount != null && TownyCombatBattlefieldRoleUtil.isHorseWearingArmour(mount)) {
+                    giveHeavyEffects(mount);
+                }
             }
         }
+    }
+
+    private static boolean isHorseWearingArmour(Horse mount) {
+        return mount.getInventory().getArmor() != null;
+    }
+
+    private static void giveHeavyEffects(LivingEntity livingEntity) {
+        final int effectDurationTicks = (int) (TimeTools.convertToTicks(TownySettings.getShortInterval() + 10));
+        Towny.getPlugin().getServer().getScheduler().runTask(Towny.getPlugin(), new Runnable() {
+            public void run() {
+                livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, effectDurationTicks,0));
+                livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, effectDurationTicks,0));
+                livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, effectDurationTicks,-2));
+            }
+        });
     }
     
     /////////////// Non-Splash Potions ///////////////
@@ -273,18 +319,17 @@ public class TownyCombatBattlefieldRoleUtil {
 
     //////////////// Splash Potions /////////////////
     
-    public static void evaluateEffectOfSplashPotion(PotionSplashEvent event, Player player) {
-        BattlefieldRole battlefieldRole = getBattlefieldRole(player);
-        switch (battlefieldRole) {
+    public static void evaluateEffectOfSplashPotion(PotionSplashEvent event, LivingEntity affectedEntity, BattlefieldRole relevantBattlefieldRole) {
+        switch (relevantBattlefieldRole) {
             case LIGHT:
                 for(PotionEffect potionEffect: event.getPotion().getEffects()) {
                     if(potionEffect.getType().equals(PotionEffectType.SPEED)) {
                         //Give a new effect to the player
                         int amplifier = potionEffect.getAmplifier() + 1;
-                        int duration = (int)((double)potionEffect.getDuration() * event.getIntensity(player));
-                        givePotionEffectToPlayerUnlessAmplifierIsNegative(potionEffect.getType(), amplifier, duration, player);
+                        int duration = (int)((double)potionEffect.getDuration() * event.getIntensity(affectedEntity));
+                        givePotionEffectUnlessAmplifierIsNegative(potionEffect.getType(), amplifier, duration, affectedEntity);
                         //Set the upcoming event effect on player to zero
-                        event.setIntensity(player, 0);
+                        event.setIntensity(affectedEntity, 0);
                     }
                 }
                 break;
@@ -293,18 +338,18 @@ public class TownyCombatBattlefieldRoleUtil {
                     if(potionEffect.getType().equals(PotionEffectType.SPEED)) {
                         //Give a new effect to the player
                         int amplifier = potionEffect.getAmplifier() - 1;
-                        int duration = (int)((double)potionEffect.getDuration() * event.getIntensity(player));
-                        givePotionEffectToPlayerUnlessAmplifierIsNegative(potionEffect.getType(), amplifier, duration, player);
+                        int duration = (int)((double)potionEffect.getDuration() * event.getIntensity(affectedEntity));
+                        givePotionEffectUnlessAmplifierIsNegative(potionEffect.getType(), amplifier, duration, affectedEntity);
                         //Set the upcoming event effect on player to zero
-                        event.setIntensity(player, 0);
+                        event.setIntensity(affectedEntity, 0);
                     }
                     if(potionEffect.getType().equals(PotionEffectType.INCREASE_DAMAGE)) {
                         //Give a new effect to the player
                         int amplifier = potionEffect.getAmplifier() + 1;
-                        int duration = (int)((double)potionEffect.getDuration() * event.getIntensity(player));
-                        givePotionEffectToPlayerUnlessAmplifierIsNegative(potionEffect.getType(), amplifier, duration, player);
+                        int duration = (int)((double)potionEffect.getDuration() * event.getIntensity(affectedEntity));
+                        givePotionEffectUnlessAmplifierIsNegative(potionEffect.getType(), amplifier, duration, affectedEntity);
                         //Set the upcoming event effect on player to zero
-                        event.setIntensity(player, 0);
+                        event.setIntensity(affectedEntity, 0);
                     }
                 }
                 break;
@@ -313,10 +358,10 @@ public class TownyCombatBattlefieldRoleUtil {
                     if(potionEffect.getType().equals(PotionEffectType.SPEED)) {
                         //Give a new effect to the player
                         int amplifier = potionEffect.getAmplifier() - 2;
-                        int duration = (int)((double)potionEffect.getDuration() * event.getIntensity(player));
-                        givePotionEffectToPlayerUnlessAmplifierIsNegative(potionEffect.getType(), amplifier, duration, player);
+                        int duration = (int)((double)potionEffect.getDuration() * event.getIntensity(affectedEntity));
+                        givePotionEffectUnlessAmplifierIsNegative(potionEffect.getType(), amplifier, duration, affectedEntity);
                         //Set the upcoming event effect on player to zero
-                        event.setIntensity(player, 0);
+                        event.setIntensity(affectedEntity, 0);
                     }
                 }
                 break;
@@ -325,11 +370,11 @@ public class TownyCombatBattlefieldRoleUtil {
         }
     }
 
-    private static void givePotionEffectToPlayerUnlessAmplifierIsNegative(PotionEffectType potionEffectType, int amplifier, int durationInTicks, Player player) {
+    private static void givePotionEffectUnlessAmplifierIsNegative(PotionEffectType potionEffectType, int amplifier, int durationInTicks, LivingEntity livingEntity) {
         if(amplifier >= 0) {
             Towny.getPlugin().getServer().getScheduler().runTask(Towny.getPlugin(), new Runnable() {
                 public void run() {
-                    player.addPotionEffect(new PotionEffect(potionEffectType, durationInTicks, amplifier));
+                    livingEntity.addPotionEffect(new PotionEffect(potionEffectType, durationInTicks, amplifier));
                 }
             });
         }

@@ -31,4 +31,5 @@ status_resident_content_heavy_line_disadvantage1: "&2Disadvantage: &aSlowness 1 
 status_resident_content_heavy_line_disadvantage2: "&2Disadvantage: &aLeaping -1 when wearing armour"
 
 msg_warning_cannot_wear_this_armour: "&cArmour dropped, because you do not have the required Battlefield Role to wear it."
+msg_warning_horse_cannot_wear_this_armour: "&cHorse armour dropped, because you do not have the required Battlefield Role for your horse to wear it."
 

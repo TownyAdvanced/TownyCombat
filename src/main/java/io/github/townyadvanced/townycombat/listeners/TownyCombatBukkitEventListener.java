@@ -2,6 +2,7 @@ package io.github.townyadvanced.townycombat.listeners;
 
 import com.palmergames.bukkit.towny.object.Translatable;
 import io.github.townyadvanced.townycombat.TownyCombat;
+import io.github.townyadvanced.townycombat.events.BattlefieldRole;
 import io.github.townyadvanced.townycombat.events.TownyCombatSpecialCavalryHitEvent;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import io.github.townyadvanced.townycombat.utils.Messaging;
@@ -17,6 +18,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AbstractHorse;
+import org.bukkit.entity.Horse;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Arrow;
@@ -26,7 +28,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityShootBowEvent;
-import org.bukkit.event.entity.LingeringPotionSplashEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -76,10 +77,16 @@ public class TownyCombatBukkitEventListener implements Listener {
 
 	@EventHandler (ignoreCancelled = true)
 	public void on (EntityMountEvent event) {
+		if(!TownyCombatSettings.isTownyCombatEnabled())
+			return;
 		if(!(event.getEntity() instanceof Player))
-			return;
+			return; //Not a player doing the mounting
 		if(!(event.getMount() instanceof AbstractHorse))
-			return;
+			return; //Not a horse being mounted
+		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && TownyCombatSettings.isBattlefieldRolesEnabled()) {
+			//Validate Armour
+			TownyCombatBattlefieldRoleUtil.validateArmour((Player)event.getEntity());
+		}
 		//Remove modifiers if system/speed-feature is disabled		
 		if (!TownyCombatSettings.isTownyCombatEnabled()) {
 			TownyCombatMovementUtil.removeTownyCombatMovementModifiers((AbstractHorse)event.getMount());
@@ -170,16 +177,19 @@ public class TownyCombatBukkitEventListener implements Listener {
 			return;
 
 		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && TownyCombatSettings.isBattlefieldRolesEnabled()) {
-			for (LivingEntity livingEntity : event.getAffectedEntities()) {
-				if (livingEntity instanceof Player) {
-					TownyCombatBattlefieldRoleUtil.evaluateEffectOfSplashPotion(event, (Player)livingEntity);
+			for (LivingEntity affectedEntity : event.getAffectedEntities()) {
+				if (affectedEntity instanceof Player) {
+					BattlefieldRole battlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole((Player)affectedEntity);
+					TownyCombatBattlefieldRoleUtil.evaluateEffectOfSplashPotion(event, affectedEntity, battlefieldRole);
+				} else if (affectedEntity instanceof Horse) {
+					Player playerRider = TownyCombatHorseUtil.getPlayerRider(affectedEntity);
+					if(playerRider != null) {
+						BattlefieldRole battlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole(playerRider);
+						TownyCombatBattlefieldRoleUtil.evaluateEffectOfSplashPotion(event, affectedEntity, battlefieldRole);
+					}
 				}
 			}
 		}
-	}
-
-	@EventHandler
-	public void on (LingeringPotionSplashEvent event) {
 	}
 
 	@EventHandler
@@ -376,7 +386,9 @@ public class TownyCombatBukkitEventListener implements Listener {
 	public void on (InventoryCloseEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled() || !TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() || !TownyCombatSettings.isBattlefieldRolesEnabled())
 			return;
-		TownyCombatBattlefieldRoleUtil.validateArmourSlots(event.getPlayer());
+		if(!(event.getPlayer() instanceof Player))
+			return;
+		TownyCombatBattlefieldRoleUtil.validateArmour((Player)event.getPlayer());
 	}
 
 	@EventHandler

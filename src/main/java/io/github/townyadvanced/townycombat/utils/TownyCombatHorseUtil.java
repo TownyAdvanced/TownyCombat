@@ -4,11 +4,15 @@ import com.palmergames.bukkit.towny.Towny;
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import org.bukkit.entity.AbstractHorse;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Horse;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -97,6 +101,21 @@ public class TownyCombatHorseUtil {
         player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, effectDurationTicks,-1));
     }
 
+    public static @Nullable Player getPlayerRider(Entity entity) {
+        if(entity.getPassengers().size() > 0 && entity.getPassengers().get(0) instanceof Player) {
+            return (Player)entity.getPassengers().get(0);
+        } else {
+            return null;
+        }
+    }
+
+    public static @Nullable Horse getMount(Player player) {
+        if(player.isInsideVehicle() && player.getVehicle() instanceof Horse) {
+            return (Horse)player.getVehicle();
+        } else {
+            return null;
+        }
+    }
 }
 
 
