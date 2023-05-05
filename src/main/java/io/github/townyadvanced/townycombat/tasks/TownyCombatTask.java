@@ -3,7 +3,6 @@ package io.github.townyadvanced.townycombat.tasks;
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import io.github.townyadvanced.townycombat.utils.TownyCombatHorseUtil;
-import io.github.townyadvanced.townycombat.utils.TownyCombatMovementUtil;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -29,10 +28,6 @@ public class TownyCombatTask extends BukkitRunnable {
     public void run() {
         if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
-        //Execute the jump restriction every 0.5 seconds.
-        if(TownyCombatSettings.isEncumbranceEnabled() && TownyCombatSettings.isJumpDamageEnabled()) {
-            TownyCombatMovementUtil.punishEncumberedJumpingPlayers();
-        }
         //Execute the cavalry charge refreshes every 1 second.
         if(TownyCombatSettings.isCavalryStrengthBonusEnabled()) {
             if(offTick) {

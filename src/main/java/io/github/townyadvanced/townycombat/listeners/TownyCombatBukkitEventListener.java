@@ -49,7 +49,6 @@ import org.spigotmc.event.entity.EntityMountEvent;
  */
 public class TownyCombatBukkitEventListener implements Listener {
 
-
 	@SuppressWarnings("unused")
 	private final TownyCombat plugin;
 	
@@ -83,25 +82,19 @@ public class TownyCombatBukkitEventListener implements Listener {
 			return; //Not a player doing the mounting
 		if(!(event.getMount() instanceof AbstractHorse))
 			return; //Not a horse being mounted
+		//Remove legacy data
+		TownyCombatMovementUtil.removeTownyCombatMovementModifiers((AbstractHorse)event.getMount());
+		TownyCombatMovementUtil.removeTownyCombatKnockbackModifiers((AbstractHorse)event.getMount());
+		//Validate Armour
 		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && TownyCombatSettings.isBattlefieldRolesEnabled()) {
-			//Validate Armour
 			TownyCombatBattlefieldRoleUtil.validateArmour((Player)event.getEntity());
 		}
-		//Remove modifiers if system/speed-feature is disabled		
-		if (!TownyCombatSettings.isTownyCombatEnabled()) {
-			TownyCombatMovementUtil.removeTownyCombatMovementModifiers((AbstractHorse)event.getMount());
-		}
-		if (!TownyCombatSettings.isTownyCombatEnabled())
-			return;
 		//Prevent mount if the horse is about to be TP'd to owner
 		if(TownyCombatSettings.isTeleportMountWithPlayerEnabled()
 				&& event.getMount() instanceof AbstractHorse
 				&& TownyCombatHorseUtil.isHorseTeleportScheduled((AbstractHorse)event.getMount())) {
 			event.setCancelled(true);
-			event.getEntity().getUniqueId();
 		}
-		//Apply speed adjustments
-		TownyCombatMovementUtil.adjustPlayerAndMountSpeeds((Player)event.getEntity());
 		//Register for charge bonus
 		TownyCombatHorseUtil.registerPlayerForCavalryStrengthBonus((Player)event.getEntity());
 	}
@@ -116,13 +109,14 @@ public class TownyCombatBukkitEventListener implements Listener {
 		TownyCombatHorseUtil.deregisterPlayerForCavalryStrengthBonus((Player)event.getEntity());
 	}
 
-	@EventHandler (ignoreCancelled = true)
+	@EventHandler
 	public void on (PlayerDeathEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
+		if(!TownyCombatSettings.isKeepInventoryOnDeathEnabled() && !TownyCombatSettings.isKeepExperienceOnDeathEnabled())
+			return;	
 		if(!TownyCombatDistanceUtil.isCloseToATown(event.getEntity(), TownyCombatSettings.getKeepStuffOnDeathTownProximityBlocks()))
 			return;
-		//Call event here todo
 		//Keep inv functions
 		if(TownyCombatSettings.isKeepInventoryOnDeathEnabled()) {
 			TownyCombatInventoryUtil.degradeInventory(event);
@@ -135,40 +129,30 @@ public class TownyCombatBukkitEventListener implements Listener {
 
 	@EventHandler (ignoreCancelled = true)
 	public void on (PlayerJoinEvent event) {
-		//Remove legacy data
+		if(!TownyCombatSettings.isTownyCombatEnabled())
+			return;
+		//Remove legacy data created by old TownyCombat versions
 		TownyCombatMovementUtil.resetPlayerBaseSpeedToVanilla(event.getPlayer());
-		//Remove modifiers if system/feature is disabled
-		if (!TownyCombatSettings.isTownyCombatEnabled()) {
-			TownyCombatMovementUtil.removeTownyCombatMovementModifiers(event.getPlayer());
-		} else {
-			TownyCombatMovementUtil.adjustPlayerAndMountSpeeds(event.getPlayer());
-		}
+		TownyCombatMovementUtil.removeTownyCombatMovementModifiers(event.getPlayer());
+		TownyCombatMovementUtil.removeTownyCombatKnockbackModifiers(event.getPlayer());
 	}
 
 	@EventHandler (ignoreCancelled = true)
 	public void on (EntityDamageEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
-		// When it is a horse and it is not being hurt by a bush/cactus, try to prevent the rearing.
-		if (event.getEntity() instanceof AbstractHorse && !instantHorseDeathCause(event.getCause())) {
-			//No rearing when horse is damaged. Do this by cancelling the event, then applying the same damage in a simple set operation.
-			if(TownyCombatSettings.isHorseRearingPreventionEnabled()
-					&& event.getEntity().getPassengers().size() > 0
-			        && event.getEntity().getPassengers().get(0) instanceof Player) {
+		if(!TownyCombatSettings.isHorseRearingPreventionEnabled())
+			return;
+		// When it is a horse, and it is not being hurt by a bush/cactus, try to prevent the rearing.
+		if (event.getEntity() instanceof AbstractHorse && !event.getCause().equals(DamageCause.CONTACT)) {
+			//Prevent the rearing by cancelling the event, then applying the same damage in a simple set operation.
+			if(TownyCombatHorseUtil.getPlayerRider(event.getEntity()) != null) {
 				event.setCancelled(true);
 				AbstractHorse horse = (AbstractHorse)event.getEntity();
 				double newHealth = horse.getHealth() - event.getDamage();
 				horse.setHealth(Math.max(0, Math.min(horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue(), newHealth)));
 			}
 		}
-	}
-
-	/**
-	 * @param cause DamageCause
-	 * @return true if this is a DamageCause that shreds horse health.
-	 */
-	private boolean instantHorseDeathCause(DamageCause cause) {
-		return cause.equals(DamageCause.CONTACT) || cause.equals(DamageCause.FIRE);
 	}
 
 	@EventHandler
