@@ -175,13 +175,6 @@ public class TownyCombatSettings {
     public static String getNewItemsWarhammerNativeWeaponName() {
 		return Settings.getString(ConfigNodes.NEW_ITEMS_WARHAMMER_NATIVE_WEAPON_NAME);
 	}
-	public static boolean isAutoPottingEnabled() {
-		return Settings.getBoolean(ConfigNodes.AUTOPOTTING_ENABLED);
-	}
-
-	public static double getAutoPottingThreshold() {
-		return Settings.getDouble(ConfigNodes.AUTOPOTTING_HEALTH_THRESHOLD);
-	}
 
 	public static boolean isCavalryMissileShieldEnabled() {
 		return Settings.getBoolean(ConfigNodes.CAVALRY_ENHANCEMENTS_CAVALRY_MISSILE_SHIELD_ENABLED);
