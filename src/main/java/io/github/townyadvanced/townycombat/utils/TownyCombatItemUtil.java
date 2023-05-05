@@ -17,35 +17,7 @@ public class TownyCombatItemUtil {
 
     //After we have identified a weapon as spear or not spear, we list it here
     public static Map<ItemStack, Boolean> spearIdentificationMap = new HashMap<>();
-    
-    /**
-     * Check if the matrix matches
-     * 
-     * NOTE!: Because of a duplication bug in MC/Bukkit, 
-     *  the recipe cannot be facilitated if the player has more than 1 item in each slot.
-     * 
-     * @param currentCraftingMatrix the matrix player has setup
-     * @param requiredMaterialMatrix the required matrix
-     * @return true if the matrix matches
-     */
-    private static boolean doesMatrixMatch(ItemStack[] currentCraftingMatrix, Material[] requiredMaterialMatrix) {
-        if(currentCraftingMatrix.length != requiredMaterialMatrix.length)
-            return false;
-        for(int i = 0; i < 9; i++) {
-            if(requiredMaterialMatrix[i] == null) { 
-                if(currentCraftingMatrix[i] != null)
-                    return false;
-            } else {
-                if(currentCraftingMatrix[i] == null)
-                    return false;
-                else if (currentCraftingMatrix[i].getAmount() > 1
-                        || currentCraftingMatrix[i].getType() != requiredMaterialMatrix[i])
-                    return false;
-            }
-        }
-       return true;
-    }
- 
+
     /**
      * Determine is a given item is a spear
      * @param item the item
