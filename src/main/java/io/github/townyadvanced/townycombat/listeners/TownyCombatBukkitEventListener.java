@@ -289,7 +289,6 @@ public class TownyCombatBukkitEventListener implements Listener {
 				damage += (3 * TownyCombatSettings.getCavalryChargeStrengthBonusEffectLevel());
 			}
 		}
-		
 		//DAMAGE RESISTANCE
 		if (event.getEntity() instanceof AbstractHorse) {
 			//Horse damage resistance
