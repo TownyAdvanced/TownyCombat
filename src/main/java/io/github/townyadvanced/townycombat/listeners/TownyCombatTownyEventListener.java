@@ -56,7 +56,7 @@ public class TownyCombatTownyEventListener implements Listener {
 		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && TownyCombatSettings.isBattlefieldRolesEnabled()) {
 			TownyCombatBattlefieldRoleUtil.giveEffectsToHeavyPlayersWearingArmour();
 			if(TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()) {
-				TownyCombatItemUtil.grantSuperPotionsAtStartOfDay();
+				TownyCombatItemUtil.grantSuperPotionsAtScheduledHourOfDay();
 			}
 		}
     }

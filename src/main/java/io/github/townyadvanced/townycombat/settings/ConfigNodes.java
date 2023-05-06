@@ -331,43 +331,7 @@ public enum ConfigNodes {
 			"new_items.spear.native_weapon_name",
 			"Spear",
 			"",
-			"# The name of the native weapon, when crafted."),
-	NEW_ITEMS_WARHAMMER(
-			"new_items.warhammer",
-			"",
-			""),
-	NEW_ITEMS_WARHAMMER_ENABLED(
-			"new_items.warhammer.enabled",
-			"true",
-			"",
-			"# if true, then the warhammer effect is enabled."),
-	NEW_ITEMS_WARHAMMER_LORE(
-			"new_items.warhammer.lore",
-			"15% Chance to Break Shield",
-			"",
-			"# It an item has this text for any of its lore lines, it gets the warhammer effect"),
-	NEW_ITEMS_WARHAMMER_CUSTOM_MODEL_DATA_ID(
-			"new_items.spear.custom_model_data_id",
-			"-1",
-			"",
-			"# If this setting is not -1, then the identification-by-lore is disabled, and warhammers are located by the given customModelData id."),
-	NEW_ITEMS_WARHAMMER_SHERLD_BREAK_CHANCE_PERCENT(
-			"new_items.warhammer.shield_break_chance_percent",
-			"15",
-			"",
-			"# Percentage chance to break shield. Integer only."), 
-	NEW_ITEMS_WARHAMMER_NATIVE_WEAPON_ENABLED(
-			"new_items.warhammer.native_weapon_enabled",
-			"true",
-			"",
-			"# If true, then native spears TCM warhammers be crafted, and regular wooden axes cannot.",
-			"# See user guide for recipe."),
-	NEW_ITEMS_WARHAMMER_NATIVE_WEAPON_NAME(
-			"new_items.warhammer.native_weapon_name",
-			"Warhammer",
-			"",
 			"# The name of the native weapon, when crafted.");
-	
 	private final String Root;
 	private final String Default;
 	private String[] comments;
