@@ -311,23 +311,10 @@ public class TownyCombatBukkitEventListener implements Listener {
 		}
 
 		//DAMAGE RESISTANCE AND AUTOPOTTING
-		if(event.getEntity() instanceof Player) {
-			//Auto-pot if needed
-			if(TownyCombatSettings.isAutoPottingEnabled()
-					&& ((Player) event.getEntity()).getHealth() < TownyCombatSettings.getAutoPottingThreshold()) {
-				TownyCombatItemUtil.autopotToThreshold((Player)event.getEntity());
-			}
-		} else if (event.getEntity() instanceof AbstractHorse) {
+		if (event.getEntity() instanceof AbstractHorse) {
 			//Horse damage resistance
 			if(attackingPlayer != null) {
 				damage = damage - (damage * (TownyCombatSettings.getAttackDamageResistanceHorsesPercent() / 100));
-			}
-			//Auto-pot if needed
-			if(TownyCombatSettings.isAutoPottingEnabled()
-					&& event.getEntity().getPassengers().size() > 0
-					&& event.getEntity().getPassengers().get(0) instanceof Player
-					&& ((AbstractHorse) event.getEntity()).getHealth() < TownyCombatSettings.getAutoPottingThreshold()) {
-				TownyCombatItemUtil.autopotToThreshold((Player)event.getEntity().getPassengers().get(0), (AbstractHorse)event.getEntity());
 			}
 		}
 

@@ -103,29 +103,6 @@ public enum ConfigNodes {
 			"10",
 			"",
 			"# The bonus effect cooldown."),
-	INFANTRY_ENHANCEMENTS(
-		"infantry_enhancements",
-			"",
-			"",
-			"",
-			"############################################################",
-			"# +------------------------------------------------------+ #",
-			"# |                   INFANTRY ENHANCEMENTS                 | #",
-			"# +------------------------------------------------------+ #",
-			"############################################################",
-			""),
-	INFANTRY_ENHANCEMENTS_GENERIC_SPEED_ADJUSTMENT_PERCENT(
-			"infantry_enhancements.generic_speed_adjustment_percent",
-			"12",
-			"",
-			"# Adjusts the walking speed of all players.",
-			"# TIP: Giving all players a small speed boost helps sugar-coat the concept of encumbrance."),
-	INFANTRY_ENHANCEMENTS_KNOCKBACK_RESISTANCE_PERCENT(
-			"infantry_enhancements.knockback_resistance_percent",
-			"25",
-			"",
-			"# This setting makes players resistant to knockback.",
-			"# TIP: This setting helps players to avoid getting knocked into holes/ganks etc."),
 	BLOCK_GLITCHING_PREVENTION(
 		"block_glitching_prevention",
 			"",
@@ -382,44 +359,8 @@ public enum ConfigNodes {
 			"new_items.warhammer.native_weapon_name",
 			"Warhammer",
 			"",
-			"# The name of the native weapon, when crafted."),
-	AUTOPOTTING(
-		"autopotting",
-			"",
-			"",
-			"",
-			"############################################################",
-			"# +------------------------------------------------------+ #",
-			"# |                    AUTO-POTTING                      | #",
-			"# +------------------------------------------------------+ #",
-			"############################################################",
-			""),
-	AUTOPOTTING_ENABLED(
-			"autopotting.enabled",
-			"true",
-			"",
-			"# If enabled, splash health potions (I and II) are automatically consumed if a player's health falls below a certain threshold.",
-			"# ",
-			"# TIP 1: ",
-			"# This setting unlocks battlefield participation for the majority of Towny players,",
-			"# specifically new-players/casual-players/traders/builders/roleplayers,",
-			"# who are otherwise almost completely excluded from battles, by an unreasonably high inventory-management skill bar.",
-			"# ",
-			"# TIP 2: ",
-			"# Protests can be expected from a vocal minority",
-			"# namely those members of the elite PVP caste who have already cleared the participation bar, ",
-			"# and are willing to continue excluding the majority of players from battles, in exchange for holding on to their own power.",
-			"# ",
-			"# TIP 3: ",
-			"# More progressive PVP'ers will recognize both a challenge and an opportunity,",
-			"# to dominate the battlefield less by twitchy young fingers,",
-			"# and more by solid army organization, reliable logistics and clever military tactics."),
-	AUTOPOTTING_HEALTH_THRESHOLD(
-			"autopotting.health_threshold",
-			"10",
-			"",
-			"# Once health falls below this threshold, splash-health potions will be automatically consumed just before the next damage event.");
-
+			"# The name of the native weapon, when crafted.");
+	
 	private final String Root;
 	private final String Default;
 	private String[] comments;
