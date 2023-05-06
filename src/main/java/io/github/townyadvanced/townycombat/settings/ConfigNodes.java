@@ -325,7 +325,6 @@ public enum ConfigNodes {
 			"Spear",
 			"",
 			"# The name of the native weapon, when crafted.");
-
 	private final String Root;
 	private final String Default;
 	private String[] comments;

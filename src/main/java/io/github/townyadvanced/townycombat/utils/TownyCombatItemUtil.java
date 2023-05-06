@@ -3,6 +3,8 @@ package io.github.townyadvanced.townycombat.utils;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
