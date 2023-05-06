@@ -213,11 +213,18 @@ public class TownyCombatSettings {
 	}
 
 	public static boolean isBattlefieldRolesSuperPotionsEnabled() {
-		return Settings.getBoolean(ConfigNodes.BATTLEFIELD_ROLES_SUPER_POTIONS_ENABLED);
+		return getBattlefieldRolesSuperPotionsDailyGenerationRate() > 0;
 	}
 
 	public static double getBattlefieldRolesMinimumTimeBetweenRoleChangesDays() {
 		return Settings.getDouble(ConfigNodes.BATTLEFIELD_ROLES_MINIMUM_TIME_BETWEEN_ROLE_CHANGES_DAYS);
 	}
 
+	public static int getBattlefieldRolesSuperPotionsDailyGenerationRate() {
+		return Settings.getInt(ConfigNodes.BATTLEFIELD_ROLES_SUPER_POTIONS_DAILY_GENERATION_RATE);
+	}
+
+	public static int getSuperPotionsScheduledGrantHour() {
+		return Settings.getInt(ConfigNodes.BATTLEFIELD_ROLES_SUPER_POTIONS_SCHEDULED_GRANT_HOUR);
+	}
 }

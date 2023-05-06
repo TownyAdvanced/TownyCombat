@@ -7,6 +7,7 @@ import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import io.github.townyadvanced.townycombat.utils.TownyCombatBattlefieldRoleUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatBlockUtil;
+import io.github.townyadvanced.townycombat.utils.TownyCombatItemUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatMapUtil;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -54,6 +55,9 @@ public class TownyCombatTownyEventListener implements Listener {
 		}
 		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && TownyCombatSettings.isBattlefieldRolesEnabled()) {
 			TownyCombatBattlefieldRoleUtil.giveEffectsToHeavyPlayersWearingArmour();
+			if(TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()) {
+				TownyCombatItemUtil.grantSuperPotionsAtStartOfDay();
+			}
 		}
     }
 }

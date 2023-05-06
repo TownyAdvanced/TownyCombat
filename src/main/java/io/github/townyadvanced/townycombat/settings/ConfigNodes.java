@@ -274,11 +274,18 @@ public enum ConfigNodes {
 			"7.0",
 			"",
 			"# This value determines the minimum time between each role-change."),
-	BATTLEFIELD_ROLES_SUPER_POTIONS_ENABLED(
-			"unlock_pvp_combat_for_regular_players.battlefield_roles.super_potions_enabled",
-			"true",
+	BATTLEFIELD_ROLES_SUPER_POTIONS_DAILY_GENERATION_RATE(
+			"unlock_pvp_combat_for_regular_players.battlefield_roles.super_potions_daily_generation_rate",
+			"3",
 			"",
-			"# If true, super potions are enabled for players with battlefield roles. See user guide for details."),
+			"# This value determines how many super potions are generated per day.",
+			"# A value of 0 will disable super potions completely."),
+	BATTLEFIELD_ROLES_SUPER_POTIONS_SCHEDULED_GRANT_HOUR(
+			"unlock_pvp_combat_for_regular_players.battlefield_roles.super_potions_scheduled_grant_hour",
+			"0",
+			"",
+			"# This value determines the hour of day (server-time) when super potions are granted.",
+			"# The default is 0, indicating midnight"),
 	NEW_ITEMS(
 		"new_items",
 			"",

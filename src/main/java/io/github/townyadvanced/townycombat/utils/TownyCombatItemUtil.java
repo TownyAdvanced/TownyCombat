@@ -8,7 +8,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +35,7 @@ public class TownyCombatItemUtil {
     //After we have identified a weapon as warhammer or not warhammer, we list it here
     public static Map<ItemStack, Boolean> warhammerIdentificationMap = new HashMap<>();
 
+    public static LocalDate dateOfLastSuperPotionGrant = null;
     /**
      * Check if the given item is a vanilla placeholder version of a custom item.
      * 
@@ -228,5 +234,61 @@ public class TownyCombatItemUtil {
             warhammerIdentificationMap.put(item, result);
         }
         return result;
+    }
+
+    public static ItemStack createTrueInvisibilityPotion(int durationSeconds) {
+        return createPotion(Material.POTION, PotionEffectType.INVISIBILITY, durationSeconds, 0, false, false, true);
+    }
+
+    public static ItemStack createLingeringHarmPotion(int durationSeconds, int amplifier) {
+        return createPotion(Material.LINGERING_POTION, PotionEffectType.HARM, durationSeconds, amplifier, true, true, true);
+    }
+
+    public static ItemStack createAbsorbtionPotion(int durationSeconds, int amplifier) {
+        return createPotion(Material.POTION, PotionEffectType.ABSORPTION, durationSeconds, amplifier, true, true, true);
+    }
+
+    private static ItemStack createPotion(Material material, PotionEffectType potionEffectType, int durationSeconds, int amplifier, boolean ambient, boolean particles, boolean icon) {
+        //Create the potion itemstack
+        ItemStack newPotion = new ItemStack(material);
+        newPotion.setAmount(1);
+        //Add the required effect
+        int durationTicks = durationSeconds * 20;
+        PotionEffect newPotionEffect = new PotionEffect(potionEffectType, durationTicks, amplifier, ambient, particles, icon);
+        PotionMeta newPotionMeta = (PotionMeta) newPotion.getItemMeta();
+        if(newPotionMeta == null)
+            return null;
+        newPotionMeta.addCustomEffect(newPotionEffect, true);
+        newPotion.setItemMeta(newPotionMeta);
+        //Return the potion
+        return newPotion;
+    }
+
+    /**
+     * Grant super potions at the scheduled hour of day
+     *  
+     *  NOTE: If a server misses this, they can use
+     *   /tcma grantsuperpotions
+     */
+    public static void grantSuperPotionsAtStartOfDay() {
+        //Grant potions at a time between the scheduled hour, and 1 minute after.
+        LocalDateTime now = LocalDateTime.now();
+        int hourNow = now.getHour();
+        int minuteNow = now.getMinute();
+        if(hourNow == TownyCombatSettings.getSuperPotionsScheduledGrantHour() && minuteNow == 0) {
+            if(dateOfLastSuperPotionGrant == null) {
+                //No record of grant. Grant now
+                grantSuperPotionsNow();
+            } else if (dateOfLastSuperPotionGrant.isBefore(LocalDate.now())) {
+                //Last grant was before today. Grant now
+                grantSuperPotionsNow();
+            } else {
+                //Last grant was today. Do not re-grant
+            }
+        }
+    }
+    
+    private static void grantSuperPotionsNow() {
+        //Grant 
     }
 }
