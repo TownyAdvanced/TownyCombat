@@ -4,7 +4,6 @@ import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.util.TimeMgmt;
-import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.events.BattlefieldRole;
 import io.github.townyadvanced.townycombat.metadata.TownyCombatResidentMetaDataController;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
@@ -17,12 +16,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.potion.PotionType;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -149,6 +145,7 @@ public class TownyCombatItemUtil {
             default:
                 throw new RuntimeException("Unknown battlefield role");
         }
+        //TODO - SEND MESSAGE TO PLAYER
     }
 
     public static void grantLightRoleSuperPotionsNow(Player player) {
