@@ -56,7 +56,6 @@ public class TownyCombatTownyEventListener implements Listener {
 				&& TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()) {
 			TownyCombatItemUtil.grantSuperPotionsToOnlinePlayers();
 		}
-		TownyCombat.info("Towny Time: " + TimeMgmt.townyTime(true));
 	}
 
 	@EventHandler
