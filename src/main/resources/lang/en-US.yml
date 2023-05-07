@@ -78,8 +78,15 @@ msg_warning_how_to_view_and_change_role: " To view your Battlefield Role, type /
 msg_warning_cannot_change_role_now: "&cYou cannot change your battlefield role for another %s."
 
 # Change-Battlefield-Role Success
+
 msg_changerole_success: "&bYou successfully changed your Battlefield Role to: %s"
 
 # Help
 
 command_help_changerole: "Change your Battlefield Role. Options: Light | Medium | Heavy."
+
+# Superpotion blurbs
+
+super_potion_name_true_invisibility: "Super Potion: True Invisibility"
+super_potion_name_lingering_harm: "Super Potion: Harming Cloud"
+super_potion_name_absorbtion: "Super Potion: Absorbtion"

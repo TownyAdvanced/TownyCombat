@@ -15,7 +15,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Horse;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.PotionSplashEvent;
@@ -167,7 +166,6 @@ public class TownyCombatBattlefieldRoleUtil {
                 Messaging.sendErrorMsg(player, errorMessage);
             }
         }
-
     }
     
     public static long getTimeUntilNextRoleChange(Resident resident) {
@@ -240,7 +238,7 @@ public class TownyCombatBattlefieldRoleUtil {
             public void run() {
                 livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, effectDurationTicks,0));
                 livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, effectDurationTicks,0));
-                livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, effectDurationTicks,-2));
+                livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, effectDurationTicks,-1));
             }
         });
     }

@@ -3,6 +3,7 @@ package io.github.townyadvanced.townycombat.utils;
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.util.TimeMgmt;
 import io.github.townyadvanced.townycombat.events.BattlefieldRole;
 import io.github.townyadvanced.townycombat.metadata.TownyCombatResidentMetaDataController;
@@ -14,10 +15,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.potion.PotionType;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -92,7 +91,7 @@ public class TownyCombatItemUtil {
         Resident resident = TownyAPI.getInstance().getResident(player);
         if(resident == null)
             return;
-        LocalDate dateOfLastSuperPotionGrant = TownyCombatResidentMetaDataController.getDateOfLastSuperPotionGrant(resident);
+        LocalDate dateOfLastSuperPotionGrant = TownyCombatResidentMetaDataController.getLastSuperPotionCollectionDate(resident);
         LocalDate today = LocalDate.now();
         LocalDate yesterday = today.minusDays(1);
         LocalDate tomorrow = today.plusDays(1);
@@ -147,7 +146,8 @@ public class TownyCombatItemUtil {
             default:
                 throw new RuntimeException("Unknown battlefield role");
         }
-        //TODO - SEND MESSAGE TO PLAYER
+        TownyCombatResidentMetaDataController.setLastSuperPotionCollectionDate(resident, LocalDate.now());
+        resident.save();
     }
 
     public static void grantLightRoleSuperPotionsNow(Player player) {
@@ -158,16 +158,18 @@ public class TownyCombatItemUtil {
         }
         //Drop potions
         dropItemsAtPlayersFeet(player, potionsToDrop);
+        Messaging.sendMsg(player, Translatable.of("super_potions_granted", potionsToDrop.size()));
     }
 
     public static void grantMediumRoleSuperPotionsNow(Player player) {
         //Create potions
         List<ItemStack> potionsToDrop = new ArrayList<>();
         for(int i = 0; i < TownyCombatSettings.getBattlefieldRolesSuperPotionsDailyGenerationRate(); i++) {
-            potionsToDrop.add(createLingeringHarmPotion(60, 4));
+            potionsToDrop.add(createLingeringHarmPotion(120, 4));
         }
         //Drop potions
         dropItemsAtPlayersFeet(player, potionsToDrop);
+        Messaging.sendMsg(player, Translatable.of("super_potions_granted", potionsToDrop.size()));
     }
 
     public static void grantHeavyRoleSuperPotions(Player player) {
@@ -178,6 +180,7 @@ public class TownyCombatItemUtil {
         }
         //Drop potions
         dropItemsAtPlayersFeet(player, potionsToDrop);
+        Messaging.sendMsg(player, Translatable.of("super_potions_granted", potionsToDrop.size()));
     }
 
     public static void dropItemsAtPlayersFeet(Player player, List<ItemStack> itemsToDrop) {
@@ -191,18 +194,18 @@ public class TownyCombatItemUtil {
     }
 
     public static ItemStack createTrueInvisibilityPotion(int durationSeconds) {
-        return createPotion(Material.POTION, PotionEffectType.INVISIBILITY, durationSeconds, 0, false, false, true);
+        return createPotion(Material.POTION, PotionEffectType.INVISIBILITY, durationSeconds, 0, false, false, true, "super_potion_name_true_invisibility");
     }
 
     public static ItemStack createLingeringHarmPotion(int durationSeconds, int amplifier) {
-        return createPotion(Material.LINGERING_POTION, PotionEffectType.HARM, durationSeconds, amplifier, true, true, true);
+        return createPotion(Material.LINGERING_POTION, PotionEffectType.HARM, durationSeconds, amplifier, true, true, true, "super_potion_name_lingering_harm");
     }
 
     public static ItemStack createAbsorbtionPotion(int durationSeconds, int amplifier) {
-        return createPotion(Material.POTION, PotionEffectType.ABSORPTION, durationSeconds, amplifier, true, true, true);
+        return createPotion(Material.POTION, PotionEffectType.ABSORPTION, durationSeconds, amplifier, true, true, true, "super_potion_name_absorbtion");
     }
 
-    public static ItemStack createPotion(Material material, PotionEffectType potionEffectType, int durationSeconds, int amplifier, boolean ambient, boolean particles, boolean icon) {
+    public static ItemStack createPotion(Material material, PotionEffectType potionEffectType, int durationSeconds, int amplifier, boolean ambient, boolean particles, boolean icon, String nameTranslationKey) {
         //Create the potion itemstack
         ItemStack potionItemStack = new ItemStack(material);
         potionItemStack.setAmount(1);
@@ -210,6 +213,7 @@ public class TownyCombatItemUtil {
         PotionMeta potionMeta = (PotionMeta) potionItemStack.getItemMeta();
         if(potionMeta == null)
             return null;
+        potionMeta.setDisplayName(Translatable.of(nameTranslationKey).toString());
         //Setup PotionEffect
         int durationTicks = durationSeconds * 20;
         PotionEffect potionEffect = new PotionEffect(potionEffectType, durationTicks, amplifier, ambient, particles, icon);
