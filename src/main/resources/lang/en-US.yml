@@ -36,9 +36,9 @@ msg_warning_jump_damage: '&cWARNING: Your encumbrance level is above %d percent.
     
 #Battlefield Role Names
 
-battlefield.role.light: "Light"
-battlefield.role.medium: "Medium"
-battlefield.role.heavy: "Heavy"
+battlefield_role_light: "Light"
+battlefield_role_medium: "Medium"
+battlefield_role_heavy: "Heavy"
 
 #Resident screen
 
