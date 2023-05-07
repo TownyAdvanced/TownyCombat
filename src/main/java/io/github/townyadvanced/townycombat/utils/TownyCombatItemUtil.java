@@ -221,7 +221,8 @@ public class TownyCombatItemUtil {
         potionMeta.addCustomEffect(potionEffect, true);
         //Add lore
         List<String> lore = new ArrayList<>();
-        lore.add(Translatable.of("super_potion_lore_line_1").translate(Locale.ROOT) + ":" + owner.getName());
+        lore.add(""); //Blank line to start with
+        lore.add(Translatable.of("super_potion_lore_line_1", owner.getName()).translate(Locale.ROOT));
         potionMeta.setLore(lore);
         //Set Potion Meta
         potionItemStack.setItemMeta(potionMeta);
