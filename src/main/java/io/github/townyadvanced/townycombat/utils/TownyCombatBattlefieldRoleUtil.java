@@ -238,7 +238,7 @@ public class TownyCombatBattlefieldRoleUtil {
             public void run() {
                 livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, effectDurationTicks,0));
                 livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, effectDurationTicks,0));
-                livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, effectDurationTicks,-1));
+                livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, effectDurationTicks,-2));
             }
         });
     }
