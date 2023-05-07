@@ -14,8 +14,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -202,18 +204,20 @@ public class TownyCombatItemUtil {
 
     public static ItemStack createPotion(Material material, PotionEffectType potionEffectType, int durationSeconds, int amplifier, boolean ambient, boolean particles, boolean icon) {
         //Create the potion itemstack
-        ItemStack newPotion = new ItemStack(material);
-        newPotion.setAmount(1);
-        //Add the required effect
-        int durationTicks = durationSeconds * 20;
-        PotionEffect newPotionEffect = new PotionEffect(potionEffectType, durationTicks, amplifier, ambient, particles, icon);
-        PotionMeta newPotionMeta = (PotionMeta) newPotion.getItemMeta();
-        if(newPotionMeta == null)
+        ItemStack potionItemStack = new ItemStack(material);
+        potionItemStack.setAmount(1);
+        //Get Potion Meta
+        PotionMeta potionMeta = (PotionMeta) potionItemStack.getItemMeta();
+        if(potionMeta == null)
             return null;
-        newPotionMeta.addCustomEffect(newPotionEffect, true);
-        newPotion.setItemMeta(newPotionMeta);
+        //Setup PotionEffect
+        int durationTicks = durationSeconds * 20;
+        PotionEffect potionEffect = new PotionEffect(potionEffectType, durationTicks, amplifier, ambient, particles, icon);
+        potionMeta.addCustomEffect(potionEffect, true);
+        //Set Potion Meta
+        potionItemStack.setItemMeta(potionMeta);
         //Return the potion
-        return newPotion;
+        return potionItemStack;
     }
 
 }

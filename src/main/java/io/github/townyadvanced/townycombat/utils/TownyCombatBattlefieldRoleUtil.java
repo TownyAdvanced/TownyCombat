@@ -257,6 +257,8 @@ public class TownyCombatBattlefieldRoleUtil {
         PotionMeta potionMeta = (PotionMeta) potionItemStack.getItemMeta();
         if(potionMeta == null)
             return;
+        if(potionMeta.getBasePotionData().getType().getEffectType() == null)
+            return;
         //Create a replacement potion if required
         ItemStack replacementPotion = null;
         switch (battlefieldRole) {
