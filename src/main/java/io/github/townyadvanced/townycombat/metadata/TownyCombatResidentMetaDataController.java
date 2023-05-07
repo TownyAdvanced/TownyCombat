@@ -86,6 +86,6 @@ public class TownyCombatResidentMetaDataController {
 	}
 
 	public static LocalDate getDateOfLastSuperPotionGrant(Resident resident) {
-		return LocalDate.now().minusDays(1);	
+		return LocalDate.now().minusDays(2);	
 	}
 }
