@@ -50,6 +50,7 @@ public class TownyCombatStatusScreenListener implements Listener {
 
 	private Component getBattlefieldRoleHoverItemContentComponent(Resident resident, BattlefieldRole battlefieldRole, Translator translator) {
 		Component text = Component.empty();
+		int numSuperPotions = TownyCombatSettings.getBattlefieldRolesSuperPotionsDailyGenerationRate();
 		//Battlefield Role Details
 		switch(battlefieldRole) {
 			case LIGHT:
@@ -62,7 +63,7 @@ public class TownyCombatStatusScreenListener implements Listener {
 				text = text.append(Component.text(translator.of("status_resident_content_light_line_passive_ability")));
 				if (TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()) {
 					text = text.append(Component.newline());
-					text = text.append(Component.text(translator.of("status_resident_content_light_super_potion_line")));
+					text = text.append(Component.text(translator.of("status_resident_content_light_super_potion_line", numSuperPotions)));
 				}
 				break;
 			case MEDIUM:
@@ -77,7 +78,7 @@ public class TownyCombatStatusScreenListener implements Listener {
 				text = text.append(Component.text(translator.of("status_resident_content_medium_line_disadvantage")));
 				if (TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()) {
 					text = text.append(Component.newline());
-					text = text.append(Component.text(translator.of("status_resident_content_medium_super_potion_line")));
+					text = text.append(Component.text(translator.of("status_resident_content_medium_super_potion_line", numSuperPotions)));
 				}
 				break;
 			case HEAVY:
@@ -96,7 +97,7 @@ public class TownyCombatStatusScreenListener implements Listener {
 				text = text.append(Component.text(translator.of("status_resident_content_heavy_line_disadvantage3")));
 				if (TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()) {
 					text = text.append(Component.newline());
-					text = text.append(Component.text(translator.of("status_resident_content_heavy_super_potion_line")));
+					text = text.append(Component.text(translator.of("status_resident_content_heavy_super_potion_line", numSuperPotions)));
 				}
 				break;
 			default:

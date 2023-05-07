@@ -36,9 +36,9 @@ msg_warning_jump_damage: '&cWARNING: Your encumbrance level is above %d percent.
     
 #Battlefield Role Names
 
-battlefield.role.light: "Light"
-battlefield.role.medium: "Medium"
-battlefield.role.heavy: "Heavy"
+battlefield_role_light: "Light"
+battlefield_role_medium: "Medium"
+battlefield_role_heavy: "Heavy"
 
 #Resident screen
 
@@ -48,23 +48,23 @@ status_resident_content_light_line_armour: "&2Armor: &aLeather"
 status_resident_content_light_line_melee_weapons: "&2Melee Weapons: &aWood"
 status_resident_content_light_line_missile_weapons: "&2Missile Weapons: &aBow"
 status_resident_content_light_line_passive_ability: "&2Passive Ability: &a+1 from Potions of Swiftness"
-status_resident_content_light_super_potion_line: "&2Super Potion (1/day): &aTrue Invisibility (5 minutes)"
+status_resident_content_light_super_potion_line: "&2Super Potion (%d/day): &aTrue Invisibility (20 seconds)"
 
 status_resident_content_medium_line_armour: "&2Armor: &aGold, Chainmail, Iron, Turtle"
 status_resident_content_medium_line_melee_weapons: "&2Melee Weapons: &aStone, Gold, Iron"
 status_resident_content_medium_line_missile_weapons: "&2Missile Weapons: &aCrossbow"
 status_resident_content_medium_line_passive_ability: "&2Passive Ability: &a+1 from Potions of Strength"
 status_resident_content_medium_line_disadvantage: "&2Disadvantage: &a-1 from Potions of Swiftness"
-status_resident_content_medium_super_potion_line: "&2Super Potion (1/day): &a TODO"
+status_resident_content_medium_super_potion_line: "&2Super Potion (%d/day): &aLingering Harming V (30 seconds)"
 
 status_resident_content_heavy_line_armour: "&2Armor: &aDiamond, Netherite"
 status_resident_content_heavy_line_melee_weapons: "&2Melee Weapons: &aDiamond, Netherite"
 status_resident_content_heavy_line_missile_weapons: "&2Missile Weapons: &aNone"
 status_resident_content_heavy_line_passive_ability: "&2Passive Ability: &a+1 Resistance 1 when wearing armor"
 status_resident_content_heavy_line_disadvantage1: "&2Disadvantage: &aSlowness 1 when wearing armor"
-status_resident_content_heavy_line_disadvantage2: "&2Disadvantage: &JumpBoost -2 when wearing armor"
+status_resident_content_heavy_line_disadvantage2: "&2Disadvantage: &aJumpBoost -2 when wearing armor"
 status_resident_content_heavy_line_disadvantage3: "&2Disadvantage: &aCannot use Potions of Swiftness"
-status_resident_content_heavy_super_potion_line: "&2Super Potion (1/day): &a TODO"
+status_resident_content_heavy_super_potion_line: "&2Super Potion (%d/day): &aAbsorbtion V (3 minutes)"
     
 status_resident_content_time_until_next_role_change: "&2Time Until Next Role-Change is Allowed: &a%s"
     
@@ -78,8 +78,16 @@ msg_warning_how_to_view_and_change_role: " To view your Battlefield Role, type /
 msg_warning_cannot_change_role_now: "&cYou cannot change your battlefield role for another %s."
 
 # Change-Battlefield-Role Success
-msg_changerole_success: "&bYou successfully changed your Battlefield Role to: %s"
+
+msg_changerole_success: "&bYou successfully changed your Battlefield Role to: %s."
 
 # Help
 
 command_help_changerole: "Change your Battlefield Role. Options: Light | Medium | Heavy."
+
+# Super-potion blurbs
+
+super_potion_name_true_invisibility: "Super Potion: True Invisibility"
+super_potion_name_lingering_harm: "Super Potion: Lingering Harming"
+super_potion_name_absorbtion: "Super Potion: Absorbtion"
+super_potions_granted: "&bYou have been granted %d super potions."

@@ -135,6 +135,13 @@ public class TownyCombatBukkitEventListener implements Listener {
 		TownyCombatMovementUtil.resetPlayerBaseSpeedToVanilla(event.getPlayer());
 		TownyCombatMovementUtil.removeTownyCombatMovementModifiers(event.getPlayer());
 		TownyCombatMovementUtil.removeTownyCombatKnockbackModifiers(event.getPlayer());
+		//Possibly grant super potions
+		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled()
+				&& TownyCombatSettings.isBattlefieldRolesEnabled()
+				&& TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()) {
+			TownyCombatItemUtil.evaluateSuperPotionGrant(event.getPlayer());
+		}
+
 	}
 
 	@EventHandler (ignoreCancelled = true)

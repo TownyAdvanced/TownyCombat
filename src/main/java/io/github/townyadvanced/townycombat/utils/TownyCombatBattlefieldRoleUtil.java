@@ -15,7 +15,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Horse;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.PotionSplashEvent;
@@ -167,7 +166,6 @@ public class TownyCombatBattlefieldRoleUtil {
                 Messaging.sendErrorMsg(player, errorMessage);
             }
         }
-
     }
     
     public static long getTimeUntilNextRoleChange(Resident resident) {
@@ -256,6 +254,8 @@ public class TownyCombatBattlefieldRoleUtil {
         BattlefieldRole battlefieldRole = getBattlefieldRole(resident);
         PotionMeta potionMeta = (PotionMeta) potionItemStack.getItemMeta();
         if(potionMeta == null)
+            return;
+        if(potionMeta.getBasePotionData().getType().getEffectType() == null)
             return;
         //Create a replacement potion if required
         ItemStack replacementPotion = null;
