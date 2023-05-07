@@ -88,4 +88,5 @@ command_help_changerole: "Change your Battlefield Role. Options: Light | Medium 
 super_potion_name_true_invisibility: "Super Potion: True Invisibility"
 super_potion_name_lingering_harm: "Super Potion: Lingering Harming"
 super_potion_name_absorbtion: "Super Potion: Absorbtion"
+super_potion_lore_line_1: "Owner: %s"
 super_potions_granted: "&bYou have been granted %d super potions."

@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class TownyCombatItemUtil {
@@ -154,7 +155,7 @@ public class TownyCombatItemUtil {
         //Create potions
         List<ItemStack> potionsToDrop = new ArrayList<>();
         for(int i = 0; i < TownyCombatSettings.getBattlefieldRolesSuperPotionsDailyGenerationRate(); i++) {
-            potionsToDrop.add(createTrueInvisibilityPotion(20));
+            potionsToDrop.add(createTrueInvisibilityPotion(player,20));
         }
         //Drop potions
         dropItemsAtPlayersFeet(player, potionsToDrop);
@@ -165,7 +166,7 @@ public class TownyCombatItemUtil {
         //Create potions
         List<ItemStack> potionsToDrop = new ArrayList<>();
         for(int i = 0; i < TownyCombatSettings.getBattlefieldRolesSuperPotionsDailyGenerationRate(); i++) {
-            potionsToDrop.add(createLingeringHarmPotion(120, 4));
+            potionsToDrop.add(createLingeringHarmPotion(player,120, 4));
         }
         //Drop potions
         dropItemsAtPlayersFeet(player, potionsToDrop);
@@ -176,7 +177,7 @@ public class TownyCombatItemUtil {
         //Create potions
         List<ItemStack> potionsToDrop = new ArrayList<>();
         for(int i = 0; i < TownyCombatSettings.getBattlefieldRolesSuperPotionsDailyGenerationRate(); i++) {
-            potionsToDrop.add(createAbsorbtionPotion(180, 4));
+            potionsToDrop.add(createAbsorbtionPotion(player,180, 4));
         }
         //Drop potions
         dropItemsAtPlayersFeet(player, potionsToDrop);
@@ -193,19 +194,19 @@ public class TownyCombatItemUtil {
         });
     }
 
-    public static ItemStack createTrueInvisibilityPotion(int durationSeconds) {
-        return createPotion(Material.POTION, PotionEffectType.INVISIBILITY, durationSeconds, 0, false, false, true, "super_potion_name_true_invisibility");
+    public static ItemStack createTrueInvisibilityPotion(Player owner, int durationSeconds) {
+        return createPotion(owner, Material.POTION, PotionEffectType.INVISIBILITY, durationSeconds, 0, false, false, true, "super_potion_name_true_invisibility");
     }
 
-    public static ItemStack createLingeringHarmPotion(int durationSeconds, int amplifier) {
-        return createPotion(Material.LINGERING_POTION, PotionEffectType.HARM, durationSeconds, amplifier, true, true, true, "super_potion_name_lingering_harm");
+    public static ItemStack createLingeringHarmPotion(Player owner, int durationSeconds, int amplifier) {
+        return createPotion(owner, Material.LINGERING_POTION, PotionEffectType.HARM, durationSeconds, amplifier, true, true, true, "super_potion_name_lingering_harm");
     }
 
-    public static ItemStack createAbsorbtionPotion(int durationSeconds, int amplifier) {
-        return createPotion(Material.POTION, PotionEffectType.ABSORPTION, durationSeconds, amplifier, true, true, true, "super_potion_name_absorbtion");
+    public static ItemStack createAbsorbtionPotion(Player owner, int durationSeconds, int amplifier) {
+        return createPotion(owner, Material.POTION, PotionEffectType.ABSORPTION, durationSeconds, amplifier, true, true, true, "super_potion_name_absorbtion");
     }
 
-    public static ItemStack createPotion(Material material, PotionEffectType potionEffectType, int durationSeconds, int amplifier, boolean ambient, boolean particles, boolean icon, String nameTranslationKey) {
+    public static ItemStack createPotion(Player owner, Material material, PotionEffectType potionEffectType, int durationSeconds, int amplifier, boolean ambient, boolean particles, boolean icon, String nameTranslationKey) {
         //Create the potion itemstack
         ItemStack potionItemStack = new ItemStack(material);
         potionItemStack.setAmount(1);
@@ -218,6 +219,10 @@ public class TownyCombatItemUtil {
         int durationTicks = durationSeconds * 20;
         PotionEffect potionEffect = new PotionEffect(potionEffectType, durationTicks, amplifier, ambient, particles, icon);
         potionMeta.addCustomEffect(potionEffect, true);
+        //Add lore
+        List<String> lore = new ArrayList<>();
+        lore.add(Translatable.of("super_potion_lore_line_1").translate(Locale.ROOT) + ":" + owner.getName());
+        potionMeta.setLore(lore);
         //Set Potion Meta
         potionItemStack.setItemMeta(potionMeta);
         //Return the potion
