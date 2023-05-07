@@ -60,9 +60,7 @@ status_resident_content_medium_super_potion_line: "&2Super Potion (%d/day): &aLi
 status_resident_content_heavy_line_armour: "&2Armor: &aDiamond, Netherite"
 status_resident_content_heavy_line_melee_weapons: "&2Melee Weapons: &aDiamond, Netherite"
 status_resident_content_heavy_line_missile_weapons: "&2Missile Weapons: &aNone"
-status_resident_content_heavy_line_passive_ability: "&2Passive Ability: &a+1 Resistance 1 when wearing armor"
-status_resident_content_heavy_line_disadvantage1: "&2Disadvantage: &aSlowness 1 when wearing armor"
-status_resident_content_heavy_line_disadvantage2: "&2Disadvantage: &aJumpBoost -2 when wearing armor"
+status_resident_content_heavy_line_passive_ability: "&2Passive Ability: &aResistance 1 when wearing armor"
 status_resident_content_heavy_line_disadvantage3: "&2Disadvantage: &aCannot use Potions of Swiftness"
 status_resident_content_heavy_super_potion_line: "&2Super Potion (%d/day): &aAbsorbtion V (3 minutes)"
     
