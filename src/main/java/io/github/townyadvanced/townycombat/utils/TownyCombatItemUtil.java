@@ -31,7 +31,7 @@ public class TownyCombatItemUtil {
 
     //After we have identified a weapon as spear or not spear, we list it here
     public static Map<ItemStack, Boolean> spearIdentificationMap = new HashMap<>();
-
+    
     /**
      * Determine is a given item is a spear
      * @param item the item
