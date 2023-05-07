@@ -4,7 +4,10 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.metadata.LongDataField;
 import com.palmergames.bukkit.towny.object.metadata.StringDataField;
 import com.palmergames.bukkit.towny.utils.MetaDataUtil;
+import org.bukkit.entity.Player;
+
 import javax.annotation.Nullable;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -82,4 +85,7 @@ public class TownyCombatResidentMetaDataController {
 		resident.addMetaData(new LongDataField("townycombat_lastbattlefieldroleswitchtime", switchTime));
 	}
 
+	public static LocalDate getDateOfLastSuperPotionGrant(Resident resident) {
+		return LocalDate.now().minusDays(1);	
+	}
 }

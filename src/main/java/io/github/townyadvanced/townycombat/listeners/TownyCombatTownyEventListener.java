@@ -1,8 +1,10 @@
 package io.github.townyadvanced.townycombat.listeners;
 
+import com.palmergames.bukkit.towny.event.NewDayEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyBuildEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyDestroyEvent;
 import com.palmergames.bukkit.towny.event.time.NewShortTimeEvent;
+import com.palmergames.util.TimeMgmt;
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import io.github.townyadvanced.townycombat.utils.TownyCombatBattlefieldRoleUtil;
@@ -44,8 +46,20 @@ public class TownyCombatTownyEventListener implements Listener {
             TownyCombatBlockUtil.applyBlockGlitchingPrevention(event.getPlayer());
         }
 	}
-	
-    @EventHandler
+
+	@EventHandler
+	public void on(NewDayEvent event) {
+		if (!TownyCombatSettings.isTownyCombatEnabled())
+			return;
+		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() 
+				&& TownyCombatSettings.isBattlefieldRolesEnabled() 
+				&& TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()) {
+			TownyCombatItemUtil.grantSuperPotionsToOnlinePlayers();
+		}
+		TownyCombat.info("Towny Time: " + TimeMgmt.townyTime(true));
+	}
+
+	@EventHandler
     public void onShortTime(NewShortTimeEvent event) {
         if (!TownyCombatSettings.isTownyCombatEnabled())
         	return;
@@ -53,11 +67,9 @@ public class TownyCombatTownyEventListener implements Listener {
 			TownyCombatMapUtil.evaluateTacticalInvisibility();
 			TownyCombatMapUtil.applyTacticalInvisibilityToPlayers();
 		}
-		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && TownyCombatSettings.isBattlefieldRolesEnabled()) {
+		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() 
+				&& TownyCombatSettings.isBattlefieldRolesEnabled()) {
 			TownyCombatBattlefieldRoleUtil.giveEffectsToHeavyPlayersWearingArmour();
-			if(TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()) {
-				TownyCombatItemUtil.grantSuperPotionsAtScheduledHourOfDay();
-			}
 		}
     }
 }

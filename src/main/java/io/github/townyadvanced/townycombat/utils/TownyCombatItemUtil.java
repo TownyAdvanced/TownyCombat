@@ -1,119 +1,38 @@
 package io.github.townyadvanced.townycombat.utils;
 
+import com.palmergames.bukkit.towny.Towny;
+import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.util.TimeMgmt;
+import io.github.townyadvanced.townycombat.TownyCombat;
+import io.github.townyadvanced.townycombat.metadata.TownyCombatResidentMetaDataController;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.event.inventory.PrepareItemCraftEvent;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class TownyCombatItemUtil {
-
-    public static final Material NATIVE_SPEAR_PLACEHOLDER_MATERIAL = Material.WOODEN_SWORD;
-    public static final Material[] NATIVE_SPEAR_MATERIALS = new Material[]{null, null, Material.IRON_INGOT, null, Material.STICK, null, Material.STICK, null, null}; 			
+    
     public static final int NATIVE_SPEAR_SHARPNESS_LEVEL = 8;
 
     //After we have identified a weapon as spear or not spear, we list it here
     public static Map<ItemStack, Boolean> spearIdentificationMap = new HashMap<>();
 
-    public static boolean potionsGrantedAtScheduledHour = false;
-
-    /**
-     * Check if the given item is a vanilla placeholder version of a custom item.
-     * 
-     * @param item the item
-     * @return true if placeholder item
-     */
-    public static boolean isVanillaPlaceholderItem(ItemStack item) {
-        if(TownyCombatSettings.isNewItemsSpearEnabled()
-                && TownyCombatSettings.isNewItemsSpearNativeWeaponEnabled()
-                && item.getType() == NATIVE_SPEAR_PLACEHOLDER_MATERIAL
-                && !isSpear(item)) {
-            return true;  //Vanilla wooden sword
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Check if the given material is s placeholder for special, non-vanilla items
-     * 
-     * @param material the material
-     * @return true if forbidden material
-     */
-    public static boolean isPlaceholderMaterial(Material material) {
-        if(TownyCombatSettings.isNewItemsSpearEnabled() 
-                && TownyCombatSettings.isNewItemsSpearNativeWeaponEnabled()
-                && material == NATIVE_SPEAR_PLACEHOLDER_MATERIAL) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Calculate the result of the given crafting
-     *
-     * @param event the event
-     * @return the result
-     */
-    public static ItemStack calculateCraftingResult(PrepareItemCraftEvent event) {
-        if(TownyCombatSettings.isNewItemsSpearEnabled()
-                && TownyCombatSettings.isNewItemsSpearNativeWeaponEnabled()
-                && doesMatrixMatch(event.getInventory().getMatrix(), NATIVE_SPEAR_MATERIALS)) {
-			ItemStack result = new ItemStack(NATIVE_SPEAR_PLACEHOLDER_MATERIAL);
-			ItemMeta itemMeta = result.getItemMeta();
-			itemMeta.setDisplayName(TownyCombatSettings.getNewItemsSpearNativeWeaponName());
-			//Add enchants
-			itemMeta.addEnchant(Enchantment.DAMAGE_ALL, NATIVE_SPEAR_SHARPNESS_LEVEL, true);
-			//Add lore
-			List<String> lore = new ArrayList<>();
-			lore.add(TownyCombatSettings.getNewItemsSpearLore());
-			itemMeta.setLore(lore);
-			result.setItemMeta(itemMeta);
-			return result;
-        } else {
-            return event.getInventory().getResult();
-        }
-    }
-
-    /**
-     * Check if the matrix matches
-     * 
-     * NOTE!: Because of a duplication bug in MC/Bukkit, 
-     *  the recipe cannot be facilitated if the player has more than 1 item in each slot.
-     * 
-     * @param currentCraftingMatrix the matrix player has setup
-     * @param requiredMaterialMatrix the required matrix
-     * @return true if the matrix matches
-     */
-    private static boolean doesMatrixMatch(ItemStack[] currentCraftingMatrix, Material[] requiredMaterialMatrix) {
-        if(currentCraftingMatrix.length != requiredMaterialMatrix.length)
-            return false;
-        for(int i = 0; i < 9; i++) {
-            if(requiredMaterialMatrix[i] == null) { 
-                if(currentCraftingMatrix[i] != null)
-                    return false;
-            } else {
-                if(currentCraftingMatrix[i] == null)
-                    return false;
-                else if (currentCraftingMatrix[i].getAmount() > 1
-                        || currentCraftingMatrix[i].getType() != requiredMaterialMatrix[i])
-                    return false;
-            }
-        }
-       return true;
-    }
- 
     /**
      * Determine is a given item is a spear
      * @param item the item
@@ -146,6 +65,20 @@ public class TownyCombatItemUtil {
         return result;
     }
 
+    public static ItemStack createNativeSpear() {
+        ItemStack result = new ItemStack(Material.WOODEN_SWORD);
+        ItemMeta itemMeta = result.getItemMeta();
+        itemMeta.setDisplayName(TownyCombatSettings.getNewItemsSpearNativeWeaponName());
+        //Add enchants
+        itemMeta.addEnchant(Enchantment.DAMAGE_ALL, NATIVE_SPEAR_SHARPNESS_LEVEL, true);
+        //Add lore
+        List<String> lore = new ArrayList<>();
+        lore.add(TownyCombatSettings.getNewItemsSpearLore());
+        itemMeta.setLore(lore);
+        result.setItemMeta(itemMeta);
+        return result;
+    }
+
     public static ItemStack createTrueInvisibilityPotion(int durationSeconds) {
         return createPotion(Material.POTION, PotionEffectType.INVISIBILITY, durationSeconds, 0, false, false, true);
     }
@@ -175,35 +108,62 @@ public class TownyCombatItemUtil {
     }
 
     /**
-     * Grant super potions at the scheduled hour of day
+     * Grant super potions to all online players
      */
-    public static void grantSuperPotionsAtScheduledHourOfDay() {
-        //If it is the scheduled hour of day, or up to 1 minute after, grant super potions.
-        LocalDateTime now = LocalDateTime.now();
-        int hourNow = now.getHour();
-        int minuteNow = now.getMinute();
-        if(hourNow == TownyCombatSettings.getSuperPotionsScheduledGrantHour() && minuteNow == 0) {
-            if(!potionsGrantedAtScheduledHour) {
-                //Grant potions now to all online players
-                grantSuperPotionsToOnlinePlayers();
-                potionsGrantedAtScheduledHour = true;
-            } 
-        } else {
-            /*
-             * It is not the scheduled hour,
-             * then if the flag is true, reset it to false,
-             * in preparation for the next scheduled grant.
-             */
-            if(potionsGrantedAtScheduledHour) {
-                potionsGrantedAtScheduledHour = false;
-            }
+    public static void grantSuperPotionsToOnlinePlayers() {
+        for(Player player: Bukkit.getOnlinePlayers()) {
+            Resident resident = TownyAPI.getInstance().getResident(player);
+            if(resident == null)
+                continue;
+            grantSuperPotionsNow(player, resident);
         }
     }
 
-    /**
-     * Grant super potions to all online players
-     */
-    private static void grantSuperPotionsToOnlinePlayers() {
-        //Grant super potions to online players
+    public static void evaluateSuperPotionGrant(Player player) {
+        Resident resident = TownyAPI.getInstance().getResident(player);
+        if(resident == null)
+            return;
+        LocalDate dateOfLastSuperPotionGrant = TownyCombatResidentMetaDataController.getDateOfLastSuperPotionGrant(resident);
+        LocalDate today = LocalDate.now();
+        LocalDate yesterday = today.minusDays(1);
+        LocalDate tomorrow = today.plusDays(1);
+
+        if(dateOfLastSuperPotionGrant == null) {
+            /*
+             * Player never received super potions before.
+             * Grant super potions now.
+             */
+            grantSuperPotionsNow(player, resident);
+        } else if(dateOfLastSuperPotionGrant.isBefore(yesterday)) {
+            /*
+             * Player didn't receive potions today or yesterday.
+             * Grant super potions now.
+             */
+            grantSuperPotionsNow(player, resident);
+        } else if (dateOfLastSuperPotionGrant.equals(yesterday)) {
+            long secondsUntilNextTownyNewDayEvent = TimeMgmt.townyTime(true);
+            LocalDate dateOfNextTownyNewDayEvent = LocalDateTime.now().plusSeconds(secondsUntilNextTownyNewDayEvent).toLocalDate();
+            if(dateOfNextTownyNewDayEvent.equals(tomorrow)) {
+                /*
+                 * The towny new day event already occurred today. 
+                 * Grant super potions now.
+                 */
+                grantSuperPotionsNow(player, resident);
+            } else if (dateOfNextTownyNewDayEvent.equals(today)) {
+                /*
+                 * The towny new day event has not yet occurred today. 
+                 * Do not grant.
+                 */
+            }
+        } else if (dateOfLastSuperPotionGrant.equals(today)) {
+            /*
+             * Potions were granted already today. 
+             * Do not grant.
+             */
+        }
+    }
+
+    private static void grantSuperPotionsNow(Player player, Resident resident) {
+        TownyCombat.info("Grant super potions to player now");
     }
 }
