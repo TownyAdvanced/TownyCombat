@@ -306,11 +306,6 @@ public enum ConfigNodes {
 			"true",
 			"",
 			"# if true, then the spear effect is enabled."),
-	NEW_ITEMS_SPEAR_LORE(
-			"new_items.spear.lore",
-			"+9 Damage v.s. Cavalry",
-			"",
-			"# It an item has this text for any of its lore lines, it gets the spear effect."),
 	NEW_ITEMS_SPEAR_CUSTOM_MODEL_DATA_ID(
 			"new_items.spear.custom_model_data_id",
 			"-1",
@@ -325,13 +320,7 @@ public enum ConfigNodes {
 			"new_items.spear.native_weapon_enabled",
 			"true",
 			"",
-			"# If true, then native spears TCM can be crafted, and regular wooden swords cannot.",
-			"# See user guide for recipe."),
-	NEW_ITEMS_SPEAR_NATIVE_WEAPON_NAME(
-			"new_items.spear.native_weapon_name",
-			"Spear",
-			"",
-			"# The name of the native weapon, when crafted.");
+			"# If true, then whenever a player crafts using the vanilla wooden sword recipe, they get a spear instead.");
 	private final String Root;
 	private final String Default;
 	private String[] comments;

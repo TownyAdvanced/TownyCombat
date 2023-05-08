@@ -84,12 +84,13 @@ public class TownyCombatItemUtil {
     public static ItemStack createNativeSpear() {
         ItemStack result = new ItemStack(Material.WOODEN_SWORD);
         ItemMeta itemMeta = result.getItemMeta();
-        itemMeta.setDisplayName(TownyCombatSettings.getNewItemsSpearNativeWeaponName());
+        itemMeta.setDisplayName(Translatable.of("spear_name").translate(Locale.ROOT));
         //Add enchants
         itemMeta.addEnchant(Enchantment.DAMAGE_ALL, NATIVE_SPEAR_SHARPNESS_LEVEL, true);
         //Add lore
         List<String> lore = new ArrayList<>();
-        lore.add(TownyCombatSettings.getNewItemsSpearLore());
+        lore.add("");
+        lore.add(Translatable.of("spear_lore_line_1", TownyCombatSettings.getNewItemsSpearBonusDamageVsCavalry()).translate(Locale.ROOT));
         itemMeta.setLore(lore);
         //Add data key
         setDataKeyValue(itemMeta, ITEM_NATIVE_SPEAR_KEY, ITEM_NATIVE_SPEAR_KEY_TYPE, "S");
