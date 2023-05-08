@@ -136,10 +136,13 @@ public class TownyCombatBukkitEventListener implements Listener {
 		TownyCombatMovementUtil.resetPlayerBaseSpeedToVanilla(event.getPlayer());
 		TownyCombatMovementUtil.removeTownyCombatMovementModifiers(event.getPlayer());
 		TownyCombatMovementUtil.removeTownyCombatKnockbackModifiers(event.getPlayer());
-		//Possibly grant super potions
+
 		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled()
 				&& TownyCombatSettings.isBattlefieldRolesEnabled()
 				&& TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()) {
+			//Remove expired super potions
+			TownyCombatItemUtil.removeExpiredSuperPotionsFromInventory(event.getPlayer());
+			//Grant new super potions
 			TownyCombatItemUtil.evaluateSuperPotionGrant(event.getPlayer());
 		}
 
@@ -356,11 +359,16 @@ public class TownyCombatBukkitEventListener implements Listener {
 
 	@EventHandler
 	public void on (InventoryCloseEvent event) {
-		if (!TownyCombatSettings.isTownyCombatEnabled() || !TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() || !TownyCombatSettings.isBattlefieldRolesEnabled())
-			return;
 		if(!(event.getPlayer() instanceof Player))
 			return;
+		if (!TownyCombatSettings.isTownyCombatEnabled() || !TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() || !TownyCombatSettings.isBattlefieldRolesEnabled())
+			return;
+		//Validate armour
 		TownyCombatBattlefieldRoleUtil.validateArmour((Player)event.getPlayer());
+		//Remove expired super potions
+		if(TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()) {
+			TownyCombatItemUtil.removeExpiredSuperPotionsFromInventory((Player) event.getPlayer());
+		}
 	}
 
 	@EventHandler

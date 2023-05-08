@@ -4,7 +4,6 @@ import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Translatable;
-import com.palmergames.util.TimeMgmt;
 import io.github.townyadvanced.townycombat.events.BattlefieldRole;
 import io.github.townyadvanced.townycombat.metadata.TownyCombatResidentMetaDataController;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
@@ -22,7 +21,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -91,7 +89,21 @@ public class TownyCombatItemUtil {
             Resident resident = TownyAPI.getInstance().getResident(player);
             if(resident == null)
                 continue;
+            removeExpiredSuperPotionsFromInventory(player);
             grantSuperPotionsNow(player, resident);
+        }
+    }
+
+    public static void removeExpiredSuperPotionsFromInventory(Player player) {
+        int numRemovedItems = 0;
+        for(ItemStack itemStack: player.getInventory().getContents()) {
+            if(isSuperPotion(itemStack) && isSuperPotionExpired(itemStack)) {
+                itemStack.setAmount(0);
+                numRemovedItems++;
+            }
+        }
+        if(numRemovedItems > 0) {
+            Messaging.sendMsg(player, Translatable.of("super_potions_removed_from_inventory", numRemovedItems));
         }
     }
 
@@ -102,7 +114,6 @@ public class TownyCombatItemUtil {
         LocalDate dateOfLastSuperPotionGrant = TownyCombatResidentMetaDataController.getLastSuperPotionCollectionDate(resident);
         LocalDate today = LocalDate.now();
         LocalDate yesterday = today.minusDays(1);
-        LocalDate tomorrow = today.plusDays(1);
 
         if(dateOfLastSuperPotionGrant == null) {
             /*
@@ -117,15 +128,13 @@ public class TownyCombatItemUtil {
              */
             grantSuperPotionsNow(player, resident);
         } else if (dateOfLastSuperPotionGrant.equals(yesterday)) {
-            long secondsUntilNextTownyNewDayEvent = TimeMgmt.townyTime(true);
-            LocalDate dateOfNextTownyNewDayEvent = LocalDateTime.now().plusSeconds(secondsUntilNextTownyNewDayEvent).toLocalDate();
-            if(dateOfNextTownyNewDayEvent.equals(tomorrow)) {
+            if(TownyCombatTimeUtil.hasTownyNewDayEventOccurredToday()) {
                 /*
                  * The towny new day event already occurred today. 
                  * Grant super potions now.
                  */
                 grantSuperPotionsNow(player, resident);
-            } else if (dateOfNextTownyNewDayEvent.equals(today)) {
+            } else {
                 /*
                  * The towny new day event has not yet occurred today. 
                  * Do not grant.
@@ -259,4 +268,12 @@ public class TownyCombatItemUtil {
         return player.getName().equals(itemStackDataContainer.get(ITEM_EXCLUSIVE_OWNER_KEY, ITEM_EXCLUSIVE_OWNER_KEY_TYPE));
     }
 
+    public static boolean isSuperPotionExpired(ItemStack potionItemStack) {
+        ItemMeta potionItemMeta = potionItemStack.getItemMeta();
+        if (potionItemMeta == null)
+            return false;
+        PersistentDataContainer itemStackDataContainer = potionItemMeta.getPersistentDataContainer();
+        LocalDate expiryDate = LocalDate.parse(itemStackDataContainer.get(ITEM_EXPIRY_DATE_KEY, ITEM_EXPIRY_DATE_KEY_TYPE));
+        return TownyCombatTimeUtil.isExpiryTimeReached(expiryDate);
+    }
 }
