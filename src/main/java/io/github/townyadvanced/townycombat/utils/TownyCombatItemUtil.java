@@ -35,7 +35,7 @@ public class TownyCombatItemUtil {
     public static final PersistentDataType<String, String> ITEM_EXCLUSIVE_OWNER_KEY_TYPE = PersistentDataType.STRING;
     public static final NamespacedKey ITEM_EXPIRY_DATE_KEY = NamespacedKey.fromString("townycombat.expirydate");
     public static final PersistentDataType<String, String> ITEM_EXPIRY_DATE_KEY_TYPE = PersistentDataType.STRING;
-
+    
     /**
      * Determine is a given item is a spear
      * 2 methods of identification are used:
