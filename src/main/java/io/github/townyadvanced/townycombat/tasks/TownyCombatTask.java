@@ -29,7 +29,8 @@ public class TownyCombatTask extends BukkitRunnable {
         if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
         //Execute the cavalry charge refreshes every 1 second.
-        if(TownyCombatSettings.isCavalryStrengthBonusEnabled()) {
+        if(TownyCombatSettings.isCavalryEnhancementsEnabled()
+            && TownyCombatSettings.isCavalryStrengthBonusEnabled()) {
             if(offTick) {
                 offTick = false;
             } else {

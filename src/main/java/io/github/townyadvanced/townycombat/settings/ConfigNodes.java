@@ -30,6 +30,11 @@ public enum ConfigNodes {
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
+	CAVALRY_ENHANCEMENTS_ENABLED(
+			"cavalry_enhancements.enabled",
+			"false",
+			"",
+			"# If true, then the below cavalry enhancements are enabled."),
 	CAVALRY_ENHANCEMENTS_TELEPORT_MOUNT_WITH_PLAYER_ENABLED(
 			"cavalry_enhancements.teleport_mount_with_player_enabled",
 			"true",
@@ -37,24 +42,12 @@ public enum ConfigNodes {
 			"# If true, then when a player uses /n or /t spawn, their mount (e.g. a horse) comes with them.",
 			"# After the player spawns, the mount takes 5 seconds to arrive.",
 			"# TIP: The setting is essential to allow cavalry to get to battlefields."),
-	CAVALRY_ENHANCEMENTS_GENERIC_CAVALRY_ADJUSTMENT_PERCENTAGE(
-			"cavalry_enhancements.generic_speed_adjustment_percent",
-			"12",
-			"",
-			"# Adjusts the walking speed of all player mounts.",
-			"# TIP: Giving all player mounts a small speed boost helps sugar-coat the concept of encumbrance."),
 	CAVALRY_ENHANCEMENTS_ATTACK_DAMAGE_RESISTANCE_PERCENT(
 			"cavalry_enhancements.attack_damage_resistance_percent",
 			"60",
 			"",
 			"# This setting makes mounted-horses more resistant to attack damage from players.",
 			"# TIP: This setting is essential to make cavalry viable in battle, because in vanilla MC they are very weak."),
-	CAVALRY_ENHANCEMENTS_KNOCKBACK_RESISTANCE_PERCENT(
-			"cavalry_enhancements.knockback_resistance_percent",
-			"75",
-			"",
-			"# This setting makes mounted-horses resistant to knockback.",
-			"# TIP: This setting helps cavalry to avoid getting knocked into holes/ganks etc."),
 	CAVALRY_ENHANCEMENTS_CAVALRY_MISSILE_SHIELD_ENABLED(
 			"cavalry_enhancements.cavalry_missile_shield_enabled",
 			"true",
@@ -65,8 +58,8 @@ public enum ConfigNodes {
 			"cavalry_enhancements.horse_rearing_prevention_enabled",
 			"true",
 			"",
-			"# If this setting is true, then horses do not rear up when damaged.",
-			"# TIP: This setting is essential as otherwise horses become useless if set on fire, poisoned etc."),
+			"# If this setting is true, then horses do not rear up when damaged, except from fire or bushes.",
+			"# TIP: This setting is essential as otherwise horses become useless if hit by a flaming or poisoned arrow etc."),
 	CAVALRY_ENHANCEMENTS_CAVALRY_STRENGTH_BONUS(
 			"cavalry_enhancements.cavalry_strength_bonus",
 			"",
@@ -116,7 +109,7 @@ public enum ConfigNodes {
 			""),
 	BLOCK_GLITCHING_PREVENTION_ENABLED(
 			"block_glitching_prevention.enabled",
-			"true",
+			"false",
 			"",
 			"# If this value is true, then some block glitching is prevented.",
 			"# Any player whose block-place-or-destroy action is cancelled, gets teleported back to where they were when they attempted the action.",
@@ -140,24 +133,23 @@ public enum ConfigNodes {
 			""),
 	KEEP_STUFF_ON_DEATH_KEEP_INVENTORY_ENABLED(
 			"keep_stuff_on_death.keep_inventory_enabled",
-			"true",
+			"false",
 			"",
 			"# If this value is true, players who die near to towns, keep inventory.",
 			"# TIP: This is great for a more casual, less hardcore battle experience",
 			"# TIP: This also helps to develop a healthier geopolitics, as powerful nations snowball less"),
 	KEEP_STUFF_ON_DEATH_KEEP_EXPERIENCE_ENABLED(
 			"keep_stuff_on_death.keep_level_enabled",
-			"true",
+			"false",
 			"",
 			"# If this value is true, players who die near to towns, keep level.",
 			"# TIP: This is great for a more casual, less hardcore battle experience",
 			"# TIP: This also helps to develop a healthier geopolitics, as powerful nations snowball less"),
 	KEEP_STUFF_ON_DEATH_TOOLS_DEGRADE_PERCENTAGE(
 			"keep_stuff_on_death.tools_degrade_percentage",
-			"20",
+			"5",
 			"",
-			"# The percentage by which a player's tools (including swords & armour) degrade when they die.",
-		    "# TIP: Don't set this too low or battles could get crezzy."),
+			"# The percentage by which a player's tools (including swords & armour) degrade when they die."),
 	KEEP_STUFF_ON_DEATH_TOWN_PROXIMITY_BLOCKS(
 			"keep_stuff_on_death.town_proximity_blocks",
 			"400",
@@ -252,9 +244,9 @@ public enum ConfigNodes {
 			""),
 	UNLOCK_PVP_COMBAT_FOR_REGULAR_PLAYERS_ENABLED(
 			"unlock_pvp_combat_for_regular_players.enabled",
-			"true",
+			"false",
 			"",
-			"# If true, PVP combat is unlocked for regular players. See user guide for details."),
+			"# If this value is true, PVP combat is unlocked for regular players. See user guide for details."),
 	BATTLEFIELD_ROLES(
 			"unlock_pvp_combat_for_regular_players.battlefield_roles",
 			"",
@@ -303,7 +295,7 @@ public enum ConfigNodes {
 			""),
 	NEW_ITEMS_SPEAR_ENABLED(
 			"new_items.spear.enabled",
-			"true",
+			"false",
 			"",
 			"# if true, then the spear effect is enabled."),
 	NEW_ITEMS_SPEAR_CUSTOM_MODEL_DATA_ID(
