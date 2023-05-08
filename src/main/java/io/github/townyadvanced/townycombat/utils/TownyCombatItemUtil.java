@@ -10,11 +10,14 @@ import io.github.townyadvanced.townycombat.metadata.TownyCombatResidentMetaDataC
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -23,6 +26,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class TownyCombatItemUtil {
@@ -31,7 +35,11 @@ public class TownyCombatItemUtil {
 
     //After we have identified a weapon as spear or not spear, we list it here
     public static Map<ItemStack, Boolean> spearIdentificationMap = new HashMap<>();
-    
+    public static final NamespacedKey ITEM_EXCLUSIVE_OWNER_KEY = NamespacedKey.fromString("townycombat.exclusiveowner");
+    public static final PersistentDataType<String, String> ITEM_EXCLUSIVE_OWNER_KEY_TYPE = PersistentDataType.STRING;
+    public static final NamespacedKey ITEM_EXPIRY_DATE_KEY = NamespacedKey.fromString("townycombat.expirydate");
+    public static final PersistentDataType<String, String> ITEM_EXPIRY_DATE_KEY_TYPE = PersistentDataType.STRING;
+
     /**
      * Determine is a given item is a spear
      * @param item the item
@@ -154,7 +162,7 @@ public class TownyCombatItemUtil {
         //Create potions
         List<ItemStack> potionsToDrop = new ArrayList<>();
         for(int i = 0; i < TownyCombatSettings.getBattlefieldRolesSuperPotionsDailyGenerationRate(); i++) {
-            potionsToDrop.add(createTrueInvisibilityPotion(20));
+            potionsToDrop.add(createTrueInvisibilityPotion(player,20));
         }
         //Drop potions
         dropItemsAtPlayersFeet(player, potionsToDrop);
@@ -165,7 +173,7 @@ public class TownyCombatItemUtil {
         //Create potions
         List<ItemStack> potionsToDrop = new ArrayList<>();
         for(int i = 0; i < TownyCombatSettings.getBattlefieldRolesSuperPotionsDailyGenerationRate(); i++) {
-            potionsToDrop.add(createLingeringHarmPotion(120, 4));
+            potionsToDrop.add(createLingeringHarmPotion(player,120, 4));
         }
         //Drop potions
         dropItemsAtPlayersFeet(player, potionsToDrop);
@@ -176,7 +184,7 @@ public class TownyCombatItemUtil {
         //Create potions
         List<ItemStack> potionsToDrop = new ArrayList<>();
         for(int i = 0; i < TownyCombatSettings.getBattlefieldRolesSuperPotionsDailyGenerationRate(); i++) {
-            potionsToDrop.add(createAbsorbtionPotion(180, 4));
+            potionsToDrop.add(createAbsorbtionPotion(player,180, 4));
         }
         //Drop potions
         dropItemsAtPlayersFeet(player, potionsToDrop);
@@ -193,19 +201,19 @@ public class TownyCombatItemUtil {
         });
     }
 
-    public static ItemStack createTrueInvisibilityPotion(int durationSeconds) {
-        return createPotion(Material.POTION, PotionEffectType.INVISIBILITY, durationSeconds, 0, false, false, true, "super_potion_name_true_invisibility");
+    public static ItemStack createTrueInvisibilityPotion(Player owner, int durationSeconds) {
+        return createPotion(owner, Material.POTION, PotionEffectType.INVISIBILITY, durationSeconds, 0, false, false, true, "super_potion_name_true_invisibility");
     }
 
-    public static ItemStack createLingeringHarmPotion(int durationSeconds, int amplifier) {
-        return createPotion(Material.LINGERING_POTION, PotionEffectType.HARM, durationSeconds, amplifier, true, true, true, "super_potion_name_lingering_harm");
+    public static ItemStack createLingeringHarmPotion(Player owner, int durationSeconds, int amplifier) {
+        return createPotion(owner, Material.LINGERING_POTION, PotionEffectType.HARM, durationSeconds, amplifier, true, true, true, "super_potion_name_lingering_harm");
     }
 
-    public static ItemStack createAbsorbtionPotion(int durationSeconds, int amplifier) {
-        return createPotion(Material.POTION, PotionEffectType.ABSORPTION, durationSeconds, amplifier, true, true, true, "super_potion_name_absorbtion");
+    public static ItemStack createAbsorbtionPotion(Player owner, int durationSeconds, int amplifier) {
+        return createPotion(owner, Material.POTION, PotionEffectType.ABSORPTION, durationSeconds, amplifier, true, true, true, "super_potion_name_absorbtion");
     }
 
-    public static ItemStack createPotion(Material material, PotionEffectType potionEffectType, int durationSeconds, int amplifier, boolean ambient, boolean particles, boolean icon, String nameTranslationKey) {
+    public static ItemStack createPotion(Player owner, Material material, PotionEffectType potionEffectType, int durationSeconds, int amplifier, boolean ambient, boolean particles, boolean icon, String nameTranslationKey) {
         //Create the potion itemstack
         ItemStack potionItemStack = new ItemStack(material);
         potionItemStack.setAmount(1);
@@ -214,14 +222,41 @@ public class TownyCombatItemUtil {
         if(potionMeta == null)
             return null;
         potionMeta.setDisplayName(Translatable.of(nameTranslationKey).toString());
-        //Setup PotionEffect
+        //Add PotionEffect
         int durationTicks = durationSeconds * 20;
         PotionEffect potionEffect = new PotionEffect(potionEffectType, durationTicks, amplifier, ambient, particles, icon);
         potionMeta.addCustomEffect(potionEffect, true);
+        //Add lore
+        List<String> lore = new ArrayList<>();
+        lore.add(""); //Blank line to start with
+        lore.add(Translatable.of("super_potion_lore_line_1", owner.getName()).translate(Locale.ROOT));
+        potionMeta.setLore(lore);
+        //Add owner information
+        PersistentDataContainer itemStackDataContainer = potionMeta.getPersistentDataContainer();
+        itemStackDataContainer.set(ITEM_EXCLUSIVE_OWNER_KEY,ITEM_EXCLUSIVE_OWNER_KEY_TYPE, owner.getName());
+        //Add expiry information        
+        String tomorrowString = LocalDate.now().plusDays(1).toString();
+        itemStackDataContainer.set(ITEM_EXPIRY_DATE_KEY,ITEM_EXPIRY_DATE_KEY_TYPE, tomorrowString);
         //Set Potion Meta
         potionItemStack.setItemMeta(potionMeta);
         //Return the potion
         return potionItemStack;
+    }
+
+    public static boolean isSuperPotion(ItemStack potionItemStack) {
+        ItemMeta potionItemMeta = potionItemStack.getItemMeta();
+        if (potionItemMeta == null)
+            return false;
+        PersistentDataContainer itemStackDataContainer = potionItemMeta.getPersistentDataContainer();
+        return itemStackDataContainer.has(ITEM_EXCLUSIVE_OWNER_KEY, ITEM_EXCLUSIVE_OWNER_KEY_TYPE);
+    }
+
+    public static boolean doesPlayerOwnSuperPotion(Player player, ItemStack potionItemStack) {
+        ItemMeta potionItemMeta = potionItemStack.getItemMeta();
+        if (potionItemMeta == null)
+            return false;
+        PersistentDataContainer itemStackDataContainer = potionItemMeta.getPersistentDataContainer();
+        return player.getName().equals(itemStackDataContainer.get(ITEM_EXCLUSIVE_OWNER_KEY, ITEM_EXCLUSIVE_OWNER_KEY_TYPE));
     }
 
 }
