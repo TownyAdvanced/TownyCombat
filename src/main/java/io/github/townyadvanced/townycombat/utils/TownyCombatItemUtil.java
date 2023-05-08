@@ -17,8 +17,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
 
 import javax.annotation.Nullable;
 import java.time.LocalDate;
@@ -281,5 +283,32 @@ public class TownyCombatItemUtil {
             return false;
         LocalDate expiryDate = LocalDate.parse(expiryDateAsString);
         return TownyCombatTimeUtil.isExpiryTimeReached(expiryDate);
+    }
+
+    public static void transmutePotionsInInventory(Player player) {
+        PotionMeta potionMeta;
+        int numTransmutedPotions = 0;
+        for(ItemStack itemStack: player.getInventory().getContents()) {
+            if(itemStack != null && (itemStack.getType() == Material.POTION || itemStack.getType() == Material.SPLASH_POTION)) {
+                potionMeta = (PotionMeta) itemStack.getItemMeta();
+                if (potionMeta != null && potionMeta.getBasePotionData().getType() == PotionType.INSTANT_HEAL) {
+                    //Create the new potion Meta
+                    boolean sourcePotionIsUpgraded = potionMeta.getBasePotionData().isUpgraded();
+                    int amplifier = TownyCombatSettings.isPotionTransmuterDowngradeOnTransmute() ? 0 : (sourcePotionIsUpgraded ? 1 : 0);
+                    ItemStack dummyItemStack = new ItemStack(itemStack.getType());
+                    potionMeta = (PotionMeta) dummyItemStack.getItemMeta();
+                    potionMeta.setDisplayName(Translatable.of("BLAH").toString());
+                    int durationTicks = TownyCombatSettings.getPotionTransmuterTransmutedPotionDurationSeconds() * 20;
+                    PotionEffect potionEffect = new PotionEffect(PotionEffectType.REGENERATION, durationTicks, amplifier, true, true, true);
+                    potionMeta.addCustomEffect(potionEffect, true);
+                    //Set the potion meta
+                    itemStack.setItemMeta(potionMeta);
+                    numTransmutedPotions++;
+                }
+            }
+        }
+        if(numTransmutedPotions > 0) {
+            Messaging.sendMsg(player, Translatable.of("potions_transmuted", numTransmutedPotions));
+        }
     }
 }

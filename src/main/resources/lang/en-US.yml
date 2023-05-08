@@ -97,3 +97,6 @@ msg_warning_cannot_use_super_potion_not_owner: "&bYou cannot use this Super-Poti
 
 spear_name: "Spear"
 spear_lore_line_1: "+%d Damage v.s. Cavalry"
+
+# potion transmuter
+potions_transmuted: "&b%d potions of healing in your inventory were transmuted to potions of regeneration."

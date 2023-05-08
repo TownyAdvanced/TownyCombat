@@ -195,4 +195,16 @@ public class TownyCombatSettings {
 	public static int getBattlefieldRolesSuperPotionsDailyGenerationRate() {
 		return Settings.getInt(ConfigNodes.BATTLEFIELD_ROLES_SUPER_POTIONS_DAILY_GENERATION_RATE);
 	}
+
+	public static boolean isPotionTransmuterEnabed() {
+		return Settings.getBoolean(ConfigNodes.POTION_TRANSMUTER_ENABLED);
+	}
+	
+	public static boolean isPotionTransmuterDowngradeOnTransmute() {
+		return Settings.getBoolean(ConfigNodes.POTION_TRANSMUTER_REMOVE_DOWNGRADE_ON_TRANSMUTE);
+	}
+	
+	public static int getPotionTransmuterTransmutedPotionDurationSeconds() {
+		return Settings.getInt(ConfigNodes.POTION_TRANSMUTER_TRANSMUTED_POTION_DURATION_SECONDS);
+	}
 }

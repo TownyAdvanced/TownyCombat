@@ -278,6 +278,33 @@ public enum ConfigNodes {
 			"",
 			"# This value determines the hour of day (server-time) when super potions are granted.",
 			"# The default is 0, indicating midnight"),
+	POTION_TRANSMUTER(
+			"unlock_pvp_combat_for_regular_players.potion_transmuter",
+			"",
+			"",
+			"",
+			"# +------------------------------------------------------+ #",
+			"# |                 POTION TRANSMUTER                    | #",
+			"# +------------------------------------------------------+ #",
+			""),
+	POTION_TRANSMUTER_ENABLED(
+			"unlock_pvp_combat_for_regular_players.potion_transmuter.enabled",
+			"true",
+			"",
+			"# If true, the potion transmuter feature is enabled. See user guide for details."),
+	POTION_TRANSMUTER_REMOVE_DOWNGRADE_ON_TRANSMUTE(
+			"unlock_pvp_combat_for_regular_players.potion_transmuter.downgrade_on_transmute",
+			"false",
+			"",
+			"# If this value is true, then on transmute, Health II potions get downgraded to Regen I."),
+	POTION_TRANSMUTER_TRANSMUTED_POTION_DURATION_SECONDS(
+			"unlock_pvp_combat_for_regular_players.potion_transmuter.transmuted_potion_duration_seconds",
+			"15",
+			"",
+			"# This value determines the duration of the transmuted potions.",
+			"# TIP 1: A value of 15 means that each potions restores +50% than its source potion",
+			"# TIP 2: Do not set this value below 10, or you will start to negate the point of this feature,",
+			"#        by making potion usage a fast-usage-and-high-skill activity"),
 	NEW_ITEMS(
 		"new_items",
 			"",
