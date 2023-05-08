@@ -83,10 +83,11 @@ msg_changerole_success: "&bYou successfully changed your Battlefield Role to: %s
 
 command_help_changerole: "Change your Battlefield Role. Options: Light | Medium | Heavy."
 
-# Super-potion blurbs
+# Super-potions
 
 super_potion_name_true_invisibility: "Super Potion: True Invisibility"
 super_potion_name_lingering_harm: "Super Potion: Lingering Harming"
 super_potion_name_absorbtion: "Super Potion: Absorbtion"
 super_potion_lore_line_1: "Owner: %s"
 super_potions_granted: "&bYou have been granted %d super potions."
+msg_warning_cannot_use_super_potion_not_owner: "&bYou cannot use this super potion because you are not its owner."

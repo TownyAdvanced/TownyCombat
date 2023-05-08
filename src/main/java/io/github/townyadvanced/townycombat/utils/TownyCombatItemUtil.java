@@ -10,11 +10,14 @@ import io.github.townyadvanced.townycombat.metadata.TownyCombatResidentMetaDataC
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -32,7 +35,15 @@ public class TownyCombatItemUtil {
 
     //After we have identified a weapon as spear or not spear, we list it here
     public static Map<ItemStack, Boolean> spearIdentificationMap = new HashMap<>();
+
+    public static final NamespacedKey ITEM_EXCLUSIVE_OWNER_KEY = NamespacedKey.fromString("townycombat.exclusiveowner");
+    public static final PersistentDataType<String, String> ITEM_EXCLUSIVE_OWNER_KEY_TYPE = PersistentDataType.STRING;
     
+    public static final NamespacedKey ITEM_EXPIRY_DATE_KEY = NamespacedKey.fromString("townycombat.expirydate");
+    public static final PersistentDataType<String, String> ITEM_EXPIRY_DATE_KEY_TYPE = PersistentDataType.STRING;
+    
+    
+
     /**
      * Determine is a given item is a spear
      * @param item the item
@@ -215,7 +226,7 @@ public class TownyCombatItemUtil {
         if(potionMeta == null)
             return null;
         potionMeta.setDisplayName(Translatable.of(nameTranslationKey).toString());
-        //Setup PotionEffect
+        //Add PotionEffect
         int durationTicks = durationSeconds * 20;
         PotionEffect potionEffect = new PotionEffect(potionEffectType, durationTicks, amplifier, ambient, particles, icon);
         potionMeta.addCustomEffect(potionEffect, true);
@@ -224,10 +235,32 @@ public class TownyCombatItemUtil {
         lore.add(""); //Blank line to start with
         lore.add(Translatable.of("super_potion_lore_line_1", owner.getName()).translate(Locale.ROOT));
         potionMeta.setLore(lore);
+        //Add owner information
+        PersistentDataContainer itemStackDataContainer = potionMeta.getPersistentDataContainer();
+        itemStackDataContainer.set(ITEM_EXCLUSIVE_OWNER_KEY,ITEM_EXCLUSIVE_OWNER_KEY_TYPE, owner.getName());
+        //Add expiry information        
+        String tomorrowString = LocalDate.now().plusDays(1).toString();
+        itemStackDataContainer.set(ITEM_EXPIRY_DATE_KEY,ITEM_EXPIRY_DATE_KEY_TYPE, tomorrowString);
         //Set Potion Meta
         potionItemStack.setItemMeta(potionMeta);
         //Return the potion
         return potionItemStack;
+    }
+
+    public static boolean isSuperPotion(ItemStack potionItemStack) {
+        ItemMeta potionItemMeta = potionItemStack.getItemMeta();
+        if (potionItemMeta == null)
+            return false;
+        PersistentDataContainer itemStackDataContainer = potionItemMeta.getPersistentDataContainer();
+        return itemStackDataContainer.has(ITEM_EXCLUSIVE_OWNER_KEY, ITEM_EXCLUSIVE_OWNER_KEY_TYPE);
+    }
+
+    public static boolean doesPlayerOwnSuperPotion(Player player, ItemStack potionItemStack) {
+        ItemMeta potionItemMeta = potionItemStack.getItemMeta();
+        if (potionItemMeta == null)
+            return false;
+        PersistentDataContainer itemStackDataContainer = potionItemMeta.getPersistentDataContainer();
+        return player.getName().equals(itemStackDataContainer.get(ITEM_EXCLUSIVE_OWNER_KEY, ITEM_EXCLUSIVE_OWNER_KEY_TYPE));
     }
 
 }

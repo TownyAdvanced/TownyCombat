@@ -39,6 +39,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.projectiles.ProjectileSource;
 import org.spigotmc.event.entity.EntityDismountEvent;
 import org.spigotmc.event.entity.EntityMountEvent;
 
@@ -167,17 +168,30 @@ public class TownyCombatBukkitEventListener implements Listener {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
 
-		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && TownyCombatSettings.isBattlefieldRolesEnabled()) {
-			for (LivingEntity affectedEntity : event.getAffectedEntities()) {
-				if (affectedEntity instanceof Player) {
-					BattlefieldRole battlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole((Player)affectedEntity);
+		if(!TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && !TownyCombatSettings.isBattlefieldRolesEnabled())
+			return;
+
+		//Cancel if this is a super potion which was thrown by a player but not owner by them
+		if(TownyCombatItemUtil.isSuperPotion(event.getPotion().getItem())) {
+			ProjectileSource shooter = event.getEntity().getShooter();
+			if(shooter instanceof Player) {
+				if(!TownyCombatItemUtil.doesPlayerOwnSuperPotion((Player)shooter, event.getPotion().getItem())) {
+					event.setCancelled(true);
+					Messaging.sendMsg((Player)shooter, Translatable.of("msg_warning_cannot_use_super_potion_not_owner"));
+				} 
+			}
+		}
+
+		//Increase or decrease effect power depending on role of affected entity
+		for (LivingEntity affectedEntity : event.getAffectedEntities()) {
+			if (affectedEntity instanceof Player) {
+				BattlefieldRole battlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole((Player)affectedEntity);
+				TownyCombatBattlefieldRoleUtil.evaluateEffectOfSplashPotion(event, affectedEntity, battlefieldRole);
+			} else if (affectedEntity instanceof Horse) {
+				Player playerRider = TownyCombatHorseUtil.getPlayerRider(affectedEntity);
+				if(playerRider != null) {
+					BattlefieldRole battlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole(playerRider);
 					TownyCombatBattlefieldRoleUtil.evaluateEffectOfSplashPotion(event, affectedEntity, battlefieldRole);
-				} else if (affectedEntity instanceof Horse) {
-					Player playerRider = TownyCombatHorseUtil.getPlayerRider(affectedEntity);
-					if(playerRider != null) {
-						BattlefieldRole battlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole(playerRider);
-						TownyCombatBattlefieldRoleUtil.evaluateEffectOfSplashPotion(event, affectedEntity, battlefieldRole);
-					}
 				}
 			}
 		}
