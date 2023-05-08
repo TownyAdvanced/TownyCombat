@@ -273,11 +273,31 @@ public class TownyCombatBukkitEventListener implements Listener {
 				&& TownyCombatSettings.isCavalryMissileShieldEnabled()
 				&& attackingPlayer != null
 				&& isCavalryUnderAttack
-				&& event.getDamager() instanceof Arrow
-				&& attackingPlayer.getInventory().getItemInMainHand().getType() == Material.BOW
-		) {
-			event.setCancelled(true);
-			return;				
+				&& event.getDamager() instanceof Arrow) {
+
+			if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled()
+					&& TownyCombatSettings.isBattlefieldRolesEnabled()) {
+				/*
+				 * If battlefield roles are enabled, then have a nice trick available:
+				 * If shooter role is light, it was a bow, otherwise it was a crossbow
+				 */				
+				BattlefieldRole battlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole(attackingPlayer);		
+				if(battlefieldRole == BattlefieldRole.LIGHT) {
+					event.setCancelled(true);
+					return;
+				}
+			} else {
+				/*
+				 * Here, battlefield roles are disabled
+				 * This if-statement is bit hacky and could be improved if needed
+				 * (by first tacking a data tag onto every fired arrow)
+				 * But I expect that battlefield roles will usually be enabled.
+				 */
+				if (attackingPlayer.getInventory().getItemInMainHand().getType() == Material.BOW) {
+					event.setCancelled(true);
+					return;
+				}
+			}
 		}
 
 		//SPEAR: Do extra damage to cavalry
