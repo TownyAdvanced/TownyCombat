@@ -18,7 +18,7 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
 - :unlock: **Unlock Combat for Regular Players**
   - :guard: :guard: :guard: **Battlefield Roles**
     - Each player can type ```/tcm changerole``` to choose a Battlefield Role: Light, Medium, or Heavy.
-    - Each role provides unique advantages & disadvantages. Type ```/resident``` for these details:
+    - Each role provides unique advantages & disadvantages. Type ```/resident``` for this information:
       - Light<br>
         ![image](https://user-images.githubusercontent.com/50219223/236868982-c487212a-3fec-4ebe-8142-ed99a74594a3.png)
       - Medium<br>
@@ -55,8 +55,8 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
   - Use stealth tactics by going invisible on the dynmap.
   - This feature allows players to use many stealth tactics, in exchange for showing less activity on the dynmap.
   - There are 2 Modes:
-    - Automatic: You go map-invisible when in the wilderness.
-    - Triggered: You go map-invisible when holding a certain combination of items in your hands (*e.g. double diamond swords*).  
+    - Automatic: You disappear from the map when in the wilderness.
+    - Triggered: You disappear from the map when holding a certain combination of items in your hands (*e.g. double diamond swords*).  
 - :coffin: :moneybag: **Keep Inventory on Death:**
   - If you die within 400 blocks of a town-homeblock, you keep your inventory and levels.
   - Any tools/weapons/armour in your inventory are subject to a 5% degrade.
