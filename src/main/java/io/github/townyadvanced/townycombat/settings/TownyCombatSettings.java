@@ -136,7 +136,7 @@ public class TownyCombatSettings {
 		return Settings.getString(ConfigNodes.NEW_ITEMS_SPEAR_LORE);
 	}
 
-	public static int getNewItemsSpearCustomModelDataID() {
+	public static int getNewItemsSpearSignatureCustomModelDataID() {
 		return Settings.getInt(ConfigNodes.NEW_ITEMS_SPEAR_CUSTOM_MODEL_DATA_ID);
 	}
 
