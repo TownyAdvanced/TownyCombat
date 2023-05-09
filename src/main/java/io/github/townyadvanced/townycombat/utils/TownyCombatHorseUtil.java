@@ -31,7 +31,9 @@ public class TownyCombatHorseUtil {
      * @param event player teleport event
      */
     public static void scheduleMountTeleport(PlayerTeleportEvent event) {
-        if(TownyCombatSettings.isTeleportMountWithPlayerEnabled() && scheduledHorseTeleports.containsKey(event.getPlayer())) {
+        if(TownyCombatSettings.isCavalryEnhancementsEnabled() 
+                && TownyCombatSettings.isTeleportMountWithPlayerEnabled() 
+                && scheduledHorseTeleports.containsKey(event.getPlayer())) {
             AbstractHorse horse = scheduledHorseTeleports.get(event.getPlayer());
             //Protect horse until it rejoins player
             double preTeleportAbsorbtion = horse.getAbsorptionAmount();

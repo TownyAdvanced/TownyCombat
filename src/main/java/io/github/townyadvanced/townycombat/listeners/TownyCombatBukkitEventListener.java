@@ -71,7 +71,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 			return;
 		}
 		//Teleport horse with player
-		if(TownyCombatSettings.isTeleportMountWithPlayerEnabled())
+		if(TownyCombatSettings.isCavalryEnhancementsEnabled() && TownyCombatSettings.isTeleportMountWithPlayerEnabled())
 			TownyCombatHorseUtil.scheduleMountTeleport(event);
 	}
 
@@ -91,7 +91,8 @@ public class TownyCombatBukkitEventListener implements Listener {
 			TownyCombatBattlefieldRoleUtil.validateArmour((Player)event.getEntity());
 		}
 		//Prevent mount if the horse is about to be TP'd to owner
-		if(TownyCombatSettings.isTeleportMountWithPlayerEnabled()
+		if(TownyCombatSettings.isCavalryEnhancementsEnabled() 
+				&& TownyCombatSettings.isTeleportMountWithPlayerEnabled()
 				&& event.getMount() instanceof AbstractHorse
 				&& TownyCombatHorseUtil.isHorseTeleportScheduled((AbstractHorse)event.getMount())) {
 			event.setCancelled(true);
@@ -153,6 +154,8 @@ public class TownyCombatBukkitEventListener implements Listener {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
 		if(!TownyCombatSettings.isHorseRearingPreventionEnabled())
+			return;
+		if(!TownyCombatSettings.isCavalryEnhancementsEnabled())
 			return;
 		// When it is a horse, and it is not being hurt by a bush/cactus, or fire block, try to prevent the rearing.
 		if (event.getEntity() instanceof AbstractHorse && !event.getCause().equals(DamageCause.CONTACT) && !event.getCause().equals(DamageCause.FIRE)) {
@@ -266,7 +269,8 @@ public class TownyCombatBukkitEventListener implements Listener {
 		}
 
 		//CAVALRY MISSILE SHIELD: Cavalry are shielded from arrows fired by player-bows
-		if(TownyCombatSettings.isCavalryMissileShieldEnabled()
+		if(TownyCombatSettings.isCavalryEnhancementsEnabled()
+				&& TownyCombatSettings.isCavalryMissileShieldEnabled()
 				&& attackingPlayer != null
 				&& isCavalryUnderAttack
 				&& event.getDamager() instanceof Arrow
@@ -289,7 +293,9 @@ public class TownyCombatBukkitEventListener implements Listener {
 		}
 
 		//CAVALRY STRENGTH BONUS: Do extra damage to player infantry
-		if(TownyCombatSettings.isCavalryStrengthBonusEnabled()
+		if(TownyCombatSettings.isCavalryEnhancementsEnabled()
+			&&
+			TownyCombatSettings.isCavalryStrengthBonusEnabled()
 			&&
 			//Cavalry Attacker 
 			(attackingPlayer != null && attackingPlayer.isInsideVehicle() && attackingPlayer.getVehicle() instanceof AbstractHorse) 				
@@ -314,7 +320,9 @@ public class TownyCombatBukkitEventListener implements Listener {
 			}
 		}
 		//DAMAGE RESISTANCE
-		if (event.getEntity() instanceof AbstractHorse) {
+		if(TownyCombatSettings.isCavalryEnhancementsEnabled() 
+				&& TownyCombatSettings.getAttackDamageResistanceHorsesPercent() > 0
+				&& event.getEntity() instanceof AbstractHorse) {
 			//Horse damage resistance
 			if(attackingPlayer != null) {
 				damage = damage - (damage * (TownyCombatSettings.getAttackDamageResistanceHorsesPercent() / 100));
