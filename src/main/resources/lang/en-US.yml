@@ -92,3 +92,8 @@ super_potion_lore_line_1: "Owner: %s"
 super_potions_granted: "&bYou have been granted %d super potions."
 super_potions_removed_from_inventory: "&b%d expired Super-Potions were removed from your inventory."
 msg_warning_cannot_use_super_potion_not_owner: "&bYou cannot use this Super-Potion because you are not its owner."
+
+# Spear
+
+spear_name: "Spear"
+spear_lore_line_1: "+%d Damage v.s. Cavalry"

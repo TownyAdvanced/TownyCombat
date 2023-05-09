@@ -132,11 +132,7 @@ public class TownyCombatSettings {
 		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_SPEAR_ENABLED);
 	}
 
-	public static String getNewItemsSpearLore() {
-		return Settings.getString(ConfigNodes.NEW_ITEMS_SPEAR_LORE);
-	}
-
-	public static int getNewItemsSpearCustomModelDataID() {
+	public static int getNewItemsSpearSignatureCustomModelDataID() {
 		return Settings.getInt(ConfigNodes.NEW_ITEMS_SPEAR_CUSTOM_MODEL_DATA_ID);
 	}
 
@@ -146,10 +142,6 @@ public class TownyCombatSettings {
 
     public static boolean isNewItemsSpearNativeWeaponEnabled() {
 		return Settings.getBoolean(ConfigNodes.NEW_ITEMS_SPEAR_NATIVE_WEAPON_ENABLED);
-	}
-
-    public static String getNewItemsSpearNativeWeaponName() {
-		return Settings.getString(ConfigNodes.NEW_ITEMS_SPEAR_NATIVE_WEAPON_NAME);
 	}
 
 	public static boolean isCavalryMissileShieldEnabled() {
