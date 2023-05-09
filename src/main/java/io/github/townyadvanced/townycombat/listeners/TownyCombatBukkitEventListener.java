@@ -138,15 +138,20 @@ public class TownyCombatBukkitEventListener implements Listener {
 		TownyCombatMovementUtil.removeTownyCombatMovementModifiers(event.getPlayer());
 		TownyCombatMovementUtil.removeTownyCombatKnockbackModifiers(event.getPlayer());
 
-		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled()
-				&& TownyCombatSettings.isBattlefieldRolesEnabled()
-				&& TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()) {
-			//Remove expired super potions
-			TownyCombatItemUtil.removeExpiredSuperPotionsFromInventory(event.getPlayer());
-			//Grant new super potions
-			TownyCombatItemUtil.evaluateSuperPotionGrant(event.getPlayer());
+		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled()) {
+			//Process super-potions
+			if(TownyCombatSettings.isBattlefieldRolesEnabled() 
+					&& TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()) {
+				//Remove expired super potions
+				TownyCombatItemUtil.removeExpiredSuperPotionsFromInventory(event.getPlayer());
+				//Grant new super potions
+				TownyCombatItemUtil.evaluateSuperPotionGrant(event.getPlayer());
+			}
+			//Transmute potions
+			if(TownyCombatSettings.isPotionTransmuterEnabed()) {
+				TownyCombatItemUtil.transmutePotionsInInventory(event.getPlayer());
+			}
 		}
-
 	}
 
 	@EventHandler (ignoreCancelled = true)
@@ -387,15 +392,19 @@ public class TownyCombatBukkitEventListener implements Listener {
 
 	@EventHandler
 	public void on (InventoryCloseEvent event) {
-		if(!(event.getPlayer() instanceof Player))
-			return;
 		if (!TownyCombatSettings.isTownyCombatEnabled() || !TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() || !TownyCombatSettings.isBattlefieldRolesEnabled())
+			return;
+		if(!(event.getPlayer() instanceof Player))
 			return;
 		//Validate armour
 		TownyCombatBattlefieldRoleUtil.validateArmour((Player)event.getPlayer());
 		//Remove expired super potions
 		if(TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()) {
 			TownyCombatItemUtil.removeExpiredSuperPotionsFromInventory((Player) event.getPlayer());
+		}
+		//Transmute potions
+		if(TownyCombatSettings.isPotionTransmuterEnabed()) {
+			TownyCombatItemUtil.transmutePotionsInInventory((Player) event.getPlayer());
 		}
 	}
 
