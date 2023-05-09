@@ -1,19 +1,6 @@
 # TownyCombat
 A combat plugin for Towny, containing some fun combat/battle/pvp features.
 
-## Installation:
-1. Download the latest ***TownyCombat.jar*** from [here](https://github.com/TownyAdvanced/TownyCombat/releases).
-2. Drop the jar into your plugins folder.
-3. Restart your server.
-4. Edit the file /TownyCombat/config.yml, and configure (***By Default, all features will be configured to off***).
-5. Restart your server.
-
-## Admin Commands:
-- ```/tcma reload```: Reload config and language settings.
-
-## Player Commands:
-- ```/tcm changerole Light|Medium|Heavy```: Change your Battlefield Role.
-
 ## Features:
 - :unlock: **Unlock Combat for Regular Players**
 
@@ -73,4 +60,17 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
 - :snake: :x: **Prevent Towny-Block-Glitching by quick-block-place/destroy:**
   - Via a secret magical method.
   - Try it and see!
+
+## Admin Commands:
+- ```/tcma reload```: Reload config and language settings.
+
+## Player Commands:
+- ```/tcm changerole Light|Medium|Heavy```: Change your Battlefield Role.
  
+## Installation:
+1. Download the latest ***TownyCombat.jar*** from [here](https://github.com/TownyAdvanced/TownyCombat/releases).
+2. Drop the jar into your plugins folder.
+3. Restart your server.
+4. Edit the file /TownyCombat/config.yml, and configure (***By Default, all features will be configured to off***).
+5. Restart your server.
+
