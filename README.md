@@ -1,89 +1,66 @@
 # TownyCombat
 A combat plugin for Towny, containing some fun combat/battle/pvp features.
 
+## Installation:
+1. Download the latest ***TownyCombat.jar*** from [here](https://github.com/TownyAdvanced/TownyCombat/releases).
+2. Drop the jar into your plugins folder.
+3. Restart your server.
+4. Edit the file /TownyCombat/config.yml, and configure (***By Default, all features will be configured to off***).
+5. Restart your server.
+
+## Admin Commands:
+- ```/tcma reload```: Reload config and language settings.
+
+## Player Commands:
+- ```/tcm changerole Light|Medium|Heavy```: Change your Battlefield Role.
+
 ## Features:
-- :snake: :x: **Prevent Towny-Block-Glitching by quick-block-place/destroy:**
-  - Via a secret magical method.
-  - Try it and see!
-- :coffin: :moneybag: **Keep Inventory on Death:**
-  - If you die within 400 blocks of a town-homeblock, you keep your inventory and levels.
-  - Any tools/weapons/armour in your inventory are subject to a 20% degrade.
-- :guard: :star: **Infantry Enchancements**
-  - Speed Increase: +12%
-  - Knockback Resistance: +25%
+- :unlock: **Unlock Combat for Regular Players**
+  - :guard: :guard: :guard: **Battlefield Roles**
+    - Each player can type ```/tcm changerole``` to choose a Battlefield Role: Light, Medium, or Heavy.
+    - Each role provides unique advantages & disadvantages. Type ```/resident``` for this information:
+      - Light<br>
+        ![image](https://user-images.githubusercontent.com/50219223/236868982-c487212a-3fec-4ebe-8142-ed99a74594a3.png)
+      - Medium<br>
+        ![image](https://user-images.githubusercontent.com/50219223/236868670-5203f17d-3e86-4b30-8f19-f93e57a9353e.png)
+      - Heavy<br>
+        ![image](https://user-images.githubusercontent.com/50219223/236869479-bb776a21-34de-4626-911a-b9c462207cfc.png)    
+    - These roles affect mounted horses also, so a total of 6 unique battlefield roles become available:
+      - Light Infantry
+      - Light Cavalry
+      - Medium Infantry
+      - Medium Cavalry
+      - Heavy Infantry
+      - Heavy Cavalry
+  - :sparkling_heart: :sparkling_heart: :sparkling_heart:  **Potion Transmuter**
+    - TODO: WILL FILL THIS IN LATER
 - :horse: :star: **Cavalry Enhancements:**
   - Overview:
     - Mounted Horses (*aka cavalry*) play the role of "Tanks" on the battlefield: tough + mobile + powerful shot. 
     - Great v.s most infantry, but very vulnerable to infantry/cavalry with spears, and sustained crossbow attack.
     - Not "one man armies", but instead they do best when operating in combination with other troop types.
   - Special Abilities:
-    - Teleport with player on /n or /t spawn.
-    - Do not rear up on taking damage.
-    - Speed Increase: +12%.
+    - Cavalry Strength Bonus: +3 PVP Strength Bonus v.s. Infantry for 1 hit. Cooldown for 10 seconds.
+    - Missile Shield: Both horse and rider are immune to arrows fired from bows (but not crossbows).
     - Resistance to PVP Attack Damage: +60% .
-    - Knockback Resistance: +75%.
-    - Missile Shield: Immune to PVP arrows (except from crossbows).
-    - Cavalry Strength Bonus: +3 PVP Strength Bonus vs Infantry for 1 hit. Cooldown for 10 seconds.
+    - Do not rear up on taking damage.
+    - Teleport with player on /n or /t spawn.
   - Special Vulnerabilities:
     - Take +9 damage when hit by a spear in PVP.
-- :crossed_swords: :new: **New Weapons**
-  - ***Warning***: While native weapons are enabled, wooden swords and stone axes are not craftable (*to avoid battlefield confusion*).
-  - Spear:
-    - +9 PVP Damage v.s. Cavalry
-    ![image](https://user-images.githubusercontent.com/50219223/162958194-a7ecd2ae-c880-49be-afb9-6838d21e2a4d.png)
-  - Warhammer
-    - 15% PVP Chance to Break Shield
-    ![image](https://user-images.githubusercontent.com/50219223/162962278-0a172a1c-3f6f-4299-89bc-b92700c2b288.png)
-  - Custom Weapons
-    - The special bonuses can also be given to custom weapons made by other plugins. See config file for more details.
-- :left_luggage: :brain: :shirt: **Encumbrance, Tactics, & Military Uniforms**
-  - :Encumbrance:
-    - Standard RPG feature:
-      - All soldiers do not move at exactly the same speed.
-      - Rather, encumbered soldiers move more slowly.
-    - Base Encumbrance / Speed adjustments:
-      - Helmet: 0.6%
-      - Leggings: 1.2%
-      - Chestplate: 1.6%
-      - Boots: 0.6%
-      - Bow: 3%
-      - Crossbow: 12%
-      - Spear: 5%
-      - Warhammer: 12%
-      - Shield: 4%
-      - Shulker Box: 15%
-      - Ender Chest: 30%
-    - Armour Material Modifiers:
-      - Leather: x1
-      - Chain-Mail: x2
-      - Gold/Turtle: x3
-      - Iron: x4
-      - Diamond: x5
-      - Netherite: x6
-    - Horse Carry Modifier:
-      - -50%
-    - Heavy Armour Jump Damage:
-      - Players with 8% encumbrance or more sometimes incur some damage when jumping or going up a hill.
-      - Compensates for an MC bug which allows slowdown-bypassing via. bunny-hopping.
-  - Tactics:
-    - With encumbrance in effect, troops types and tactics naturally become more diverse.
-  - Military Uniforms
-    - With encumbrance in effect, it makes little sense for an nation to put every soldier in a full-diamond/netherite kit.
-    - It makes a more sense to equip all units with at least one identifying piece of kit (*e.g. a coloured leather helmet*).
-- :sparkling_heart: :heavy_plus_sign: **Auto-Potting**
-  - In combat, Splash health potions (I and II) are automatically consumed after a player's health falls below 5 hearts.
-  - This feature helps ensure that your battlefields are not completely dominated by PVP professionals -> because by reducing the importance of fast-twitch inventory management skills developed over years, it allows more casual players to get involved and have fun.
-- :bust_in_silhouette: :footprints: **Tactical Invisibilty:** ***(Disabled By Default)***
+- :crossed_swords: :new: **New Weapon**
+  - Spear<br>
+    ![image](https://user-images.githubusercontent.com/50219223/236872422-90922285-a49e-497a-9528-97a4581ca6db.png)    
+  - *Note: The spear bonus can also be given to custom-model weapons. See config file for mode details.*
+- :bust_in_silhouette: :footprints: **Tactical Invisibilty:**
   - Use stealth tactics by going invisible on the dynmap.
-  - This is a hardcore battle feature, which enables stealth tactics, in exchange for showing less activity on the dynmap.
+  - This feature allows players to use many stealth tactics, in exchange for showing less activity on the dynmap.
   - There are 2 Modes:
-    - Automatic: You go map-invisible when in the wilderness.
-    - Triggered: You go map-invisible when holding a certain combination of items in your hands (*e.g. double diamond swords*).  
+    - Automatic: You disappear from the map when in the wilderness.
+    - Triggered: You disappear from the map when holding a certain combination of items in your hands (*e.g. double diamond swords*).  
+- :coffin: :moneybag: **Keep Inventory on Death:**
+  - If you die within 400 blocks of a town-homeblock, you keep your inventory and levels.
+  - Any tools/weapons/armour in your inventory are subject to a 5% degrade.
+- :snake: :x: **Prevent Towny-Block-Glitching by quick-block-place/destroy:**
+  - Via a secret magical method.
+  - Try it and see!
  
-## Commands:
-- ```/tcm reload```: Reloads config and language settings
-
-## Installation:
-1. Download the latest ***TownyCombat.jar*** from [here](https://github.com/TownyAdvanced/TownyCombat/releases).
-2. Drop the jar into your plugins folder.
-3. Restart your server.
