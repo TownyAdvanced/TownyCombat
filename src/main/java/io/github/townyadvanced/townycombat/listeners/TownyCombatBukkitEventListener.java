@@ -99,9 +99,17 @@ public class TownyCombatBukkitEventListener implements Listener {
 			event.setCancelled(true);
 		}
 		//Register for charge bonus
-		TownyCombatHorseUtil.registerPlayerForCavalryStrengthBonus((Player)event.getEntity());
-		//Validate potion effects for role
-		
+		if(TownyCombatSettings.isCavalryEnhancementsEnabled() && TownyCombatSettings.isCavalryStrengthBonusEnabled()) {
+			if (TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && TownyCombatSettings.isBattlefieldRolesEnabled()) {
+				//If battlefield roles is enabled, only some roles get the bonus
+				if (TownyCombatBattlefieldRoleUtil.getBattlefieldRole((Player) event.getEntity()).hasCavalryStrengthBonus()) {
+					TownyCombatHorseUtil.registerPlayerForCavalryStrengthBonus((Player) event.getEntity());
+				}
+			} else {
+				//If battlefield roles is disabled, all players get the bonus
+				TownyCombatHorseUtil.registerPlayerForCavalryStrengthBonus((Player) event.getEntity());
+			}
+		}
 	}
 
 	@EventHandler
@@ -286,12 +294,9 @@ public class TownyCombatBukkitEventListener implements Listener {
 			if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled()
 					&& TownyCombatSettings.isBattlefieldRolesEnabled()) {
 				/*
-				 * If battlefield roles are enabled, then have a nice trick available:
-				 * If shooter role is light, it was a bow, otherwise it was a crossbow
+				 * If battlefield roles are enabled, then we query the role enum
 				 */				
-				BattlefieldRole battlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole(attackingPlayer);		
-				if(battlefieldRole == BattlefieldRole.LIGHT_INFANTRY
-						|| battlefieldRole == BattlefieldRole.LIGHT_CAVALRY) {
+				if(TownyCombatBattlefieldRoleUtil.getBattlefieldRole(attackingPlayer).getMissileWeapon() == Material.BOW) {
 					event.setCancelled(true);
 					return;
 				}
@@ -329,19 +334,16 @@ public class TownyCombatBukkitEventListener implements Listener {
 			}
 		}
 
-		//CAVALRY STRENGTH BONUS: Do extra damage to player infantry
+		//CAVALRY STRENGTH BONUS: Do extra damage
 		if(TownyCombatSettings.isCavalryEnhancementsEnabled()
 			&&
 			TownyCombatSettings.isCavalryStrengthBonusEnabled()
 			&&
-			//Cavalry Attacker 
+			//Attacker is on a horse
 			(attackingPlayer != null && attackingPlayer.isInsideVehicle() && attackingPlayer.getVehicle() instanceof AbstractHorse) 				
 			&&
-			//Infantry defender
-			(event.getEntity() instanceof Player && (!event.getEntity().isInsideVehicle() || !(event.getEntity().getVehicle() instanceof AbstractHorse)))
-			&&
 			//Bonus is charged-up
-			(attackingPlayer.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE) && attackingPlayer.getPotionEffect(PotionEffectType.INCREASE_DAMAGE).getAmplifier() == 0))
+			(attackingPlayer.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE) && attackingPlayer.getPotionEffect(PotionEffectType.INCREASE_DAMAGE).getAmplifier() == -1))
 		{
 			TownyCombatSpecialCavalryHitEvent specialCavalryHit = new TownyCombatSpecialCavalryHitEvent(attackingPlayer, event.getEntity(), true);
 			Bukkit.getPluginManager().callEvent(specialCavalryHit);
@@ -352,10 +354,17 @@ public class TownyCombatBukkitEventListener implements Listener {
 				 * So we need to explicitly add the damage.
 				 */
 				TownyCombatHorseUtil.registerPlayerForCavalryStrengthBonus(attackingPlayer);
-				attackingPlayer.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
-				damage += (3 * TownyCombatSettings.getCavalryChargeStrengthBonusEffectLevel());
+				if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled()
+						&& TownyCombatSettings.isBattlefieldRolesEnabled()) {
+					//If battlefield roles are enabled, the damage is by role
+					damage += (3 * TownyCombatBattlefieldRoleUtil.getBattlefieldRole(attackingPlayer).getCavalryStrengthBonus());
+				} else {
+					//If battlefield roles are not enabled, the damage is configured
+					damage += (3 * TownyCombatSettings.getCavalryChargeStrengthBonusEffectLevel());
+				}
 			}
 		}
+
 		//DAMAGE RESISTANCE
 		if(TownyCombatSettings.isCavalryEnhancementsEnabled() 
 				&& TownyCombatSettings.getAttackDamageResistanceHorsesPercent() > 0

@@ -64,11 +64,12 @@ public class TownyCombatHorseUtil {
 
     public static void registerPlayerForCavalryStrengthBonus(Player player) {
         cavalryStrengthBonusRefreshTimes.put(player, System.currentTimeMillis() + TownyCombatSettings.getCavalryChargeCooldownMilliseconds());
+        player.removePotionEffect(PotionEffectType.INCREASE_DAMAGE); //Removed so as not to cause confusion, and/or in preparation for next hit if applicable
     }
 
     public static void deregisterPlayerForCavalryStrengthBonus(Player player) {
         cavalryStrengthBonusRefreshTimes.remove(player);
-        player.removePotionEffect(PotionEffectType.INCREASE_DAMAGE); //Remove strength effect if any
+        player.removePotionEffect(PotionEffectType.INCREASE_DAMAGE); //Remove so as not to cause confusion
     }
 
     public static boolean isHorseTeleportScheduled(AbstractHorse horse) {
@@ -97,7 +98,7 @@ public class TownyCombatHorseUtil {
 
     /**
      * Apply a "placeholder" strength effect to the player
-     * This has no effect on its own, but is used to indicate the strength bonus is ready for use.
+     * This has no effect on its own, but is used to indicate that the strength bonus is ready for use.
      */
     private static void applyPlaceholderStrengthEffectToPlayer(Player player, int effectDurationTicks) {
         player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, effectDurationTicks,-1));

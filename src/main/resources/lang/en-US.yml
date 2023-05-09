@@ -57,7 +57,7 @@ status_resident_content_light_infantry_super_potion: "&2Super Potion (%d/day): &
 status_resident_content_light_cavalry_armour: "&2Armor: &aLeather"
 status_resident_content_light_cavalry_melee_weapons: "&2Melee Weapons: &aWood"
 status_resident_content_light_cavalry_missile_weapons: "&2Missile Weapons: &aBow"
-status_resident_content_light_cavalry_passive_ability_A: "&2Passive Ability A: &aStrength I Cavalry Power Shot"
+status_resident_content_light_cavalry_passive_ability_A: "&2Passive Ability A: &aStrength I Power Shot"
 status_resident_content_light_cavalry_passive_ability_B: "&2Passive Ability B: &a+1 from Potions of Swiftness"
 status_resident_content_light_cavalry_super_potion: "&2Super Potion (%d/day): &aTrue Invisibility (20 seconds)"
 

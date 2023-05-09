@@ -90,7 +90,8 @@ public enum ConfigNodes {
 			"cavalry_enhancements.cavalry_strength_bonus.effect_level",
 			"3",
 			"",
-			"# The level of the bonus strength effect."),
+			"# The level of the bonus strength effect.",
+			"# Note: If battlefield roles is enabled, this setting is ignored."),
 	CAVALRY_ENHANCEMENTS_CAVALRY_STRENGTH_BONUS_COOLDOWN_SECONDS(
 			"cavalry_enhancements.cavalry_strength_bonus.cooldown_time_seconds",
 			"10",
