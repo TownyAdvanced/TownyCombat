@@ -75,20 +75,21 @@ public class TownyCombatBukkitEventListener implements Listener {
 			TownyCombatHorseUtil.scheduleMountTeleport(event);
 	}
 
-	@EventHandler (ignoreCancelled = true)
+	@EventHandler
 	public void on (EntityMountEvent event) {
 		if(!TownyCombatSettings.isTownyCombatEnabled())
 			return;
 		if(!(event.getEntity() instanceof Player))
 			return; //Not a player doing the mounting
-		if(!(event.getMount() instanceof AbstractHorse))
+		if(!(event.getMount() instanceof Horse))
 			return; //Not a horse being mounted
 		//Remove legacy data
 		TownyCombatMovementUtil.removeTownyCombatMovementModifiers((AbstractHorse)event.getMount());
 		TownyCombatMovementUtil.removeTownyCombatKnockbackModifiers((AbstractHorse)event.getMount());
-		//Validate Armour
+		//Validate Armour and effects
 		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && TownyCombatSettings.isBattlefieldRolesEnabled()) {
 			TownyCombatBattlefieldRoleUtil.validateArmour((Player)event.getEntity());
+			TownyCombatBattlefieldRoleUtil.validateMagicalEffectsOnMount((Player)event.getEntity(), (Horse)event.getMount());
 		}
 		//Prevent mount if the horse is about to be TP'd to owner
 		if(TownyCombatSettings.isCavalryEnhancementsEnabled() 
@@ -99,9 +100,11 @@ public class TownyCombatBukkitEventListener implements Listener {
 		}
 		//Register for charge bonus
 		TownyCombatHorseUtil.registerPlayerForCavalryStrengthBonus((Player)event.getEntity());
+		//Validate potion effects for role
+		
 	}
 
-	@EventHandler (ignoreCancelled = true)
+	@EventHandler
 	public void on (EntityDismountEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
@@ -129,7 +132,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		}
 	}
 
-	@EventHandler (ignoreCancelled = true)
+	@EventHandler
 	public void on (PlayerJoinEvent event) {
 		if(!TownyCombatSettings.isTownyCombatEnabled())
 			return;
@@ -154,7 +157,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		}
 	}
 
-	@EventHandler (ignoreCancelled = true)
+	@EventHandler
 	public void on (EntityDamageEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
@@ -225,7 +228,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		}
 	}
 	
-	@EventHandler (ignoreCancelled = true)
+	@EventHandler
 	public void on (EntityDamageByEntityEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
@@ -273,7 +276,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 			isCavalryUnderAttack = false;
 		}
 
-		//CAVALRY MISSILE SHIELD: Cavalry are shielded from arrows fired by player-bows
+		//CAVALRY MISSILE SHIELD: Cavalry (Horse+Rider) are shielded from arrows fired by player-bows
 		if(TownyCombatSettings.isCavalryEnhancementsEnabled()
 				&& TownyCombatSettings.isCavalryMissileShieldEnabled()
 				&& attackingPlayer != null
@@ -287,7 +290,8 @@ public class TownyCombatBukkitEventListener implements Listener {
 				 * If shooter role is light, it was a bow, otherwise it was a crossbow
 				 */				
 				BattlefieldRole battlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole(attackingPlayer);		
-				if(battlefieldRole == BattlefieldRole.LIGHT) {
+				if(battlefieldRole == BattlefieldRole.LIGHT_INFANTRY
+						|| battlefieldRole == BattlefieldRole.LIGHT_CAVALRY) {
 					event.setCancelled(true);
 					return;
 				}
@@ -309,10 +313,18 @@ public class TownyCombatBukkitEventListener implements Listener {
 		double damage = event.getDamage();
 		if(TownyCombatSettings.isNewItemsSpearEnabled()
 			&& isCavalryUnderAttack
-			&& event.getDamager() instanceof Player
+			&& attackingPlayer != null
 		) { 
-			ItemStack mainHandItem = ((Player)event.getDamager()).getInventory().getItemInMainHand();
-			if(TownyCombatItemUtil.isSpear(mainHandItem)) {
+			ItemStack mainHandItem = attackingPlayer.getInventory().getItemInMainHand();
+			if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled()
+				&& TownyCombatSettings.isBattlefieldRolesEnabled()) {
+				//If B-Roles is enabled, only light infantry get the spear anti-cav bonus
+				if(TownyCombatBattlefieldRoleUtil.getBattlefieldRole(attackingPlayer) == BattlefieldRole.LIGHT_INFANTRY
+						&& TownyCombatItemUtil.isSpear(mainHandItem)) {
+					damage += TownyCombatSettings.getNewItemsSpearBonusDamageVsCavalry();
+				}
+			} else if(TownyCombatItemUtil.isSpear(mainHandItem)) {
+				//If B-Roles is disabled, anyone can get the spear bonus
 				damage += TownyCombatSettings.getNewItemsSpearBonusDamageVsCavalry();
 			}
 		}
@@ -358,7 +370,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		event.setDamage(damage);
 	}
 
-	@EventHandler (ignoreCancelled = true)
+	@EventHandler
 	public void on (PrepareItemCraftEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
@@ -379,7 +391,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		}
 	}
 
-	@EventHandler (ignoreCancelled = true)
+	@EventHandler
 	public void on (PrepareAnvilEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;

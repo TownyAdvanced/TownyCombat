@@ -22,7 +22,7 @@ public class TownyCombatNationEventListener implements Listener {
 		plugin = instance;
 	}
 	
-	@EventHandler (ignoreCancelled = true)
+	@EventHandler
 	public void on(NationSpawnEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;

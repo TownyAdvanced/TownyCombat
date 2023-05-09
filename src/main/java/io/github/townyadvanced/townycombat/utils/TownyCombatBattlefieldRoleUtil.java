@@ -53,22 +53,41 @@ public class TownyCombatBattlefieldRoleUtil {
 
     static {
         armourBattlefieldRoleMap = new HashMap<>();
-        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, leatherArmourKey, BattlefieldRole.LIGHT);
-        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, ironArmourKey, BattlefieldRole.MEDIUM);
-        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, chainArmourKey, BattlefieldRole.MEDIUM);
-        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, turtleArmourKey, BattlefieldRole.MEDIUM);
-        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, goldArmourKey, BattlefieldRole.MEDIUM);
-        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, diamondArmourKey, BattlefieldRole.HEAVY);
-        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, netheriteArmourKey, BattlefieldRole.HEAVY);
+        //Infantry Armour
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, leatherArmourKey, BattlefieldRole.LIGHT_INFANTRY);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, ironArmourKey, BattlefieldRole.MEDIUM_INFANTRY);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, chainArmourKey, BattlefieldRole.MEDIUM_INFANTRY);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, turtleArmourKey, BattlefieldRole.MEDIUM_INFANTRY);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, goldArmourKey, BattlefieldRole.MEDIUM_INFANTRY);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, diamondArmourKey, BattlefieldRole.HEAVY_INFANTRY);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, netheriteArmourKey, BattlefieldRole.HEAVY_INFANTRY);
+        //Cavalry Armour
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, leatherArmourKey, BattlefieldRole.LIGHT_CAVALRY);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, ironArmourKey, BattlefieldRole.MEDIUM_CAVALRY);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, chainArmourKey, BattlefieldRole.MEDIUM_CAVALRY);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, turtleArmourKey, BattlefieldRole.MEDIUM_CAVALRY);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, goldArmourKey, BattlefieldRole.MEDIUM_CAVALRY);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, diamondArmourKey, BattlefieldRole.HEAVY_CAVALRY);
+        addMaterialsToBattlefieldRoleMap(armourBattlefieldRoleMap, netheriteArmourKey, BattlefieldRole.HEAVY_CAVALRY);
         
         weaponBattlefieldRoleMap = new HashMap<>();
-        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, woodenWeaponKey, BattlefieldRole.LIGHT);
-        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, bowKey, BattlefieldRole.LIGHT);
-        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, stoneWeaponKey, BattlefieldRole.MEDIUM);
-        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, ironWeaponKey, BattlefieldRole.MEDIUM);
-        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, crossbowKey, BattlefieldRole.MEDIUM);
-        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, diamondWeaponKey, BattlefieldRole.HEAVY);
-        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, netheriteWeaponKey, BattlefieldRole.HEAVY);
+        //Infantry Weapons
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, woodenWeaponKey, BattlefieldRole.LIGHT_INFANTRY);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, bowKey, BattlefieldRole.LIGHT_INFANTRY);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, stoneWeaponKey, BattlefieldRole.MEDIUM_INFANTRY);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, ironWeaponKey, BattlefieldRole.MEDIUM_INFANTRY);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, crossbowKey, BattlefieldRole.MEDIUM_INFANTRY);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, diamondWeaponKey, BattlefieldRole.HEAVY_INFANTRY);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, netheriteWeaponKey, BattlefieldRole.HEAVY_INFANTRY);
+        //Cavalry Weapons
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, woodenWeaponKey, BattlefieldRole.LIGHT_CAVALRY);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, bowKey, BattlefieldRole.LIGHT_CAVALRY);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, stoneWeaponKey, BattlefieldRole.MEDIUM_CAVALRY);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, ironWeaponKey, BattlefieldRole.MEDIUM_CAVALRY);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, crossbowKey, BattlefieldRole.MEDIUM_CAVALRY);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, diamondWeaponKey, BattlefieldRole.HEAVY_CAVALRY);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, netheriteWeaponKey, BattlefieldRole.HEAVY_CAVALRY);
+        addMaterialsToBattlefieldRoleMap(weaponBattlefieldRoleMap, crossbowKey, BattlefieldRole.HEAVY_CAVALRY);
     }
 
     private static void addMaterialsToBattlefieldRoleMap(Map<String, Set<BattlefieldRole>> materialBattlefieldRoleMap, String materialKey, BattlefieldRole battlefieldRole) {
@@ -108,7 +127,7 @@ public class TownyCombatBattlefieldRoleUtil {
     public static BattlefieldRole getBattlefieldRole(Player player) {
         Resident resident = TownyAPI.getInstance().getResident(player.getUniqueId());
         if (resident == null)
-            return BattlefieldRole.LIGHT;  //Edge case
+            return BattlefieldRole.LIGHT_INFANTRY;  //Edge case
         String roleAsString = TownyCombatResidentMetaDataController.getBattlefieldRole(resident);
         return BattlefieldRole.parseString(roleAsString);
     }
@@ -212,17 +231,26 @@ public class TownyCombatBattlefieldRoleUtil {
      * Their mounts, if any, get the effects also
      */
     public static void giveEffectsToHeavyPlayersWearingArmour() {
-        
+        BattlefieldRole playerBattlefieldRole;
         for(Player player: Bukkit.getOnlinePlayers()) {
-            if(TownyCombatBattlefieldRoleUtil.getBattlefieldRole(player) == BattlefieldRole.HEAVY) {
-                //Give effects to player
-                if(TownyCombatBattlefieldRoleUtil.isPlayerWearingArmour(player)) {
-                    giveHeavyEffects(player);
-                }
-                //Give effects to mount
+            playerBattlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole(player);
+            
+            if(playerBattlefieldRole == BattlefieldRole.HEAVY_INFANTRY
+                    && TownyCombatBattlefieldRoleUtil.isPlayerWearingArmour(player)        
+                    && TownyCombatHorseUtil.getMount(player) == null) {
+                //Heavy infantry player gets effects as he is armoured + unmounted
+                giveRoleBasedDamageResistance(player);
+
+            } else if(playerBattlefieldRole == BattlefieldRole.HEAVY_CAVALRY
+                        && TownyCombatBattlefieldRoleUtil.isPlayerWearingArmour(player)) {
                 Horse mount = TownyCombatHorseUtil.getMount(player);
-                if(mount != null && TownyCombatBattlefieldRoleUtil.isHorseWearingArmour(mount)) {
-                    giveHeavyEffects(mount);
+                if(mount != null) {
+                    //Heavy Cavalry player gets effects as he is armoured + mounted
+                    giveRoleBasedDamageResistance(player);
+                    //Mount gets effects as it is armoured
+                    if(TownyCombatBattlefieldRoleUtil.isHorseWearingArmour(mount)) {
+                        giveRoleBasedDamageResistance(mount);
+                    }
                 }
             }
         }
@@ -230,15 +258,6 @@ public class TownyCombatBattlefieldRoleUtil {
 
     private static boolean isHorseWearingArmour(Horse mount) {
         return mount.getInventory().getArmor() != null;
-    }
-
-    private static void giveHeavyEffects(LivingEntity livingEntity) {
-        final int effectDurationTicks = (int) (TimeTools.convertToTicks(TownySettings.getShortInterval() + 10));
-        Towny.getPlugin().getServer().getScheduler().runTask(Towny.getPlugin(), new Runnable() {
-            public void run() {
-                livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, effectDurationTicks,0));
-            }
-        });
     }
     
     /////////////// Non-Splash Potions ///////////////
@@ -258,20 +277,22 @@ public class TownyCombatBattlefieldRoleUtil {
         //Create a replacement potion if required
         ItemStack replacementPotion = null;
         switch (battlefieldRole) {
-            case LIGHT:
+            case LIGHT_INFANTRY:
+            case LIGHT_CAVALRY:
                 if (potionMeta.getBasePotionData().getType().getEffectType().equals(PotionEffectType.SPEED)) {
                     replacementPotion = getUpdatedSpeedPotion(potionMeta.getBasePotionData(), 1);
                 }
                 break;
-            case MEDIUM:
+            case MEDIUM_INFANTRY:
+            case MEDIUM_CAVALRY:
                 if (potionMeta.getBasePotionData().getType().getEffectType().equals(PotionEffectType.INCREASE_DAMAGE)) {
-                    replacementPotion =  getUpdatedStrengthPotion(potionMeta.getBasePotionData(), 1);
-                }
-                if (potionMeta.getBasePotionData().getType().getEffectType().equals(PotionEffectType.SPEED)) {
+                    replacementPotion = getUpdatedStrengthPotion(potionMeta.getBasePotionData(), 1);
+                } else if (potionMeta.getBasePotionData().getType().getEffectType().equals(PotionEffectType.SPEED)) {
                     replacementPotion = getUpdatedSpeedPotion(potionMeta.getBasePotionData(), -1);
                 }
                 break;
-            case HEAVY:
+            case HEAVY_INFANTRY:
+            case HEAVY_CAVALRY:
                 if (potionMeta.getBasePotionData().getType().getEffectType().equals(PotionEffectType.SPEED)) {
                     replacementPotion = getUpdatedSpeedPotion(potionMeta.getBasePotionData(), -2);
                 }
@@ -316,50 +337,60 @@ public class TownyCombatBattlefieldRoleUtil {
     }
 
     //////////////// Splash Potions /////////////////
-    
-    public static void evaluateEffectOfSplashPotion(PotionSplashEvent event, LivingEntity affectedEntity, BattlefieldRole relevantBattlefieldRole) {
-        switch (relevantBattlefieldRole) {
-            case LIGHT:
+
+    /**
+     * Evaluate the effect of a splash potion
+     * 
+     * @param event the potion splash event
+     * @param affectedPlayerOrHorse either 1. A player, or 2. A player-mounted horse
+     * @param playerBattlefieldRole the battlefield role of 1. The affected player, or 2. The player rider of the affected horse
+     */
+    public static void evaluateEffectOfSplashPotion(PotionSplashEvent event, LivingEntity affectedPlayerOrHorse, BattlefieldRole playerBattlefieldRole) {
+        switch (playerBattlefieldRole) {
+            case LIGHT_INFANTRY:
+            case LIGHT_CAVALRY:
                 for(PotionEffect potionEffect: event.getPotion().getEffects()) {
                     if(potionEffect.getType().equals(PotionEffectType.SPEED)) {
                         //Give a new effect to the player
                         int amplifier = potionEffect.getAmplifier() + 1;
-                        int duration = (int)((double)potionEffect.getDuration() * event.getIntensity(affectedEntity));
-                        givePotionEffectUnlessAmplifierIsNegative(potionEffect.getType(), amplifier, duration, affectedEntity);
+                        int duration = (int)((double)potionEffect.getDuration() * event.getIntensity(affectedPlayerOrHorse));
+                        givePotionEffectUnlessAmplifierIsNegative(potionEffect.getType(), amplifier, duration, true, true, true, affectedPlayerOrHorse);
                         //Set the upcoming event effect on player to zero
-                        event.setIntensity(affectedEntity, 0);
+                        event.setIntensity(affectedPlayerOrHorse, 0);
                     }
                 }
                 break;
-            case MEDIUM:
+            case MEDIUM_INFANTRY:
+            case MEDIUM_CAVALRY:
                 for(PotionEffect potionEffect: event.getPotion().getEffects()) {
                     if(potionEffect.getType().equals(PotionEffectType.SPEED)) {
                         //Give a new effect to the player
                         int amplifier = potionEffect.getAmplifier() - 1;
-                        int duration = (int)((double)potionEffect.getDuration() * event.getIntensity(affectedEntity));
-                        givePotionEffectUnlessAmplifierIsNegative(potionEffect.getType(), amplifier, duration, affectedEntity);
+                        int duration = (int)((double)potionEffect.getDuration() * event.getIntensity(affectedPlayerOrHorse));
+                        givePotionEffectUnlessAmplifierIsNegative(potionEffect.getType(), amplifier, duration, true, true, true, affectedPlayerOrHorse);
                         //Set the upcoming event effect on player to zero
-                        event.setIntensity(affectedEntity, 0);
+                        event.setIntensity(affectedPlayerOrHorse, 0);
                     }
                     if(potionEffect.getType().equals(PotionEffectType.INCREASE_DAMAGE)) {
                         //Give a new effect to the player
                         int amplifier = potionEffect.getAmplifier() + 1;
-                        int duration = (int)((double)potionEffect.getDuration() * event.getIntensity(affectedEntity));
-                        givePotionEffectUnlessAmplifierIsNegative(potionEffect.getType(), amplifier, duration, affectedEntity);
+                        int duration = (int)((double)potionEffect.getDuration() * event.getIntensity(affectedPlayerOrHorse));
+                        givePotionEffectUnlessAmplifierIsNegative(potionEffect.getType(), amplifier, duration, true, true, true, affectedPlayerOrHorse);
                         //Set the upcoming event effect on player to zero
-                        event.setIntensity(affectedEntity, 0);
+                        event.setIntensity(affectedPlayerOrHorse, 0);
                     }
                 }
                 break;
-            case HEAVY:
+            case HEAVY_INFANTRY:
+            case HEAVY_CAVALRY:
                 for(PotionEffect potionEffect: event.getPotion().getEffects()) {
                     if(potionEffect.getType().equals(PotionEffectType.SPEED)) {
                         //Give a new effect to the player
                         int amplifier = potionEffect.getAmplifier() - 2;
-                        int duration = (int)((double)potionEffect.getDuration() * event.getIntensity(affectedEntity));
-                        givePotionEffectUnlessAmplifierIsNegative(potionEffect.getType(), amplifier, duration, affectedEntity);
+                        int duration = (int)((double)potionEffect.getDuration() * event.getIntensity(affectedPlayerOrHorse));
+                        givePotionEffectUnlessAmplifierIsNegative(potionEffect.getType(), amplifier, duration, true, true, true, affectedPlayerOrHorse);
                         //Set the upcoming event effect on player to zero
-                        event.setIntensity(affectedEntity, 0);
+                        event.setIntensity(affectedPlayerOrHorse, 0);
                     }
                 }
                 break;
@@ -368,14 +399,65 @@ public class TownyCombatBattlefieldRoleUtil {
         }
     }
 
-    private static void givePotionEffectUnlessAmplifierIsNegative(PotionEffectType potionEffectType, int amplifier, int durationInTicks, LivingEntity livingEntity) {
+    private static void giveRoleBasedDamageResistance(LivingEntity livingEntity) {
+        final int effectDurationTicks = (int) (TimeTools.convertToTicks(TownySettings.getShortInterval() + 10));
+        givePotionEffectUnlessAmplifierIsNegative(PotionEffectType.DAMAGE_RESISTANCE, 0, effectDurationTicks, false, false, true, livingEntity);
+    }
+
+    private static void givePotionEffectUnlessAmplifierIsNegative(PotionEffectType potionEffectType, 
+                                                                  int amplifier, 
+                                                                  int durationInTicks, 
+                                                                  boolean ambient,
+                                                                  boolean particles,
+                                                                  boolean icon,
+                                                                  LivingEntity livingEntity) {
         if(amplifier >= 0) {
             Towny.getPlugin().getServer().getScheduler().runTask(Towny.getPlugin(), new Runnable() {
                 public void run() {
-                    livingEntity.addPotionEffect(new PotionEffect(potionEffectType, durationInTicks, amplifier));
+                    livingEntity.addPotionEffect(new PotionEffect(potionEffectType, durationInTicks, amplifier, ambient, particles, icon));
                 }
             });
         }
     }
 
+    public static void validateMagicalEffectsOnMount(Player playerRider, Horse mountedHorse) {
+        BattlefieldRole riderBattlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole(playerRider);
+        PotionEffect speedEffect = mountedHorse.getPotionEffect(PotionEffectType.SPEED);
+        PotionEffect resistanceEffect = mountedHorse.getPotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
+
+        switch (riderBattlefieldRole) {
+            case LIGHT_CAVALRY:
+                if (speedEffect != null) {
+                    int amplifier = speedEffect.getAmplifier() + 1;
+                    int duration = speedEffect.getDuration();
+                    mountedHorse.removePotionEffect(PotionEffectType.SPEED);
+                    givePotionEffectUnlessAmplifierIsNegative(PotionEffectType.SPEED, amplifier, duration, true, true, true, mountedHorse);
+                }
+                break;
+            case MEDIUM_INFANTRY:
+            case MEDIUM_CAVALRY:
+                if (speedEffect != null) {
+                    int amplifier = speedEffect.getAmplifier() - 1;
+                    int duration = speedEffect.getDuration();
+                    mountedHorse.removePotionEffect(PotionEffectType.SPEED);
+                    givePotionEffectUnlessAmplifierIsNegative(PotionEffectType.SPEED, amplifier, duration, true, true, true, mountedHorse);
+                }
+                break;
+            case HEAVY_INFANTRY:
+            case HEAVY_CAVALRY:
+                if (speedEffect != null) {
+                    int amplifier = speedEffect.getAmplifier() - 1;
+                    int duration = speedEffect.getDuration();
+                    mountedHorse.removePotionEffect(PotionEffectType.SPEED);
+                    givePotionEffectUnlessAmplifierIsNegative(PotionEffectType.SPEED, amplifier, duration, true, true, true, mountedHorse);
+                }
+                if(riderBattlefieldRole == BattlefieldRole.HEAVY_CAVALRY
+                        && resistanceEffect == null
+                        && isPlayerWearingArmour(playerRider) 
+                        && isHorseWearingArmour(mountedHorse)) {
+                    giveRoleBasedDamageResistance(mountedHorse);
+                }
+                break;
+        }
+    }
 }

@@ -36,9 +36,12 @@ msg_warning_jump_damage: '&cWARNING: Your encumbrance level is above %d percent.
     
 #Battlefield Role Names
 
-battlefield_role_light: "Light"
-battlefield_role_medium: "Medium"
-battlefield_role_heavy: "Heavy"
+battlefield_role_light_infantry: "Light Infantry"
+battlefield_role_medium_infantry: "Medium Infantry"
+battlefield_role_heavy_infantry: "Heavy Infantry"
+battlefield_role_light_cavalry: "Light Cavalry"
+battlefield_role_medium_cavalry: "Medium Cavalry"
+battlefield_role_heavy_cavalry: "Heavy Cavalry"
 
 #Resident screen
 

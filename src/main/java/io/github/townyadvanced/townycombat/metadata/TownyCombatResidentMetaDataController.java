@@ -28,7 +28,7 @@ public class TownyCombatResidentMetaDataController {
 		StringDataField sdf = (StringDataField) battlefieldRole.clone();
 		if (resident.hasMeta(sdf.getKey()))
 			return MetaDataUtil.getString(resident, sdf);
-		return "Light";
+		return "LIGHT_INFANTRY";
 	}
 
 	public static void setBattlefieldRole(Resident resident, String newBattlefieldRole) {

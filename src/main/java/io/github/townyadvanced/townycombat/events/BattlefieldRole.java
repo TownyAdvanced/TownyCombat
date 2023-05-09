@@ -29,7 +29,6 @@ public enum BattlefieldRole {
                 return HEAVY_INFANTRY;
             case "HEAVY_CAVALRY":
                 return HEAVY_CAVALRY;
-                
             default:
                 throw new RuntimeException("Unknown role");
         }
