@@ -90,11 +90,7 @@ public class TownyCombatStatusScreenListener implements Listener {
 				text = text.append(Component.newline());
 				text = text.append(Component.text(translator.of("status_resident_content_heavy_line_passive_ability")));
 				text = text.append(Component.newline());
-				text = text.append(Component.text(translator.of("status_resident_content_heavy_line_disadvantage1")));
-				text = text.append(Component.newline());
-				text = text.append(Component.text(translator.of("status_resident_content_heavy_line_disadvantage2")));
-				text = text.append(Component.newline());
-				text = text.append(Component.text(translator.of("status_resident_content_heavy_line_disadvantage3")));
+				text = text.append(Component.text(translator.of("status_resident_content_heavy_line_disadvantage")));
 				if (TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()) {
 					text = text.append(Component.newline());
 					text = text.append(Component.text(translator.of("status_resident_content_heavy_super_potion_line", numSuperPotions)));
