@@ -2,9 +2,12 @@ package io.github.townyadvanced.townycombat.events;
 
 public enum BattlefieldRole {
 
-    LIGHT("battlefield_role_light"), 
-    MEDIUM("battlefield_role_medium"), 
-    HEAVY("battlefield_role_heavy");
+    LIGHT_INFANTRY("battlefield_role_light_infantry"),
+    LIGHT_CAVALRY("battlefield_role_light_cavalry"),
+    MEDIUM_INFANTRY("battlefield_role_medium_infantry"),
+    MEDIUM_CAVALRY("battlefield_role_medium_cavalry"),
+    HEAVY_INFANTRY("battlefield_role_heavy"),
+    HEAVY_CAVALRY("battlefield_role_heavy");
 
     private String nameKey;
  
@@ -14,12 +17,18 @@ public enum BattlefieldRole {
 
     public static BattlefieldRole parseString(String roleAsString) {
         switch(roleAsString.toUpperCase()) {
-            case "LIGHT":
-                return LIGHT;
-            case "MEDIUM":
-                return MEDIUM;
-            case "HEAVY":
-                return HEAVY;
+            case "LIGHT_INFANTRY":
+                return LIGHT_INFANTRY;
+            case "LIGHT_CAVALRY":
+                return LIGHT_CAVALRY;
+            case "MEDIUM_INFANTRY":
+                return MEDIUM_INFANTRY;
+            case "MEDIUM_CAVALRY":
+                return MEDIUM_CAVALRY;
+            case "HEAVY_INFANTRY":
+                return HEAVY_INFANTRY;
+            case "HEAVY_CAVALRY":
+                return HEAVY_CAVALRY;
                 
             default:
                 throw new RuntimeException("Unknown role");

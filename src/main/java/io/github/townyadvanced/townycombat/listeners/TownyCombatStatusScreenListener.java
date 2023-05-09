@@ -51,54 +51,48 @@ public class TownyCombatStatusScreenListener implements Listener {
 	private Component getBattlefieldRoleHoverItemContentComponent(Resident resident, BattlefieldRole battlefieldRole, Translator translator) {
 		Component text = Component.empty();
 		int numSuperPotions = TownyCombatSettings.getBattlefieldRolesSuperPotionsDailyGenerationRate();
-		//Battlefield Role Details
+		String translationKey = battlefieldRole.toString().toLowerCase();
+		
+		//Armour & Weapons
+		text = text.append(Component.text(translator.of("status_resident_content_" + translationKey + "_armour")));
+		text = text.append(Component.newline());
+		text = text.append(Component.text(translator.of("status_resident_content_" + translationKey + "_melee_weapons")));
+		text = text.append(Component.newline());
+		text = text.append(Component.text(translator.of("status_resident_content_" + translationKey + "_missile_weapons")));
+		
+		//Passive(s)
 		switch(battlefieldRole) {
-			case LIGHT:
-				text = text.append(Component.text(translator.of("status_resident_content_light_line_armour")));
+			case LIGHT_INFANTRY:
+			case LIGHT_CAVALRY:
+			case HEAVY_CAVALRY:
 				text = text.append(Component.newline());
-				text = text.append(Component.text(translator.of("status_resident_content_light_line_melee_weapons")));
+				text = text.append(Component.text(translator.of("status_resident_content_light_line_passive_ability_A")));
 				text = text.append(Component.newline());
-				text = text.append(Component.text(translator.of("status_resident_content_light_line_missile_weapons")));
-				text = text.append(Component.newline());
-				text = text.append(Component.text(translator.of("status_resident_content_light_line_passive_ability")));
-				if (TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()) {
-					text = text.append(Component.newline());
-					text = text.append(Component.text(translator.of("status_resident_content_light_super_potion_line", numSuperPotions)));
-				}
-				break;
-			case MEDIUM:
-				text = text.append(Component.text(translator.of("status_resident_content_medium_line_armour")));
-				text = text.append(Component.newline());
-				text = text.append(Component.text(translator.of("status_resident_content_medium_line_melee_weapons")));
-				text = text.append(Component.newline());
-				text = text.append(Component.text(translator.of("status_resident_content_medium_line_missile_weapons")));
-				text = text.append(Component.newline());
-				text = text.append(Component.text(translator.of("status_resident_content_medium_line_passive_ability")));
-				text = text.append(Component.newline());
-				text = text.append(Component.text(translator.of("status_resident_content_medium_line_disadvantage")));
-				if (TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()) {
-					text = text.append(Component.newline());
-					text = text.append(Component.text(translator.of("status_resident_content_medium_super_potion_line", numSuperPotions)));
-				}
-				break;
-			case HEAVY:
-				text = text.append(Component.text(translator.of("status_resident_content_heavy_line_armour")));
-				text = text.append(Component.newline());
-				text = text.append(Component.text(translator.of("status_resident_content_heavy_line_melee_weapons")));
-				text = text.append(Component.newline());
-				text = text.append(Component.text(translator.of("status_resident_content_heavy_line_missile_weapons")));
-				text = text.append(Component.newline());
-				text = text.append(Component.text(translator.of("status_resident_content_heavy_line_passive_ability")));
-				text = text.append(Component.newline());
-				text = text.append(Component.text(translator.of("status_resident_content_heavy_line_disadvantage")));
-				if (TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()) {
-					text = text.append(Component.newline());
-					text = text.append(Component.text(translator.of("status_resident_content_heavy_super_potion_line", numSuperPotions)));
-				}
+				text = text.append(Component.text(translator.of("status_resident_content_light_line_passive_ability_B")));
 				break;
 			default:
-				throw new RuntimeException("Unknown battlefield role");
+				text = text.append(Component.newline());
+				text = text.append(Component.text(translator.of("status_resident_content_light_line_passive_ability")));
+				break;
 		}
+
+		//Disadvantage
+		switch(battlefieldRole) {
+			case MEDIUM_INFANTRY:
+			case MEDIUM_CAVALRY:
+			case HEAVY_INFANTRY:
+			case HEAVY_CAVALRY:
+				text = text.append(Component.newline());
+				text = text.append(Component.text(translator.of("status_resident_content_medium_line_disadvantage")));
+				break;
+		}
+
+		//Super Potions
+		if (TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()) {
+			text = text.append(Component.newline());
+			text = text.append(Component.text(translator.of("status_resident_content_medium_super_potion_line", numSuperPotions)));
+		}
+		
 		//Time Until Next Role Change
 		long timeUntilNextRoleChange = TownyCombatBattlefieldRoleUtil.getTimeUntilNextRoleChange(resident);
 		if(timeUntilNextRoleChange > 0) {
