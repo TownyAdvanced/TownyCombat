@@ -200,8 +200,8 @@ public class TownyCombatSettings {
 		return Settings.getBoolean(ConfigNodes.POTION_TRANSMUTER_ENABLED);
 	}
 	
-	public static boolean isPotionTransmuterDowngradeOnTransmute() {
-		return Settings.getBoolean(ConfigNodes.POTION_TRANSMUTER_REMOVE_DOWNGRADE_ON_TRANSMUTE);
+	public static int getPotionTransmuterAmplificationAdjustment() {
+		return Settings.getInt(ConfigNodes.POTION_TRANSMUTER_AMPLIFICATION_ADJUSTMENT);
 	}
 	
 	public static int getPotionTransmuterTransmutedPotionDurationSeconds() {

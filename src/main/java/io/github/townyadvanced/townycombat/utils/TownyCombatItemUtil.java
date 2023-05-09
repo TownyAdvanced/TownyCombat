@@ -17,7 +17,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
@@ -292,16 +291,18 @@ public class TownyCombatItemUtil {
             if(itemStack != null && (itemStack.getType() == Material.POTION || itemStack.getType() == Material.SPLASH_POTION)) {
                 potionMeta = (PotionMeta) itemStack.getItemMeta();
                 if (potionMeta != null && potionMeta.getBasePotionData().getType() == PotionType.INSTANT_HEAL) {
-                    //Create the new potion Meta
-                    boolean sourcePotionIsUpgraded = potionMeta.getBasePotionData().isUpgraded();
-                    int amplifier = TownyCombatSettings.isPotionTransmuterDowngradeOnTransmute() ? 0 : (sourcePotionIsUpgraded ? 1 : 0);
+                    //Create a new potion meta object
                     ItemStack dummyItemStack = new ItemStack(itemStack.getType());
                     potionMeta = (PotionMeta) dummyItemStack.getItemMeta();
-                    potionMeta.setDisplayName(Translatable.of("BLAH").toString());
-                    int durationTicks = TownyCombatSettings.getPotionTransmuterTransmutedPotionDurationSeconds() * 20;
-                    PotionEffect potionEffect = new PotionEffect(PotionEffectType.REGENERATION, durationTicks, amplifier, true, true, true);
+                    potionMeta.setDisplayName(Translatable.of("transmuted.potion.name").translate(Locale.ROOT));
+                    //Create a new potion effect
+                    int transmutedPotionDurationTicks = TownyCombatSettings.getPotionTransmuterTransmutedPotionDurationSeconds() * 20;
+                    int sourcePotionAmplifier = potionMeta.getBasePotionData().isUpgraded() ? 1: 0;
+                    int transmutedPotionAmplifier = sourcePotionAmplifier + TownyCombatSettings.getPotionTransmuterAmplificationAdjustment();
+                    transmutedPotionAmplifier = Math.max(transmutedPotionAmplifier, 0);
+                    PotionEffect potionEffect = new PotionEffect(PotionEffectType.REGENERATION, transmutedPotionDurationTicks, transmutedPotionAmplifier, true, true, true);
                     potionMeta.addCustomEffect(potionEffect, true);
-                    //Set the potion meta
+                    //Set the potion meta into the original itemstack
                     itemStack.setItemMeta(potionMeta);
                     numTransmutedPotions++;
                 }

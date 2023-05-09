@@ -292,11 +292,14 @@ public enum ConfigNodes {
 			"true",
 			"",
 			"# If true, the potion transmuter feature is enabled. See user guide for details."),
-	POTION_TRANSMUTER_REMOVE_DOWNGRADE_ON_TRANSMUTE(
-			"unlock_pvp_combat_for_regular_players.potion_transmuter.downgrade_on_transmute",
-			"false",
+	POTION_TRANSMUTER_AMPLIFICATION_ADJUSTMENT(
+			"unlock_pvp_combat_for_regular_players.potion_transmuter.amplification_adjustment",
+			"0",
 			"",
-			"# If this value is true, then on transmute, Health II potions get downgraded to Regen I."),
+			"# This value determines the adjustment to the amplification on potion transmute.",
+			"# A value of 0 means Healing-I/Healing-II potions become Regen-I/Regen-II",
+			"# A value of 1 means Healing-I/Healing-II potions become Regen-II/Regen-III",
+			"# A value of -1 means means Healing-I/Healing-II potions become Regen-I/Regen-I"),
 	POTION_TRANSMUTER_TRANSMUTED_POTION_DURATION_SECONDS(
 			"unlock_pvp_combat_for_regular_players.potion_transmuter.transmuted_potion_duration_seconds",
 			"15",
