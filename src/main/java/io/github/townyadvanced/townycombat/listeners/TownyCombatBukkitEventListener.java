@@ -138,15 +138,20 @@ public class TownyCombatBukkitEventListener implements Listener {
 		TownyCombatMovementUtil.removeTownyCombatMovementModifiers(event.getPlayer());
 		TownyCombatMovementUtil.removeTownyCombatKnockbackModifiers(event.getPlayer());
 
-		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled()
-				&& TownyCombatSettings.isBattlefieldRolesEnabled()
-				&& TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()) {
-			//Remove expired super potions
-			TownyCombatItemUtil.removeExpiredSuperPotionsFromInventory(event.getPlayer());
-			//Grant new super potions
-			TownyCombatItemUtil.evaluateSuperPotionGrant(event.getPlayer());
+		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled()) {
+			//Process super-potions
+			if(TownyCombatSettings.isBattlefieldRolesEnabled() 
+					&& TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()) {
+				//Remove expired super potions
+				TownyCombatItemUtil.removeExpiredSuperPotionsFromInventory(event.getPlayer());
+				//Grant new super potions
+				TownyCombatItemUtil.evaluateSuperPotionGrant(event.getPlayer());
+			}
+			//Transmute potions
+			if(TownyCombatSettings.isPotionTransmuterEnabed()) {
+				TownyCombatItemUtil.transmutePotionsInInventory(event.getPlayer());
+			}
 		}
-
 	}
 
 	@EventHandler (ignoreCancelled = true)
