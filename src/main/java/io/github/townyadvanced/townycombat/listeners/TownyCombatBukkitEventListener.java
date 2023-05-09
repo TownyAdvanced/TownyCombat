@@ -223,7 +223,9 @@ public class TownyCombatBukkitEventListener implements Listener {
 	public void on (EntityShootBowEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
-
+		/*
+		 * Cancel event if attacker has used a disallowed weapon
+		 */
 		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && TownyCombatSettings.isBattlefieldRolesEnabled()) {
 			if(event.getBow() == null)
 				return;
