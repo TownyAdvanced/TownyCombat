@@ -113,7 +113,7 @@ public class TownyCombatItemUtil {
     public static void removeExpiredSuperPotionsFromInventory(Player player) {
         int numRemovedItems = 0;
         for(ItemStack itemStack: player.getInventory().getContents()) {
-            if(isSuperPotion(itemStack) && isSuperPotionExpired(itemStack)) {
+            if(itemStack != null && isSuperPotion(itemStack) && isSuperPotionExpired(itemStack)) {
                 itemStack.setAmount(0);
                 numRemovedItems++;
             }
