@@ -238,19 +238,15 @@ public class TownyCombatBattlefieldRoleUtil {
             if(playerBattlefieldRole == BattlefieldRole.HEAVY_INFANTRY
                     && TownyCombatBattlefieldRoleUtil.isPlayerWearingArmour(player)        
                     && TownyCombatHorseUtil.getMount(player) == null) {
-                //Heavy infantry player gets effects as he is armoured + unmounted
+                //Heavy infantry player gets effects as he is armoured + unmounted.
                 giveRoleBasedDamageResistance(player);
 
-            } else if(playerBattlefieldRole == BattlefieldRole.HEAVY_CAVALRY
-                        && TownyCombatBattlefieldRoleUtil.isPlayerWearingArmour(player)) {
+            } else if(playerBattlefieldRole == BattlefieldRole.HEAVY_CAVALRY) {
                 Horse mount = TownyCombatHorseUtil.getMount(player);
-                if(mount != null) {
-                    //Heavy Cavalry player gets effects as he is armoured + mounted
+                if (mount != null && isHorseWearingArmour(mount) && isPlayerWearingArmour(player)) {
+                    //Heavy cavalry gets effects is both players and mount are armoured.
                     giveRoleBasedDamageResistance(player);
-                    //Mount gets effects as it is armoured
-                    if(TownyCombatBattlefieldRoleUtil.isHorseWearingArmour(mount)) {
-                        giveRoleBasedDamageResistance(mount);
-                    }
+                    giveRoleBasedDamageResistance(mount);
                 }
             }
         }
@@ -346,23 +342,29 @@ public class TownyCombatBattlefieldRoleUtil {
      * @param playerBattlefieldRole the battlefield role of 1. The affected player, or 2. The player rider of the affected horse
      */
     public static void evaluateEffectOfSplashPotion(PotionSplashEvent event, LivingEntity affectedPlayerOrHorse, BattlefieldRole playerBattlefieldRole) {
-        switch (playerBattlefieldRole) {
-            case LIGHT_INFANTRY:
-            case LIGHT_CAVALRY:
-                for(PotionEffect potionEffect: event.getPotion().getEffects()) {
-                    if(potionEffect.getType().equals(PotionEffectType.SPEED)) {
+        for(PotionEffect potionEffect: event.getPotion().getEffects()) {
+            switch (playerBattlefieldRole) {
+                case LIGHT_INFANTRY:
+                    if (potionEffect.getType().equals(PotionEffectType.SPEED)) {
+                        TODO - This area needs cleanup
+                        Probably create a separate section for horse & for player
+                        If light infantry, we give speed only if this is unmounted player
+                    }
+                case LIGHT_CAVALRY:
+                    if (potionEffect.getType().equals(PotionEffectType.SPEED)) {
                         //Give a new effect to the player
                         int amplifier = potionEffect.getAmplifier() + 1;
-                        int duration = (int)((double)potionEffect.getDuration() * event.getIntensity(affectedPlayerOrHorse));
+                        int duration = (int) ((double) potionEffect.getDuration() * event.getIntensity(affectedPlayerOrHorse));
                         givePotionEffectUnlessAmplifierIsNegative(potionEffect.getType(), amplifier, duration, true, true, true, affectedPlayerOrHorse);
                         //Set the upcoming event effect on player to zero
                         event.setIntensity(affectedPlayerOrHorse, 0);
                     }
-                }
+                    break;
+            }
+                
                 break;
             case MEDIUM_INFANTRY:
             case MEDIUM_CAVALRY:
-                for(PotionEffect potionEffect: event.getPotion().getEffects()) {
                     if(potionEffect.getType().equals(PotionEffectType.SPEED)) {
                         //Give a new effect to the player
                         int amplifier = potionEffect.getAmplifier() - 1;
@@ -379,11 +381,10 @@ public class TownyCombatBattlefieldRoleUtil {
                         //Set the upcoming event effect on player to zero
                         event.setIntensity(affectedPlayerOrHorse, 0);
                     }
-                }
+                
                 break;
             case HEAVY_INFANTRY:
             case HEAVY_CAVALRY:
-                for(PotionEffect potionEffect: event.getPotion().getEffects()) {
                     if(potionEffect.getType().equals(PotionEffectType.SPEED)) {
                         //Give a new effect to the player
                         int amplifier = potionEffect.getAmplifier() - 2;
@@ -392,7 +393,7 @@ public class TownyCombatBattlefieldRoleUtil {
                         //Set the upcoming event effect on player to zero
                         event.setIntensity(affectedPlayerOrHorse, 0);
                     }
-                }
+                
                 break;
             default:
                 throw new RuntimeException("Unknown Battlefield Role");
