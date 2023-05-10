@@ -36,34 +36,60 @@ msg_warning_jump_damage: '&cWARNING: Your encumbrance level is above %d percent.
     
 #Battlefield Role Names
 
-battlefield_role_light: "Light"
-battlefield_role_medium: "Medium"
-battlefield_role_heavy: "Heavy"
+battlefield_role_light_infantry: "Light Infantry"
+battlefield_role_medium_infantry: "Medium Infantry"
+battlefield_role_heavy_infantry: "Heavy Infantry"
+battlefield_role_light_cavalry: "Light Cavalry"
+battlefield_role_medium_cavalry: "Medium Cavalry"
+battlefield_role_heavy_cavalry: "Heavy Cavalry"
 
 #Resident screen
 
 status_resident_hover_title_battlefield_role: "%s[&2Battlefield Role: &a%s%s]"
 
-status_resident_content_light_line_armour: "&2Armor: &aLeather"
-status_resident_content_light_line_melee_weapons: "&2Melee Weapons: &aWood"
-status_resident_content_light_line_missile_weapons: "&2Missile Weapons: &aBow"
-status_resident_content_light_line_passive_ability: "&2Passive Ability: &a+1 from Potions of Swiftness"
-status_resident_content_light_super_potion_line: "&2Super Potion (%d/day): &aTrue Invisibility (20 seconds)"
+status_resident_content_light_infantry_armour: "&2Armor: &aLeather"
+status_resident_content_light_infantry_melee_weapons: "&2Melee Weapons: &aWood"
+status_resident_content_light_infantry_missile_weapons: "&2Missile Weapons: &aBow"
+status_resident_content_light_infantry_passive_ability_A: "&2Passive Ability A: &aSpear Damage Bonus v.s. cavalry +9"
+status_resident_content_light_infantry_passive_ability_B: "&2Passive Ability B: &aPotions of Swiftness +1"
+status_resident_content_light_infantry_super_potion: "&2Super Potion (%d/day): &aTrue Invisibility (20 secs)"
 
-status_resident_content_medium_line_armour: "&2Armor: &aGold, Chainmail, Iron, Turtle"
-status_resident_content_medium_line_melee_weapons: "&2Melee Weapons: &aStone, Gold, Iron"
-status_resident_content_medium_line_missile_weapons: "&2Missile Weapons: &aCrossbow"
-status_resident_content_medium_line_passive_ability: "&2Passive Ability: &a+1 from Potions of Strength"
-status_resident_content_medium_line_disadvantage: "&2Disadvantage: &a-1 from Potions of Swiftness"
-status_resident_content_medium_super_potion_line: "&2Super Potion (%d/day): &aLingering Harming V (30 seconds)"
+status_resident_content_light_cavalry_armour: "&2Armor: &aLeather"
+status_resident_content_light_cavalry_melee_weapons: "&2Melee Weapons: &aWood"
+status_resident_content_light_cavalry_missile_weapons: "&2Missile Weapons: &aBow"
+status_resident_content_light_cavalry_passive_ability_A: "&2Passive Ability A: &aCavalry Power Shot, Strength I"
+status_resident_content_light_cavalry_passive_ability_B: "&2Passive Ability B: &aPotions of Swiftness +1"
+status_resident_content_light_cavalry_super_potion: "&2Super Potion (%d/day): &aTrue Invisibility (20 secs)"
 
-status_resident_content_heavy_line_armour: "&2Armor: &aDiamond, Netherite"
-status_resident_content_heavy_line_melee_weapons: "&2Melee Weapons: &aDiamond, Netherite"
-status_resident_content_heavy_line_missile_weapons: "&2Missile Weapons: &aNone"
-status_resident_content_heavy_line_passive_ability: "&2Passive Ability: &aResistance 1 when wearing armor"
-status_resident_content_heavy_line_disadvantage: "&2Disadvantage: &aCannot use Potions of Swiftness"
-status_resident_content_heavy_super_potion_line: "&2Super Potion (%d/day): &aAbsorbtion V (3 minutes)"
+status_resident_content_medium_infantry_armour: "&2Armor: &aGold, Chainmail, Iron, Turtle"
+status_resident_content_medium_infantry_melee_weapons: "&2Melee Weapons: &aStone, Gold, Iron"
+status_resident_content_medium_infantry_missile_weapons: "&2Missile Weapons: &aCrossbow"
+status_resident_content_medium_infantry_passive_ability: "&2Passive Ability: &aPotions of Strength +1"
+status_resident_content_medium_infantry_disadvantage: "&2Disadvantage: &aPotions of Swiftness -1"
+status_resident_content_medium_infantry_super_potion: "&2Super Potion (%d/day): &aLingering Harming V (30 secs)"
+
+status_resident_content_medium_cavalry_armour: "&2Armor: &aGold, Chainmail, Iron, Turtle"
+status_resident_content_medium_cavalry_melee_weapons: "&2Melee Weapons: &aStone, Gold, Iron"
+status_resident_content_medium_cavalry_missile_weapons: "&2Missile Weapons: &aCrossbow"
+status_resident_content_medium_cavalry_passive_ability: "&2Passive Ability: &aCavalry Power Shot, Strength III"
+status_resident_content_medium_cavalry_disadvantage: "&2Disadvantage: &aPotions of Swiftness -1"
+status_resident_content_medium_cavalry_super_potion: "&2Super Potion (%d/day): &aLingering Harming V (30 secs)"
+
+status_resident_content_heavy_infantry_armour: "&2Armor: &aDiamond, Netherite"
+status_resident_content_heavy_infantry_melee_weapons: "&2Melee Weapons: &aDiamond, Netherite"
+status_resident_content_heavy_infantry_missile_weapons: "&2Missile Weapons: &aNone"
+status_resident_content_heavy_infantry_passive_ability: "&2Passive Ability: &aWhen armored, Resistance I"
+status_resident_content_heavy_infantry_disadvantage: "&2Disadvantage: &aCannot use Potions of Swiftness"
+status_resident_content_heavy_infantry_super_potion: "&2Super Potion (%d/day): &aAbsorbtion V (3 mins)"
     
+status_resident_content_heavy_cavalry_armour: "&2Armor: &aDiamond, Netherite"
+status_resident_content_heavy_cavalry_melee_weapons: "&2Melee Weapons: &aDiamond, Netherite"
+status_resident_content_heavy_cavalry_missile_weapons: "&2Missile Weapons: &aCrossbow"
+status_resident_content_heavy_cavalry_passive_ability_A: "&2Passive Ability A: &aCavalry Power Shot Strength II"
+status_resident_content_heavy_cavalry_passive_ability_B: "&2Passive Ability B: &aWhen armored, Resistance I"
+status_resident_content_heavy_cavalry_disadvantage: "&2Disadvantage: &aCannot use Potions of Swiftness"
+status_resident_content_heavy_cavalry_super_potion: "&2Super Potion (%d/day): &aAbsorbtion V (3 mins)"
+
 status_resident_content_time_until_next_role_change: "&2Time Until Next Role-Change is Allowed: &a%s"
     
 # Change-Battlefield-Role Warnings
@@ -103,3 +129,7 @@ spear_lore_line_1: "+%d Damage v.s. Cavalry"
 transmuted_potion_name: "Potion of Regeneration"
 transmuted_potion_name_splash: "Splash Potion of Regeneration"
 potions_transmuted: "&b%d potions of healing in your inventory were transmuted into potions of regeneration."
+
+# Effect change errors
+
+msg_err_strength_potion_did_not_affect_horse_rider: "The horse rider did not gain the Strength effect."

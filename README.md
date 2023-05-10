@@ -34,7 +34,7 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
     - Great v.s most infantry, but very vulnerable to infantry/cavalry with spears, and sustained crossbow attack.
     - Not "one man armies", but instead they do best when operating in combination with other troop types.
   - Special Abilities:
-    - Cavalry Strength Bonus: +3 PVP Strength Bonus v.s. Infantry for 1 hit. Cooldown for 10 seconds.
+    - Cavalry Strength Bonus: +3 PVP Strength Bonus for 1 hit. Cooldown for 10 seconds.
     - Missile Shield: Both horse and rider are immune to arrows fired from bows (but not crossbows).
     - Resistance to PVP Attack Damage: +60% .
     - Do not rear up on taking damage.

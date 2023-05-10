@@ -90,7 +90,8 @@ public enum ConfigNodes {
 			"cavalry_enhancements.cavalry_strength_bonus.effect_level",
 			"3",
 			"",
-			"# The level of the bonus strength effect."),
+			"# The level of the bonus strength effect.",
+			"# Note: If battlefield roles is enabled, this setting is ignored."),
 	CAVALRY_ENHANCEMENTS_CAVALRY_STRENGTH_BONUS_COOLDOWN_SECONDS(
 			"cavalry_enhancements.cavalry_strength_bonus.cooldown_time_seconds",
 			"10",
@@ -272,12 +273,6 @@ public enum ConfigNodes {
 			"",
 			"# This value determines how many super potions are generated per day.",
 			"# A value of 0 will disable super potions completely."),
-	BATTLEFIELD_ROLES_SUPER_POTIONS_SCHEDULED_GRANT_HOUR(
-			"unlock_pvp_combat_for_regular_players.battlefield_roles.super_potions_scheduled_grant_hour",
-			"0",
-			"",
-			"# This value determines the hour of day (server-time) when super potions are granted.",
-			"# The default is 0, indicating midnight"),
 	POTION_TRANSMUTER(
 			"unlock_pvp_combat_for_regular_players.potion_transmuter",
 			"",
@@ -337,7 +332,8 @@ public enum ConfigNodes {
 			"new_items.spear.bonus_damage_vs_cavalry",
 			"9",
 			"",
-			"# Bonus damage to cavalry (horse or rider). Integer only"),
+			"# Bonus damage to cavalry (horse or rider). Integer only,",
+			"# If Battlefield roles are enabled, this config is ignored, and the value is set at 9"),
 	NEW_ITEMS_SPEAR_NATIVE_WEAPON_ENABLED(
 			"new_items.spear.native_weapon_enabled",
 			"true",

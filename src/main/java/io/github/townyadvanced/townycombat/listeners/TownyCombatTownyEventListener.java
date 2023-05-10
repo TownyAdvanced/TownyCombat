@@ -4,7 +4,6 @@ import com.palmergames.bukkit.towny.event.NewDayEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyBuildEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyDestroyEvent;
 import com.palmergames.bukkit.towny.event.time.NewShortTimeEvent;
-import com.palmergames.util.TimeMgmt;
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import io.github.townyadvanced.townycombat.utils.TownyCombatBattlefieldRoleUtil;
@@ -68,7 +67,7 @@ public class TownyCombatTownyEventListener implements Listener {
 		}
 		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() 
 				&& TownyCombatSettings.isBattlefieldRolesEnabled()) {
-			TownyCombatBattlefieldRoleUtil.giveEffectsToHeavyPlayersWearingArmour();
+			TownyCombatBattlefieldRoleUtil.giveRoleBasedDamageResistance();
 		}
     }
 }

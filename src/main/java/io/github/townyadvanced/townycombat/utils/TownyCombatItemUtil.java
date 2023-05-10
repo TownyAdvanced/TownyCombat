@@ -17,7 +17,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
@@ -92,7 +91,8 @@ public class TownyCombatItemUtil {
         //Add lore
         List<String> lore = new ArrayList<>();
         lore.add("");
-        lore.add(Translatable.of("spear_lore_line_1", TownyCombatSettings.getNewItemsSpearBonusDamageVsCavalry()).translate(Locale.ROOT));
+        int bonusDamage = TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && TownyCombatSettings.isBattlefieldRolesEnabled() ? 9 : TownyCombatSettings.getNewItemsSpearBonusDamageVsCavalry();
+        lore.add(Translatable.of("spear_lore_line_1", bonusDamage).translate(Locale.ROOT));
         itemMeta.setLore(lore);
         //Add data key
         setDataKeyValue(itemMeta, ITEM_NATIVE_SPEAR_KEY, ITEM_NATIVE_SPEAR_KEY_TYPE, "S");
@@ -168,13 +168,16 @@ public class TownyCombatItemUtil {
     public static void grantSuperPotionsNow(Player player, Resident resident) {
         BattlefieldRole battlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole(resident);
         switch(battlefieldRole) {
-            case LIGHT:
+            case LIGHT_INFANTRY:
+            case LIGHT_CAVALRY:
                 grantLightRoleSuperPotionsNow(player);
                 break;
-            case MEDIUM:
+            case MEDIUM_INFANTRY:
+            case MEDIUM_CAVALRY:
                 grantMediumRoleSuperPotionsNow(player);
                 break;
-            case HEAVY:
+            case HEAVY_INFANTRY:
+            case HEAVY_CAVALRY:
                 grantHeavyRoleSuperPotions(player);
                 break;
             default:

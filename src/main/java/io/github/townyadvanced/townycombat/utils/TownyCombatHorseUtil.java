@@ -1,14 +1,19 @@
 package io.github.townyadvanced.townycombat.utils;
 
 import com.palmergames.bukkit.towny.Towny;
+import com.palmergames.bukkit.towny.object.Translatable;
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
+import org.bukkit.Material;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.PotionSplashEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -64,11 +69,12 @@ public class TownyCombatHorseUtil {
 
     public static void registerPlayerForCavalryStrengthBonus(Player player) {
         cavalryStrengthBonusRefreshTimes.put(player, System.currentTimeMillis() + TownyCombatSettings.getCavalryChargeCooldownMilliseconds());
+        player.removePotionEffect(PotionEffectType.INCREASE_DAMAGE); //Removed so as not to cause confusion, and/or in preparation for next hit if applicable
     }
 
     public static void deregisterPlayerForCavalryStrengthBonus(Player player) {
         cavalryStrengthBonusRefreshTimes.remove(player);
-        player.removePotionEffect(PotionEffectType.INCREASE_DAMAGE); //Remove strength effect if any
+        player.removePotionEffect(PotionEffectType.INCREASE_DAMAGE); //Remove so as not to cause confusion
     }
 
     public static boolean isHorseTeleportScheduled(AbstractHorse horse) {
@@ -97,7 +103,7 @@ public class TownyCombatHorseUtil {
 
     /**
      * Apply a "placeholder" strength effect to the player
-     * This has no effect on its own, but is used to indicate the strength bonus is ready for use.
+     * This has no effect on its own, but is used to indicate that the strength bonus is ready for use.
      */
     private static void applyPlaceholderStrengthEffectToPlayer(Player player, int effectDurationTicks) {
         player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, effectDurationTicks,-1));
@@ -116,6 +122,35 @@ public class TownyCombatHorseUtil {
             return (Horse)player.getVehicle();
         } else {
             return null;
+        }
+    }
+
+    public static void cancelStrengthEffectsOnPlayerRiders(PotionSplashEvent event) {
+        for (PotionEffect potionEffect : event.getPotion().getEffects()) {
+            if (potionEffect.getType() == PotionEffectType.INCREASE_DAMAGE) {
+                for (LivingEntity entity : event.getAffectedEntities()) {
+                    if (entity instanceof Player && getMount((Player)entity) != null) {
+                        event.setIntensity(entity, 0);
+                        Messaging.sendMsg(event.getEntity(), Translatable.of("msg_err_strength_potion_did_not_affect_horse_rider"));
+                    }
+                }
+            }
+        }
+    }
+
+    public static void cancelDrinkingStrengthPotionIfPlayerIsRider(PlayerItemConsumeEvent event) {
+        if(event.getItem().getType() == Material.POTION) {
+            PotionMeta potionMeta= (PotionMeta)event.getItem().getItemMeta();
+            if(potionMeta == null)
+                return;
+            PotionEffectType potionEffectType = potionMeta.getBasePotionData().getType().getEffectType();
+            if(potionEffectType == null)
+                return;
+            if(potionEffectType.equals(PotionEffectType.DAMAGE_RESISTANCE)
+                    && TownyCombatHorseUtil.getMount(event.getPlayer()) != null) {
+                event.setCancelled(true);
+                Messaging.sendMsg(event.getPlayer(), "CANNOT USE STRENGTH POTIONS WHILE RIDING");
+            }
         }
     }
 }

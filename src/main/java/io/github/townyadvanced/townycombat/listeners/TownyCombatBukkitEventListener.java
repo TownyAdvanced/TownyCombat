@@ -19,7 +19,6 @@ import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Horse;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Arrow;
 import org.bukkit.event.EventHandler;
@@ -75,20 +74,21 @@ public class TownyCombatBukkitEventListener implements Listener {
 			TownyCombatHorseUtil.scheduleMountTeleport(event);
 	}
 
-	@EventHandler (ignoreCancelled = true)
+	@EventHandler
 	public void on (EntityMountEvent event) {
 		if(!TownyCombatSettings.isTownyCombatEnabled())
 			return;
 		if(!(event.getEntity() instanceof Player))
 			return; //Not a player doing the mounting
-		if(!(event.getMount() instanceof AbstractHorse))
+		if(!(event.getMount() instanceof Horse))
 			return; //Not a horse being mounted
 		//Remove legacy data
 		TownyCombatMovementUtil.removeTownyCombatMovementModifiers((AbstractHorse)event.getMount());
 		TownyCombatMovementUtil.removeTownyCombatKnockbackModifiers((AbstractHorse)event.getMount());
-		//Validate Armour
+		//Validate Armour and effects
 		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && TownyCombatSettings.isBattlefieldRolesEnabled()) {
 			TownyCombatBattlefieldRoleUtil.validateArmour((Player)event.getEntity());
+			TownyCombatBattlefieldRoleUtil.validatePotionEffectsOnMount((Horse)event.getMount(), (Player)event.getEntity());
 		}
 		//Prevent mount if the horse is about to be TP'd to owner
 		if(TownyCombatSettings.isCavalryEnhancementsEnabled() 
@@ -98,10 +98,20 @@ public class TownyCombatBukkitEventListener implements Listener {
 			event.setCancelled(true);
 		}
 		//Register for charge bonus
-		TownyCombatHorseUtil.registerPlayerForCavalryStrengthBonus((Player)event.getEntity());
+		if(TownyCombatSettings.isCavalryEnhancementsEnabled() && TownyCombatSettings.isCavalryStrengthBonusEnabled()) {
+			if (TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && TownyCombatSettings.isBattlefieldRolesEnabled()) {
+				//If battlefield roles is enabled, only some roles get the bonus
+				if (TownyCombatBattlefieldRoleUtil.getBattlefieldRole((Player) event.getEntity()).hasCavalryStrengthBonus()) {
+					TownyCombatHorseUtil.registerPlayerForCavalryStrengthBonus((Player) event.getEntity());
+				}
+			} else {
+				//If battlefield roles is disabled, all players get the bonus
+				TownyCombatHorseUtil.registerPlayerForCavalryStrengthBonus((Player) event.getEntity());
+			}
+		}
 	}
 
-	@EventHandler (ignoreCancelled = true)
+	@EventHandler
 	public void on (EntityDismountEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
@@ -129,7 +139,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		}
 	}
 
-	@EventHandler (ignoreCancelled = true)
+	@EventHandler
 	public void on (PlayerJoinEvent event) {
 		if(!TownyCombatSettings.isTownyCombatEnabled())
 			return;
@@ -154,7 +164,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		}
 	}
 
-	@EventHandler (ignoreCancelled = true)
+	@EventHandler
 	public void on (EntityDamageEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
@@ -179,32 +189,30 @@ public class TownyCombatBukkitEventListener implements Listener {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
 
-		if(!TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && !TownyCombatSettings.isBattlefieldRolesEnabled())
-			return;
+		//Cancel strength potion effects on player riders, to avoid confusion with the cavalry power shot
+		if(TownyCombatSettings.isCavalryEnhancementsEnabled() 
+				&& TownyCombatSettings.isCavalryStrengthBonusEnabled()) {
+			TownyCombatHorseUtil.cancelStrengthEffectsOnPlayerRiders(event);
+		}
 
 		//Cancel if this is a super potion which was thrown by a player but not owner by them
-		if(TownyCombatItemUtil.isSuperPotion(event.getPotion().getItem())) {
+		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() 
+				&& TownyCombatSettings.isBattlefieldRolesEnabled()
+				&& TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()
+			    && TownyCombatItemUtil.isSuperPotion(event.getPotion().getItem())) {
 			ProjectileSource shooter = event.getEntity().getShooter();
-			if(shooter instanceof Player) {
-				if(!TownyCombatItemUtil.doesPlayerOwnSuperPotion((Player)shooter, event.getPotion().getItem())) {
+			if (shooter instanceof Player) {
+				if (!TownyCombatItemUtil.doesPlayerOwnSuperPotion((Player) shooter, event.getPotion().getItem())) {
 					event.setCancelled(true);
-					Messaging.sendMsg((Player)shooter, Translatable.of("msg_warning_cannot_use_super_potion_not_owner"));
-				} 
+					Messaging.sendMsg((Player) shooter, Translatable.of("msg_warning_cannot_use_super_potion_not_owner"));
+				}
 			}
 		}
 
-		//Increase or decrease effect power depending on role of affected entity
-		for (LivingEntity affectedEntity : event.getAffectedEntities()) {
-			if (affectedEntity instanceof Player) {
-				BattlefieldRole battlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole((Player)affectedEntity);
-				TownyCombatBattlefieldRoleUtil.evaluateEffectOfSplashPotion(event, affectedEntity, battlefieldRole);
-			} else if (affectedEntity instanceof Horse) {
-				Player playerRider = TownyCombatHorseUtil.getPlayerRider(affectedEntity);
-				if(playerRider != null) {
-					BattlefieldRole battlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole(playerRider);
-					TownyCombatBattlefieldRoleUtil.evaluateEffectOfSplashPotion(event, affectedEntity, battlefieldRole);
-				}
-			}
+		//Apply role based effect adjustments
+		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled()
+				&& TownyCombatSettings.isBattlefieldRolesEnabled()) {
+			TownyCombatBattlefieldRoleUtil.processSplashPotionEvent(event);
 		}
 	}
 
@@ -212,7 +220,9 @@ public class TownyCombatBukkitEventListener implements Listener {
 	public void on (EntityShootBowEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
-
+		/*
+		 * Cancel event if attacker has used a disallowed weapon
+		 */
 		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && TownyCombatSettings.isBattlefieldRolesEnabled()) {
 			if(event.getBow() == null)
 				return;
@@ -225,7 +235,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		}
 	}
 	
-	@EventHandler (ignoreCancelled = true)
+	@EventHandler
 	public void on (EntityDamageByEntityEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
@@ -273,7 +283,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 			isCavalryUnderAttack = false;
 		}
 
-		//CAVALRY MISSILE SHIELD: Cavalry are shielded from arrows fired by player-bows
+		//CAVALRY MISSILE SHIELD: Cavalry (Horse+Rider) are shielded from arrows fired by player-bows
 		if(TownyCombatSettings.isCavalryEnhancementsEnabled()
 				&& TownyCombatSettings.isCavalryMissileShieldEnabled()
 				&& attackingPlayer != null
@@ -283,11 +293,9 @@ public class TownyCombatBukkitEventListener implements Listener {
 			if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled()
 					&& TownyCombatSettings.isBattlefieldRolesEnabled()) {
 				/*
-				 * If battlefield roles are enabled, then have a nice trick available:
-				 * If shooter role is light, it was a bow, otherwise it was a crossbow
+				 * If battlefield roles are enabled, then we query the role enum
 				 */				
-				BattlefieldRole battlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole(attackingPlayer);		
-				if(battlefieldRole == BattlefieldRole.LIGHT) {
+				if(TownyCombatBattlefieldRoleUtil.getBattlefieldRole(attackingPlayer).getMissileWeapon() == Material.BOW) {
 					event.setCancelled(true);
 					return;
 				}
@@ -309,27 +317,32 @@ public class TownyCombatBukkitEventListener implements Listener {
 		double damage = event.getDamage();
 		if(TownyCombatSettings.isNewItemsSpearEnabled()
 			&& isCavalryUnderAttack
-			&& event.getDamager() instanceof Player
+			&& attackingPlayer != null
 		) { 
-			ItemStack mainHandItem = ((Player)event.getDamager()).getInventory().getItemInMainHand();
-			if(TownyCombatItemUtil.isSpear(mainHandItem)) {
+			ItemStack mainHandItem = attackingPlayer.getInventory().getItemInMainHand();
+			if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled()
+				&& TownyCombatSettings.isBattlefieldRolesEnabled()) {
+				//If B-Roles is enabled, only light infantry get the spear anti-cav bonus, and the valus is 9
+				if(TownyCombatBattlefieldRoleUtil.getBattlefieldRole(attackingPlayer) == BattlefieldRole.LIGHT_INFANTRY
+						&& TownyCombatItemUtil.isSpear(mainHandItem)) {
+					damage += 9;
+				}
+			} else if(TownyCombatItemUtil.isSpear(mainHandItem)) {
+				//If B-Roles is disabled, anyone can get the spear bonus
 				damage += TownyCombatSettings.getNewItemsSpearBonusDamageVsCavalry();
 			}
 		}
 
-		//CAVALRY STRENGTH BONUS: Do extra damage to player infantry
+		//CAVALRY STRENGTH BONUS: Do extra damage
 		if(TownyCombatSettings.isCavalryEnhancementsEnabled()
 			&&
 			TownyCombatSettings.isCavalryStrengthBonusEnabled()
 			&&
-			//Cavalry Attacker 
+			//Attacker is on a horse
 			(attackingPlayer != null && attackingPlayer.isInsideVehicle() && attackingPlayer.getVehicle() instanceof AbstractHorse) 				
 			&&
-			//Infantry defender
-			(event.getEntity() instanceof Player && (!event.getEntity().isInsideVehicle() || !(event.getEntity().getVehicle() instanceof AbstractHorse)))
-			&&
 			//Bonus is charged-up
-			(attackingPlayer.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE) && attackingPlayer.getPotionEffect(PotionEffectType.INCREASE_DAMAGE).getAmplifier() == 0))
+			(attackingPlayer.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE) && attackingPlayer.getPotionEffect(PotionEffectType.INCREASE_DAMAGE).getAmplifier() == -1))
 		{
 			TownyCombatSpecialCavalryHitEvent specialCavalryHit = new TownyCombatSpecialCavalryHitEvent(attackingPlayer, event.getEntity(), true);
 			Bukkit.getPluginManager().callEvent(specialCavalryHit);
@@ -340,10 +353,17 @@ public class TownyCombatBukkitEventListener implements Listener {
 				 * So we need to explicitly add the damage.
 				 */
 				TownyCombatHorseUtil.registerPlayerForCavalryStrengthBonus(attackingPlayer);
-				attackingPlayer.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
-				damage += (3 * TownyCombatSettings.getCavalryChargeStrengthBonusEffectLevel());
+				if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled()
+						&& TownyCombatSettings.isBattlefieldRolesEnabled()) {
+					//If battlefield roles are enabled, the damage is by role
+					damage += (3 * TownyCombatBattlefieldRoleUtil.getBattlefieldRole(attackingPlayer).getCavalryStrengthBonus());
+				} else {
+					//If battlefield roles are not enabled, the damage is configured
+					damage += (3 * TownyCombatSettings.getCavalryChargeStrengthBonusEffectLevel());
+				}
 			}
 		}
+
 		//DAMAGE RESISTANCE
 		if(TownyCombatSettings.isCavalryEnhancementsEnabled() 
 				&& TownyCombatSettings.getAttackDamageResistanceHorsesPercent() > 0
@@ -358,7 +378,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		event.setDamage(damage);
 	}
 
-	@EventHandler (ignoreCancelled = true)
+	@EventHandler
 	public void on (PrepareItemCraftEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
@@ -379,7 +399,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		}
 	}
 
-	@EventHandler (ignoreCancelled = true)
+	@EventHandler
 	public void on (PrepareAnvilEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
@@ -410,10 +430,13 @@ public class TownyCombatBukkitEventListener implements Listener {
 
 	@EventHandler
 	public void on (PlayerItemConsumeEvent event) {
-		if (!TownyCombatSettings.isTownyCombatEnabled() || !TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() || !TownyCombatSettings.isBattlefieldRolesEnabled())
+		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
-		if (event.getItem().getType() == Material.POTION) {
-			TownyCombatBattlefieldRoleUtil.evaluateEffectOfDrinkingPotion(event);
+		if(TownyCombatSettings.isCavalryEnhancementsEnabled() && TownyCombatSettings.isCavalryStrengthBonusEnabled()) {
+			TownyCombatHorseUtil.cancelDrinkingStrengthPotionIfPlayerIsRider(event);
+		}
+		if(!event.isCancelled() && TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && TownyCombatSettings.isBattlefieldRolesEnabled()) {
+			TownyCombatBattlefieldRoleUtil.processItemConsumptionEvent(event);
 		}
 	}
 
