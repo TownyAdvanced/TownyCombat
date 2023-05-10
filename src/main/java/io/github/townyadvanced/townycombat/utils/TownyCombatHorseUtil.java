@@ -4,13 +4,16 @@ import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.object.Translatable;
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
+import org.bukkit.Material;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.PotionSplashEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -134,7 +137,22 @@ public class TownyCombatHorseUtil {
             }
         }
     }
-    
+
+    public static void cancelDrinkingStrengthPotionIfPlayerIsRider(PlayerItemConsumeEvent event) {
+        if(event.getItem().getType() == Material.POTION) {
+            PotionMeta potionMeta= (PotionMeta)event.getItem().getItemMeta();
+            if(potionMeta == null)
+                return;
+            PotionEffectType potionEffectType = potionMeta.getBasePotionData().getType().getEffectType();
+            if(potionEffectType == null)
+                return;
+            if(potionEffectType.equals(PotionEffectType.DAMAGE_RESISTANCE)
+                    && TownyCombatHorseUtil.getMount(event.getPlayer()) != null) {
+                event.setCancelled(true);
+                Messaging.sendMsg(event.getPlayer(), "CANNOT USE STRENGTH POTIONS WHILE RIDING");
+            }
+        }
+    }
 }
 
 

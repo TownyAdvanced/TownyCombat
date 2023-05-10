@@ -39,17 +39,17 @@ public enum BattlefieldRole {
 
     public static BattlefieldRole parseString(String roleAsString) {
         switch(roleAsString.toUpperCase()) {
-            case "LIGHT_INFANTRY":
+            case "LIGHT-INFANTRY":
                 return LIGHT_INFANTRY;
-            case "LIGHT_CAVALRY":
+            case "LIGHT-CAVALRY":
                 return LIGHT_CAVALRY;
-            case "MEDIUM_INFANTRY":
+            case "MEDIUM-INFANTRY":
                 return MEDIUM_INFANTRY;
-            case "MEDIUM_CAVALRY":
+            case "MEDIUM-CAVALRY":
                 return MEDIUM_CAVALRY;
-            case "HEAVY_INFANTRY":
+            case "HEAVY-INFANTRY":
                 return HEAVY_INFANTRY;
-            case "HEAVY_CAVALRY":
+            case "HEAVY-CAVALRY":
                 return HEAVY_CAVALRY;
             default:
                 throw new RuntimeException("Unknown role");

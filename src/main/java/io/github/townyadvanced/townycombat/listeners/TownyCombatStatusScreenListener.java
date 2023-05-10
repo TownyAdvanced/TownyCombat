@@ -66,13 +66,13 @@ public class TownyCombatStatusScreenListener implements Listener {
 			case LIGHT_CAVALRY:
 			case HEAVY_CAVALRY:
 				text = text.append(Component.newline());
-				text = text.append(Component.text(translator.of("status_resident_content_light_line_passive_ability_A")));
+				text = text.append(Component.text(translator.of("status_resident_content_" + translationKey + "_passive_ability_A")));
 				text = text.append(Component.newline());
-				text = text.append(Component.text(translator.of("status_resident_content_light_line_passive_ability_B")));
+				text = text.append(Component.text(translator.of("status_resident_content_" + translationKey + "_passive_ability_B")));
 				break;
 			default:
 				text = text.append(Component.newline());
-				text = text.append(Component.text(translator.of("status_resident_content_light_line_passive_ability")));
+				text = text.append(Component.text(translator.of("status_resident_content_" + translationKey + "_passive_ability")));
 				break;
 		}
 
@@ -83,14 +83,14 @@ public class TownyCombatStatusScreenListener implements Listener {
 			case HEAVY_INFANTRY:
 			case HEAVY_CAVALRY:
 				text = text.append(Component.newline());
-				text = text.append(Component.text(translator.of("status_resident_content_medium_line_disadvantage")));
+				text = text.append(Component.text(translator.of("status_resident_content_" + translationKey + "_disadvantage")));
 				break;
 		}
 
 		//Super Potions
 		if (TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()) {
 			text = text.append(Component.newline());
-			text = text.append(Component.text(translator.of("status_resident_content_medium_super_potion_line", numSuperPotions)));
+			text = text.append(Component.text(translator.of("status_resident_content_" + translationKey + "_super_potion", numSuperPotions)));
 		}
 		
 		//Time Until Next Role Change

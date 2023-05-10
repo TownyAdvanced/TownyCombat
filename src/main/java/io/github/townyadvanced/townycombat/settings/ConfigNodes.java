@@ -332,7 +332,8 @@ public enum ConfigNodes {
 			"new_items.spear.bonus_damage_vs_cavalry",
 			"9",
 			"",
-			"# Bonus damage to cavalry (horse or rider). Integer only"),
+			"# Bonus damage to cavalry (horse or rider). Integer only,",
+			"# If Battlefield roles are enabled, this config is ignored, and the value is set at 9"),
 	NEW_ITEMS_SPEAR_NATIVE_WEAPON_ENABLED(
 			"new_items.spear.native_weapon_enabled",
 			"true",

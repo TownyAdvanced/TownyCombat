@@ -336,47 +336,50 @@ public class TownyCombatBattlefieldRoleUtil {
 
     /**
      * Process a potion drunk by a player
+     * Apply any required role-based adjustments
+     * 
+     * NOTE: Potions of strength will already be cancelled for player riders
      * 
      * @param event the potion drinking event
      */
-    public static void applyConsumedItemAdjustments(PlayerItemConsumeEvent event) {
+    public static void processItemConsumptionEvent(PlayerItemConsumeEvent event) {
         if(event.getItem().getType() == Material.POTION) {
             //Transform the potion effect into a PotionEffect object for reference
             PotionMeta potionMeta = (PotionMeta) event.getItem().getItemMeta();
             PotionData potionData = potionMeta.getBasePotionData();
             PotionEffectType potionEffectType = potionData.getType().getEffectType();
-            if(potionEffectType.equals(PotionEffectType.SPEED)) {
+            if(potionEffectType != null && potionEffectType.equals(PotionEffectType.SPEED)) {
                 int potionAmplifier = potionData.isUpgraded() ? 1 : 0;
-                int potionDuration = potionData.isExtended() ? 8 * 60 * 20 : 3 * 60 * 20;
-                PotionEffect originalPotionEffect = new PotionEffect(potionEffectType, potionAmplifier, potionDuration, true, true, true);
+                int potionDurationTicks = potionData.isExtended() ? (8 * 60 * 20) : (3 * 60 * 20);
+                PotionEffect originalPotionEffect = new PotionEffect(potionEffectType, potionAmplifier, potionDurationTicks, true, true, true);
                 //Apply adjustment
-                if (applyPotionSpeedAdjustmentForPlayer(originalPotionEffect, event.getPlayer())) {
-                    event.setCancelled(true);
+                if (grantAdjustedPotionSpeedEffectToPlayer(originalPotionEffect, event.getPlayer())) {
+                    event.setItem(new ItemStack(Material.GLASS_BOTTLE));
                 }
             }
         }
     }
     
-    
-    
     //////////////// Process Splash Potions /////////////////
 
     /**
-     * Apply role-based splash potion adjustments
-     * Note: Strength effects on player horse riders will already have been removed 
+     * Process the splash potion event
+     * Apply any required role-based adjustments
+     * 
+     * NOTE: Strength effects on player horse riders will already have been removed 
      *
      * @param event the splash potion effect
      */
-    public static void applySplashPotionAdjustments(PotionSplashEvent event) {
+    public static void processSplashPotionEvent(PotionSplashEvent event) {
         for (PotionEffect potionEffect : event.getPotion().getEffects()) {
             if (potionEffect.getType() == PotionEffectType.SPEED) {
                 for (LivingEntity entity : event.getAffectedEntities()) {
                     if (entity instanceof Player) {
-                        if(applyPotionSpeedAdjustmentForPlayer(potionEffect, (Player) entity)) {
+                        if(grantAdjustedPotionSpeedEffectToPlayer(potionEffect, (Player) entity)) {
                             event.setIntensity(entity, 0);
                         }
                     } else if (entity instanceof Horse) {
-                        if(applyPotionSpeedAdjustmentForHorse(potionEffect, (Horse) entity)) {
+                        if(grantAdjustedPotionSpeedEffectToHorse(potionEffect, (Horse) entity)) {
                             event.setIntensity(entity, 0);
                         }
                     }
@@ -385,7 +388,7 @@ public class TownyCombatBattlefieldRoleUtil {
         }
     }
     
-    private static boolean applyPotionSpeedAdjustmentForPlayer(PotionEffect originalPotionEffect, Player player) {
+    private static boolean grantAdjustedPotionSpeedEffectToPlayer(PotionEffect originalPotionEffect, Player player) {
         BattlefieldRole battlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole(player);
         boolean mounted = TownyCombatHorseUtil.getMount(player) != null;
         switch (battlefieldRole) {
@@ -416,7 +419,7 @@ public class TownyCombatBattlefieldRoleUtil {
         return false;
     }
 
-    private static boolean applyPotionSpeedAdjustmentForHorse(PotionEffect potionEffect, Horse horse) {
+    private static boolean grantAdjustedPotionSpeedEffectToHorse(PotionEffect potionEffect, Horse horse) {
         Player rider = TownyCombatHorseUtil.getPlayerRider(horse);
         if (rider == null)
             return false;
@@ -469,7 +472,7 @@ public class TownyCombatBattlefieldRoleUtil {
         if(amplifier >= 0) {
             Towny.getPlugin().getServer().getScheduler().runTask(Towny.getPlugin(), new Runnable() {
                 public void run() {
-                    livingEntity.addPotionEffect(new PotionEffect(potionEffectType, durationInTicks, amplifier, ambient, particles, icon));
+                    livingEntity.addPotionEffect(new PotionEffect(potionEffectType, amplifier, durationInTicks, ambient, particles, icon));
                 }
             });
         }
@@ -508,7 +511,7 @@ public class TownyCombatBattlefieldRoleUtil {
 
     private static void grantAdjustedPotionEffectToLivingEntity(PotionEffect potionEffect, LivingEntity livingEntity, int adjustment) {
         giveSpeedEffectUnlessAmplifierIsNegative(
-                potionEffect.getAmplifier() - adjustment,
+                potionEffect.getAmplifier() + adjustment,
                 potionEffect.getDuration(),
                 livingEntity);
     }

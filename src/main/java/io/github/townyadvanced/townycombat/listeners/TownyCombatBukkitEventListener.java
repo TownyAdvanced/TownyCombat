@@ -19,7 +19,6 @@ import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Horse;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Arrow;
 import org.bukkit.event.EventHandler;
@@ -213,7 +212,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		//Apply role based effect adjustments
 		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled()
 				&& TownyCombatSettings.isBattlefieldRolesEnabled()) {
-			TownyCombatBattlefieldRoleUtil.applySplashPotionAdjustments(event);
+			TownyCombatBattlefieldRoleUtil.processSplashPotionEvent(event);
 		}
 	}
 
@@ -323,10 +322,10 @@ public class TownyCombatBukkitEventListener implements Listener {
 			ItemStack mainHandItem = attackingPlayer.getInventory().getItemInMainHand();
 			if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled()
 				&& TownyCombatSettings.isBattlefieldRolesEnabled()) {
-				//If B-Roles is enabled, only light infantry get the spear anti-cav bonus
+				//If B-Roles is enabled, only light infantry get the spear anti-cav bonus, and the valus is 9
 				if(TownyCombatBattlefieldRoleUtil.getBattlefieldRole(attackingPlayer) == BattlefieldRole.LIGHT_INFANTRY
 						&& TownyCombatItemUtil.isSpear(mainHandItem)) {
-					damage += TownyCombatSettings.getNewItemsSpearBonusDamageVsCavalry();
+					damage += 9;
 				}
 			} else if(TownyCombatItemUtil.isSpear(mainHandItem)) {
 				//If B-Roles is disabled, anyone can get the spear bonus
@@ -433,8 +432,11 @@ public class TownyCombatBukkitEventListener implements Listener {
 	public void on (PlayerItemConsumeEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
-		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && TownyCombatSettings.isBattlefieldRolesEnabled()) {
-			TownyCombatBattlefieldRoleUtil.applyConsumedItemAdjustments(event);
+		if(TownyCombatSettings.isCavalryEnhancementsEnabled() && TownyCombatSettings.isCavalryStrengthBonusEnabled()) {
+			TownyCombatHorseUtil.cancelDrinkingStrengthPotionIfPlayerIsRider(event);
+		}
+		if(!event.isCancelled() && TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && TownyCombatSettings.isBattlefieldRolesEnabled()) {
+			TownyCombatBattlefieldRoleUtil.processItemConsumptionEvent(event);
 		}
 	}
 

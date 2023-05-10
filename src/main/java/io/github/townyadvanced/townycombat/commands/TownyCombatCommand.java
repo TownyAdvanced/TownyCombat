@@ -22,8 +22,8 @@ import java.util.List;
 public class TownyCombatCommand implements TabExecutor {
 
 	private static final List<String> tabCompletes = Arrays.asList("changerole");
-	private static final List<String> changeRoleTabCompletes = Arrays.asList("Light", "Medium", "Heavy");
-	private static final List<String> battlefieldRolesList = Arrays.asList("light", "medium", "heavy");
+	private static final List<String> changeRoleTabCompletes = Arrays.asList("Light-Infantry", "Light-Cavalry", "Medium-Infantry", "Medium-Cavalry", "Heavy-Infantry", "Heavy-Cavalry");
+	private static final List<String> battlefieldRolesList = Arrays.asList("light-infantry", "light-cavalry", "medium-infantry", "medium-cavalry", "heavy-infantry", "heavy-cavalry");
 	
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 		switch (args[0].toLowerCase()) {

@@ -91,7 +91,8 @@ public class TownyCombatItemUtil {
         //Add lore
         List<String> lore = new ArrayList<>();
         lore.add("");
-        lore.add(Translatable.of("spear_lore_line_1", TownyCombatSettings.getNewItemsSpearBonusDamageVsCavalry()).translate(Locale.ROOT));
+        int bonusDamage = TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && TownyCombatSettings.isBattlefieldRolesEnabled() ? 9 : TownyCombatSettings.getNewItemsSpearBonusDamageVsCavalry();
+        lore.add(Translatable.of("spear_lore_line_1", bonusDamage).translate(Locale.ROOT));
         itemMeta.setLore(lore);
         //Add data key
         setDataKeyValue(itemMeta, ITEM_NATIVE_SPEAR_KEY, ITEM_NATIVE_SPEAR_KEY_TYPE, "S");
