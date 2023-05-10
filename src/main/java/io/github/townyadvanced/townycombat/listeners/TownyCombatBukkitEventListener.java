@@ -89,7 +89,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		//Validate Armour and effects
 		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && TownyCombatSettings.isBattlefieldRolesEnabled()) {
 			TownyCombatBattlefieldRoleUtil.validateArmour((Player)event.getEntity());
-			TownyCombatBattlefieldRoleUtil.validateMagicalEffectsOnMount((Player)event.getEntity(), (Horse)event.getMount());
+			TownyCombatBattlefieldRoleUtil.validatePotionEffectsOnMount((Horse)event.getMount(), (Player)event.getEntity());
 		}
 		//Prevent mount if the horse is about to be TP'd to owner
 		if(TownyCombatSettings.isCavalryEnhancementsEnabled() 
@@ -190,32 +190,30 @@ public class TownyCombatBukkitEventListener implements Listener {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
 
-		if(!TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && !TownyCombatSettings.isBattlefieldRolesEnabled())
-			return;
+		//Cancel strength potion effects on player riders, to avoid confusion with the cavalry power shot
+		if(TownyCombatSettings.isCavalryEnhancementsEnabled() 
+				&& TownyCombatSettings.isCavalryStrengthBonusEnabled()) {
+			TownyCombatHorseUtil.cancelStrengthEffectsOnPlayerRiders(event);
+		}
 
 		//Cancel if this is a super potion which was thrown by a player but not owner by them
-		if(TownyCombatItemUtil.isSuperPotion(event.getPotion().getItem())) {
+		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() 
+				&& TownyCombatSettings.isBattlefieldRolesEnabled()
+				&& TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()
+			    && TownyCombatItemUtil.isSuperPotion(event.getPotion().getItem())) {
 			ProjectileSource shooter = event.getEntity().getShooter();
-			if(shooter instanceof Player) {
-				if(!TownyCombatItemUtil.doesPlayerOwnSuperPotion((Player)shooter, event.getPotion().getItem())) {
+			if (shooter instanceof Player) {
+				if (!TownyCombatItemUtil.doesPlayerOwnSuperPotion((Player) shooter, event.getPotion().getItem())) {
 					event.setCancelled(true);
-					Messaging.sendMsg((Player)shooter, Translatable.of("msg_warning_cannot_use_super_potion_not_owner"));
-				} 
+					Messaging.sendMsg((Player) shooter, Translatable.of("msg_warning_cannot_use_super_potion_not_owner"));
+				}
 			}
 		}
 
-		//Increase or decrease effect power depending on role of affected entity
-		for (LivingEntity affectedEntity : event.getAffectedEntities()) {
-			if (affectedEntity instanceof Player) {
-				BattlefieldRole battlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole((Player)affectedEntity);
-				TownyCombatBattlefieldRoleUtil.evaluateEffectOfSplashPotion(event, affectedEntity, battlefieldRole);
-			} else if (affectedEntity instanceof Horse) {
-				Player playerRider = TownyCombatHorseUtil.getPlayerRider(affectedEntity);
-				if(playerRider != null) {
-					BattlefieldRole battlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole(playerRider);
-					TownyCombatBattlefieldRoleUtil.evaluateEffectOfSplashPotion(event, affectedEntity, battlefieldRole);
-				}
-			}
+		//Apply role based effect adjustments
+		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled()
+				&& TownyCombatSettings.isBattlefieldRolesEnabled()) {
+			TownyCombatBattlefieldRoleUtil.applySplashPotionAdjustments(event);
 		}
 	}
 

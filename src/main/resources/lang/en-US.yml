@@ -129,3 +129,7 @@ spear_lore_line_1: "+%d Damage v.s. Cavalry"
 transmuted_potion_name: "Potion of Regeneration"
 transmuted_potion_name_splash: "Splash Potion of Regeneration"
 potions_transmuted: "&b%d potions of healing in your inventory were transmuted into potions of regeneration."
+
+# Effect change errors
+
+msg_err_strength_potion_did_not_affect_horse_rider: "The horse rider did not gain the Strength effect."

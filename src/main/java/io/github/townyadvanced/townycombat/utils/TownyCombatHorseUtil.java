@@ -1,6 +1,7 @@
 package io.github.townyadvanced.townycombat.utils;
 
 import com.palmergames.bukkit.towny.Towny;
+import com.palmergames.bukkit.towny.object.Translatable;
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import org.bukkit.entity.AbstractHorse;
@@ -8,6 +9,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -118,6 +120,34 @@ public class TownyCombatHorseUtil {
         } else {
             return null;
         }
+    }
+
+    public static void cancelStrengthEffectsOnPlayerRiders(PotionSplashEvent event) {
+        for (PotionEffect potionEffect : event.getPotion().getEffects()) {
+            if (potionEffect.getType() == PotionEffectType.INCREASE_DAMAGE) {
+                for (LivingEntity entity : event.getAffectedEntities()) {
+                    if (entity instanceof Player && getMount((Player)entity) != null) {
+                        event.setIntensity(entity, 0);
+                        Messaging.sendMsg(event.getEntity(), Translatable.of("msg_err_strength_potion_did_not_affect_horse_rider"));
+                    }
+                }
+            }
+        }
+    }
+            
+                     
+                     
+                        Player rider = getPlayerRider(entity);
+                        
+                    } getPlayerRider(entity) != null) {
+                        
+                    }
+                }
+            }
+        }
+        event.getPotion().get
+        
+        
     }
 }
 

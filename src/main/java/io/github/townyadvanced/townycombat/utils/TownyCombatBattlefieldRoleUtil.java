@@ -226,11 +226,9 @@ public class TownyCombatBattlefieldRoleUtil {
     }
 
     /**
-     * Any players with the heavy role who are wearing armour, get some effects.
-     * 
-     * Their mounts, if any, get the effects also
+     * Players with heavy roles, and their mounts, can get resistance
      */
-    public static void giveEffectsToHeavyPlayersWearingArmour() {
+    public static void giveRoleBasedDamageResistance() {
         BattlefieldRole playerBattlefieldRole;
         for(Player player: Bukkit.getOnlinePlayers()) {
             playerBattlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole(player);
@@ -244,7 +242,7 @@ public class TownyCombatBattlefieldRoleUtil {
             } else if(playerBattlefieldRole == BattlefieldRole.HEAVY_CAVALRY) {
                 Horse mount = TownyCombatHorseUtil.getMount(player);
                 if (mount != null && isHorseWearingArmour(mount) && isPlayerWearingArmour(player)) {
-                    //Heavy cavalry gets effects is both players and mount are armoured.
+                    //Heavy cavalry player+horse gets effects as both players+mount are armoured.
                     giveRoleBasedDamageResistance(player);
                     giveRoleBasedDamageResistance(mount);
                 }
@@ -256,7 +254,8 @@ public class TownyCombatBattlefieldRoleUtil {
         return mount.getInventory().getArmor() != null;
     }
     
-    /////////////// Non-Splash Potions ///////////////
+    /////////////// PROCESS NON-SPLASH POTIONS ///////////////
+    
     public static void evaluateEffectOfDrinkingPotion(PlayerItemConsumeEvent event) {
         //Convenience variables and basic checks
         Player player = event.getPlayer();
@@ -332,79 +331,105 @@ public class TownyCombatBattlefieldRoleUtil {
         return newPotion;
     }
 
-    //////////////// Splash Potions /////////////////
+    //////////////// Process Splash Potions /////////////////
 
     /**
-     * Evaluate the effect of a splash potion
-     * 
-     * @param event the potion splash event
-     * @param affectedPlayerOrHorse either 1. A player, or 2. A player-mounted horse
-     * @param playerBattlefieldRole the battlefield role of 1. The affected player, or 2. The player rider of the affected horse
+     * Apply role-based splash potion adjustments
+     * Note: Strength effects on player horse riders will already have been removed 
+     *
+     * @param event the splash potion effect
      */
-    public static void evaluateEffectOfSplashPotion(PotionSplashEvent event, LivingEntity affectedPlayerOrHorse, BattlefieldRole playerBattlefieldRole) {
-        for(PotionEffect potionEffect: event.getPotion().getEffects()) {
-            switch (playerBattlefieldRole) {
-                case LIGHT_INFANTRY:
-                    if (potionEffect.getType().equals(PotionEffectType.SPEED)) {
-                        TODO - This area needs cleanup
-                        Probably create a separate section for horse & for player
-                        If light infantry, we give speed only if this is unmounted player
+    public static void applySplashPotionAdjustments(PotionSplashEvent event) {
+        for (PotionEffect potionEffect : event.getPotion().getEffects()) {
+            if (potionEffect.getType() == PotionEffectType.SPEED) {
+                for (LivingEntity entity : event.getAffectedEntities()) {
+                    if (entity instanceof Player) {
+                        applySplashPotionSpeedAdjustmentsForPlayer(event, potionEffect, (Player) entity);
+                    } else if (entity instanceof Horse) {
+                        applySplashPotionSpeedAdjustmentsForHors(event, potionEffect, (Horse) entity);
                     }
-                case LIGHT_CAVALRY:
-                    if (potionEffect.getType().equals(PotionEffectType.SPEED)) {
-                        //Give a new effect to the player
-                        int amplifier = potionEffect.getAmplifier() + 1;
-                        int duration = (int) ((double) potionEffect.getDuration() * event.getIntensity(affectedPlayerOrHorse));
-                        givePotionEffectUnlessAmplifierIsNegative(potionEffect.getType(), amplifier, duration, true, true, true, affectedPlayerOrHorse);
-                        //Set the upcoming event effect on player to zero
-                        event.setIntensity(affectedPlayerOrHorse, 0);
-                    }
-                    break;
+                }
             }
-                
-                break;
-            case MEDIUM_INFANTRY:
-            case MEDIUM_CAVALRY:
-                    if(potionEffect.getType().equals(PotionEffectType.SPEED)) {
-                        //Give a new effect to the player
-                        int amplifier = potionEffect.getAmplifier() - 1;
-                        int duration = (int)((double)potionEffect.getDuration() * event.getIntensity(affectedPlayerOrHorse));
-                        givePotionEffectUnlessAmplifierIsNegative(potionEffect.getType(), amplifier, duration, true, true, true, affectedPlayerOrHorse);
-                        //Set the upcoming event effect on player to zero
-                        event.setIntensity(affectedPlayerOrHorse, 0);
-                    }
-                    if(potionEffect.getType().equals(PotionEffectType.INCREASE_DAMAGE)) {
-                        //Give a new effect to the player
-                        int amplifier = potionEffect.getAmplifier() + 1;
-                        int duration = (int)((double)potionEffect.getDuration() * event.getIntensity(affectedPlayerOrHorse));
-                        givePotionEffectUnlessAmplifierIsNegative(potionEffect.getType(), amplifier, duration, true, true, true, affectedPlayerOrHorse);
-                        //Set the upcoming event effect on player to zero
-                        event.setIntensity(affectedPlayerOrHorse, 0);
-                    }
-                
-                break;
-            case HEAVY_INFANTRY:
-            case HEAVY_CAVALRY:
-                    if(potionEffect.getType().equals(PotionEffectType.SPEED)) {
-                        //Give a new effect to the player
-                        int amplifier = potionEffect.getAmplifier() - 2;
-                        int duration = (int)((double)potionEffect.getDuration() * event.getIntensity(affectedPlayerOrHorse));
-                        givePotionEffectUnlessAmplifierIsNegative(potionEffect.getType(), amplifier, duration, true, true, true, affectedPlayerOrHorse);
-                        //Set the upcoming event effect on player to zero
-                        event.setIntensity(affectedPlayerOrHorse, 0);
-                    }
-                
-                break;
-            default:
-                throw new RuntimeException("Unknown Battlefield Role");
         }
     }
 
+    private static void applySplashPotionSpeedAdjustmentsForPlayer(PotionSplashEvent event, PotionEffect originalPotionEffect, Player player) {
+        BattlefieldRole battlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole(player);
+        boolean mounted = TownyCombatHorseUtil.getMount(player) != null;
+        switch (battlefieldRole) {
+            case LIGHT_INFANTRY:
+                if (!mounted) {
+                    blockSplashPotionEffect(event, player);
+                    grantIncreasedPotionEffectToLivingEntity(originalPotionEffect, player);
+                    Messaging.sendMsg(player, "SPEED EFFECT WAS INCREASED ");
+                }
+                break;
+            case LIGHT_CAVALRY:
+                if(mounted) {
+                    blockSplashPotionEffect(event, player);
+                    grantIncreasedPotionEffectToLivingEntity(originalPotionEffect, player);
+                    Messaging.sendMsg(player, "SPEED EFFECT WAS INCREASED ");
+                }
+                break;
+            case MEDIUM_INFANTRY:
+            case MEDIUM_CAVALRY:
+                blockSplashPotionEffect(event, player);
+                grantDecreasedPotionEffectToLivingEntity(originalPotionEffect, player);
+                Messaging.sendMsg(player, "SPEED EFFECT WAS DECREASED ");
+                break;
+            case HEAVY_INFANTRY:
+            case HEAVY_CAVALRY:
+                blockSplashPotionEffect(event, player);
+                Messaging.sendMsg(player, "NO EFFECT");
+                break;
+        }
+    }
+
+    private static void applySplashPotionSpeedAdjustmentsForHors(PotionSplashEvent event, PotionEffect potionEffect, Horse horse) {
+        Player rider = TownyCombatHorseUtil.getPlayerRider(horse);
+        if (rider == null)
+            return;
+        BattlefieldRole riderBattlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole(rider);
+        switch (riderBattlefieldRole) {
+            case LIGHT_CAVALRY:
+                blockSplashPotionEffect(event, horse);
+                grantIncreasedPotionEffectToLivingEntity(potionEffect, horse);
+                Messaging.sendMsg(rider, "SPEED EFFECT WAS INCREASED ON HORSE");
+                break;
+            case MEDIUM_INFANTRY:
+            case MEDIUM_CAVALRY:
+                blockSplashPotionEffect(event, horse);
+                grantDecreasedPotionEffectToLivingEntity(potionEffect, horse);
+                Messaging.sendMsg(rider, "SPEED EFFECT WAS DECREASED ON HORSE");
+                break;
+            case HEAVY_INFANTRY:
+            case HEAVY_CAVALRY:
+                blockSplashPotionEffect(event, horse);
+                Messaging.sendMsg(rider, "NO EFFECT ON HORSE");
+                break;
+        }
+    }
+
+
+
+    /////////////////////////////////////////////////////
+    
     private static void giveRoleBasedDamageResistance(LivingEntity livingEntity) {
         final int effectDurationTicks = (int) (TimeTools.convertToTicks(TownySettings.getShortInterval() + 10));
         givePotionEffectUnlessAmplifierIsNegative(PotionEffectType.DAMAGE_RESISTANCE, 0, effectDurationTicks, false, false, true, livingEntity);
     }
 
+    private static void giveSpeedEffectUnlessAmplifierIsNegative(int amplifier, int durationTicks, LivingEntity livingEntity) {
+        givePotionEffectUnlessAmplifierIsNegative(
+                PotionEffectType.SPEED,
+                amplifier,
+                durationTicks,
+                true,
+                true,
+                true,
+                livingEntity);
+    }
+    
     private static void givePotionEffectUnlessAmplifierIsNegative(PotionEffectType potionEffectType, 
                                                                   int amplifier, 
                                                                   int durationInTicks, 
@@ -421,44 +446,47 @@ public class TownyCombatBattlefieldRoleUtil {
         }
     }
 
-    public static void validateMagicalEffectsOnMount(Player playerRider, Horse mountedHorse) {
+    public static void validatePotionEffectsOnMount(Horse mountedHorse, Player playerRider) {
         BattlefieldRole riderBattlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole(playerRider);
         PotionEffect speedEffect = mountedHorse.getPotionEffect(PotionEffectType.SPEED);
-        PotionEffect resistanceEffect = mountedHorse.getPotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
 
         switch (riderBattlefieldRole) {
-            case LIGHT_CAVALRY:
-                if (speedEffect != null) {
-                    int amplifier = speedEffect.getAmplifier() + 1;
-                    int duration = speedEffect.getDuration();
-                    mountedHorse.removePotionEffect(PotionEffectType.SPEED);
-                    givePotionEffectUnlessAmplifierIsNegative(PotionEffectType.SPEED, amplifier, duration, true, true, true, mountedHorse);
-                }
-                break;
             case MEDIUM_INFANTRY:
             case MEDIUM_CAVALRY:
-                if (speedEffect != null) {
-                    int amplifier = speedEffect.getAmplifier() - 1;
-                    int duration = speedEffect.getDuration();
+                //If speed is power 2, reduce it to 1
+                if (speedEffect != null && speedEffect.getAmplifier() > 0) {
                     mountedHorse.removePotionEffect(PotionEffectType.SPEED);
-                    givePotionEffectUnlessAmplifierIsNegative(PotionEffectType.SPEED, amplifier, duration, true, true, true, mountedHorse);
+                    grantDecreasedPotionEffectToLivingEntity(speedEffect, mountedHorse);
                 }
                 break;
             case HEAVY_INFANTRY:
             case HEAVY_CAVALRY:
+                //Remove speed effect
                 if (speedEffect != null) {
-                    int amplifier = speedEffect.getAmplifier() - 1;
-                    int duration = speedEffect.getDuration();
                     mountedHorse.removePotionEffect(PotionEffectType.SPEED);
-                    givePotionEffectUnlessAmplifierIsNegative(PotionEffectType.SPEED, amplifier, duration, true, true, true, mountedHorse);
-                }
-                if(riderBattlefieldRole == BattlefieldRole.HEAVY_CAVALRY
-                        && resistanceEffect == null
-                        && isPlayerWearingArmour(playerRider) 
-                        && isHorseWearingArmour(mountedHorse)) {
-                    giveRoleBasedDamageResistance(mountedHorse);
                 }
                 break;
         }
     }
+
+    private static void grantIncreasedPotionEffectToLivingEntity(PotionEffect originalEffect, LivingEntity livingEntity) {
+        grantAdjustedPotionEffectToLivingEntity(originalEffect, livingEntity, 1);
+    }
+
+    private static void grantDecreasedPotionEffectToLivingEntity(PotionEffect originalEffect, LivingEntity livingEntity) {
+        grantAdjustedPotionEffectToLivingEntity(originalEffect, livingEntity, -1);
+    }
+
+
+    private static void blockSplashPotionEffect(PotionSplashEvent event, LivingEntity livingEntity) {
+        event.setIntensity(livingEntity, 0);
+    }
+
+    private static void grantAdjustedPotionEffectToLivingEntity(PotionEffect potionEffect, LivingEntity livingEntity, int adjustment) {
+        giveSpeedEffectUnlessAmplifierIsNegative(
+                potionEffect.getAmplifier() - adjustment,
+                potionEffect.getDuration(),
+                livingEntity);
+    }
+    
 }
