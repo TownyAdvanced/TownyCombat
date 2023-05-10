@@ -431,10 +431,10 @@ public class TownyCombatBukkitEventListener implements Listener {
 
 	@EventHandler
 	public void on (PlayerItemConsumeEvent event) {
-		if (!TownyCombatSettings.isTownyCombatEnabled() || !TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() || !TownyCombatSettings.isBattlefieldRolesEnabled())
+		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
-		if (event.getItem().getType() == Material.POTION) {
-			TownyCombatBattlefieldRoleUtil.evaluateEffectOfDrinkingPotion(event);
+		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && TownyCombatSettings.isBattlefieldRolesEnabled()) {
+			TownyCombatBattlefieldRoleUtil.applyConsumedItemAdjustments(event);
 		}
 	}
 

@@ -256,7 +256,7 @@ public class TownyCombatBattlefieldRoleUtil {
     
     /////////////// PROCESS NON-SPLASH POTIONS ///////////////
     
-    public static void evaluateEffectOfDrinkingPotion(PlayerItemConsumeEvent event) {
+    public static void evaluateEffectOfDrinkingPotioxn(PlayerItemConsumeEvent event) {
         //Convenience variables and basic checks
         Player player = event.getPlayer();
         ItemStack potionItemStack = event.getItem();
@@ -331,6 +331,34 @@ public class TownyCombatBattlefieldRoleUtil {
         return newPotion;
     }
 
+    
+    //////////////  Process Drunk Potions //////////////////
+
+    /**
+     * Process a potion drunk by a player
+     * 
+     * @param event the potion drinking event
+     */
+    public static void applyConsumedItemAdjustments(PlayerItemConsumeEvent event) {
+        if(event.getItem().getType() == Material.POTION) {
+            //Transform the potion effect into a PotionEffect object for reference
+            PotionMeta potionMeta = (PotionMeta) event.getItem().getItemMeta();
+            PotionData potionData = potionMeta.getBasePotionData();
+            PotionEffectType potionEffectType = potionData.getType().getEffectType();
+            if(potionEffectType.equals(PotionEffectType.SPEED)) {
+                int potionAmplifier = potionData.isUpgraded() ? 1 : 0;
+                int potionDuration = potionData.isExtended() ? 8 * 60 * 20 : 3 * 60 * 20;
+                PotionEffect originalPotionEffect = new PotionEffect(potionEffectType, potionAmplifier, potionDuration, true, true, true);
+                //Apply adjustment
+                if (applyPotionSpeedAdjustmentForPlayer(originalPotionEffect, event.getPlayer())) {
+                    event.setCancelled(true);
+                }
+            }
+        }
+    }
+    
+    
+    
     //////////////// Process Splash Potions /////////////////
 
     /**
@@ -344,70 +372,71 @@ public class TownyCombatBattlefieldRoleUtil {
             if (potionEffect.getType() == PotionEffectType.SPEED) {
                 for (LivingEntity entity : event.getAffectedEntities()) {
                     if (entity instanceof Player) {
-                        applySplashPotionSpeedAdjustmentsForPlayer(event, potionEffect, (Player) entity);
+                        if(applyPotionSpeedAdjustmentForPlayer(potionEffect, (Player) entity)) {
+                            event.setIntensity(entity, 0);
+                        }
                     } else if (entity instanceof Horse) {
-                        applySplashPotionSpeedAdjustmentsForHors(event, potionEffect, (Horse) entity);
+                        if(applyPotionSpeedAdjustmentForHorse(potionEffect, (Horse) entity)) {
+                            event.setIntensity(entity, 0);
+                        }
                     }
                 }
             }
         }
     }
-
-    private static void applySplashPotionSpeedAdjustmentsForPlayer(PotionSplashEvent event, PotionEffect originalPotionEffect, Player player) {
+    
+    private static boolean applyPotionSpeedAdjustmentForPlayer(PotionEffect originalPotionEffect, Player player) {
         BattlefieldRole battlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole(player);
         boolean mounted = TownyCombatHorseUtil.getMount(player) != null;
         switch (battlefieldRole) {
             case LIGHT_INFANTRY:
                 if (!mounted) {
-                    blockSplashPotionEffect(event, player);
                     grantIncreasedPotionEffectToLivingEntity(originalPotionEffect, player);
                     Messaging.sendMsg(player, "SPEED EFFECT WAS INCREASED ");
+                    return true;
                 }
                 break;
             case LIGHT_CAVALRY:
                 if(mounted) {
-                    blockSplashPotionEffect(event, player);
                     grantIncreasedPotionEffectToLivingEntity(originalPotionEffect, player);
                     Messaging.sendMsg(player, "SPEED EFFECT WAS INCREASED ");
+                    return true;
                 }
                 break;
             case MEDIUM_INFANTRY:
             case MEDIUM_CAVALRY:
-                blockSplashPotionEffect(event, player);
                 grantDecreasedPotionEffectToLivingEntity(originalPotionEffect, player);
                 Messaging.sendMsg(player, "SPEED EFFECT WAS DECREASED ");
-                break;
+                return true;
             case HEAVY_INFANTRY:
             case HEAVY_CAVALRY:
-                blockSplashPotionEffect(event, player);
                 Messaging.sendMsg(player, "NO EFFECT");
-                break;
+                return true;
         }
+        return false;
     }
 
-    private static void applySplashPotionSpeedAdjustmentsForHors(PotionSplashEvent event, PotionEffect potionEffect, Horse horse) {
+    private static boolean applyPotionSpeedAdjustmentForHorse(PotionEffect potionEffect, Horse horse) {
         Player rider = TownyCombatHorseUtil.getPlayerRider(horse);
         if (rider == null)
-            return;
+            return false;
         BattlefieldRole riderBattlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole(rider);
         switch (riderBattlefieldRole) {
             case LIGHT_CAVALRY:
-                blockSplashPotionEffect(event, horse);
                 grantIncreasedPotionEffectToLivingEntity(potionEffect, horse);
                 Messaging.sendMsg(rider, "SPEED EFFECT WAS INCREASED ON HORSE");
-                break;
+                return true;
             case MEDIUM_INFANTRY:
             case MEDIUM_CAVALRY:
-                blockSplashPotionEffect(event, horse);
                 grantDecreasedPotionEffectToLivingEntity(potionEffect, horse);
                 Messaging.sendMsg(rider, "SPEED EFFECT WAS DECREASED ON HORSE");
-                break;
+                return true;
             case HEAVY_INFANTRY:
             case HEAVY_CAVALRY:
-                blockSplashPotionEffect(event, horse);
                 Messaging.sendMsg(rider, "NO EFFECT ON HORSE");
-                break;
+                return true;
         }
+        return false;
     }
 
 
@@ -475,11 +504,6 @@ public class TownyCombatBattlefieldRoleUtil {
 
     private static void grantDecreasedPotionEffectToLivingEntity(PotionEffect originalEffect, LivingEntity livingEntity) {
         grantAdjustedPotionEffectToLivingEntity(originalEffect, livingEntity, -1);
-    }
-
-
-    private static void blockSplashPotionEffect(PotionSplashEvent event, LivingEntity livingEntity) {
-        event.setIntensity(livingEntity, 0);
     }
 
     private static void grantAdjustedPotionEffectToLivingEntity(PotionEffect potionEffect, LivingEntity livingEntity, int adjustment) {

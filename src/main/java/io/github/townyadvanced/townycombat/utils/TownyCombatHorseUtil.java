@@ -134,21 +134,7 @@ public class TownyCombatHorseUtil {
             }
         }
     }
-            
-                     
-                     
-                        Player rider = getPlayerRider(entity);
-                        
-                    } getPlayerRider(entity) != null) {
-                        
-                    }
-                }
-            }
-        }
-        event.getPotion().get
-        
-        
-    }
+    
 }
 
 
