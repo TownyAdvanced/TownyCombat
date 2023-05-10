@@ -350,8 +350,8 @@ public class TownyCombatBattlefieldRoleUtil {
             PotionEffectType potionEffectType = potionData.getType().getEffectType();
             if(potionEffectType != null && potionEffectType.equals(PotionEffectType.SPEED)) {
                 int potionAmplifier = potionData.isUpgraded() ? 1 : 0;
-                int potionDurationTicks = potionData.isExtended() ? (8 * 60 * 20) : (3 * 60 * 20);
-                PotionEffect originalPotionEffect = new PotionEffect(potionEffectType, potionAmplifier, potionDurationTicks, true, true, true);
+                int potionDurationTicks = (potionData.isExtended() ? 480 : potionData.isUpgraded() ? 90 : 180) * 20;
+                PotionEffect originalPotionEffect = new PotionEffect(potionEffectType, potionDurationTicks, potionAmplifier, true, true, true);
                 //Apply adjustment
                 if (grantAdjustedPotionSpeedEffectToPlayer(originalPotionEffect, event.getPlayer())) {
                     event.setItem(new ItemStack(Material.GLASS_BOTTLE));
@@ -448,14 +448,14 @@ public class TownyCombatBattlefieldRoleUtil {
     
     private static void giveRoleBasedDamageResistance(LivingEntity livingEntity) {
         final int effectDurationTicks = (int) (TimeTools.convertToTicks(TownySettings.getShortInterval() + 10));
-        givePotionEffectUnlessAmplifierIsNegative(PotionEffectType.DAMAGE_RESISTANCE, 0, effectDurationTicks, false, false, true, livingEntity);
+        givePotionEffectUnlessAmplifierIsNegative(PotionEffectType.DAMAGE_RESISTANCE, effectDurationTicks,0, false, false, true, livingEntity);
     }
 
-    private static void giveSpeedEffectUnlessAmplifierIsNegative(int amplifier, int durationTicks, LivingEntity livingEntity) {
+    private static void giveEffectUnlessAmplifierIsNegative(PotionEffectType potionEffectType, int durationTicks, int amplifier, LivingEntity livingEntity) {
         givePotionEffectUnlessAmplifierIsNegative(
-                PotionEffectType.SPEED,
-                amplifier,
+                potionEffectType,
                 durationTicks,
+                amplifier,
                 true,
                 true,
                 true,
@@ -463,8 +463,8 @@ public class TownyCombatBattlefieldRoleUtil {
     }
     
     private static void givePotionEffectUnlessAmplifierIsNegative(PotionEffectType potionEffectType, 
-                                                                  int amplifier, 
-                                                                  int durationInTicks, 
+                                                                  int durationInTicks,
+                                                                  int amplifier,
                                                                   boolean ambient,
                                                                   boolean particles,
                                                                   boolean icon,
@@ -472,7 +472,7 @@ public class TownyCombatBattlefieldRoleUtil {
         if(amplifier >= 0) {
             Towny.getPlugin().getServer().getScheduler().runTask(Towny.getPlugin(), new Runnable() {
                 public void run() {
-                    livingEntity.addPotionEffect(new PotionEffect(potionEffectType, amplifier, durationInTicks, ambient, particles, icon));
+                    livingEntity.addPotionEffect(new PotionEffect(potionEffectType, durationInTicks, amplifier, ambient, particles, icon));
                 }
             });
         }
@@ -509,10 +509,11 @@ public class TownyCombatBattlefieldRoleUtil {
         grantAdjustedPotionEffectToLivingEntity(originalEffect, livingEntity, -1);
     }
 
-    private static void grantAdjustedPotionEffectToLivingEntity(PotionEffect potionEffect, LivingEntity livingEntity, int adjustment) {
-        giveSpeedEffectUnlessAmplifierIsNegative(
-                potionEffect.getAmplifier() + adjustment,
-                potionEffect.getDuration(),
+    private static void grantAdjustedPotionEffectToLivingEntity(PotionEffect originalEffect, LivingEntity livingEntity, int adjustment) {
+        giveEffectUnlessAmplifierIsNegative(
+                originalEffect.getType(),
+                originalEffect.getDuration(),
+                (originalEffect.getAmplifier() + adjustment),
                 livingEntity);
     }
     

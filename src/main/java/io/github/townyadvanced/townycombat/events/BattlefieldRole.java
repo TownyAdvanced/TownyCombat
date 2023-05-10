@@ -8,8 +8,8 @@ public enum BattlefieldRole {
     LIGHT_CAVALRY("battlefield_role_light_cavalry", Material.BOW, 1),
     MEDIUM_INFANTRY("battlefield_role_medium_infantry", Material.CROSSBOW, 0),
     MEDIUM_CAVALRY("battlefield_role_medium_cavalry", Material.CROSSBOW, 3),
-    HEAVY_INFANTRY("battlefield_role_heavy", null, 0),
-    HEAVY_CAVALRY("battlefield_role_heavy", Material.CROSSBOW, 2);
+    HEAVY_INFANTRY("battlefield_role_heavy_infantry", null, 0),
+    HEAVY_CAVALRY("battlefield_role_heavy_cavalry", Material.CROSSBOW, 2);
 
     private final String nameKey;
     /*
