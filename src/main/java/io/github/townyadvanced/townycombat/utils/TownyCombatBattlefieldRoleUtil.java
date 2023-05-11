@@ -395,25 +395,25 @@ public class TownyCombatBattlefieldRoleUtil {
             case LIGHT_INFANTRY:
                 if (!mounted) {
                     grantIncreasedPotionEffectToLivingEntity(originalPotionEffect, player);
-                    Messaging.sendMsg(player, "SPEED EFFECT WAS INCREASED ");
+                    Messaging.sendMsg(player, Translatable.of("msg_warning_potion_speed_effect_increased"));
                     return true;
                 }
                 break;
             case LIGHT_CAVALRY:
                 if(mounted) {
                     grantIncreasedPotionEffectToLivingEntity(originalPotionEffect, player);
-                    Messaging.sendMsg(player, "SPEED EFFECT WAS INCREASED ");
+                    Messaging.sendMsg(player, Translatable.of("msg_warning_potion_speed_effect_increased"));
                     return true;
                 }
                 break;
             case MEDIUM_INFANTRY:
             case MEDIUM_CAVALRY:
                 grantDecreasedPotionEffectToLivingEntity(originalPotionEffect, player);
-                Messaging.sendMsg(player, "SPEED EFFECT WAS DECREASED ");
+                Messaging.sendMsg(player, Translatable.of("msg_warning_potion_speed_effect_decreased"));
                 return true;
             case HEAVY_INFANTRY:
             case HEAVY_CAVALRY:
-                Messaging.sendMsg(player, "NO EFFECT");
+                Messaging.sendMsg(player, Translatable.of("msg_warning_potion_speed_effect_cancelled"));
                 return true;
         }
         return false;
@@ -427,16 +427,16 @@ public class TownyCombatBattlefieldRoleUtil {
         switch (riderBattlefieldRole) {
             case LIGHT_CAVALRY:
                 grantIncreasedPotionEffectToLivingEntity(potionEffect, horse);
-                Messaging.sendMsg(rider, "SPEED EFFECT WAS INCREASED ON HORSE");
+                Messaging.sendMsg(rider, Translatable.of("msg_warning_potion_speed_effect_increased_on_your_horse"));
                 return true;
             case MEDIUM_INFANTRY:
             case MEDIUM_CAVALRY:
                 grantDecreasedPotionEffectToLivingEntity(potionEffect, horse);
-                Messaging.sendMsg(rider, "SPEED EFFECT WAS DECREASED ON HORSE");
+                Messaging.sendMsg(rider, Translatable.of("msg_warning_potion_speed_effect_decreased_on_your_horse"));
                 return true;
             case HEAVY_INFANTRY:
             case HEAVY_CAVALRY:
-                Messaging.sendMsg(rider, "NO EFFECT ON HORSE");
+                Messaging.sendMsg(rider, Translatable.of("msg_warning_potion_speed_effect_cancelled_on_your_horse"));
                 return true;
         }
         return false;
