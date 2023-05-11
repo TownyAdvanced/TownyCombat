@@ -290,30 +290,16 @@ public class TownyCombatItemUtil {
 
     public static void transmutePotionsInInventory(Player player) {
         PotionMeta oldPotionMeta;
-        PotionMeta newPotionMeta;
         int numTransmutedPotions = 0;
         for(ItemStack itemStack: player.getInventory().getContents()) {
             if(itemStack != null && (itemStack.getType() == Material.POTION || itemStack.getType() == Material.SPLASH_POTION)) {
                 oldPotionMeta = (PotionMeta) itemStack.getItemMeta();
                 if (oldPotionMeta != null && oldPotionMeta.getBasePotionData().getType() == PotionType.INSTANT_HEAL) {
-                    //Create a new potion meta object
-                    ItemStack dummyItemStack = new ItemStack(itemStack.getType());
-                    newPotionMeta = (PotionMeta) dummyItemStack.getItemMeta();
-                    //Set the potion name
-                    if(itemStack.getType() == Material.POTION) {
-                        newPotionMeta.setDisplayName(Translatable.of("transmuted_potion_name").translate(Locale.ROOT));
-                    } else {
-                        newPotionMeta.setDisplayName(Translatable.of("transmuted_potion_name_splash").translate(Locale.ROOT));
-                    }
-                    //Create a new potion effect
-                    int transmutedPotionDurationTicks = TownyCombatSettings.getPotionTransmuterTransmutedPotionDurationSeconds() * 20;
-                    int sourcePotionAmplifier = oldPotionMeta.getBasePotionData().isUpgraded() ? 1: 0;
-                    int transmutedPotionAmplifier = sourcePotionAmplifier + TownyCombatSettings.getPotionTransmuterAmplificationAdjustment();
-                    transmutedPotionAmplifier = Math.min(transmutedPotionAmplifier, 0);
-                    PotionEffect potionEffect = new PotionEffect(PotionEffectType.REGENERATION, transmutedPotionDurationTicks, transmutedPotionAmplifier, true, true, true);
-                    newPotionMeta.addCustomEffect(potionEffect, true);
-                    //Set the potion meta into the original itemstack
-                    itemStack.setItemMeta(newPotionMeta);
+                    //Create a new healing potion itemstack
+                    ItemStack transmutedPotion = createTransmutedPotion(itemStack);
+                    //Set the meta into the existing inventory item
+                    itemStack.setItemMeta(transmutedPotion.getItemMeta());
+                    //Increase the counter for messaging purposes
                     numTransmutedPotions++;
                 }
             }
@@ -321,5 +307,30 @@ public class TownyCombatItemUtil {
         if(numTransmutedPotions > 0) {
             Messaging.sendMsg(player, Translatable.of("potions_transmuted", numTransmutedPotions));
         }
+    }
+    
+    public static ItemStack createTransmutedPotion(ItemStack originalPotionItemStack) {
+        if(originalPotionItemStack.getItemMeta() == null) {
+            return new ItemStack(Material.GLASS_BOTTLE); //Edge case
+        }
+        PotionMeta oldPotionMeta = (PotionMeta) originalPotionItemStack.getItemMeta();
+        ItemStack newPotionItemStack = new ItemStack(originalPotionItemStack.getType());
+        PotionMeta newPotionMeta = (PotionMeta) newPotionItemStack.getItemMeta();
+        //Set the potion name
+        if(newPotionItemStack.getType() == Material.POTION) {
+            newPotionMeta.setDisplayName(Translatable.of("transmuted_potion_name").translate(Locale.ROOT));
+        } else {
+            newPotionMeta.setDisplayName(Translatable.of("transmuted_potion_name_splash").translate(Locale.ROOT));
+        }
+        //Create a new potion effect
+        int transmutedPotionDurationTicks = TownyCombatSettings.getPotionTransmuterTransmutedPotionDurationSeconds() * 20;
+        int sourcePotionAmplifier = oldPotionMeta.getBasePotionData().isUpgraded() ? 1: 0;
+        int transmutedPotionAmplifier = sourcePotionAmplifier + TownyCombatSettings.getPotionTransmuterAmplificationAdjustment();
+        transmutedPotionAmplifier = Math.max(transmutedPotionAmplifier, 0);
+        PotionEffect potionEffect = new PotionEffect(PotionEffectType.REGENERATION, transmutedPotionDurationTicks, transmutedPotionAmplifier, false, false, true);
+        newPotionMeta.addCustomEffect(potionEffect, true);
+        //Set the adjusted potion meta into the itemstack
+        newPotionItemStack.setItemMeta(newPotionMeta);
+        return newPotionItemStack;
     }
 }

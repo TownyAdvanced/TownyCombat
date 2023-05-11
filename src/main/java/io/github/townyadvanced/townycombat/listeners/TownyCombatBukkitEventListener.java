@@ -15,10 +15,12 @@ import io.github.townyadvanced.townycombat.utils.TownyCombatExperienceUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatItemUtil;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Horse;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Arrow;
 import org.bukkit.event.EventHandler;
@@ -29,6 +31,7 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
+import org.bukkit.event.inventory.BrewEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
@@ -36,8 +39,14 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
+import org.bukkit.inventory.BrewerInventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.spigotmc.event.entity.EntityDismountEvent;
 import org.spigotmc.event.entity.EntityMountEvent;
@@ -368,23 +377,52 @@ public class TownyCombatBukkitEventListener implements Listener {
 	public void on (PrepareItemCraftEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
-		if (!TownyCombatSettings.isNewItemsSpearEnabled() || !TownyCombatSettings.isNewItemsSpearNativeWeaponEnabled())
-			return;
-		if(event.getInventory().getResult() != null) {
-			if (event.isRepair()) {
-				//Cannot repair native spear
-				if (event.getInventory().getResult().getType() == Material.WOODEN_SWORD) {
-					event.getInventory().setResult(null);
-				}
-			} else {
-				//Craft native spear	
-				if (event.getInventory().getResult().getType() == Material.WOODEN_SWORD) {
-					event.getInventory().setResult(TownyCombatItemUtil.createNativeSpear());
+		ItemStack resultItemStack = event.getInventory().getResult();
+		if (resultItemStack!= null) {
+			//Native Spear
+			if (TownyCombatSettings.isNewItemsSpearEnabled() && TownyCombatSettings.isNewItemsSpearNativeWeaponEnabled()) {
+				if (event.isRepair()) {
+					//Cannot repair native spear
+					if (resultItemStack.getType() == Material.WOODEN_SWORD) {
+						event.getInventory().setResult(null);
+					}
+				} else {
+					//Craft native spear	
+					if (resultItemStack.getType() == Material.WOODEN_SWORD) {
+						event.getInventory().setResult(TownyCombatItemUtil.createNativeSpear());
+					}
 				}
 			}
 		}
 	}
 
+	@EventHandler
+	public void on (BrewEvent event) {
+		if (!TownyCombatSettings.isTownyCombatEnabled())
+			return;
+		//Can't alter the new regen potions
+		if (TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && TownyCombatSettings.isPotionTransmuterEnabed()) {
+			BrewerInventory brewerInventory = event.getContents();
+			ItemStack resultItemStack;
+			for (int i = 0; i < brewerInventory.getContents().length; i++) {
+				resultItemStack = brewerInventory.getItem(i);
+				if (resultItemStack != null
+						&& resultItemStack.getType() == Material.POTION
+						&& resultItemStack.getItemMeta() != null
+						&& ((PotionMeta) resultItemStack.getItemMeta()).getCustomEffects().size() > 0
+						&& ((PotionMeta) resultItemStack.getItemMeta()).getCustomEffects().get(0).getType().equals(PotionEffectType.REGENERATION)) {
+					//Cancel Event. Reduce ingredient so the brew does not keep going indefinitely
+					if(brewerInventory.getIngredient() != null) {
+						brewerInventory.getIngredient().setAmount(brewerInventory.getIngredient().getAmount() - 1);
+					}
+					event.setCancelled(true);
+					event.getBlock().getWorld().playEffect(event.getBlock().getLocation(), Effect.EXTINGUISH, null);
+					break;
+				}
+			}
+		}
+	}
+	
 	@EventHandler
 	public void on (PrepareAnvilEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())

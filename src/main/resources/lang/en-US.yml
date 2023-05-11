@@ -78,15 +78,15 @@ status_resident_content_medium_cavalry_super_potion: "&2Super Potion (%d/day): &
 status_resident_content_heavy_infantry_armour: "&2Armor: &aDiamond, Netherite"
 status_resident_content_heavy_infantry_melee_weapons: "&2Melee Weapons: &aDiamond, Netherite"
 status_resident_content_heavy_infantry_missile_weapons: "&2Missile Weapons: &aNone"
-status_resident_content_heavy_infantry_passive_ability: "&2Passive Ability: &aWhen armored, Resistance I"
+status_resident_content_heavy_infantry_passive_ability: "&2Passive Ability: &aResistance I (when armored)"
 status_resident_content_heavy_infantry_disadvantage: "&2Disadvantage: &aCannot use Potions of Swiftness"
 status_resident_content_heavy_infantry_super_potion: "&2Super Potion (%d/day): &aAbsorbtion V (3 mins)"
     
 status_resident_content_heavy_cavalry_armour: "&2Armor: &aDiamond, Netherite"
 status_resident_content_heavy_cavalry_melee_weapons: "&2Melee Weapons: &aDiamond, Netherite"
-status_resident_content_heavy_cavalry_missile_weapons: "&2Missile Weapons: &aCrossbow"
+status_resident_content_heavy_cavalry_missile_weapons: "&2Missile Weapons: &aCrossbow (when mounted)"
 status_resident_content_heavy_cavalry_passive_ability_A: "&2Passive Ability A: &aCavalry Power Shot Strength II"
-status_resident_content_heavy_cavalry_passive_ability_B: "&2Passive Ability B: &aWhen armored, Resistance I"
+status_resident_content_heavy_cavalry_passive_ability_B: "&2Passive Ability B: &aResistance I (when armored & mounted)"
 status_resident_content_heavy_cavalry_disadvantage: "&2Disadvantage: &aCannot use Potions of Swiftness"
 status_resident_content_heavy_cavalry_super_potion: "&2Super Potion (%d/day): &aAbsorbtion V (3 mins)"
 
@@ -128,7 +128,7 @@ spear_lore_line_1: "+%d Damage v.s. Cavalry"
 
 transmuted_potion_name: "Potion of Regeneration"
 transmuted_potion_name_splash: "Splash Potion of Regeneration"
-potions_transmuted: "&b%d potions of healing in your inventory were transmuted into potions of regeneration."
+potions_transmuted: "&b%d Potions of Healing in your inventory were transmuted into Potions of Regeneration."
 
 # Potions Effect changes
 
