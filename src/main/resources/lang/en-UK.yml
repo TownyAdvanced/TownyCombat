@@ -23,29 +23,7 @@ description: >
 # DarkPurple = &9, LightGreen = &a, LightBlue = &b
 # Rose = &c, LightPurple = &d, Yellow = &e, White = &f
 
-# Added in 0.01
-plugin_prefix: '&f[&6TownyCombat&f] '
-msg_err_command_disable: '&cYou don''t have enough permissions for that command.'
-msg_inventory_degrade_warning: '&4WARNING: &cSome of your gear is close to breaking due to inventory degradation.'
-admin_help_reload: 'Reload the config and language file.'
-config_and_lang_file_reloaded_successfully: 'Config and Language file reloaded successfully.'
-config_and_lang_file_could_not_be_reloaded: 'Reload unsuccessful. See console for details.'
-
-# Added in 0.02
-msg_warning_jump_damage: '&cWARNING: Your encumbrance level is above %d percent. Be careful when jumping or climbing a hill, as this will cause tiredness-damage.'
-    
-#Battlefield Role Names
-
-battlefield_role_light_infantry: "Light Infantry"
-battlefield_role_medium_infantry: "Medium Infantry"
-battlefield_role_heavy_infantry: "Heavy Infantry"
-battlefield_role_light_cavalry: "Light Cavalry"
-battlefield_role_medium_cavalry: "Medium Cavalry"
-battlefield_role_heavy_cavalry: "Heavy Cavalry"
-
 #Resident screen
-
-status_resident_hover_title_battlefield_role: "%s[&2Battlefield Role: &a%s%s]"
 
 status_resident_content_light_infantry_armour: "&2Armour: &aLeather"
 status_resident_content_light_cavalry_armour: "&2Armour: &aLeather"
