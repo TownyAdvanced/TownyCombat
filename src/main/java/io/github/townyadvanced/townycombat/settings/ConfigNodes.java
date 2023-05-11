@@ -91,7 +91,7 @@ public enum ConfigNodes {
 			"",
 			"# If this setting is true, then the Cavalry Power Shot is enabled:",
 			"# - Effects:",
-			"#   - Increased Strength for a single shot",
+			"#   - Increased Damage for a single shot",
 			"# - Cooldown:",
 			"#   - Starts in cooldown when a player mounts a horse.",
 			"#   - Goes into cooldown when the rider strikes a player/mob with their weapon.",
@@ -104,7 +104,7 @@ public enum ConfigNodes {
 			"cavalry_enhancements.cavalry_power_shot.effect_level",
 			"3",
 			"",
-			"# The level of the Cavalry Power Shot Strength bonus.",
+			"# The Strength level of the Cavalry Power Shot bonus.",
 			"# Note: If the Battlefield Roles feature is enabled, this setting is ignored."),
 	CAVALRY_ENHANCEMENTS_CAVALRY_STRENGTH_BONUS_COOLDOWN_SECONDS(
 			"cavalry_enhancements.cavalry_power_shot.cooldown_time_seconds",
