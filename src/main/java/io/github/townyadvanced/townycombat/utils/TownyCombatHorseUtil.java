@@ -127,11 +127,11 @@ public class TownyCombatHorseUtil {
 
     public static void cancelStrengthEffectsOnPlayerRiders(PotionSplashEvent event) {
         for (PotionEffect potionEffect : event.getPotion().getEffects()) {
-            if (potionEffect.getType() == PotionEffectType.INCREASE_DAMAGE) {
+            if (potionEffect.getType().equals(PotionEffectType.INCREASE_DAMAGE)) {
                 for (LivingEntity entity : event.getAffectedEntities()) {
                     if (entity instanceof Player && getMount((Player)entity) != null) {
                         event.setIntensity(entity, 0);
-                        Messaging.sendMsg(event.getEntity(), Translatable.of("msg_warning_potion_strength_effect_blocked_for_rider"));
+                        Messaging.sendMsg(entity, Translatable.of("msg_warning_potion_strength_effect_blocked_for_rider"));
                     }
                 }
             }
@@ -146,7 +146,7 @@ public class TownyCombatHorseUtil {
             PotionEffectType potionEffectType = potionMeta.getBasePotionData().getType().getEffectType();
             if(potionEffectType == null)
                 return;
-            if(potionEffectType.equals(PotionEffectType.DAMAGE_RESISTANCE)
+            if(potionEffectType.equals(PotionEffectType.INCREASE_DAMAGE)
                     && TownyCombatHorseUtil.getMount(event.getPlayer()) != null) {
                 event.setCancelled(true);
                 Messaging.sendMsg(event.getPlayer(), Translatable.of("msg_warning_potion_strength_effect_blocked_for_rider"));

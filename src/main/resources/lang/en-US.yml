@@ -140,3 +140,4 @@ msg_warning_potion_strength_effect_blocked_for_rider: "&bThe horse rider did not
 msg_warning_potion_speed_effect_increased_on_your_horse: "&bThe Speed effect of the potion on your horse was increased."
 msg_warning_potion_speed_effect_decreased_on_your_horse: "&bThe Speed effect of the potion on your horse was decreased."
 msg_warning_potion_speed_effect_cancelled_on_your_horse: "&bThe Speed effect of the potion on your horse was cancelled."
+msg_warning_super_potion_also_affected_horse: "&bYour horse also gained the benefit of the Super Potion."

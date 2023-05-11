@@ -8,6 +8,7 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.util.TimeMgmt;
 import com.palmergames.util.TimeTools;
+import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.events.BattlefieldRole;
 import io.github.townyadvanced.townycombat.metadata.TownyCombatResidentMetaDataController;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
@@ -274,11 +275,9 @@ public class TownyCombatBattlefieldRoleUtil {
      */
     public static void processItemConsumptionEvent(PlayerItemConsumeEvent event) {
         if(event.getItem().getType() == Material.POTION) {
-            if(TownyCombatItemUtil.isSuperPotion(event.getItem())) {
-                if(TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()
-                        && TownyCombatItemUtil.isSuperPotion(event.getItem())) {
-                    TownyCombatBattlefieldRoleUtil.processSuperPotionDrinking(event);
-                }
+            if(TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()
+                    && TownyCombatItemUtil.isSuperPotion(event.getItem())) {
+                TownyCombatBattlefieldRoleUtil.processSuperPotionDrinking(event);
             } else {
                 TownyCombatBattlefieldRoleUtil.processRegularPotionDrinking(event);
             }
@@ -292,13 +291,10 @@ public class TownyCombatBattlefieldRoleUtil {
      */
     private static void processSuperPotionDrinking(PlayerItemConsumeEvent event) {
         //Cancel if super potion was used by a non-owner
-        if(TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()
-                && TownyCombatItemUtil.isSuperPotion(event.getItem())) {
-            if (!TownyCombatItemUtil.doesPlayerOwnSuperPotion(event.getPlayer(), event.getItem())) {
-                event.setCancelled(true);
-                Messaging.sendMsg(event.getPlayer(), Translatable.of("msg_warning_cannot_use_super_potion_not_owner"));
-                return;
-            }
+        if (!TownyCombatItemUtil.doesPlayerOwnSuperPotion(event.getPlayer(), event.getItem())) {
+            event.setCancelled(true);
+            Messaging.sendMsg(event.getPlayer(), Translatable.of("msg_warning_cannot_use_super_potion_not_owner"));
+            return;
         }
 
         //Apply effect to mounted horse
@@ -308,7 +304,8 @@ public class TownyCombatBattlefieldRoleUtil {
             switch (drinkerBattlefieldRole) {
                 case LIGHT_CAVALRY:
                 case HEAVY_CAVALRY:
-                    grantAdjustedPotionEffectToLivingEntity(((PotionMeta) event.getItem()).getCustomEffects().get(0), mount, 0);
+                    grantAdjustedPotionEffectToLivingEntity(((PotionMeta) event.getItem().getItemMeta()).getCustomEffects().get(0), mount, 0);
+                    Messaging.sendMsg(event.getPlayer(), Translatable.of("msg_warning_super_potion_also_affected_horse"));
                     break;
             }
         }
@@ -348,7 +345,7 @@ public class TownyCombatBattlefieldRoleUtil {
      * Process the splash potion event
      * Apply any required role-based adjustments
      * 
-     * NOTE: Strength effects on player horse riders will already have been removed 
+     * NOTE: Strength effects on player horse riders will already have been reduced to 0 
      *
      * @param event the splash potion effect
      */
@@ -371,19 +368,19 @@ public class TownyCombatBattlefieldRoleUtil {
             if (potionEffect.getType().equals(PotionEffectType.SPEED)) {
                 for (LivingEntity entity : event.getAffectedEntities()) {
                     if (entity instanceof Player) {
-                        if(grantAdjustedPotionSpeedEffectToPlayer(potionEffect, (Player) entity)) {
+                        if(event.getIntensity(entity) != 0 && grantAdjustedPotionSpeedEffectToPlayer(potionEffect, (Player) entity)) {
                             event.setIntensity(entity, 0);
                         }
                     } else if (entity instanceof Horse) {
-                        if(grantAdjustedPotionSpeedEffectToHorse(potionEffect, (Horse) entity)) {
+                        if(event.getIntensity(entity) != 0 && grantAdjustedPotionSpeedEffectToHorse(potionEffect, (Horse) entity)) {
                             event.setIntensity(entity, 0);
                         }
                     }
                 }
-            } else if (potionEffect.getType() == PotionEffectType.INCREASE_DAMAGE) {
+            } else if (potionEffect.getType().equals(PotionEffectType.INCREASE_DAMAGE)) {
                 for (LivingEntity entity : event.getAffectedEntities()) {
                     if (entity instanceof Player) {
-                        if (grantAdjustedPotionStrengthEffectToPlayer(potionEffect, (Player) entity)) {
+                        if (event.getIntensity(entity) != 0 && grantAdjustedPotionStrengthEffectToPlayer(potionEffect, (Player) entity)) {
                             event.setIntensity(entity, 0);
                         }
                     }
