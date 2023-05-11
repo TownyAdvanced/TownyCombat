@@ -30,9 +30,9 @@ status_resident_content_light_cavalry_armour: "&2Armour: &aLeather"
 status_resident_content_medium_infantry_armour: "&2Armour: &aGold, Chainmail, Iron, Turtle"
 status_resident_content_medium_cavalry_armour: "&2Armour: &aGold, Chainmail, Iron, Turtle"
 status_resident_content_heavy_infantry_armour: "&2Armour: &aDiamond, Netherite"
-status_resident_content_heavy_infantry_passive_ability: "&2Passive Ability: &aWhen armoured, Resistance I"
+status_resident_content_heavy_infantry_passive_ability: "&2Passive Ability: &aResistance I (when armoured)"
 status_resident_content_heavy_cavalry_armour: "&2Armour: &aDiamond, Netherite"
-status_resident_content_heavy_cavalry_passive_ability_B: "&2Passive Ability B: &aWhen armoured, Resistance I"
+status_resident_content_heavy_cavalry_passive_ability_B: "&2Passive Ability B: &aResistance I (when armoured & mounted)"
 
 # Change-Battlefield-Role Warnings
 
