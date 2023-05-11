@@ -15,10 +15,12 @@ import io.github.townyadvanced.townycombat.utils.TownyCombatExperienceUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatItemUtil;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Horse;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Arrow;
 import org.bukkit.event.EventHandler;
@@ -29,6 +31,7 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
+import org.bukkit.event.inventory.BrewEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
@@ -36,11 +39,14 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
+import org.bukkit.inventory.BrewerInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.spigotmc.event.entity.EntityDismountEvent;
 import org.spigotmc.event.entity.EntityMountEvent;
@@ -401,24 +407,42 @@ public class TownyCombatBukkitEventListener implements Listener {
 					}
 				}
 			}
-
-			//Transmuted Potion
-			if (TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && TownyCombatSettings.isPotionTransmuterEnabed()) {
-				if (!event.isRepair()) {
-					if (resultItemStack.getType() == Material.POTION || resultItemStack.getType() == Material.SPLASH_POTION) {
-						if (resultItemStack.getItemMeta() != null) {
-							PotionMeta potionMeta = (PotionMeta) resultItemStack.getItemMeta();
-							PotionEffectType potionEffectType = potionMeta.getBasePotionData().getType().getEffectType();
-							if (potionEffectType != null && potionEffectType.equals(PotionEffectType.HEAL)) {
-								event.getInventory().setResult(TownyCombatItemUtil.createTransmutedPotion(resultItemStack));
-							}
-						}
-					}
-				}
-			}
 		}
 	}
 
+	@EventHandler
+	public void on (BrewEvent event) {
+		if (!TownyCombatSettings.isTownyCombatEnabled())
+			return;
+		//Transmuted Potion
+		boolean potionsTransmuted = false;
+		ItemStack resultItemStack;
+		if (TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && TownyCombatSettings.isPotionTransmuterEnabed()) {
+			BrewerInventory brewerInventory = event.getContents();
+			if (brewerInventory.getIngredient() != null && brewerInventory.getIngredient().getType() == Material.GLISTERING_MELON_SLICE) {
+				//Replace ackward potions with special regen potions
+				for (int i = 0; i < brewerInventory.getContents().length; i++) {
+					resultItemStack = brewerInventory.getItem(i);
+					if (resultItemStack != null
+							&& resultItemStack.getType() == Material.POTION
+							&& resultItemStack.getItemMeta() != null
+							&& ((PotionMeta) resultItemStack.getItemMeta()).getBasePotionData().getType().equals(PotionType.AWKWARD)) {
+						brewerInventory.setItem(i, TownyCombatItemUtil.createTransmutedPotion(resultItemStack));
+						potionsTransmuted = true;
+					}
+				}
+				//If potions were transmuted, reduce ingredient, play sound and cancel event
+				if(potionsTransmuted) {
+					brewerInventory.getIngredient().setAmount(brewerInventory.getIngredient().getAmount() - 1);
+					event.getBlock().getWorld().playEffect(event.getBlock().getLocation(), Effect.BREWING_STAND_BREW, null);
+					event.setCancelled(true);
+				}
+			}
+			
+
+		}
+	}
+	
 	@EventHandler
 	public void on (PrepareAnvilEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
