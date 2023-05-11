@@ -37,6 +37,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.spigotmc.event.entity.EntityDismountEvent;
@@ -382,18 +385,35 @@ public class TownyCombatBukkitEventListener implements Listener {
 	public void on (PrepareItemCraftEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
-		if (!TownyCombatSettings.isNewItemsSpearEnabled() || !TownyCombatSettings.isNewItemsSpearNativeWeaponEnabled())
-			return;
-		if(event.getInventory().getResult() != null) {
-			if (event.isRepair()) {
-				//Cannot repair native spear
-				if (event.getInventory().getResult().getType() == Material.WOODEN_SWORD) {
-					event.getInventory().setResult(null);
+		ItemStack resultItemStack = event.getInventory().getResult();
+		if (resultItemStack!= null) {
+			//Native Spear
+			if (TownyCombatSettings.isNewItemsSpearEnabled() && TownyCombatSettings.isNewItemsSpearNativeWeaponEnabled()) {
+				if (event.isRepair()) {
+					//Cannot repair native spear
+					if (resultItemStack.getType() == Material.WOODEN_SWORD) {
+						event.getInventory().setResult(null);
+					}
+				} else {
+					//Craft native spear	
+					if (resultItemStack.getType() == Material.WOODEN_SWORD) {
+						event.getInventory().setResult(TownyCombatItemUtil.createNativeSpear());
+					}
 				}
-			} else {
-				//Craft native spear	
-				if (event.getInventory().getResult().getType() == Material.WOODEN_SWORD) {
-					event.getInventory().setResult(TownyCombatItemUtil.createNativeSpear());
+			}
+
+			//Transmuted Potion
+			if (TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && TownyCombatSettings.isPotionTransmuterEnabed()) {
+				if (!event.isRepair()) {
+					if (resultItemStack.getType() == Material.POTION || resultItemStack.getType() == Material.SPLASH_POTION) {
+						if (resultItemStack.getItemMeta() != null) {
+							PotionMeta potionMeta = (PotionMeta) resultItemStack.getItemMeta();
+							PotionEffectType potionEffectType = potionMeta.getBasePotionData().getType().getEffectType();
+							if (potionEffectType != null && potionEffectType.equals(PotionEffectType.HEAL)) {
+								event.getInventory().setResult(TownyCombatItemUtil.createTransmutedPotion(resultItemStack));
+							}
+						}
+					}
 				}
 			}
 		}
