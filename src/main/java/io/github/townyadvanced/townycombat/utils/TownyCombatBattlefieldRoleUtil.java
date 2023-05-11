@@ -106,7 +106,14 @@ public class TownyCombatBattlefieldRoleUtil {
         if (resident == null)
             return true;  //Edge case
         BattlefieldRole playerBattlefieldRole = getBattlefieldRole(resident);
-        return isMaterialAllowedByBattlefieldRole(weaponBattlefieldRoleMap, itemStack.getType(), playerBattlefieldRole);
+        if(playerBattlefieldRole == BattlefieldRole.HEAVY_CAVALRY 
+            && itemStack.getType() == Material.CROSSBOW 
+            && TownyCombatHorseUtil.getMount(player) == null) {
+            //Special case where the weapon permission depends on mounted/unmounted
+            return false;
+        } else {
+            return isMaterialAllowedByBattlefieldRole(weaponBattlefieldRoleMap, itemStack.getType(), playerBattlefieldRole);
+        }
     }
     
     private static boolean isMaterialAllowedByBattlefieldRole(Map<String, Set<BattlefieldRole>> materialRoleMap, Material material, BattlefieldRole battlefieldRole) {
