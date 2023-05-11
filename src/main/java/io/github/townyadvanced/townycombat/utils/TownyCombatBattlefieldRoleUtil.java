@@ -262,84 +262,6 @@ public class TownyCombatBattlefieldRoleUtil {
         return mount.getInventory().getArmor() != null;
     }
     
-    /////////////// PROCESS NON-SPLASH POTIONS ///////////////
-    
-    public static void evaluateEffectOfDrinkingPotioxn(PlayerItemConsumeEvent event) {
-        //Convenience variables and basic checks
-        Player player = event.getPlayer();
-        ItemStack potionItemStack = event.getItem();
-        Resident resident = TownyAPI.getInstance().getResident(player.getUniqueId());
-        if (resident == null)
-            return;
-        BattlefieldRole battlefieldRole = getBattlefieldRole(resident);
-        PotionMeta potionMeta = (PotionMeta) potionItemStack.getItemMeta();
-        if(potionMeta == null)
-            return;
-        if(potionMeta.getBasePotionData().getType().getEffectType() == null)
-            return;
-        //Create a replacement potion if required
-        ItemStack replacementPotion = null;
-        switch (battlefieldRole) {
-            case LIGHT_INFANTRY:
-            case LIGHT_CAVALRY:
-                if (potionMeta.getBasePotionData().getType().getEffectType().equals(PotionEffectType.SPEED)) {
-                    replacementPotion = getUpdatedSpeedPotion(potionMeta.getBasePotionData(), 1);
-                }
-                break;
-            case MEDIUM_INFANTRY:
-            case MEDIUM_CAVALRY:
-                if (potionMeta.getBasePotionData().getType().getEffectType().equals(PotionEffectType.INCREASE_DAMAGE)) {
-                    replacementPotion = getUpdatedStrengthPotion(potionMeta.getBasePotionData(), 1);
-                } else if (potionMeta.getBasePotionData().getType().getEffectType().equals(PotionEffectType.SPEED)) {
-                    replacementPotion = getUpdatedSpeedPotion(potionMeta.getBasePotionData(), -1);
-                }
-                break;
-            case HEAVY_INFANTRY:
-            case HEAVY_CAVALRY:
-                if (potionMeta.getBasePotionData().getType().getEffectType().equals(PotionEffectType.SPEED)) {
-                    replacementPotion = getUpdatedSpeedPotion(potionMeta.getBasePotionData(), -2);
-                }
-                break;
-            default:
-                throw new RuntimeException("Unknown Battlefield Role");
-        }
-        //Set the replacement potion into the event
-        if (replacementPotion != null) {
-            event.setItem(replacementPotion);
-        }
-    }
-
-    private static @Nullable ItemStack getUpdatedSpeedPotion(PotionData basePotionData, int powerModifier) {
-        return getUpdatedPotion(basePotionData, powerModifier, 180, 480);
-    }
-
-    private static @Nullable ItemStack getUpdatedStrengthPotion(PotionData basePotionData, int powerModifier) {
-        return getUpdatedPotion(basePotionData, powerModifier, 180, 480);
-    }
-
-    private static @Nullable ItemStack getUpdatedPotion(PotionData basePotionData, int powerModifier, int nonExtendedDurationSeconds, int extendedDurationSeconds) {
-        //Create the updated potion
-        ItemStack newPotion = new ItemStack(Material.POTION);
-        newPotion.setAmount(1);
-        //Add the required effect (if any)
-        if(basePotionData.getType().getEffectType() != null) {
-            int amplifier = basePotionData.isUpgraded() ? 1 : 0;
-            amplifier += powerModifier;
-            if(amplifier >= 0) {
-                int duration = basePotionData.isExtended() ? extendedDurationSeconds * 20 : nonExtendedDurationSeconds * 20;
-                PotionEffect newPotionEffect = new PotionEffect(basePotionData.getType().getEffectType(), duration, amplifier, true, true, true);
-                PotionMeta newPotionMeta = (PotionMeta) newPotion.getItemMeta();
-                if(newPotionMeta == null)
-                    return null;
-                newPotionMeta.addCustomEffect(newPotionEffect, true);
-                newPotion.setItemMeta(newPotionMeta);
-            }
-        }
-        //Return the update potion
-        return newPotion;
-    }
-
-    
     //////////////  Process Drunk Potions //////////////////
 
     /**
@@ -399,12 +321,22 @@ public class TownyCombatBattlefieldRoleUtil {
         PotionMeta potionMeta = (PotionMeta) event.getItem().getItemMeta();
         PotionData potionData = potionMeta.getBasePotionData();
         PotionEffectType potionEffectType = potionData.getType().getEffectType();
-        if(potionEffectType != null && potionEffectType.equals(PotionEffectType.SPEED)) {
+        if(potionEffectType == null)
+            return;
+        if(potionEffectType.equals(PotionEffectType.SPEED)) {
             int potionAmplifier = potionData.isUpgraded() ? 1 : 0;
             int potionDurationTicks = (potionData.isExtended() ? 480 : potionData.isUpgraded() ? 90 : 180) * 20;
             PotionEffect originalPotionEffect = new PotionEffect(potionEffectType, potionDurationTicks, potionAmplifier, true, true, true);
             //Apply adjustment
             if (grantAdjustedPotionSpeedEffectToPlayer(originalPotionEffect, event.getPlayer())) {
+                event.setItem(new ItemStack(Material.GLASS_BOTTLE));
+            }
+        } else if (potionEffectType.equals(PotionEffectType.INCREASE_DAMAGE)) {
+            int potionAmplifier = potionData.isUpgraded() ? 1 : 0;
+            int potionDurationTicks = (potionData.isExtended() ? 480 : potionData.isUpgraded() ? 90 : 180) * 20;
+            PotionEffect originalPotionEffect = new PotionEffect(potionEffectType, potionDurationTicks, potionAmplifier, true, true, true);
+            //Apply adjustment
+            if (grantAdjustedPotionStrengthEffectToPlayer(originalPotionEffect, event.getPlayer())) {
                 event.setItem(new ItemStack(Material.GLASS_BOTTLE));
             }
         }
@@ -434,9 +366,9 @@ public class TownyCombatBattlefieldRoleUtil {
             }
         }
 
-        //Apply any relevant speed effects
+        //Adjust any role-relevant effects
         for (PotionEffect potionEffect : event.getPotion().getEffects()) {
-            if (potionEffect.getType() == PotionEffectType.SPEED) {
+            if (potionEffect.getType().equals(PotionEffectType.SPEED)) {
                 for (LivingEntity entity : event.getAffectedEntities()) {
                     if (entity instanceof Player) {
                         if(grantAdjustedPotionSpeedEffectToPlayer(potionEffect, (Player) entity)) {
@@ -444,6 +376,14 @@ public class TownyCombatBattlefieldRoleUtil {
                         }
                     } else if (entity instanceof Horse) {
                         if(grantAdjustedPotionSpeedEffectToHorse(potionEffect, (Horse) entity)) {
+                            event.setIntensity(entity, 0);
+                        }
+                    }
+                }
+            } else if (potionEffect.getType() == PotionEffectType.INCREASE_DAMAGE) {
+                for (LivingEntity entity : event.getAffectedEntities()) {
+                    if (entity instanceof Player) {
+                        if (grantAdjustedPotionStrengthEffectToPlayer(potionEffect, (Player) entity)) {
                             event.setIntensity(entity, 0);
                         }
                     }
@@ -483,6 +423,20 @@ public class TownyCombatBattlefieldRoleUtil {
         return false;
     }
 
+    private static boolean grantAdjustedPotionStrengthEffectToPlayer(PotionEffect originalPotionEffect, Player player) {
+        BattlefieldRole battlefieldRole = TownyCombatBattlefieldRoleUtil.getBattlefieldRole(player);
+        boolean mounted = TownyCombatHorseUtil.getMount(player) != null;
+        switch (battlefieldRole) {
+            case MEDIUM_INFANTRY:
+                if(!mounted) {
+                    grantIncreasedPotionEffectToLivingEntity(originalPotionEffect, player);
+                    Messaging.sendMsg(player, Translatable.of("msg_warning_potion_strength_effect_increased"));
+                    return true;
+                }
+        }
+        return false;
+    }
+    
     private static boolean grantAdjustedPotionSpeedEffectToHorse(PotionEffect potionEffect, Horse horse) {
         Player rider = TownyCombatHorseUtil.getPlayerRider(horse);
         if (rider == null)
@@ -505,9 +459,7 @@ public class TownyCombatBattlefieldRoleUtil {
         }
         return false;
     }
-
-
-
+    
     /////////////////////////////////////////////////////
     
     private static void giveRoleBasedDamageResistance(LivingEntity livingEntity) {

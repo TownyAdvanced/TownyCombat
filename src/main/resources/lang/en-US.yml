@@ -132,11 +132,11 @@ potions_transmuted: "&b%d Potions of Healing in your inventory were transmuted i
 
 # Potions Effect changes
 
-msg_warning_potion_speed_effect_increased: "The Speed effect of the potion was increased."
-msg_warning_potion_speed_effect_decreased: "The Speed effect of the potion was decreased."
-msg_warning_potion_speed_effect_cancelled: "The Speed effect of the potion was cancelled."
-msg_warning_potion_strength_effect_increased: "The Strength effect of the potion was increased."
-msg_warning_potion_strength_effect_blocked_for_rider: "The horse rider did not gain the Strength effect of the potion."
-msg_warning_potion_speed_effect_increased_on_your_horse: "The Speed effect of the potion on your horse was increased."
-msg_warning_potion_speed_effect_decreased_on_your_horse: "The Speed effect of the potion on your horse was decreased."
-msg_warning_potion_speed_effect_cancelled_on_your_horse: "The Speed effect of the potion on your horse was cancelled."
+msg_warning_potion_speed_effect_increased: "&bThe Speed effect of the potion was increased."
+msg_warning_potion_speed_effect_decreased: "&bThe Speed effect of the potion was decreased."
+msg_warning_potion_speed_effect_cancelled: "&bThe Speed effect of the potion was cancelled."
+msg_warning_potion_strength_effect_increased: "&bThe Strength effect of the potion was increased."
+msg_warning_potion_strength_effect_blocked_for_rider: "&bThe horse rider did not gain the Strength effect of the potion."
+msg_warning_potion_speed_effect_increased_on_your_horse: "&bThe Speed effect of the potion on your horse was increased."
+msg_warning_potion_speed_effect_decreased_on_your_horse: "&bThe Speed effect of the potion on your horse was decreased."
+msg_warning_potion_speed_effect_cancelled_on_your_horse: "&bThe Speed effect of the potion on your horse was cancelled."
