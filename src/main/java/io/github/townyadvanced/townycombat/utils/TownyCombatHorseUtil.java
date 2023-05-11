@@ -131,7 +131,7 @@ public class TownyCombatHorseUtil {
                 for (LivingEntity entity : event.getAffectedEntities()) {
                     if (entity instanceof Player && getMount((Player)entity) != null) {
                         event.setIntensity(entity, 0);
-                        Messaging.sendMsg(event.getEntity(), Translatable.of("msg_err_strength_potion_did_not_affect_horse_rider"));
+                        Messaging.sendMsg(event.getEntity(), Translatable.of("msg_warning_potion_strength_effect_blocked_for_rider"));
                     }
                 }
             }
@@ -149,7 +149,7 @@ public class TownyCombatHorseUtil {
             if(potionEffectType.equals(PotionEffectType.DAMAGE_RESISTANCE)
                     && TownyCombatHorseUtil.getMount(event.getPlayer()) != null) {
                 event.setCancelled(true);
-                Messaging.sendMsg(event.getPlayer(), "CANNOT USE STRENGTH POTIONS WHILE RIDING");
+                Messaging.sendMsg(event.getPlayer(), Translatable.of("msg_warning_potion_strength_effect_blocked_for_rider"));
             }
         }
     }

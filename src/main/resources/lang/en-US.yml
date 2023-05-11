@@ -130,6 +130,13 @@ transmuted_potion_name: "Potion of Regeneration"
 transmuted_potion_name_splash: "Splash Potion of Regeneration"
 potions_transmuted: "&b%d potions of healing in your inventory were transmuted into potions of regeneration."
 
-# Effect change errors
+# Potions Effect changes
 
-msg_err_strength_potion_did_not_affect_horse_rider: "The horse rider did not gain the Strength effect."
+msg_warning_potion_speed_effect_increased: "The Speed effect of the potion was increased."
+msg_warning_potion_speed_effect_decreased: "The Speed effect of the potion was decreased."
+msg_warning_potion_speed_effect_cancelled: "The Speed effect of the potion was cancelled."
+msg_warning_potion_strength_effect_increased: "The Strength effect of the potion was increased."
+msg_warning_potion_strength_effect_blocked_for_rider: "The horse rider did not gain the Strength effect of the potion."
+msg_warning_potion_speed_effect_increased_on_your_horse: "The Speed effect of the potion on your horse was increased."
+msg_warning_potion_speed_effect_decreased_on_your_horse: "The Speed effect of the potion on your horse was decreased."
+msg_warning_potion_speed_effect_cancelled_on_your_horse: "The Speed effect of the potion on your horse was cancelled."
