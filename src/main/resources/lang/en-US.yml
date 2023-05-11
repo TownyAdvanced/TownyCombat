@@ -128,7 +128,7 @@ spear_lore_line_1: "+%d Damage v.s. Cavalry"
 
 transmuted_potion_name: "Potion of Regeneration"
 transmuted_potion_name_splash: "Splash Potion of Regeneration"
-potions_transmuted: "&b%d potions of healing in your inventory were transmuted into potions of regeneration."
+potions_transmuted: "&b%d Potions of Healing in your inventory were transmuted into Potions of Regeneration."
 
 # Effect change errors
 

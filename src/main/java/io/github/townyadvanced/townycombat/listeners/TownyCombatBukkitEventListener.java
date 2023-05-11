@@ -414,32 +414,26 @@ public class TownyCombatBukkitEventListener implements Listener {
 	public void on (BrewEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
-		//Transmuted Potion
-		boolean potionsTransmuted = false;
-		ItemStack resultItemStack;
+		//Can't alter the new regen potions
 		if (TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() && TownyCombatSettings.isPotionTransmuterEnabed()) {
 			BrewerInventory brewerInventory = event.getContents();
-			if (brewerInventory.getIngredient() != null && brewerInventory.getIngredient().getType() == Material.GLISTERING_MELON_SLICE) {
-				//Replace ackward potions with special regen potions
-				for (int i = 0; i < brewerInventory.getContents().length; i++) {
-					resultItemStack = brewerInventory.getItem(i);
-					if (resultItemStack != null
-							&& resultItemStack.getType() == Material.POTION
-							&& resultItemStack.getItemMeta() != null
-							&& ((PotionMeta) resultItemStack.getItemMeta()).getBasePotionData().getType().equals(PotionType.AWKWARD)) {
-						brewerInventory.setItem(i, TownyCombatItemUtil.createTransmutedPotion(resultItemStack));
-						potionsTransmuted = true;
+			ItemStack resultItemStack;
+			for (int i = 0; i < brewerInventory.getContents().length; i++) {
+				resultItemStack = brewerInventory.getItem(i);
+				if (resultItemStack != null
+						&& resultItemStack.getType() == Material.POTION
+						&& resultItemStack.getItemMeta() != null
+						&& ((PotionMeta) resultItemStack.getItemMeta()).getCustomEffects().size() > 0
+						&& ((PotionMeta) resultItemStack.getItemMeta()).getCustomEffects().get(0).getType().equals(PotionEffectType.REGENERATION)) {
+					//Cancel Event. Reduce ingredient so the brew does not keep going indefinitely
+					if(brewerInventory.getIngredient() != null) {
+						brewerInventory.getIngredient().setAmount(brewerInventory.getIngredient().getAmount() - 1);
 					}
-				}
-				//If potions were transmuted, reduce ingredient, play sound and cancel event
-				if(potionsTransmuted) {
-					brewerInventory.getIngredient().setAmount(brewerInventory.getIngredient().getAmount() - 1);
-					event.getBlock().getWorld().playEffect(event.getBlock().getLocation(), Effect.BREWING_STAND_BREW, null);
 					event.setCancelled(true);
+					event.getBlock().getWorld().playEffect(event.getBlock().getLocation(), Effect.EXTINGUISH, null);
+					break;
 				}
 			}
-			
-
 		}
 	}
 	

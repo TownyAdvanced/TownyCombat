@@ -326,7 +326,7 @@ public class TownyCombatItemUtil {
         int transmutedPotionDurationTicks = TownyCombatSettings.getPotionTransmuterTransmutedPotionDurationSeconds() * 20;
         int sourcePotionAmplifier = oldPotionMeta.getBasePotionData().isUpgraded() ? 1: 0;
         int transmutedPotionAmplifier = sourcePotionAmplifier + TownyCombatSettings.getPotionTransmuterAmplificationAdjustment();
-        transmutedPotionAmplifier = Math.min(transmutedPotionAmplifier, 0);
+        transmutedPotionAmplifier = Math.max(transmutedPotionAmplifier, 0);
         PotionEffect potionEffect = new PotionEffect(PotionEffectType.REGENERATION, transmutedPotionDurationTicks, transmutedPotionAmplifier, false, false, true);
         newPotionMeta.addCustomEffect(potionEffect, true);
         //Set the adjusted potion meta into the itemstack
