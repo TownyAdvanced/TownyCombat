@@ -194,21 +194,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 				&& TownyCombatSettings.isCavalryStrengthBonusEnabled()) {
 			TownyCombatHorseUtil.cancelStrengthEffectsOnPlayerRiders(event);
 		}
-
-		//Cancel if this is a super potion which was thrown by a player but not owner by them
-		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled() 
-				&& TownyCombatSettings.isBattlefieldRolesEnabled()
-				&& TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()
-			    && TownyCombatItemUtil.isSuperPotion(event.getPotion().getItem())) {
-			ProjectileSource shooter = event.getEntity().getShooter();
-			if (shooter instanceof Player) {
-				if (!TownyCombatItemUtil.doesPlayerOwnSuperPotion((Player) shooter, event.getPotion().getItem())) {
-					event.setCancelled(true);
-					Messaging.sendMsg((Player) shooter, Translatable.of("msg_warning_cannot_use_super_potion_not_owner"));
-				}
-			}
-		}
-
+		
 		//Apply role based effect adjustments
 		if(TownyCombatSettings.isUnlockCombatForRegularPlayersEnabled()
 				&& TownyCombatSettings.isBattlefieldRolesEnabled()) {

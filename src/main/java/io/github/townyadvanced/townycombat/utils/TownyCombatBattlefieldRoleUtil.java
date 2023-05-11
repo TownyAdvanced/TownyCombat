@@ -24,6 +24,7 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.projectiles.ProjectileSource;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -344,22 +345,64 @@ public class TownyCombatBattlefieldRoleUtil {
      */
     public static void processItemConsumptionEvent(PlayerItemConsumeEvent event) {
         if(event.getItem().getType() == Material.POTION) {
-            //Transform the potion effect into a PotionEffect object for reference
-            PotionMeta potionMeta = (PotionMeta) event.getItem().getItemMeta();
-            PotionData potionData = potionMeta.getBasePotionData();
-            PotionEffectType potionEffectType = potionData.getType().getEffectType();
-            if(potionEffectType != null && potionEffectType.equals(PotionEffectType.SPEED)) {
-                int potionAmplifier = potionData.isUpgraded() ? 1 : 0;
-                int potionDurationTicks = (potionData.isExtended() ? 480 : potionData.isUpgraded() ? 90 : 180) * 20;
-                PotionEffect originalPotionEffect = new PotionEffect(potionEffectType, potionDurationTicks, potionAmplifier, true, true, true);
-                //Apply adjustment
-                if (grantAdjustedPotionSpeedEffectToPlayer(originalPotionEffect, event.getPlayer())) {
-                    event.setItem(new ItemStack(Material.GLASS_BOTTLE));
+            if(TownyCombatItemUtil.isSuperPotion(event.getItem())) {
+                if(TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()
+                        && TownyCombatItemUtil.isSuperPotion(event.getItem())) {
+                    TownyCombatBattlefieldRoleUtil.processSuperPotionDrinking(event);
                 }
+            } else {
+                TownyCombatBattlefieldRoleUtil.processRegularPotionDrinking(event);
             }
         }
     }
-    
+
+    /**
+     * Process super potion drinking to see if we give the effect to a mount
+     * 
+     * @param event potion item consume event
+     */
+    private static void processSuperPotionDrinking(PlayerItemConsumeEvent event) {
+        //Cancel if super potion was used by a non-owner
+        if(TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()
+                && TownyCombatItemUtil.isSuperPotion(event.getItem())) {
+            if (!TownyCombatItemUtil.doesPlayerOwnSuperPotion(event.getPlayer(), event.getItem())) {
+                event.setCancelled(true);
+                Messaging.sendMsg(event.getPlayer(), Translatable.of("msg_warning_cannot_use_super_potion_not_owner"));
+                return;
+            }
+        }
+
+        //Apply effect to mounted horse
+        Horse mount = TownyCombatHorseUtil.getMount(event.getPlayer());
+        if(mount != null) {
+            BattlefieldRole drinkerBattlefieldRole = getBattlefieldRole(event.getPlayer());
+            switch (drinkerBattlefieldRole) {
+                case LIGHT_CAVALRY:
+                case HEAVY_CAVALRY:
+                    grantAdjustedPotionEffectToLivingEntity(((PotionMeta) event.getItem()).getCustomEffects().get(0), mount, 0);
+                    break;
+            }
+        }
+    }
+
+    private static void processRegularPotionDrinking(PlayerItemConsumeEvent event) {
+        //Apply speed effects if needed
+        if(event.getItem().getItemMeta() == null)
+            return;
+        PotionMeta potionMeta = (PotionMeta) event.getItem().getItemMeta();
+        PotionData potionData = potionMeta.getBasePotionData();
+        PotionEffectType potionEffectType = potionData.getType().getEffectType();
+        if(potionEffectType != null && potionEffectType.equals(PotionEffectType.SPEED)) {
+            int potionAmplifier = potionData.isUpgraded() ? 1 : 0;
+            int potionDurationTicks = (potionData.isExtended() ? 480 : potionData.isUpgraded() ? 90 : 180) * 20;
+            PotionEffect originalPotionEffect = new PotionEffect(potionEffectType, potionDurationTicks, potionAmplifier, true, true, true);
+            //Apply adjustment
+            if (grantAdjustedPotionSpeedEffectToPlayer(originalPotionEffect, event.getPlayer())) {
+                event.setItem(new ItemStack(Material.GLASS_BOTTLE));
+            }
+        }
+    }
+
     //////////////// Process Splash Potions /////////////////
 
     /**
@@ -371,6 +414,20 @@ public class TownyCombatBattlefieldRoleUtil {
      * @param event the splash potion effect
      */
     public static void processSplashPotionEvent(PotionSplashEvent event) {
+        //Cancel if super potion was thrown by a non-owner
+        if(TownyCombatSettings.isBattlefieldRolesSuperPotionsEnabled()
+                && TownyCombatItemUtil.isSuperPotion(event.getPotion().getItem())) {
+            ProjectileSource shooter = event.getEntity().getShooter();
+            if (shooter instanceof Player) {
+                if (!TownyCombatItemUtil.doesPlayerOwnSuperPotion((Player) shooter, event.getPotion().getItem())) {
+                    event.setCancelled(true);
+                    Messaging.sendMsg((Player) shooter, Translatable.of("msg_warning_cannot_use_super_potion_not_owner"));
+                    return;
+                }
+            }
+        }
+
+        //Apply any relevant speed effects
         for (PotionEffect potionEffect : event.getPotion().getEffects()) {
             if (potionEffect.getType() == PotionEffectType.SPEED) {
                 for (LivingEntity entity : event.getAffectedEntities()) {
