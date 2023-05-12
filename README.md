@@ -66,9 +66,10 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
 - ```/tcma reload```: Reload config and language settings.
 
 ## Installation:
-1. Download the latest ***TownyCombat.jar*** from [here](https://github.com/TownyAdvanced/TownyCombat/releases).
-2. Drop the jar into your plugins folder.
-3. Restart your server.
-4. Edit the file /TownyCombat/config.yml, and configure (***By Default, all features will be configured to off***).
-5. Restart your server.
+1. Ensure your server has *Towny 0.98.4.0* or newer.
+2. Download the latest ***TownyCombat.jar*** from [here](https://github.com/TownyAdvanced/TownyCombat/releases).
+3. Drop the jar into your plugins folder.
+4. Restart your server.
+5. Edit the file /TownyCombat/config.yml, and configure (***By Default, all features will be configured to off***).
+6. Restart your server.
 
