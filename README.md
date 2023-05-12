@@ -1,8 +1,8 @@
 # TownyCombat
 A combat plugin for Towny, containing some fun combat/battle/pvp features.
 
-## Features:
-- :bricks: **Prevent Towny-Block-Glitching by quick-block-place/destroy:**
+## Features
+- :bricks: **Prevent Towny-Block-Glitching by quick-block-place/destroy**
   - Via a secret magical method.
   - Try it and see!
 
@@ -30,7 +30,7 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
     - The healing is +50% of the source potion, but delivered over 15 seconds rather than instantly.
     - *With this feature, players no longer require elite-level inventory management skills to manage their healing during battles.*
 
-- :horse: **Cavalry Enhancements:**
+- :horse: **Cavalry Enhancements**
   - Overview:
     - Mounted Horses (*aka cavalry*) play the role of "Tanks" on the battlefield: tough + mobile + powerful shot. 
   - Special Abilities:
@@ -47,25 +47,25 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
     ![image](https://user-images.githubusercontent.com/50219223/236872422-90922285-a49e-497a-9528-97a4581ca6db.png)    
   - *Note: The spear bonus can also be given to custom-model weapons. See config file for mode details.*
 
-- :footprints: **Tactical Invisibilty:**
+- :footprints: **Tactical Invisibilty**
   - Use stealth tactics by going invisible on the dynmap.
   - This feature allows players to use many stealth tactics, in exchange for showing less activity on the dynmap.
   - There are 2 Modes:
     - Automatic: You disappear from the map when in the wilderness.
     - Triggered: You disappear from the map when holding a certain combination of items in your hands (*e.g. double diamond swords*).  
 
-- :coffin: **Keep Inventory on Death:**
+- :coffin: **Keep Inventory on Death**
   - If you die within 400 blocks of a town-homeblock, you keep your inventory and levels.
   - Any tools/weapons/armour in your inventory are subject to a 5% degrade.
 
-## Player Commands:
+## Player Commands
 - ```/resident```: View your Battlefield Role.
 - ```/tcm changerole```: Change your Battlefield Role.
 
-## Admin Commands:
+## Admin Commands
 - ```/tcma reload```: Reload config and language settings.
 
-## Installation:
+## Installation
 1. Ensure your server has *Towny 0.98.4.0* or newer.
 2. Download the latest ***TownyCombat.jar*** from [here](https://github.com/TownyAdvanced/TownyCombat/releases).
 3. Drop the jar into your plugins folder.
