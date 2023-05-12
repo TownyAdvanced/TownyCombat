@@ -34,7 +34,7 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
   - Overview:
     - Mounted Horses (*aka cavalry*) play the role of "Tanks" on the battlefield: tough + mobile + powerful shot. 
   - Special Abilities:
-    - Cavalry Strength Bonus: +3 PVP Strength Bonus for 1 hit. Cooldown for 10 seconds.
+    - Cavalry Power Shot: +3 Strength Bonus for 1 hit. Cooldown for 10 seconds.
     - Missile Shield: Both horse and rider are immune to arrows fired from bows (but not crossbows).
     - Resistance to PVP Attack Damage: +70% .
     - Do not rear up on taking damage.
