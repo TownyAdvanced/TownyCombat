@@ -58,12 +58,12 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
   - If you die within 400 blocks of a town-homeblock, you keep your inventory and levels.
   - Any tools/weapons/armour in your inventory are subject to a 5% degrade.
 
-## Admin Commands:
-- ```/tcma reload```: Reload config and language settings.
-
 ## Player Commands:
 - ```/resident```: View your Battlefield Role.
 - ```/tcm changerole```: Change your Battlefield Role.
+- 
+## Admin Commands:
+- ```/tcma reload```: Reload config and language settings.
 
 ## Installation:
 1. Download the latest ***TownyCombat.jar*** from [here](https://github.com/TownyAdvanced/TownyCombat/releases).
