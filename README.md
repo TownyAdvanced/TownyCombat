@@ -61,7 +61,7 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
 ## Player Commands:
 - ```/resident```: View your Battlefield Role.
 - ```/tcm changerole```: Change your Battlefield Role.
-- 
+
 ## Admin Commands:
 - ```/tcma reload```: Reload config and language settings.
 
