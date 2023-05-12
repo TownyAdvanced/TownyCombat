@@ -2,7 +2,7 @@
 A combat plugin for Towny, containing some fun combat/battle/pvp features.
 
 ## Features:
-- :snake: **Prevent Towny-Block-Glitching by quick-block-place/destroy:**
+- :bricks: **Prevent Towny-Block-Glitching by quick-block-place/destroy:**
   - Via a secret magical method.
   - Try it and see!
 
