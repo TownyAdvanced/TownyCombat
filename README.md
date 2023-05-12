@@ -23,12 +23,12 @@ A combat plugin for Towny, containing some fun combat/battle/pvp features.
       - Heavy Cavalry<br>
         ![image](https://github.com/TownyAdvanced/TownyCombat/assets/50219223/024478f5-631b-44df-b3b2-3474a9ec4d08) 
       <br>
-    - *With this feature, players do not require excessively expensive armor and weapons to be competitive during battles.*
+    - *With this feature, players no longer require excessively expensive armor and weapons to be competitive during battles.*
   
   - :sparkling_heart: :sparkling_heart: :sparkling_heart:  **Potion Transmuter**
     - Potions of Healing are automatically Transmuted into Special Potions of Regeneration.
     - The healing is +50% of the source potion, but delivered over 15 seconds rather than instantly.
-    - *With this feature, players do not require elite-level inventory management skills to manage their healing during battles.*
+    - *With this feature, players no longer require elite-level inventory management skills to manage their healing during battles.*
 
 - :horse: :star: **Cavalry Enhancements:**
   - Overview:
