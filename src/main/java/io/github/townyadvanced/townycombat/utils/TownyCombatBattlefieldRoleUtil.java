@@ -8,7 +8,6 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.util.TimeMgmt;
 import com.palmergames.util.TimeTools;
-import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.events.BattlefieldRole;
 import io.github.townyadvanced.townycombat.metadata.TownyCombatResidentMetaDataController;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
@@ -27,7 +26,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.ProjectileSource;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -307,6 +305,8 @@ public class TownyCombatBattlefieldRoleUtil {
                     grantAdjustedPotionEffectToLivingEntity(((PotionMeta) event.getItem().getItemMeta()).getCustomEffects().get(0), mount, 0);
                     Messaging.sendMsg(event.getPlayer(), Translatable.of("msg_warning_super_potion_also_affected_horse"));
                     break;
+                default:
+                    break;
             }
         }
     }
@@ -430,6 +430,8 @@ public class TownyCombatBattlefieldRoleUtil {
                     Messaging.sendMsg(player, Translatable.of("msg_warning_potion_strength_effect_increased"));
                     return true;
                 }
+            default:
+                break;
         }
         return false;
     }
@@ -453,6 +455,8 @@ public class TownyCombatBattlefieldRoleUtil {
             case HEAVY_CAVALRY:
                 Messaging.sendMsg(rider, Translatable.of("msg_warning_potion_speed_effect_cancelled_on_your_horse"));
                 return true;
+            default:
+                break;
         }
         return false;
     }
@@ -510,6 +514,8 @@ public class TownyCombatBattlefieldRoleUtil {
                 if (speedEffect != null) {
                     mountedHorse.removePotionEffect(PotionEffectType.SPEED);
                 }
+                break;
+            default:
                 break;
         }
     }

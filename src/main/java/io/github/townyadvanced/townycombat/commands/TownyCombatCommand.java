@@ -1,13 +1,12 @@
 package io.github.townyadvanced.townycombat.commands;
 
 
+import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.utils.NameUtil;
 import com.palmergames.bukkit.util.ChatTools;
 import io.github.townyadvanced.townycombat.enums.TownyCombatPermissionNodes;
-import io.github.townyadvanced.townycombat.settings.Settings;
-import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import io.github.townyadvanced.townycombat.utils.Messaging;
 import io.github.townyadvanced.townycombat.utils.TownyCombatBattlefieldRoleUtil;
 import org.bukkit.command.Command;
@@ -70,8 +69,8 @@ public class TownyCombatCommand implements TabExecutor {
 		}
 	}
 	private void showHelp(CommandSender sender) {
-		Messaging.sendMsg(sender, ChatTools.formatTitle("/townycombat"));
-		Messaging.sendMsg(sender, ChatTools.formatCommand("Eg", "/tcm", "changerole", Translatable.of("command_help_changerole").forLocale(sender)));
+		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/townycombat"));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/tcm", "changerole", Translatable.of("command_help_changerole").forLocale(sender)));
 	}
 
 	private void parseChangeRoleCommand(CommandSender sender, String[] args) {
