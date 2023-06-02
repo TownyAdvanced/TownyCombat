@@ -9,9 +9,6 @@ import io.github.townyadvanced.townycombat.utils.Messaging;
 import io.github.townyadvanced.townycombat.utils.TownyCombatBattlefieldRoleUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatHorseUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatMovementUtil;
-import io.github.townyadvanced.townycombat.utils.TownyCombatDistanceUtil;
-import io.github.townyadvanced.townycombat.utils.TownyCombatInventoryUtil;
-import io.github.townyadvanced.townycombat.utils.TownyCombatExperienceUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatItemUtil;
 
 import org.bukkit.Bukkit;
@@ -20,7 +17,6 @@ import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Horse;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Arrow;
 import org.bukkit.event.EventHandler;
@@ -29,7 +25,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityShootBowEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.inventory.BrewEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -41,13 +36,8 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.BrewerInventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.Potion;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.potion.PotionType;
-import org.bukkit.projectiles.ProjectileSource;
 import org.spigotmc.event.entity.EntityDismountEvent;
 import org.spigotmc.event.entity.EntityMountEvent;
 
@@ -128,24 +118,6 @@ public class TownyCombatBukkitEventListener implements Listener {
 			return;
 		//Deregister for charge bonus
 		TownyCombatHorseUtil.deregisterPlayerForCavalryStrengthBonus((Player)event.getEntity());
-	}
-
-	@EventHandler
-	public void on (PlayerDeathEvent event) {
-		if (!TownyCombatSettings.isTownyCombatEnabled())
-			return;
-		if(!TownyCombatSettings.isKeepInventoryOnDeathEnabled() && !TownyCombatSettings.isKeepExperienceOnDeathEnabled())
-			return;	
-		if(!TownyCombatDistanceUtil.isCloseToATown(event.getEntity(), TownyCombatSettings.getKeepStuffOnDeathTownProximityBlocks()))
-			return;
-		//Keep inv functions
-		if(TownyCombatSettings.isKeepInventoryOnDeathEnabled()) {
-			TownyCombatInventoryUtil.degradeInventory(event);
-			TownyCombatInventoryUtil.keepInventory(event);
-		}
-		if(TownyCombatSettings.isKeepExperienceOnDeathEnabled()) {
-			TownyCombatExperienceUtil.keepExperience(event);
-		}
 	}
 
 	@EventHandler
