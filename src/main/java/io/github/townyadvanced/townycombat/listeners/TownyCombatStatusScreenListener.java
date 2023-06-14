@@ -85,6 +85,8 @@ public class TownyCombatStatusScreenListener implements Listener {
 				text = text.append(Component.newline());
 				text = text.append(Component.text(translator.of("status_resident_content_" + translationKey + "_disadvantage")));
 				break;
+			default:
+				break;
 		}
 
 		//Super Potions

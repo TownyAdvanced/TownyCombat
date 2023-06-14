@@ -1,6 +1,7 @@
 package io.github.townyadvanced.townycombat.commands;
 
 
+import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.utils.NameUtil;
 import com.palmergames.bukkit.util.ChatTools;
@@ -66,8 +67,8 @@ public class TownyCombatAdminCommand implements TabExecutor {
 	}
 
 	private void showHelp(CommandSender sender) {
-		sender.sendMessage(ChatTools.formatTitle("/townycombatadmin"));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/tcma", "reload", Translatable.of("admin_help_reload").forLocale(sender)));
+		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/townycombatadmin"));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/tcma", "reload", Translatable.of("admin_help_reload").forLocale(sender)));
 	}
 
 	private void parseReloadCommand(CommandSender sender) {
