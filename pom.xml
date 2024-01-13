@@ -2,14 +2,14 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.github.townyadvanced</groupId>
   <artifactId>TownyCombat</artifactId>
-  <version>4.0.1</version>
+  <version>4.1.0</version>
   <name>townycombat</name> <!-- Leave lower-cased -->
 
   <properties>
     <java.version>1.8</java.version>
     <project.bukkitAPIVersion>1.15</project.bukkitAPIVersion>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <towny.version>0.98.4.0</towny.version>
+    <towny.version>0.100.0.0</towny.version>
   </properties>
 
   <repositories>
