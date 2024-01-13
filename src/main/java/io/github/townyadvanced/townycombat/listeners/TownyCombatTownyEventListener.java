@@ -3,11 +3,15 @@ package io.github.townyadvanced.townycombat.listeners;
 import com.palmergames.bukkit.towny.event.NewDayEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyBuildEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyDestroyEvent;
+import com.palmergames.bukkit.towny.event.player.PlayerKeepsExperienceEvent;
+import com.palmergames.bukkit.towny.event.player.PlayerKeepsInventoryEvent;
 import com.palmergames.bukkit.towny.event.time.NewShortTimeEvent;
 import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import io.github.townyadvanced.townycombat.utils.TownyCombatBattlefieldRoleUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatBlockUtil;
+import io.github.townyadvanced.townycombat.utils.TownyCombatDistanceUtil;
+import io.github.townyadvanced.townycombat.utils.TownyCombatInventoryUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatItemUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatMapUtil;
 import org.bukkit.event.EventHandler;
@@ -70,4 +74,29 @@ public class TownyCombatTownyEventListener implements Listener {
 			TownyCombatBattlefieldRoleUtil.giveRoleBasedDamageResistance();
 		}
     }
+
+	@EventHandler (priority = EventPriority.LOWEST)
+	public void onPlayerDeathInventory(PlayerKeepsInventoryEvent event) {
+		if (!TownyCombatSettings.isTownyCombatEnabled())
+			return;
+		if(!TownyCombatSettings.isKeepInventoryOnDeathEnabled())
+			return;	
+		if(!TownyCombatDistanceUtil.isCloseToATown(event.getPlayer(), TownyCombatSettings.getKeepStuffOnDeathTownProximityBlocks()))
+			return;
+		//Keep inv functions
+		TownyCombatInventoryUtil.degradeInventory(event.getPlayer());
+		event.setCancelled(false);
+	}
+
+	@EventHandler (priority = EventPriority.LOWEST)
+	public void onPlayerDeathExperience(PlayerKeepsExperienceEvent event) {
+		if (!TownyCombatSettings.isTownyCombatEnabled())
+			return;
+		if(!TownyCombatSettings.isKeepExperienceOnDeathEnabled())
+			return;	
+		if(!TownyCombatDistanceUtil.isCloseToATown(event.getPlayer(), TownyCombatSettings.getKeepStuffOnDeathTownProximityBlocks()))
+			return;
+		event.setCancelled(false);
+	}
+
 }

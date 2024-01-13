@@ -2,7 +2,8 @@ package io.github.townyadvanced.townycombat.utils;
 
 import com.palmergames.bukkit.towny.object.Translatable;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
-import org.bukkit.event.entity.PlayerDeathEvent;
+
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -14,12 +15,12 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TownyCombatInventoryUtil {
 
-	public static void degradeInventory(PlayerDeathEvent playerDeathEvent) {
+	public static void degradeInventory(Player player) {
 		Damageable damageable;
 		double maxDurability;
 		int currentDurability, damageToInflict, newDurability, durabilityWarning;
 		boolean closeToBreaking = false;
-        for (ItemStack itemStack : playerDeathEvent.getEntity().getInventory().getContents()) {
+        for (ItemStack itemStack : player.getInventory().getContents()) {
             if (itemStack != null && itemStack.getType().getMaxDurability() != 0 && !itemStack.getItemMeta().isUnbreakable()) {
                 damageable = ((Damageable) itemStack.getItemMeta());
                 maxDurability = itemStack.getType().getMaxDurability();
@@ -40,12 +41,6 @@ public class TownyCombatInventoryUtil {
             }
         }
         if (closeToBreaking) //One or more items are close to breaking, send warning.
-            Messaging.sendMsg(playerDeathEvent.getEntity(), Translatable.of("msg_inventory_degrade_warning"));
+            Messaging.sendMsg(player, Translatable.of("msg_inventory_degrade_warning"));
 	}
-
-	public static void keepInventory(PlayerDeathEvent playerDeathEvent) {
-        playerDeathEvent.setKeepInventory(true);
-        playerDeathEvent.getDrops().clear();
-	}
-
 }
