@@ -55,7 +55,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		plugin = instance;
 	}
 
-	@EventHandler
+	@EventHandler (ignoreCancelled = true)
 	public void on (PlayerTeleportEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
@@ -73,7 +73,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 			TownyCombatHorseUtil.scheduleMountTeleport(event);
 	}
 
-	@EventHandler
+	@EventHandler (ignoreCancelled = true)
 	public void on (EntityMountEvent event) {
 		if(!TownyCombatSettings.isTownyCombatEnabled())
 			return;
@@ -110,7 +110,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		}
 	}
 
-	@EventHandler
+	@EventHandler (ignoreCancelled = true)
 	public void on (EntityDismountEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
@@ -120,7 +120,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		TownyCombatHorseUtil.deregisterPlayerForCavalryStrengthBonus((Player)event.getEntity());
 	}
 
-	@EventHandler
+	@EventHandler (ignoreCancelled = true)
 	public void on (PlayerJoinEvent event) {
 		if(!TownyCombatSettings.isTownyCombatEnabled())
 			return;
@@ -145,7 +145,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		}
 	}
 
-	@EventHandler
+	@EventHandler (ignoreCancelled = true)
 	public void on (EntityDamageEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
@@ -165,7 +165,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		}
 	}
 
-	@EventHandler
+	@EventHandler (ignoreCancelled = true)
 	public void on (PotionSplashEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
@@ -183,7 +183,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		}
 	}
 
-	@EventHandler
+	@EventHandler (ignoreCancelled = true)
 	public void on (EntityShootBowEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
@@ -202,7 +202,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		}
 	}
 	
-	@EventHandler
+	@EventHandler (ignoreCancelled = true)
 	public void on (EntityDamageByEntityEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
@@ -345,7 +345,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		event.setDamage(damage);
 	}
 
-	@EventHandler
+	@EventHandler (ignoreCancelled = true)
 	public void on (PrepareItemCraftEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
@@ -368,7 +368,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		}
 	}
 
-	@EventHandler
+	@EventHandler (ignoreCancelled = true)
 	public void on (BrewEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
@@ -424,7 +424,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 		}
 	}
 
-	@EventHandler
+	@EventHandler (ignoreCancelled = true)
 	public void on (PlayerItemConsumeEvent event) {
 		if (!TownyCombatSettings.isTownyCombatEnabled())
 			return;
