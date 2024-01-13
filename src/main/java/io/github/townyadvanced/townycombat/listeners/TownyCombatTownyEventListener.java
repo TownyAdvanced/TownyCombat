@@ -10,6 +10,7 @@ import io.github.townyadvanced.townycombat.utils.TownyCombatBattlefieldRoleUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatBlockUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatItemUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatMapUtil;
+import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -33,6 +34,9 @@ public class TownyCombatTownyEventListener implements Listener {
         if(TownyCombatSettings.isTownyCombatEnabled() 
 	        	&& TownyCombatSettings.isBlockGlitchingPreventionEnabled()
     	    	&& event.isCancelled()) {
+			Block block = event.getBlock();
+			if (block.isPassable()) return;
+
             TownyCombatBlockUtil.applyBlockGlitchingPrevention(event.getPlayer());
         }
 	}
@@ -42,6 +46,9 @@ public class TownyCombatTownyEventListener implements Listener {
         if(TownyCombatSettings.isTownyCombatEnabled() 
         		&& TownyCombatSettings.isBlockGlitchingPreventionEnabled()
         		&& event.isCancelled()) {
+			Block block = event.getBlock();
+			if (block.isPassable() && !block.isLiquid()) return;
+
             TownyCombatBlockUtil.applyBlockGlitchingPrevention(event.getPlayer());
         }
 	}
