@@ -181,7 +181,7 @@ public class TownyCombatItemUtil {
                 grantHeavyRoleSuperPotions(player);
                 break;
             default:
-                throw new RuntimeException("Unknown battlefield role");
+                throw new RuntimeException(resident.getName() + " has an unknown battlefield role.");
         }
         TownyCombatResidentMetaDataController.setLastSuperPotionCollectionDate(resident, LocalDate.now());
         resident.save();
