@@ -6,10 +6,10 @@
   <name>townycombat</name> <!-- Leave lower-cased -->
 
   <properties>
-    <java.version>1.8</java.version>
+    <java.version>17</java.version>
     <project.bukkitAPIVersion>1.15</project.bukkitAPIVersion>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <towny.version>0.100.0.0</towny.version>
+    <towny.version>0.101.0.0</towny.version>
   </properties>
 
   <repositories>
@@ -59,8 +59,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.10.1</version>
         <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
         </configuration>
       </plugin>
     </plugins>
