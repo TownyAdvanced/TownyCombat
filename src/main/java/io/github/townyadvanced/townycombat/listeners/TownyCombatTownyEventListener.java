@@ -14,7 +14,6 @@ import io.github.townyadvanced.townycombat.utils.TownyCombatDistanceUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatInventoryUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatItemUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatMapUtil;
-import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -38,8 +37,9 @@ public class TownyCombatTownyEventListener implements Listener {
         if(TownyCombatSettings.isTownyCombatEnabled() 
 	        	&& TownyCombatSettings.isBlockGlitchingPreventionEnabled()
     	    	&& event.isCancelled()) {
-			Block block = event.getBlock();
-			if (block.isPassable()) return;
+
+			if (!event.getMaterial().isSolid())
+				return;
 
             TownyCombatBlockUtil.applyBlockGlitchingPrevention(event.getPlayer());
         }
@@ -50,8 +50,9 @@ public class TownyCombatTownyEventListener implements Listener {
         if(TownyCombatSettings.isTownyCombatEnabled() 
         		&& TownyCombatSettings.isBlockGlitchingPreventionEnabled()
         		&& event.isCancelled()) {
-			Block block = event.getBlock();
-			if (block.isPassable() && !block.isLiquid()) return;
+
+        	if (!event.getMaterial().isSolid() && !event.getMaterial().name().endsWith("BUCKET"))
+				return;
 
             TownyCombatBlockUtil.applyBlockGlitchingPrevention(event.getPlayer());
         }
