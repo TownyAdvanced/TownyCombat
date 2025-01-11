@@ -14,6 +14,8 @@ import io.github.townyadvanced.townycombat.utils.TownyCombatDistanceUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatInventoryUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatItemUtil;
 import io.github.townyadvanced.townycombat.utils.TownyCombatMapUtil;
+
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -51,11 +53,23 @@ public class TownyCombatTownyEventListener implements Listener {
         		&& TownyCombatSettings.isBlockGlitchingPreventionEnabled()
         		&& event.isCancelled()) {
 
-        	if (!event.getMaterial().isSolid() && !event.getMaterial().name().endsWith("BUCKET"))
+        	if (!event.getMaterial().isSolid() && notAPeskyBlock(event.getMaterial()))
 				return;
 
             TownyCombatBlockUtil.applyBlockGlitchingPrevention(event.getPlayer());
         }
+	}
+
+	/**
+	 * @param material Material being built.
+	 * @return true when it is not a block players can use to travel upwards.
+	 */
+	private boolean notAPeskyBlock(Material material) {
+		if (material.name().endsWith("BUCKET")   // Water buckets are exploited to swim up.
+		|| material.equals(Material.SCAFFOLDING) // Scaffolds can be climbed up, like water.
+		)
+			return false;
+		return true;
 	}
 
 	@EventHandler
