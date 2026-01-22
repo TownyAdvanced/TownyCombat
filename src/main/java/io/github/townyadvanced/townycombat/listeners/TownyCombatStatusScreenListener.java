@@ -1,8 +1,5 @@
 package io.github.townyadvanced.townycombat.listeners;
 
-
-import com.palmergames.adventure.text.Component;
-import com.palmergames.adventure.text.event.HoverEvent;
 import com.palmergames.bukkit.towny.event.statusscreen.ResidentStatusScreenEvent;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Translation;
@@ -12,6 +9,9 @@ import io.github.townyadvanced.townycombat.TownyCombat;
 import io.github.townyadvanced.townycombat.events.BattlefieldRole;
 import io.github.townyadvanced.townycombat.settings.TownyCombatSettings;
 import io.github.townyadvanced.townycombat.utils.TownyCombatBattlefieldRoleUtil;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.HoverEvent;
+
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 

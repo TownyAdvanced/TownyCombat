@@ -328,7 +328,7 @@ public class TownyCombatBattlefieldRoleUtil {
             if (grantAdjustedPotionSpeedEffectToPlayer(originalPotionEffect, event.getPlayer())) {
                 event.setItem(new ItemStack(Material.GLASS_BOTTLE));
             }
-        } else if (potionEffectType.equals(PotionEffectType.INCREASE_DAMAGE)) {
+        } else if (potionEffectType.equals(PotionEffectType.STRENGTH)) {
             int potionAmplifier = potionData.isUpgraded() ? 1 : 0;
             int potionDurationTicks = (potionData.isExtended() ? 480 : potionData.isUpgraded() ? 90 : 180) * 20;
             PotionEffect originalPotionEffect = new PotionEffect(potionEffectType, potionDurationTicks, potionAmplifier, true, true, true);
@@ -377,7 +377,7 @@ public class TownyCombatBattlefieldRoleUtil {
                         }
                     }
                 }
-            } else if (potionEffect.getType().equals(PotionEffectType.INCREASE_DAMAGE)) {
+            } else if (potionEffect.getType().equals(PotionEffectType.STRENGTH)) {
                 for (LivingEntity entity : event.getAffectedEntities()) {
                     if (entity instanceof Player) {
                         if (event.getIntensity(entity) != 0 && grantAdjustedPotionStrengthEffectToPlayer(potionEffect, (Player) entity)) {
@@ -465,7 +465,7 @@ public class TownyCombatBattlefieldRoleUtil {
     
     private static void giveRoleBasedDamageResistance(LivingEntity livingEntity) {
         final int effectDurationTicks = (int) (TimeTools.convertToTicks(TownySettings.getShortInterval() + 10));
-        givePotionEffectUnlessAmplifierIsNegative(PotionEffectType.DAMAGE_RESISTANCE, effectDurationTicks,0, false, false, true, livingEntity);
+        givePotionEffectUnlessAmplifierIsNegative(PotionEffectType.RESISTANCE, effectDurationTicks,0, false, false, true, livingEntity);
     }
 
     private static void giveEffectUnlessAmplifierIsNegative(PotionEffectType potionEffectType, int durationTicks, int amplifier, LivingEntity livingEntity) {

@@ -24,6 +24,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.EntityDismountEvent;
+import org.bukkit.event.entity.EntityMountEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.inventory.BrewEvent;
@@ -38,8 +40,8 @@ import org.bukkit.inventory.BrewerInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionEffectType;
-import org.spigotmc.event.entity.EntityDismountEvent;
-import org.spigotmc.event.entity.EntityMountEvent;
+//import org.spigotmc.event.entity.EntityDismountEvent;
+//import org.spigotmc.event.entity.EntityMountEvent;
 
 /**
  * 
@@ -160,7 +162,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 				event.setCancelled(true);
 				AbstractHorse horse = (AbstractHorse)event.getEntity();
 				double newHealth = horse.getHealth() - event.getDamage();
-				horse.setHealth(Math.max(0, Math.min(horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue(), newHealth)));
+				horse.setHealth(Math.max(0, Math.min(horse.getAttribute(Attribute.MAX_HEALTH).getValue(), newHealth)));
 			}
 		}
 	}
@@ -309,7 +311,7 @@ public class TownyCombatBukkitEventListener implements Listener {
 			(attackingPlayer != null && attackingPlayer.isInsideVehicle() && attackingPlayer.getVehicle() instanceof AbstractHorse) 				
 			&&
 			//Bonus is charged-up
-			(attackingPlayer.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE) && attackingPlayer.getPotionEffect(PotionEffectType.INCREASE_DAMAGE).getAmplifier() == -1))
+			(attackingPlayer.hasPotionEffect(PotionEffectType.STRENGTH) && attackingPlayer.getPotionEffect(PotionEffectType.STRENGTH).getAmplifier() == -1))
 		{
 			TownyCombatSpecialCavalryHitEvent specialCavalryHit = new TownyCombatSpecialCavalryHitEvent(attackingPlayer, event.getEntity(), true);
 			Bukkit.getPluginManager().callEvent(specialCavalryHit);

@@ -18,23 +18,23 @@ public class TownyCombatMovementUtil {
 
     public static void removeTownyCombatMovementModifiers(LivingEntity livingEntity) {
         //Remove the TCM modifiers
-        for (AttributeModifier attributeModifier : new ArrayList<>(livingEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getModifiers())) {
+        for (AttributeModifier attributeModifier : new ArrayList<>(livingEntity.getAttribute(Attribute.MOVEMENT_SPEED).getModifiers())) {
             if (attributeModifier.getName().equals(ATTRIBUTE_MODIFIER_NAME)) {
-                livingEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).removeModifier(attributeModifier);
+                livingEntity.getAttribute(Attribute.MOVEMENT_SPEED).removeModifier(attributeModifier);
             }
         }
     }
 
     public static void removeTownyCombatKnockbackModifiers(LivingEntity livingEntity) {
-        for(AttributeModifier attributeModifier: new ArrayList<>(livingEntity.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).getModifiers())) {
+        for(AttributeModifier attributeModifier: new ArrayList<>(livingEntity.getAttribute(Attribute.KNOCKBACK_RESISTANCE).getModifiers())) {
             if(attributeModifier.getName().equals(ATTRIBUTE_MODIFIER_NAME)) {
-                livingEntity.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).removeModifier(attributeModifier);
+                livingEntity.getAttribute(Attribute.KNOCKBACK_RESISTANCE).removeModifier(attributeModifier);
             }
         }
     }
 
     public static void resetPlayerBaseSpeedToVanilla(Player player) {
-        player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(VANILLA_PLAYER_MOVEMENT_SPEED);        
+        player.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(VANILLA_PLAYER_MOVEMENT_SPEED);        
     }
     
 }
