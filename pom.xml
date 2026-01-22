@@ -9,7 +9,7 @@
     <java.version>17</java.version>
     <project.bukkitAPIVersion>1.15</project.bukkitAPIVersion>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <towny.version>0.101.0.2</towny.version>
+    <towny.version>0.102.0.0</towny.version>
   </properties>
 
   <repositories>
@@ -18,8 +18,8 @@
       <url>https://repo.glaremasters.me/repository/towny/</url>
       </repository>    
     <repository>
-      <id>spigot-repo</id>
-      <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+      <id>papermc</id>
+      <url>https://repo.papermc.io/repository/maven-public/</url>
     </repository>
 	<repository>
 	  <id>jitpack.io</id>
@@ -33,9 +33,9 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.spigotmc</groupId>
-      <artifactId>spigot-api</artifactId>
-      <version>1.16.5-R0.1-SNAPSHOT</version>
+      <groupId>io.papermc.paper</groupId>
+      <artifactId>paper-api</artifactId>
+      <version>1.21.10-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
 	<dependency>

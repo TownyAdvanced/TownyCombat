@@ -87,7 +87,7 @@ public class TownyCombatItemUtil {
         ItemMeta itemMeta = result.getItemMeta();
         itemMeta.setDisplayName(Translatable.of("spear_name").translate(Locale.ROOT));
         //Add enchants
-        itemMeta.addEnchant(Enchantment.DAMAGE_ALL, NATIVE_SPEAR_SHARPNESS_LEVEL, true);
+        itemMeta.addEnchant(Enchantment.SHARPNESS, NATIVE_SPEAR_SHARPNESS_LEVEL, true);
         //Add lore
         List<String> lore = new ArrayList<>();
         lore.add("");
@@ -235,7 +235,7 @@ public class TownyCombatItemUtil {
     }
 
     public static ItemStack createLingeringHarmPotion(Player owner, int durationSeconds, int amplifier) {
-        return createPotion(owner, Material.LINGERING_POTION, PotionEffectType.HARM, durationSeconds, amplifier, true, true, true, "super_potion_name_lingering_harm");
+        return createPotion(owner, Material.LINGERING_POTION, PotionEffectType.INSTANT_DAMAGE, durationSeconds, amplifier, true, true, true, "super_potion_name_lingering_harm");
     }
 
     public static ItemStack createAbsorbtionPotion(Player owner, int durationSeconds, int amplifier) {
@@ -294,7 +294,7 @@ public class TownyCombatItemUtil {
         for(ItemStack itemStack: player.getInventory().getContents()) {
             if(itemStack != null && (itemStack.getType() == Material.POTION || itemStack.getType() == Material.SPLASH_POTION)) {
                 oldPotionMeta = (PotionMeta) itemStack.getItemMeta();
-                if (oldPotionMeta != null && oldPotionMeta.getBasePotionData().getType() == PotionType.INSTANT_HEAL) {
+                if (oldPotionMeta != null && oldPotionMeta.getBasePotionData().getType() == PotionType.HEALING) {
                     //Create a new healing potion itemstack
                     ItemStack transmutedPotion = createTransmutedPotion(itemStack);
                     //Set the meta into the existing inventory item

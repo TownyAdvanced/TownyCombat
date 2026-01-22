@@ -69,12 +69,12 @@ public class TownyCombatHorseUtil {
 
     public static void registerPlayerForCavalryStrengthBonus(Player player) {
         cavalryStrengthBonusRefreshTimes.put(player, System.currentTimeMillis() + TownyCombatSettings.getCavalryChargeCooldownMilliseconds());
-        player.removePotionEffect(PotionEffectType.INCREASE_DAMAGE); //Removed so as not to cause confusion, and/or in preparation for next hit if applicable
+        player.removePotionEffect(PotionEffectType.STRENGTH); //Removed so as not to cause confusion, and/or in preparation for next hit if applicable
     }
 
     public static void deregisterPlayerForCavalryStrengthBonus(Player player) {
         cavalryStrengthBonusRefreshTimes.remove(player);
-        player.removePotionEffect(PotionEffectType.INCREASE_DAMAGE); //Remove so as not to cause confusion
+        player.removePotionEffect(PotionEffectType.STRENGTH); //Remove so as not to cause confusion
     }
 
     public static boolean isHorseTeleportScheduled(AbstractHorse horse) {
@@ -106,7 +106,7 @@ public class TownyCombatHorseUtil {
      * This has no effect on its own, but is used to indicate that the strength bonus is ready for use.
      */
     private static void applyPlaceholderStrengthEffectToPlayer(Player player, int effectDurationTicks) {
-        player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, effectDurationTicks,-1));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, effectDurationTicks,-1));
     }
 
     public static @Nullable Player getPlayerRider(Entity entity) {
@@ -127,7 +127,7 @@ public class TownyCombatHorseUtil {
 
     public static void cancelStrengthEffectsOnPlayerRiders(PotionSplashEvent event) {
         for (PotionEffect potionEffect : event.getPotion().getEffects()) {
-            if (potionEffect.getType().equals(PotionEffectType.INCREASE_DAMAGE)) {
+            if (potionEffect.getType().equals(PotionEffectType.STRENGTH)) {
                 for (LivingEntity entity : event.getAffectedEntities()) {
                     if (entity instanceof Player && getMount((Player)entity) != null) {
                         event.setIntensity(entity, 0);
@@ -146,7 +146,7 @@ public class TownyCombatHorseUtil {
             PotionEffectType potionEffectType = potionMeta.getBasePotionData().getType().getEffectType();
             if(potionEffectType == null)
                 return;
-            if(potionEffectType.equals(PotionEffectType.INCREASE_DAMAGE)
+            if(potionEffectType.equals(PotionEffectType.STRENGTH)
                     && TownyCombatHorseUtil.getMount(event.getPlayer()) != null) {
                 event.setCancelled(true);
                 Messaging.sendMsg(event.getPlayer(), Translatable.of("msg_warning_potion_strength_effect_blocked_for_rider"));
